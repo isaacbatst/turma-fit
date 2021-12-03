@@ -38,7 +38,7 @@ model Picture {
   student       Student @relation(fields: [student_id], references: [id])
 }
 
-model Measures {
+model Measurement {
   createdAt      DateTime @default(now())
   id             Int      @id @default(autoincrement())
   weight         Float  
@@ -54,6 +54,6 @@ model Student {
   profile      String
   id           Int       @id @default(autoincrement())
   age          Int
-  measures     Measures[]
+  measures     Measurement[]
   pictures     Picture[]
 }
