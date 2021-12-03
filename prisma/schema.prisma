@@ -30,3 +30,30 @@ model User {
   posts    Post[]
   profiles Profile[]
 }
+
+model Picture {
+  url           String
+  id            Int     @id @default(autoincrement())
+  student_id    Int
+  student       Student @relation(fields: [student_id], references: [id])
+}
+
+model Measures {
+  createdAt      DateTime @default(now())
+  id             Int      @id @default(autoincrement())
+  weight         Float  
+  biceps_left    Float
+  biceps_right   Float
+  student_id     Int
+  student        Student  @relation(fields: [student_id], references: [id])
+}
+
+model Student {
+  name         String 
+  email        String    @unique
+  profile      String
+  id           Int       @id @default(autoincrement())
+  age          Int
+  measures     Measures[]
+  pictures     Picture[]
+}
