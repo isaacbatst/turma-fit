@@ -1,0 +1,13 @@
+@use '../common/colors.module';
+
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  background-color: colors.$primary;
+  color: white;
+  text-align: center;
+}
