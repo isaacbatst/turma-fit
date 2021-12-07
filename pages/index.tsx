@@ -3,6 +3,7 @@ import Head from 'next/head'
 import styles from '../styles/pages/home.module.scss'
 import Layout from '../components/Layout'
 import Header from '../components/Home/Header'
+import NavMenu from '../components/Home/NavMenu'
 
 
 const Home: NextPage = () => {
@@ -15,6 +16,8 @@ const Home: NextPage = () => {
         </Head>
 
         <Header />
+        <NavMenu />
+
       </div>
     </Layout>
   )

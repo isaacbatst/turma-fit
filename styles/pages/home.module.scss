@@ -1,13 +1,42 @@
 @use '../common/colors.module';
+@use '../common/box-shadow';
 
 .container {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-}
 
-.header {
-  background-color: colors.$primary;
-  color: white;
-  text-align: center;
+  .header {
+    background-color: colors.$primary;
+    color: white;
+    text-align: center;
+  }
+
+  nav {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding: 10px;
+
+    a {
+      flex: 1;
+      padding: 45px 0;
+      margin: 15px 10px;
+      font-size: 18px;
+      font-weight: 700;
+      transition: 0.1s;
+
+      @include box-shadow.default;
+
+      &:hover, &:active {
+        transform: scale(1.03);
+        @include box-shadow.strong;
+      }
+    }
+
+    div {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
 }
