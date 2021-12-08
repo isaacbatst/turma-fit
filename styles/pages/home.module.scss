@@ -16,7 +16,7 @@
     display: flex;
     flex-direction: column;
     text-align: center;
-    padding: 10px;
+    padding: 15px;
 
     a {
       flex: 1;
@@ -29,7 +29,8 @@
       @include box-shadow.default;
 
       &:hover, &:active {
-        transform: scale(1.03);
+        transform: scale(1.02);
+        font-size: 24px;
         @include box-shadow.strong;
       }
     }
