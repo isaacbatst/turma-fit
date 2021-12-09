@@ -9,7 +9,7 @@ import NavMenu from '../components/Home/NavMenu'
 const Home: NextPage = () => {
   return (
     <Layout>
-      <div className={styles.container}>
+      <div className={styles.wrap}>
         <Head>
           <title>Turma Fit</title>
           <link rel="icon" href="/favicon.png" />

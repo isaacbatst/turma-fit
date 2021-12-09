@@ -1,9 +1,10 @@
 import Link from 'next/link';
 import styles from '../../styles/pages/home.module.scss';
+import containers from '../../styles/common/containers.module.scss';
 
 const NavMenu: React.FC = () => {
   return (
-    <nav>
+    <nav className={containers.container}>
       <Link href="/next">
         <a className={styles.bigButton}>Próximo Treino</a>
       </Link>
