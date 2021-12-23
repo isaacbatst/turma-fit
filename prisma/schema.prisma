@@ -26,11 +26,75 @@ model Picture {
 }
 
 model Measurement {
-  createdAt    DateTime @default(now())
-  id           Int      @id @default(autoincrement())
-  weight       Float
-  biceps_left  Float
-  biceps_right Float
-  student_id   Int
-  student      Student  @relation(fields: [student_id], references: [id])
+  createdAt     DateTime @default(now())
+  id            Int      @id @default(autoincrement())
+  weight        Float
+  shoulders     Float
+  chest         Float
+  waist         Float
+  hips          Float
+  arm_left      Float
+  arm_right     Float
+  forearm_left  Float
+  forearm_right Float
+  thigh_left    Float
+  thigh_right   Float
+  calf_left     Float
+  calf_right    Float
+  student_id Int
+  student    Student @relation(fields: [student_id], references: [id])
+}
+
+model MuscleGroup {
+  name      String     @unique
+  id        Int        @id @default(autoincrement())
+  exercises Exercise[]
+}
+
+model Exercise {
+  name           String
+  id             Int             @id @default(autoincrement())
+  grip           String?
+  exerciseSeries ExerciseSerie[]
+  muscleGroups   MuscleGroup[]
+}
+
+model ExerciseSerie {
+  exercises           Exercise[]
+  id                  Int               @id @default(autoincrement())
+  repetitions         String
+  times               Int
+  technique           ExerciseTechnique @relation(fields: [exerciseTechniqueId], references: [id])
+  exerciseTechniqueId Int
+  restMinTime         Int
+  restMaxTime         Int
+  trainings           Training[]
+}
+
+model ExerciseTechnique {
+  name           String
+  id             Int             @id @default(autoincrement())
+  explanation    String
+  exerciseSeries ExerciseSerie[]
+}
+
+model TrainingPlanning {
+  trainings Training[]
+  id        Int        @id @default(autoincrement())
+  type      String
+}
+
+model Training {
+  id                 Int               @id @default(autoincrement())
+  letter             String
+  exercisesSeries    ExerciseSerie[]
+  aerobicMinutes     Int
+  trainingPlanning   TrainingPlanning? @relation(fields: [trainingPlanningId], references: [id])
+  trainingPlanningId Int?
+}
+
+model TrainingPlanningType {
+  name        String
+  id          Int    @id @default(autoincrement())
+  explanation String
 }
