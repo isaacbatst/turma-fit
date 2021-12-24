@@ -9,13 +9,14 @@ datasource db {
 }
 
 model Student {
-  name     String
-  email    String        @unique
-  profile  String
-  id       Int           @id @default(autoincrement())
-  age      Int?
-  measures Measurement[]
-  pictures Picture[]
+  name              String
+  email             String             @unique
+  profile           String
+  id                Int                @id @default(autoincrement())
+  age               Int?
+  measures          Measurement[]
+  pictures          Picture[]
+  trainingPlannings TrainingPlanning[]
 }
 
 model Picture {
@@ -66,8 +67,8 @@ model ExerciseSerie {
   times               Int
   technique           ExerciseTechnique @relation(fields: [exerciseTechniqueId], references: [id])
   exerciseTechniqueId Int
-  restMinTime         Int
-  restMaxTime         Int
+  minRestTime         Int?
+  maxRestTime         Int?
   trainings           Training[]
 }
 
@@ -79,9 +80,12 @@ model ExerciseTechnique {
 }
 
 model TrainingPlanning {
-  trainings Training[]
-  id        Int        @id @default(autoincrement())
-  type      String
+  trainings              Training[]
+  id                     Int                  @id @default(autoincrement())
+  type                   TrainingPlanningType @relation(fields: [trainingPlanningTypeId], references: [id])
+  trainingPlanningTypeId Int
+  Student                Student?             @relation(fields: [studentId], references: [id])
+  studentId              Int?
 }
 
 model Training {
@@ -94,7 +98,10 @@ model Training {
 }
 
 model TrainingPlanningType {
-  name        String
-  id          Int    @id @default(autoincrement())
-  explanation String
+  name               String
+  id                 Int                @id @default(autoincrement())
+  explanation        String
+  defaultMaxRestTime Int                @default(45)
+  defaultMinRestTime Int                @default(60)
+  TrainingPlanning   TrainingPlanning[]
 }
