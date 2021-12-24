@@ -13,7 +13,7 @@ model Student {
   email    String        @unique
   profile  String
   id       Int           @id @default(autoincrement())
-  age      Int
+  age      Int?
   measures Measurement[]
   pictures Picture[]
 }
@@ -41,8 +41,8 @@ model Measurement {
   thigh_right   Float
   calf_left     Float
   calf_right    Float
-  student_id Int
-  student    Student @relation(fields: [student_id], references: [id])
+  student_id    Int
+  student       Student  @relation(fields: [student_id], references: [id])
 }
 
 model MuscleGroup {
