@@ -1,0 +1,56 @@
+@use '../common/colors.module';
+@use '../common//containers.module';
+
+.header {
+  background-color: colors.$primary;
+  color: white;
+  text-align: center;
+  font-size: 16px;
+  
+  .content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    @extend .container;
+
+    .userInfo {
+      display: flex;
+      align-items: center;
+      transition: 0.1s;
+      padding: 0 15px;
+      align-self: stretch;
+      
+      button {
+        cursor: pointer;
+        border: 0;
+        color: white;
+        font-family: Montserrat;
+        display: flex;
+        justify-content: center;
+        align-self: stretch;
+        align-items: center;
+        margin-left: 10px;
+        padding: 0 20px;
+        font-size: 18px;
+        background-color: transparent;
+  
+        &:hover {
+          background-color: darken($color: colors.$primary, $amount: 15);
+        }
+      }
+
+      div {
+        display: flex;
+        flex-direction: column;
+      }
+
+      span {
+        margin-left: 10px;
+      }
+
+      img {
+        border-radius: 50%;
+      }
+    }
+  }
+}

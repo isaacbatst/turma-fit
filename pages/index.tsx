@@ -4,9 +4,12 @@ import styles from '../styles/pages/home.module.scss'
 import Layout from '../components/Layout'
 import Header from '../components/Home/Header'
 import NavMenu from '../components/Home/NavMenu'
+import { useSession } from 'next-auth/react'
 
 
 const Home: NextPage = () => {
+  const session = useSession();
+
   return (
     <Layout>
       <div className={styles.wrap}>
