@@ -17,6 +17,7 @@ model Student {
   measures          Measurement[]
   pictures          Picture[]
   trainingPlannings TrainingPlanning[]
+  trainingPlanningsOrder Int[]
 }
 
 model Picture {
@@ -89,7 +90,7 @@ model TrainingPlanning {
   id                     Int                  @id @default(autoincrement())
   type                   TrainingPlanningType @relation(fields: [trainingPlanningTypeId], references: [id])
   trainingPlanningTypeId Int
-  Student                Student?             @relation(fields: [studentId], references: [id])
+  student                Student?             @relation(fields: [studentId], references: [id])
   studentId              Int?
 }
 
@@ -97,6 +98,7 @@ model Training {
   id                 Int               @id @default(autoincrement())
   letter             String
   exercisesSeries    ExerciseSerie[]
+  exercisesSeriesOrder Int[]
   aerobicMinutes     Int
   trainingPlanning   TrainingPlanning? @relation(fields: [trainingPlanningId], references: [id])
   trainingPlanningId Int?
