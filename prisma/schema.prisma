@@ -52,21 +52,26 @@ model MuscleGroup {
   exercises Exercise[]
 }
 
+enum Grip {
+  PRONATE
+  SUPINE
+}
+
 model Exercise {
   name           String
   id             Int             @id @default(autoincrement())
-  grip           String?
+  grip           Grip?
   exerciseSeries ExerciseSerie[]
   muscleGroups   MuscleGroup[]
 }
 
 model ExerciseSerie {
   exercises           Exercise[]
-  id                  Int               @id @default(autoincrement())
-  repetitions         String
+  id                  Int                @id @default(autoincrement())
   times               Int
-  technique           ExerciseTechnique @relation(fields: [exerciseTechniqueId], references: [id])
-  exerciseTechniqueId Int
+  repetitions         String
+  technique           ExerciseTechnique? @relation(fields: [exerciseTechniqueId], references: [id])
+  exerciseTechniqueId Int?
   minRestTime         Int?
   maxRestTime         Int?
   trainings           Training[]
