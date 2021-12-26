@@ -8,16 +8,26 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Personal {
+  name     String
+  email    String    @unique
+  profile  String
+  id       Int       @id @default(autoincrement())
+  students Student[]
+}
+
 model Student {
-  name              String
-  email             String             @unique
-  profile           String
-  id                Int                @id @default(autoincrement())
-  age               Int?
-  measures          Measurement[]
-  pictures          Picture[]
-  trainingPlannings TrainingPlanning[]
+  name                   String
+  email                  String             @unique
+  profile                String
+  id                     Int                @id @default(autoincrement())
+  age                    Int?
+  measures               Measurement[]
+  pictures               Picture[]
+  trainingPlannings      TrainingPlanning[]
   trainingPlanningsOrder Int[]
+  Personal               Personal?          @relation(fields: [personalId], references: [id])
+  personalId             Int?
 }
 
 model Picture {
@@ -94,14 +104,25 @@ model TrainingPlanning {
   studentId              Int?
 }
 
+enum Day {
+  SUNDAY
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+}
+
 model Training {
-  id                 Int               @id @default(autoincrement())
-  letter             String
-  exercisesSeries    ExerciseSerie[]
+  id                   Int               @id @default(autoincrement())
+  letter               String
+  exercisesSeries      ExerciseSerie[]
   exercisesSeriesOrder Int[]
-  aerobicMinutes     Int
-  trainingPlanning   TrainingPlanning? @relation(fields: [trainingPlanningId], references: [id])
-  trainingPlanningId Int?
+  aerobicMinutes       Int
+  trainingPlanning     TrainingPlanning? @relation(fields: [trainingPlanningId], references: [id])
+  trainingPlanningId   Int?
+  day                  Day
 }
 
 model TrainingPlanningType {
