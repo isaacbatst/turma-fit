@@ -5,7 +5,12 @@
   background-color: colors.$primary;
   color: white;
   text-align: center;
-  font-size: 16px;
+  font-size: 14px;
+
+  h1 {
+    font-size: 20px;
+    margin: 20px 0;
+  }
   
   .content {
     display: flex;
@@ -24,7 +29,6 @@
         cursor: pointer;
         border: 0;
         color: white;
-        font-family: Montserrat;
         display: flex;
         justify-content: center;
         align-self: stretch;
