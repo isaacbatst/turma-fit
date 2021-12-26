@@ -4,13 +4,17 @@ import styles from '../../styles/components/header.module.scss'
 import { MdLogout } from 'react-icons/md';
 import { signOut } from 'next-auth/react';
 
-const Header: React.FC = () => {
+type HeaderProps = {
+  title?: string;
+}
+
+const Header: React.FC<HeaderProps> = ({ title = 'Turma Fit' }) => {
   const { data } = useSession();
 
   return (
     <header className={styles.header}>
       <div className={styles.content}>
-        <h1>Turma Fit</h1>
+        <h1>{ title }</h1>
         { data && (
           <div className={styles.userInfo}>
             <Image 

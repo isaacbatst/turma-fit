@@ -2,14 +2,10 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import styles from '../styles/pages/home.module.scss'
 import Layout from '../components/Layout'
-import Header from '../components/Home/Header'
+import Header from '../components/Header'
 import NavMenu from '../components/Home/NavMenu'
-import { useSession } from 'next-auth/react'
-
 
 const Home: NextPage = () => {
-  const session = useSession();
-
   return (
     <Layout>
       <div className={styles.wrap}>
