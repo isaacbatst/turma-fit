@@ -3,6 +3,7 @@ import { GetServerSideProps, NextPage } from "next";
 import { getSession } from "next-auth/react";
 import Header from "../components/Header";
 import Layout from "../components/Layout";
+import { prisma } from "../lib/prisma";
 import containers from '../styles/common/containers.module.scss';
 
 type Props = {
@@ -44,20 +45,22 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const session = await getSession({ req });
 
   if(session) {
-    const prisma = new PrismaClient();
-
-    const student = await prisma.student.findFirst({
+    const user = await prisma.user.findFirst({
       where: {
         email: session.user?.email || ''
       },
       include: {
-        trainingPlannings: {
+        student: {
           include: {
-            trainings: {
+            trainingPlannings: {
               include: {
-                exercisesSeries: {
+                trainings: {
                   include: {
-                    exercises: true
+                    exercisesSeries: {
+                      include: {
+                        exercises: true
+                      }
+                    }
                   }
                 }
               }
@@ -67,10 +70,10 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
       }
     })
   
-    if(student){
+    if(user?.student){
       return {
         props: {
-          trainingPlannings: student.trainingPlannings
+          trainingPlannings: user.student.trainingPlannings
         }
       }  
     }
