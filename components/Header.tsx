@@ -1,6 +1,6 @@
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
-import styles from '../../styles/components/header.module.scss'
+import styles from '../styles/components/header.module.scss'
 import { MdLogout } from 'react-icons/md';
 import { signOut } from 'next-auth/react';
 
@@ -10,6 +10,8 @@ type HeaderProps = {
 
 const Header: React.FC<HeaderProps> = ({ title = 'Turma Fit' }) => {
   const { data } = useSession();
+
+  console.log(data)
 
   return (
     <header className={styles.header}>

@@ -1,6 +1,6 @@
 import NextAuth from "next-auth";
 import GoogleProvider from 'next-auth/providers/google';
-import { PrismaClient } from '@prisma/client'
+import { prisma } from "../../../lib/prisma";
 
 export default NextAuth({
   providers: [
@@ -16,21 +16,22 @@ export default NextAuth({
   ],
   secret: process.env.JWT_SECRET,
   callbacks: {
-    async signIn ({ user }) {
-      const prisma = new PrismaClient();
-
-      const student = await prisma.student.findFirst({
+    async signIn ({ user: userFromLogin }) {
+      const user = await prisma.user.findUnique({
         where: {
-          email: user.email || ''
-        }
+          email: userFromLogin.email || ''
+        },
       })
 
-      if(!student) {
-        await prisma.student.create({
+      if(!user) {
+        await prisma.user.create({
           data: {
-            email: user.email || '',
-            name: user.name || '',
-            profile: user.image || '',
+            email: userFromLogin.email || '',
+            name: userFromLogin.name || '',
+            profile: userFromLogin.image || '',
+            student: {
+              create: {}
+            }
           }
         })
       }
