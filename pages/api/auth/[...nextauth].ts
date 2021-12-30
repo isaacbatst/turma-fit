@@ -1,14 +1,11 @@
 import NextAuth from "next-auth";
 import GoogleProvider from 'next-auth/providers/google';
 import { prisma } from "../../../lib/prisma";
+import { PrismaAdapter } from "@next-auth/prisma-adapter"
 
 export default NextAuth({
+  adapter: PrismaAdapter(prisma),
   providers: [
-    // Auth0Provider({
-    //   clientId: process.env.AUTH0_CLIENT_ID || '',
-    //   clientSecret: process.env.AUTH0_CLIENT_SECRET || '',
-    //   issuer: process.env.AUTH0_ISSUER 
-    // }),
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || '',
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || ''
@@ -16,19 +13,19 @@ export default NextAuth({
   ],
   secret: process.env.JWT_SECRET,
   callbacks: {
-    async signIn ({ user: userFromLogin }) {
+    async signIn ({ user: userFromAuth }) {
       const user = await prisma.user.findUnique({
         where: {
-          email: userFromLogin.email || ''
+          email: userFromAuth.email || ''
         },
       })
 
       if(!user) {
         await prisma.user.create({
           data: {
-            email: userFromLogin.email || '',
-            name: userFromLogin.name || '',
-            profile: userFromLogin.image || '',
+            email: userFromAuth.email || '',
+            name: userFromAuth.name || '',
+            profile: userFromAuth.image || '',
             student: {
               create: {}
             }
@@ -37,6 +34,24 @@ export default NextAuth({
       }
 
       return true;
+    },
+    async session ({ session }) {
+      const user = await prisma.user.findUnique({
+        where: {
+          email: session.user.email || ''
+        },
+        include: {
+          personal: {
+            select: {
+              id: true
+            }
+          }
+        }
+      })
+
+      session.user.personal = !!user?.personal;
+
+      return session;
     }
   }
 })

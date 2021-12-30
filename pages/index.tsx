@@ -16,10 +16,9 @@ const Home: NextPage = () => {
 
         <Header />
         <NavMenu />
-
       </div>
     </Layout>
   )
 }
 
-export default Home
+export default Home;

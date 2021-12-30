@@ -1,36 +1,59 @@
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import styles from '../styles/components/header.module.scss'
-import { MdLogout } from 'react-icons/md';
+import { MdLogout, MdAdminPanelSettings } from 'react-icons/md';
 import { signOut } from 'next-auth/react';
+import useSWR from 'swr';
+import { getUser } from '../lib/axios';
+import { useEffect } from 'react';
+import Link from 'next/link';
 
 type HeaderProps = {
   title?: string;
 }
 
-const Header: React.FC<HeaderProps> = ({ title = 'Turma Fit' }) => {
-  const { data } = useSession();
 
-  console.log(data)
+const Header: React.FC<HeaderProps> = ({ title = 'Turma Fit' }) => {
+  const { data: session } = useSession();
+
+  const { data: user, mutate } = useSWR('/api/user/', getUser(session?.user?.email || ''));
+
+  useEffect(() => {
+    mutate();
+  }, [session?.user?.email, mutate])
 
   return (
     <header className={styles.header}>
       <div className={styles.content}>
         <h1>{ title }</h1>
-        { data && (
-          <div className={styles.userInfo}>
-            <Image 
-              src={data.user?.image || ''} 
-              alt='Foto de perfil' 
-              height={40}
-              width={40}
-            />
-            <span>Olá, {data.user?.name}!</span>
-            <button onClick={() => signOut()} >
-              <MdLogout />
-            </button>
-          </div>
-        ) }
+        <div className={styles.right}>
+          { session && (
+            <>
+              <div className={styles.pictureAndName}>
+                <Image 
+                  src={session.user?.image || ''} 
+                  alt='Foto de perfil' 
+                  height={40}
+                  width={40}
+                />
+                <span>Olá, {session.user?.name}!</span>
+              </div>
+              {
+                user?.personal && (
+                  <Link href='/personal/admin'>
+                    <a className={styles.button}>
+                      <MdAdminPanelSettings />
+                    </a>
+                  </Link>
+                )
+              }
+              <button className={styles.button} onClick={() => signOut()} >
+                <MdLogout />
+              </button>
+            </>
+          ) }
+
+        </div>
       </div>
     </header>
   )

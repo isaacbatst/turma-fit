@@ -1,19 +1,14 @@
 import { getToken } from "next-auth/jwt"
 import { NextRequest, NextResponse } from "next/server"
+import getSession from "../lib/session";
 
 export async function middleware(req: NextRequest) {
-  const protectedRoutes = ['/']
+  const protectedRoutes = ['/', '/personal/admin']
 
   const  { nextUrl: { pathname } } = req;
   
-  const session = await getToken({
-    req,
-    secret: process.env.JWT_SECRET || '',
-    secureCookie:
-    process.env.NEXTAUTH_URL?.startsWith("https://") ??
-    !!process.env.VERCEL_URL,
-  })
-
+  const session = await getSession(req);
+  
   if (!session && protectedRoutes.find(route => route.includes(pathname))) {
     return NextResponse.redirect("/api/auth/signin")
   }
