@@ -2,6 +2,7 @@ import '../styles/common/global.scss'
 import type { AppProps } from 'next/app'
 import { SessionProvider, signIn, useSession } from 'next-auth/react';
 import { NextComponentType, NextPageContext } from 'next';
+import { Session } from 'next-auth';
 
 type MyAppProps = AppProps & {
   Component: NextComponentType<NextPageContext, any, {}> & {

@@ -27,7 +27,7 @@ export default NextAuth({
         }
       })
 
-      session.user.personal = !!user?.personal;
+      session.user.isPersonal = !!user?.personal;
 
       return session;
     }

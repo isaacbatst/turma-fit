@@ -18,7 +18,6 @@ type Props = {
 }
 
 const Trainings: NextPageWithAuth<Props> = ({ trainingPlannings }) => {
-  console.log(trainingPlannings)
   return (
     <Layout>
       <Header title="Meus treinos" />

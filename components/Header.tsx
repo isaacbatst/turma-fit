@@ -15,12 +15,6 @@ type Props = {
 const Header: React.FC<Props> = ({ title = 'Turma Fit' }) => {
   const { data: session } = useSession();
 
-  const { data: user, mutate } = useSWR('/api/user/', getUser(session?.user?.email || ''));
-
-  useEffect(() => {
-    mutate();
-  }, [session?.user?.email, mutate])
-
   return (
     <header className={styles.header}>
       <div className={styles.content}>
@@ -38,7 +32,7 @@ const Header: React.FC<Props> = ({ title = 'Turma Fit' }) => {
                 <span>Olá, {session.user?.name}!</span>
               </div>
               {
-                user?.personal && (
+                session.user.isPersonal && (
                   <Link href='/personal/admin'>
                     <a className={styles.button}>
                       <MdAdminPanelSettings />

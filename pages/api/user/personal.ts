@@ -9,7 +9,20 @@ const handler: NextApiHandler = async (req, res) => {
       email: email.toString()
     },
     include: {
-      personal: true
+      personal: {
+        include: {
+          students: {
+            include: {
+              trainingPlannings: {
+                include: {
+                  type: true,
+                }
+              },
+              user: true
+            }
+          }
+        }
+      }
     }
   })
 

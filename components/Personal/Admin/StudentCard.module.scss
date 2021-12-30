@@ -1,0 +1,57 @@
+@use '../../../styles/common/box-shadow';
+@use '../../../styles/common/colors.module';
+
+.card {
+  @include box-shadow.default();  
+  padding: 15px;
+
+  .imageAndName {
+    display: flex;
+    align-items: center;
+
+    img {
+      border-radius: 50%;
+    }
+  
+    .studentName {
+      margin-left: 10px;
+    }
+  }
+
+  .lastTrainingPlanning {
+    font-size: 14px;
+    text-align: center;
+    
+    span {
+      background-color: rgb(161, 10, 18);
+      padding: 7px 15px;
+      margin-left: 10px;
+      display: inline-block;
+      border-radius: 15px;
+      color: white;
+    }
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+
+    button {
+      @include box-shadow.default();
+      display: flex;
+      background-color: white;
+      border: 0;
+      width: 45%;
+      flex-direction: column;
+      align-items: center;
+      font-size: 24px;
+      padding: 10px 0;
+      cursor: pointer;
+
+      &:hover {
+        background: darken($color: white, $amount: 3);
+        transform: scale(1.2);
+      }
+    }
+  }
+}

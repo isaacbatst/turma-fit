@@ -1,11 +1,13 @@
 @use './libs';
 @use './fonts';
+@use './colors.module';
 
 html,
 body {
   padding: 0;
   margin: 0;
   font-family: 'Montserrat';
+  color: colors.$black;
 }
 
 a {
