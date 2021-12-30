@@ -13,28 +13,6 @@ export default NextAuth({
   ],
   secret: process.env.JWT_SECRET,
   callbacks: {
-    async signIn ({ user: userFromAuth }) {
-      const user = await prisma.user.findUnique({
-        where: {
-          email: userFromAuth.email || ''
-        },
-      })
-
-      if(!user) {
-        await prisma.user.create({
-          data: {
-            email: userFromAuth.email || '',
-            name: userFromAuth.name || '',
-            profile: userFromAuth.image || '',
-            student: {
-              create: {}
-            }
-          }
-        })
-      }
-
-      return true;
-    },
     async session ({ session }) {
       const user = await prisma.user.findUnique({
         where: {

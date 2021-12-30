@@ -4,8 +4,9 @@ import styles from '../styles/pages/home.module.scss'
 import Layout from '../components/Layout'
 import Header from '../components/Header'
 import NavMenu from '../components/Home/NavMenu'
+import { NextPageWithAuth } from '../types/page'
 
-const Home: NextPage = () => {
+const Home: NextPageWithAuth = () => {
   return (
     <Layout>
       <div className={styles.wrap}>
@@ -20,5 +21,7 @@ const Home: NextPage = () => {
     </Layout>
   )
 }
+
+Home.auth = true;
 
 export default Home;

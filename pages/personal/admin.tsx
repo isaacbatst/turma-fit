@@ -1,8 +1,8 @@
-import { NextPage } from "next";
 import Header from "../../components/Header";
 import Layout from "../../components/Layout";
+import { NextPageWithAuth } from "../../types/page";
 
-const PersonalAdmin: NextPage = () => {
+const PersonalAdmin: NextPageWithAuth = () => {
   return (
     <Layout>
       <Header />
@@ -10,5 +10,7 @@ const PersonalAdmin: NextPage = () => {
     </Layout>
   )
 }
+
+PersonalAdmin.auth = true;
 
 export default PersonalAdmin;

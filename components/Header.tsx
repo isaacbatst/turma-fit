@@ -8,12 +8,11 @@ import { getUser } from '../lib/axios';
 import { useEffect } from 'react';
 import Link from 'next/link';
 
-type HeaderProps = {
+type Props = {
   title?: string;
 }
 
-
-const Header: React.FC<HeaderProps> = ({ title = 'Turma Fit' }) => {
+const Header: React.FC<Props> = ({ title = 'Turma Fit' }) => {
   const { data: session } = useSession();
 
   const { data: user, mutate } = useSWR('/api/user/', getUser(session?.user?.email || ''));

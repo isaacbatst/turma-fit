@@ -1,12 +1,45 @@
 import '../styles/common/global.scss'
 import type { AppProps } from 'next/app'
-import { SessionProvider } from 'next-auth/react';
+import { SessionProvider, signIn, useSession } from 'next-auth/react';
+import { NextComponentType, NextPageContext } from 'next';
 
-function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
+type MyAppProps = AppProps & {
+  Component: NextComponentType<NextPageContext, any, {}> & {
+    auth: boolean;
+  }
+}
+
+function MyApp({ Component, pageProps: { session, ...pageProps } }: MyAppProps) {
   return (
     <SessionProvider session={session}>
-      <Component {...pageProps} />
+      {
+        Component.auth ? (
+          <Auth>
+            <Component {...pageProps} />
+          </Auth>
+        ) : (
+          <Component {...pageProps} />
+        )
+      }
     </SessionProvider>
   )
 }
-export default MyApp
+
+const Auth: React.FC = function ({ children }) {
+  const { data: session } = useSession({
+    required: true,
+    onUnauthenticated() {
+      signIn() 
+    }
+  })
+
+  if (session?.user) {
+    return (<>
+      {children}
+    </>)
+  }
+
+  return <div>Loading...</div>
+}
+
+export default MyApp;

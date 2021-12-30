@@ -5,6 +5,7 @@ import Header from "../components/Header";
 import Layout from "../components/Layout";
 import { prisma } from "../lib/prisma";
 import containers from '../styles/common/containers.module.scss';
+import { NextPageWithAuth } from "../types/page";
 
 type Props = {
   trainingPlannings: (TrainingPlanning & {
@@ -16,7 +17,7 @@ type Props = {
   })[];
 }
 
-const Trainings: NextPage<Props> = ({ trainingPlannings }) => {
+const Trainings: NextPageWithAuth<Props> = ({ trainingPlannings }) => {
   console.log(trainingPlannings)
   return (
     <Layout>
@@ -83,5 +84,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
     props: {}
   };
 }
+
+Trainings.auth = true;
 
 export default Trainings;
