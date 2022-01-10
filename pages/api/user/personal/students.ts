@@ -1,5 +1,5 @@
 import { NextApiHandler } from 'next'
-import { prisma } from '../../../lib/prisma'
+import { prisma } from '../../../../lib/prisma'
 
 const handler: NextApiHandler = async (req, res) => {
   const { email } = req.query
@@ -26,7 +26,7 @@ const handler: NextApiHandler = async (req, res) => {
     }
   })
 
-  res.json(user)
+  res.json(user?.personal?.students);
 }
 
 export default handler

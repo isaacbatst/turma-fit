@@ -1,5 +1,5 @@
-@use '../../../styles/common/box-shadow';
-@use '../../../styles/common/colors.module';
+@use '../../../../styles/common/box-shadow';
+@use '../../../../styles/common/colors.module';
 
 .card {
   @include box-shadow.default();  
@@ -36,16 +36,15 @@
     display: flex;
     justify-content: space-between;
 
-    button {
+    a {
       @include box-shadow.default();
       display: flex;
       background-color: white;
       border: 0;
-      width: 45%;
       flex-direction: column;
       align-items: center;
       font-size: 24px;
-      padding: 10px 0;
+      padding: 10px 15px;
       cursor: pointer;
 
       &:hover {

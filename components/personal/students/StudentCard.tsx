@@ -1,10 +1,11 @@
 import Image from "next/image";
-import { PersonalStudent } from "../../../lib/axios";
 import styles from './StudentCard.module.scss';
-import { MdAddCircleOutline, MdSettings } from 'react-icons/md';
+import { MdAddCircleOutline, MdSettings, MdViewList } from 'react-icons/md';
+import Link from "next/link";
+import { PersonalStudentWithTrainings } from "../../../types/schema";
 
 type Props = {
-  student: PersonalStudent
+  student: PersonalStudentWithTrainings
 }
 
 const StudentCard: React.FC<Props> = ({ student }) => {
@@ -21,12 +22,21 @@ const StudentCard: React.FC<Props> = ({ student }) => {
         Último Treino: <span>{ lastTrainingPlanning.type.name }</span>
       </p>
       <div className={styles.buttons}>
-        <button>
-          <MdAddCircleOutline />
-        </button>
-        <button>
-          <MdSettings />
-        </button>
+        <Link href={`/personal/students/${student.id}/plannings/create`}>
+          <a>
+            <MdAddCircleOutline />
+          </a>
+        </Link>
+        <Link href={`/personal/students/${student.id}/plannings`}>
+          <a>
+            <MdViewList />
+          </a>
+        </Link>
+        <Link href={`/personal/students/${student.id}/settings`}>
+          <a>
+            <MdSettings />
+          </a>
+        </Link>
       </div>
     </div>
   )

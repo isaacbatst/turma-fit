@@ -3,9 +3,6 @@ import Image from 'next/image';
 import styles from '../styles/components/header.module.scss'
 import { MdLogout, MdAdminPanelSettings } from 'react-icons/md';
 import { signOut } from 'next-auth/react';
-import useSWR from 'swr';
-import { getUser } from '../lib/axios';
-import { useEffect } from 'react';
 import Link from 'next/link';
 
 type Props = {
@@ -33,7 +30,7 @@ const Header: React.FC<Props> = ({ title = 'Turma Fit' }) => {
               </div>
               {
                 session.user.isPersonal && (
-                  <Link href='/personal/admin'>
+                  <Link href='/personal/students'>
                     <a className={styles.button}>
                       <MdAdminPanelSettings />
                     </a>
