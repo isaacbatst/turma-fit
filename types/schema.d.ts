@@ -60,4 +60,6 @@ export type PersonalUserWithStudentsTrainings = Prisma.UserGetPayload<typeof per
 
 export type PersonalStudentWithTrainings = NonNullable<PersonalUserWithStudentsTrainings["personal"]>["students"][number]
 export type TrainingPlanningWithDetails = PersonalStudentWithTrainings["trainingPlannings"][number]
-
+export type TrainingWithExercisesSeries = TrainingPlanningWithDetails["trainings"][number] 
+export type ExerciseSeriesWithExercises = TrainingWithExercisesSeries["exercisesSeries"][number];
+export type ExerciseWithMuscleGroups = ExerciseSeriesWithExercises["exercises"][number] 
