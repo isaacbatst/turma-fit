@@ -1,5 +1,6 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { MdOutlineAdd } from "react-icons/md";
 import Header from "../../../../../components/Header";
 import Layout from "../../../../../components/Layout";
 import TrainingPlanningCard from "../../../../../components/personal/students/plannings/TrainingPlanningCard";
@@ -22,9 +23,9 @@ const CreatePlannings: NextPageWithAuth = () => {
         {
           student && (
             <>
-              <p>Planejamentos de {student.user.name}</p>
+              <h2>Planejamentos de {student.user.name}</h2>
               <div className={styles.plannings}>
-                <div>+ Treinamento</div>
+                <div className={styles.addTraining}><MdOutlineAdd /> Planejamento</div>
                 {student.trainingPlannings.map(trainingPlanning => (
                   <TrainingPlanningCard trainingPlanning={trainingPlanning} key={trainingPlanning.id} />
                 ))}

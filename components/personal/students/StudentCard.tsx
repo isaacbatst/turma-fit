@@ -2,10 +2,10 @@ import Image from "next/image";
 import styles from './StudentCard.module.scss';
 import { MdAddCircleOutline, MdSettings, MdViewList } from 'react-icons/md';
 import Link from "next/link";
-import { PersonalStudentWithTrainings } from "../../../types/schema";
+import { PersonalStudentWithPlannings } from "../../../types/schema";
 
 type Props = {
-  student: PersonalStudentWithTrainings
+  student: PersonalStudentWithPlannings
 }
 
 const StudentCard: React.FC<Props> = ({ student }) => {
