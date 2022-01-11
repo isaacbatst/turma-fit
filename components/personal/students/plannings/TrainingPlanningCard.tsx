@@ -14,7 +14,7 @@ const TrainingPlanningCard: React.FC<Props> = ({ trainingPlanning }) => {
     <div className={styles.card}>
       <span className={badgeStyles.badge}>Treino de {trainingPlanning.type.name}</span>
       {
-        trainingWithMuscleGroups.filter((_, index) => index <= 1).map(training => (
+        trainingWithMuscleGroups.map(training => (
           <div className={styles.training} key={training.id}>
             <span className={styles.label}>Treino { training.letter }</span>
             <div className={styles.muscleGroups}>
