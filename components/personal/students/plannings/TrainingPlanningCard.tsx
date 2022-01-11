@@ -25,7 +25,6 @@ const TrainingPlanningCard: React.FC<Props> = ({ trainingPlanning }) => {
           </div>
         ))
       }
-      <button>Ver completo</button>
     </div>
   )
 }

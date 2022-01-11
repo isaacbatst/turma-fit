@@ -1,0 +1,41 @@
+@use '../../../../styles/common/box-shadow';
+@use '../../../../styles/components/iconButton.module';
+
+.formWrapper {
+  @include box-shadow.default();  
+  padding: 15px;
+  margin-bottom: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+
+  .closeForm {
+    border: 0;
+    background-color: white;
+    align-self: flex-end;
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 7px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+
+    &:hover {
+      background-color: darken($color: white, $amount: 5)
+    }
+  }
+
+  .addTraining {
+    @extend .iconButton;
+
+    font-weight: 500;
+    font-size: 15px;
+    margin: auto;
+    padding: 15px 40px;
+
+    svg {
+      font-size: 22px;
+    }
+  }
+}
