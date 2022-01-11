@@ -19,8 +19,12 @@
     font-size: 18px;
   }
 
-  &:hover, &:active {
+  &:hover {
     transform: scale(1.03);
     @include box-shadow.strong;
+  }
+
+  &:active {
+    transform: scale(1.1);
   }
 }
