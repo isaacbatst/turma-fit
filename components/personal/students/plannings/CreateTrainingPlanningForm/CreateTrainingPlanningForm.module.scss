@@ -1,0 +1,59 @@
+@use '~/styles/common/box-shadow';
+@use '~/styles/components/iconButton.module';
+@use '~/styles/components/closeButton.module';
+
+.formWrapper {
+  @include box-shadow.default();  
+  padding: 10px 15px 20px;
+  margin-bottom: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+
+  .closeForm {
+    @extend .closeButton;
+  }
+
+  .addTraining {
+    @extend .iconButton;
+    flex-direction: row;
+    align-items: center;
+
+    font-size: 15px;
+    margin: 0 auto 15px;
+    padding: 15px 40px;
+
+    svg {
+      margin-bottom: 0;
+    }
+  }
+
+  .planningTypesWrapper {
+    margin-bottom: 20px;
+
+    input[type="radio"] {
+      display: none;
+    }
+
+    input[type="radio"] {
+      + label {
+        display: inline-block;
+        padding: 10px;
+        border: 2px solid #2b2b2b;
+        cursor: pointer;
+        margin: 5px;
+
+        &:hover {
+          transform: scale(1.03);
+        }
+      }
+
+      &:checked {
+        + label {
+          background-color: #2b2b2b;
+          color: white;
+        }
+      }
+    }
+  }
+}

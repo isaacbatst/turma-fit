@@ -1,4 +1,4 @@
-import { letterMap } from "../../../../lib/letters";
+import { letterMap } from "../../../../../lib/letters";
 import { v4 as uuid } from 'uuid';
 
 const ADD_TRAINING = 'ADD_TRAINING';
@@ -29,7 +29,8 @@ export type TrainingAction = {
   }
 }
 
-type TrainingsReducerState = {
+type CreateTrainingsPlanningState = {
+  type: string;
   trainings: TrainingBeingCreated[]
 }
 
@@ -37,13 +38,14 @@ const getLetter = (index: number) => {
   return letterMap[index];
 }
 
-const addTraining = (state: TrainingsReducerState): TrainingsReducerState => {
+const addTraining = (state: CreateTrainingsPlanningState): CreateTrainingsPlanningState => {
   const training: TrainingBeingCreated = {
     letter: getLetter(state.trainings.length),
     id: uuid()
   }
 
   return ({
+    ...state,
     trainings: [
       ...state.trainings,
       training
@@ -51,7 +53,7 @@ const addTraining = (state: TrainingsReducerState): TrainingsReducerState => {
   })
 }
 
-const removeTraining = (state: TrainingsReducerState, indexToRemove: number): TrainingsReducerState => {
+const removeTraining = (state: CreateTrainingsPlanningState, indexToRemove: number): CreateTrainingsPlanningState => {
   const updatedTrainings = state.trainings
     .filter((_, index) => index !== indexToRemove)
     .map((training, index) => ({
@@ -60,11 +62,12 @@ const removeTraining = (state: TrainingsReducerState, indexToRemove: number): Tr
     }))
 
   return {
+    ...state,
     trainings: updatedTrainings
   }
 }
 
-const trainingsReducer = (state: TrainingsReducerState, action: TrainingAction) => {
+const trainingsReducer = (state: CreateTrainingsPlanningState, action: TrainingAction) => {
   switch(action.type) {
   case ADD_TRAINING:
     return addTraining(state)
@@ -75,7 +78,8 @@ const trainingsReducer = (state: TrainingsReducerState, action: TrainingAction) 
   }
 }
 
-export const initialState: TrainingsReducerState = {
+export const initialState: CreateTrainingsPlanningState = {
+  type: '',
   trainings: []
 };
 

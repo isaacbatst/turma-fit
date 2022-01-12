@@ -1,4 +1,4 @@
-import { removeTrainingAction, TrainingAction, TrainingBeingCreated } from "./CreateTrainingPlanningFormReducer"
+import { removeTrainingAction, TrainingAction, TrainingBeingCreated } from "../CreateTrainingPlanningForm/CreateTrainingPlanningFormReducer"
 import styles from './CreateTrainingForm.module.scss';
 import { MdClose } from "react-icons/md";
 import { Dispatch } from "react";
@@ -25,6 +25,7 @@ export const CreateTrainingForm: React.FC<Props> = ({ training, index, dispatch 
         </span>
         <input type="number" />
       </label>
+      
     </div>
   )
 }
