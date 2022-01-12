@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction, useReducer } from 'react';
 import { MdOutlineAdd, MdClose } from 'react-icons/md';
 import usePlanningTypes from '../../../../../lib/swr/usePlanningTypes';
 import { CreateTrainingForm } from '../CreateTrainingForm/CreateTrainingForm';
+import { PlanningTypeRadio } from './PlanningTypeRadio';
 import styles from './CreateTrainingPlanningForm.module.scss';
 import trainingsReducer, { addTrainingAction, initialState } from './CreateTrainingPlanningFormReducer';
 
@@ -25,13 +26,8 @@ const CreateTrainingPlanningForm: React.FC<Props> = ({ setShouldShowForm }) => {
         planningTypes && (
           <div className={styles.planningTypesWrapper}>
             <h3>Tipo de Planejamento</h3>
-            {planningTypes.map(({ id, name }) => (
-              <>
-                <input type="radio" id={`planningTypeRadio-${id}`} name="planningType" value={id} />
-                <label key={id} htmlFor={`planningTypeRadio-${id}`}>
-                  {name}
-                </label>
-              </>
+            {planningTypes.map((planningType) => (
+              <PlanningTypeRadio key={planningType.id} planningType={planningType} />
             ))}  
           </div>
         )
