@@ -4,23 +4,23 @@ import { v4 as uuid } from 'uuid';
 const ADD_TRAINING = 'ADD_TRAINING';
 const REMOVE_TRAINING = 'REMOVE_TRAINING';
 
-export const addTrainingAction = (): Action => ({
+export const addTrainingAction = (): TrainingAction => ({
   type: ADD_TRAINING
 })
 
-export const removeTrainingAction = (index: number): Action => ({
+export const removeTrainingAction = (index: number): TrainingAction => ({
   type: REMOVE_TRAINING,
   payload: {
     index
   }
 })
 
-type TrainingBeingCreated = {
+export type TrainingBeingCreated = {
   letter: string,
   id: string,
 } 
 
-type Action = {
+export type TrainingAction = {
   type: typeof ADD_TRAINING;
 } | {
   type: typeof REMOVE_TRAINING;
@@ -64,7 +64,7 @@ const removeTraining = (state: TrainingsReducerState, indexToRemove: number): Tr
   }
 }
 
-const trainingsReducer = (state: TrainingsReducerState, action: Action) => {
+const trainingsReducer = (state: TrainingsReducerState, action: TrainingAction) => {
   switch(action.type) {
   case ADD_TRAINING:
     return addTraining(state)

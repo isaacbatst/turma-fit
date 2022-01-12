@@ -1,7 +1,8 @@
 import { Dispatch, SetStateAction, useReducer } from 'react';
 import { MdOutlineAdd, MdClose } from 'react-icons/md';
+import { CreateTrainingForm } from './CreateTrainingForm';
 import styles from './CreateTrainingPlanningForm.module.scss';
-import trainingsReducer, { addTrainingAction, initialState, removeTrainingAction } from './CreateTrainingPlanningFormReducer';
+import trainingsReducer, { addTrainingAction, initialState } from './CreateTrainingPlanningFormReducer';
 
 type Props = {
   setShouldShowForm: Dispatch<SetStateAction<boolean>>
@@ -27,21 +28,7 @@ const CreateTrainingPlanningForm: React.FC<Props> = ({ setShouldShowForm }) => {
       <div className={styles.trainings}>
         {
           state.trainings.map((training, index) => (
-            <div key={training.id} className={styles.training}>
-              <button 
-                className={styles.closeForm} 
-                onClick={() => dispatch(removeTrainingAction(index))}
-              >
-                <MdClose />
-              </button>              
-              <p className={styles.name}>Treino {training.letter}</p>
-              <label htmlFor={`aerobic-minutes-${training.letter}`}>
-                <span>
-                  Minutos de Aeróbico
-                </span>
-                <input type="number" />
-              </label>
-            </div>
+            <CreateTrainingForm key={training.id} training={training} index={index} dispatch={dispatch} />
           ))
         }
       </div>

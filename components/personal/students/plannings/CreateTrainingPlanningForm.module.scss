@@ -1,5 +1,6 @@
-@use '../../../../styles/common/box-shadow';
-@use '../../../../styles/components/iconButton.module';
+@use '~/styles/common/box-shadow';
+@use '~/styles/components/iconButton.module';
+@use '~/styles/components/closeButton.module';
 
 .formWrapper {
   @include box-shadow.default();  
@@ -10,20 +11,7 @@
   flex-direction: column;
 
   .closeForm {
-    border: 0;
-    background-color: white;
-    align-self: flex-end;
-    border-radius: 50%;
-    cursor: pointer;
-    padding: 7px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 18px;
-
-    &:hover {
-      background-color: darken($color: white, $amount: 5)
-    }
+    @extend .closeButton;
   }
 
   .addTraining {
@@ -36,40 +24,6 @@
 
     svg {
       font-size: 18px;
-    }
-  }
-
-  .trainings {
-    .training {
-      @include box-shadow.default();  
-      padding: 5px 5px 25px;
-      margin-bottom: 25px;
-      display: flex;
-      flex-direction: column;
-
-      .name {
-        margin-top: 0;
-      }
-
-      label {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-
-        input {
-          margin-top: 10px;
-          width: 65px;
-          border: 1px solid #cccccc;
-          font-size: 22px;
-          text-align: center;
-          padding: 5px;
-
-          &:focus {
-            border: 1px solid #9b9b9b;
-            outline: none;
-          }
-        }
-      }
     }
   }
 }
