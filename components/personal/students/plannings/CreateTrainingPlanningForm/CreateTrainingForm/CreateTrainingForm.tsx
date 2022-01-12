@@ -1,8 +1,8 @@
 import AddButton from "../../../../../common/AddButton";
 import CloseButton from "../../../../../common/CloseButton";
-import { useCreatePlanningContext } from "../CreateTrainingPlanningContext";
-import { addExercisesSeriesAction, removeTrainingAction } from "../store/actions";
-import { TrainingBeingCreated } from "../store/types";
+import { useCreatePlanningForm } from "../store/form/context";
+import { addExercisesSeriesAction, removeTrainingAction } from "../store/form/actions";
+import { TrainingBeingCreated } from "../store/form/types";
 import { AerobicInput } from "./AerobicInput";
 import CreateExercisesSeriesForm from "./CreateExercisesSeriesForm/CreateExercisesSeriesForm";
 import styles from './CreateTrainingForm.module.scss';
@@ -13,7 +13,7 @@ type Props = {
 }
 
 export const CreateTrainingForm: React.FC<Props> = ({ training, index }) => {
-  const [, dispatch] = useCreatePlanningContext();
+  const [, dispatch] = useCreatePlanningForm();
 
   return (
     <div key={training.id} className={styles.trainingForm}>

@@ -1,4 +1,4 @@
-import { letterMap } from "../../../../../../lib/letters";
+import { letterMap } from "../../../../../../../lib/letters";
 import { v4 as uuid } from 'uuid';
 import { ADD_EXERCISES_SERIES, ADD_TRAINING, REMOVE_TRAINING } from "./actions";
 import { CreateTrainingPlanningState, ExerciseSerieBeingCreated, TrainingAction, TrainingBeingCreated } from "./types";
@@ -6,7 +6,7 @@ import update from 'immutability-helper';
 
 export const initialState: CreateTrainingPlanningState = {
   type: '',
-  trainings: []
+  trainings: [],
 };
 
 const getLetter = (index: number) => {

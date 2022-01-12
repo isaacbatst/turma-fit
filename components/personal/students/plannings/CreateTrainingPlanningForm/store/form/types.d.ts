@@ -1,4 +1,5 @@
 import { Exercise } from "@prisma/client";
+import { Swiper } from 'swiper/types';
 import { ADD_EXERCISES_SERIES, ADD_TRAINING, REMOVE_EXERCISES_SERIES, REMOVE_TRAINING } from "./actions";
 
 export type ExerciseSerieBeingCreated = {
@@ -16,7 +17,7 @@ export type TrainingBeingCreated = {
 
 export type CreateTrainingPlanningState = {
   type: string;
-  trainings: TrainingBeingCreated[]
+  trainings: TrainingBeingCreated[],
 }
 
 export type TrainingAction = |

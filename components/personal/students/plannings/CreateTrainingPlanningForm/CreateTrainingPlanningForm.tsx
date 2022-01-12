@@ -1,14 +1,18 @@
 import { Dispatch, SetStateAction } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import AddButton from '../../../../common/AddButton';
 import CloseButton from '../../../../common/CloseButton';
 import { CreateTrainingForm } from './CreateTrainingForm/CreateTrainingForm';
-import { CreatePlanningProvider, useCreatePlanningContext } from './CreateTrainingPlanningContext';
 import styles from './CreateTrainingPlanningForm.module.scss';
-import { addTrainingAction } from './store/actions';
 import PlanningTypesRadios from './PlanningTypesRadios';
+import { addTrainingAction } from './store/form/actions';
+import { CreatePlanningFormProvider, useCreatePlanningForm } from './store/form/context';
+import { removeSwiper, setSwiperAction } from './store/steps/actions';
+import { CreatePlanningStepsProvider, useCreatePlanningStepsContext } from './store/steps/context';
+
 
 const TrainingsBeingCreated: React.FC = () => {
-  const [state] = useCreatePlanningContext();
+  const [state] = useCreatePlanningForm();
 
   return (
     <div className={styles.trainings}>
@@ -22,12 +26,34 @@ const TrainingsBeingCreated: React.FC = () => {
 }
 
 const AddTrainingButton: React.FC = () => {
-  const [,dispatch] = useCreatePlanningContext();
+  const [,dispatch] = useCreatePlanningForm();
   return (
     <AddButton
       text='Treino'
       onClick={() => dispatch(addTrainingAction())}
     />
+  )
+}
+
+const CreatePlanningSteps: React.FC = () => {
+  const [, dispatch] = useCreatePlanningStepsContext();
+
+  return (
+    <div>
+      <Swiper
+        spaceBetween={50}
+        slidesPerView={1}
+        allowTouchMove={false}
+        onSwiper={(swiper) => {
+          dispatch(setSwiperAction(swiper));
+        }}
+        onDestroy={() => dispatch(removeSwiper())}
+      >
+        <SwiperSlide><PlanningTypesRadios /></SwiperSlide>
+        <SwiperSlide><AddTrainingButton /></SwiperSlide>
+        <SwiperSlide><TrainingsBeingCreated /></SwiperSlide>
+      </Swiper>
+    </div>
   )
 }
 
@@ -37,15 +63,15 @@ type CreateTrainingPlanningFormProps = {
 
 const CreateTrainingPlanningForm: React.FC<CreateTrainingPlanningFormProps> = ({ setShouldShowForm }) => {
   return (
-    <CreatePlanningProvider>
+    <CreatePlanningFormProvider>
       <div className={styles.formWrapper}>
         <CloseButton onClick={() => setShouldShowForm(false)} />
-        <PlanningTypesRadios />
-        <AddTrainingButton />
-        <TrainingsBeingCreated />
+        <CreatePlanningStepsProvider>
+          <CreatePlanningSteps />
+        </CreatePlanningStepsProvider>
       </div>
-    </CreatePlanningProvider>
+    </CreatePlanningFormProvider>
   )
 }
 
-export default CreateTrainingPlanningForm;
+export default CreateTrainingPlanningForm;  

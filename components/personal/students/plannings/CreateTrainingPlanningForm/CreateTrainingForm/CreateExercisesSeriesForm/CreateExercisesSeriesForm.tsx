@@ -1,5 +1,5 @@
 import React from 'react'
-import { ExerciseSerieBeingCreated } from '../../store/types';
+import { ExerciseSerieBeingCreated } from '../../store/form/types';
 import styles from './CreateExercisesSeriesForm.module.scss';
 
 type Props = {
