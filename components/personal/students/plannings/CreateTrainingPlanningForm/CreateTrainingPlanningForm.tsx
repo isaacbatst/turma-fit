@@ -1,34 +1,50 @@
-import { Dispatch, SetStateAction, useReducer } from 'react';
-import { CreateTrainingForm } from './CreateTrainingForm/CreateTrainingForm';
-import styles from './CreateTrainingPlanningForm.module.scss';
-import trainingsReducer, { addTrainingAction, initialState } from './CreateTrainingPlanningFormReducer';
-import CloseButton from '../../../../common/CloseButton';
+import { Dispatch, SetStateAction } from 'react';
 import AddButton from '../../../../common/AddButton';
+import CloseButton from '../../../../common/CloseButton';
+import { CreateTrainingForm } from './CreateTrainingForm/CreateTrainingForm';
+import { CreatePlanningProvider, useCreatePlanningContext } from './CreateTrainingPlanningContext';
+import styles from './CreateTrainingPlanningForm.module.scss';
+import { addTrainingAction } from './CreateTrainingPlanningFormReducer';
 import PlanningTypesRadios from './PlanningTypesRadios';
 
-type Props = {
+const TrainingsBeingCreated: React.FC = () => {
+  const [state] = useCreatePlanningContext();
+
+  return (
+    <div className={styles.trainings}>
+      {
+        state.trainings.map((training, index) => (
+          <CreateTrainingForm key={training.id} training={training} index={index} />
+        ))
+      }
+    </div>
+  )
+}
+
+const AddTrainingButton: React.FC = () => {
+  const [,dispatch] = useCreatePlanningContext();
+  return (
+    <AddButton
+      text='Treino'
+      onClick={() => dispatch(addTrainingAction())}
+    />
+  )
+}
+
+type CreateTrainingPlanningFormProps = {
   setShouldShowForm: Dispatch<SetStateAction<boolean>>
 }
 
-const CreateTrainingPlanningForm: React.FC<Props> = ({ setShouldShowForm }) => {
-  const [state, dispatch] = useReducer(trainingsReducer, initialState);
-
+const CreateTrainingPlanningForm: React.FC<CreateTrainingPlanningFormProps> = ({ setShouldShowForm }) => {
   return (
-    <div className={styles.formWrapper}>
-      <CloseButton onClick={() => setShouldShowForm(false)} />
-      <PlanningTypesRadios />
-      <AddButton
-        text='Treino'
-        onClick={() => dispatch(addTrainingAction())}
-      />
-      <div className={styles.trainings}>
-        {
-          state.trainings.map((training, index) => (
-            <CreateTrainingForm key={training.id} training={training} index={index} dispatch={dispatch} />
-          ))
-        }
+    <CreatePlanningProvider>
+      <div className={styles.formWrapper}>
+        <CloseButton onClick={() => setShouldShowForm(false)} />
+        <PlanningTypesRadios />
+        <AddTrainingButton />
+        <TrainingsBeingCreated />
       </div>
-    </div>
+    </CreatePlanningProvider>
   )
 }
 

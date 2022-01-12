@@ -9,7 +9,7 @@ export const AerobicInput: React.FC<Props> = ({ training }) => {
   return (
     <label htmlFor={`aerobic-minutes-${training.letter}`}>
       <span>
-        Minutos de Aeróbico
+        Tempo de Aeróbico (minutos)
       </span>
       <input type="number" />
     </label>

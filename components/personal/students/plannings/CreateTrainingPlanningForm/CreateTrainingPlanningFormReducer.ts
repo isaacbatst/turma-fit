@@ -29,7 +29,7 @@ export type TrainingAction = {
   }
 }
 
-type CreateTrainingsPlanningState = {
+export type CreateTrainingPlanningState = {
   type: string;
   trainings: TrainingBeingCreated[]
 }
@@ -38,7 +38,7 @@ const getLetter = (index: number) => {
   return letterMap[index];
 }
 
-const addTraining = (state: CreateTrainingsPlanningState): CreateTrainingsPlanningState => {
+const addTraining = (state: CreateTrainingPlanningState): CreateTrainingPlanningState => {
   const training: TrainingBeingCreated = {
     letter: getLetter(state.trainings.length),
     id: uuid()
@@ -53,7 +53,7 @@ const addTraining = (state: CreateTrainingsPlanningState): CreateTrainingsPlanni
   })
 }
 
-const removeTraining = (state: CreateTrainingsPlanningState, indexToRemove: number): CreateTrainingsPlanningState => {
+const removeTraining = (state: CreateTrainingPlanningState, indexToRemove: number): CreateTrainingPlanningState => {
   const updatedTrainings = state.trainings
     .filter((_, index) => index !== indexToRemove)
     .map((training, index) => ({
@@ -67,7 +67,7 @@ const removeTraining = (state: CreateTrainingsPlanningState, indexToRemove: numb
   }
 }
 
-const trainingsReducer = (state: CreateTrainingsPlanningState, action: TrainingAction) => {
+const createTrainingPlanningReducer = (state: CreateTrainingPlanningState, action: TrainingAction) => {
   switch(action.type) {
   case ADD_TRAINING:
     return addTraining(state)
@@ -78,9 +78,9 @@ const trainingsReducer = (state: CreateTrainingsPlanningState, action: TrainingA
   }
 }
 
-export const initialState: CreateTrainingsPlanningState = {
+export const initialState: CreateTrainingPlanningState = {
   type: '',
   trainings: []
 };
 
-export default trainingsReducer;
+export default createTrainingPlanningReducer;

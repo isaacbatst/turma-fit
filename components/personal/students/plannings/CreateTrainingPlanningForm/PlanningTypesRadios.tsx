@@ -1,8 +1,7 @@
-import { TrainingPlanningType } from '@prisma/client'
-import React from 'react'
-import { PlanningTypeRadio } from './PlanningTypeRadio'
-import styles from './CreateTrainingPlanningForm.module.scss';
+import React from 'react';
 import usePlanningTypes from '../../../../../lib/swr/usePlanningTypes';
+import styles from './CreateTrainingPlanningForm.module.scss';
+import { PlanningTypeRadio } from './PlanningTypeRadio';
 
 type Props = {
 }
