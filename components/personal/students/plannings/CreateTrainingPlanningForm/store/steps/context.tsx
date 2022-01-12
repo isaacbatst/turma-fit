@@ -1,6 +1,10 @@
 import { createContext, useContext, useReducer } from "react";
-import { initialState, stepsReducer } from "./reducer";
-import { CreatePlanningStepsContextType } from "./types";
+import { stepsReducer } from "./reducer";
+import { CreatePlanningStepsContextType, CreatePlanningStepsState } from "./types";
+
+const initialState: CreatePlanningStepsState = {
+  swiper: null
+}
 
 const initialContext: CreatePlanningStepsContextType = [initialState, () => null];
 

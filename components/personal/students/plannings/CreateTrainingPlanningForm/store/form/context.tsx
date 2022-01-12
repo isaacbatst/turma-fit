@@ -1,6 +1,11 @@
 import { createContext, useContext, useReducer } from "react";
-import createTrainingPlanningReducer, { initialState } from "./reducer";
-import { CreatePlanningFormContextType } from "./types";
+import createTrainingPlanningReducer from "./reducer";
+import { CreatePlanningFormContextType, CreateTrainingPlanningState } from "./types";
+
+const initialState: CreateTrainingPlanningState = {
+  type: '',
+  trainings: [],
+};
 
 const initialContext: CreatePlanningFormContextType = [initialState, () => null];
 

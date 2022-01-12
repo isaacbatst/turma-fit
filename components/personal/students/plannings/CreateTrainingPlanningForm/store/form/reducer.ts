@@ -4,11 +4,6 @@ import { ADD_EXERCISES_SERIES, ADD_TRAINING, REMOVE_TRAINING } from "./actions";
 import { CreateTrainingPlanningState, ExerciseSerieBeingCreated, TrainingAction, TrainingBeingCreated } from "./types";
 import update from 'immutability-helper';
 
-export const initialState: CreateTrainingPlanningState = {
-  type: '',
-  trainings: [],
-};
-
 const getLetter = (index: number) => {
   return letterMap[index];
 }
