@@ -4,6 +4,7 @@ import { useCreatePlanningContext } from "../CreateTrainingPlanningContext";
 import { addExercisesSeriesAction, removeTrainingAction } from "../store/actions";
 import { TrainingBeingCreated } from "../store/types";
 import { AerobicInput } from "./AerobicInput";
+import CreateExercisesSeriesForm from "./CreateExercisesSeriesForm/CreateExercisesSeriesForm";
 import styles from './CreateTrainingForm.module.scss';
 
 type Props = {
@@ -25,7 +26,7 @@ export const CreateTrainingForm: React.FC<Props> = ({ training, index }) => {
       <AerobicInput training={training}/>
       {
         training.exercisesSeries.map(exercisesSeries => (
-          <div key={exercisesSeries.id}>{exercisesSeries.times}x{exercisesSeries.repetitions}</div>
+          <CreateExercisesSeriesForm exercisesSeries={exercisesSeries} key={exercisesSeries.id} />
         ))
       }
     </div>
