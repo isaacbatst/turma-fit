@@ -2,6 +2,8 @@ import { removeTrainingAction, TrainingAction, TrainingBeingCreated } from "../C
 import styles from './CreateTrainingForm.module.scss';
 import { MdClose } from "react-icons/md";
 import { Dispatch } from "react";
+import { AerobicInput } from "./AerobicInput";
+import CloseButton from "../../../../common/CloseButton";
 
 type Props = {
   training: TrainingBeingCreated,
@@ -12,20 +14,9 @@ type Props = {
 export const CreateTrainingForm: React.FC<Props> = ({ training, index, dispatch }) => {
   return (
     <div key={training.id} className={styles.trainingForm}>
-      <button 
-        className={styles.closeForm} 
-        onClick={() => dispatch(removeTrainingAction(index))}
-      >
-        <MdClose />
-      </button>              
+      <CloseButton onClick={() => dispatch(removeTrainingAction(index))} />             
       <p className={styles.name}>Treino {training.letter}</p>
-      <label htmlFor={`aerobic-minutes-${training.letter}`}>
-        <span>
-        Minutos de Aeróbico
-        </span>
-        <input type="number" />
-      </label>
-      
+      <AerobicInput training={training}/>
     </div>
   )
 }

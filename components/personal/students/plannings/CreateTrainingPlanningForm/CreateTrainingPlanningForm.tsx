@@ -5,6 +5,7 @@ import { CreateTrainingForm } from '../CreateTrainingForm/CreateTrainingForm';
 import { PlanningTypeRadio } from './PlanningTypeRadio';
 import styles from './CreateTrainingPlanningForm.module.scss';
 import trainingsReducer, { addTrainingAction, initialState } from './CreateTrainingPlanningFormReducer';
+import CloseButton from '../../../../common/CloseButton';
 
 type Props = {
   setShouldShowForm: Dispatch<SetStateAction<boolean>>
@@ -16,12 +17,7 @@ const CreateTrainingPlanningForm: React.FC<Props> = ({ setShouldShowForm }) => {
 
   return (
     <div className={styles.formWrapper}>
-      <button 
-        className={styles.closeForm} 
-        onClick={() => setShouldShowForm(false)}
-      >
-        <MdClose />
-      </button>
+      <CloseButton onClick={() => setShouldShowForm(false)} />
       {
         planningTypes && (
           <div className={styles.planningTypesWrapper}>
