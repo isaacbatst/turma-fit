@@ -1,10 +1,6 @@
-import { createContext, Dispatch, useContext, useReducer } from "react";
+import { createContext, useContext, useReducer } from "react";
 import { initialState, stepsReducer } from "./reducer";
-import { CreatePlanningStepsState, CreatePlanningStepsAction } from "./types";
-
-type CreatePlanningStepsContextType = [
-  CreatePlanningStepsState, Dispatch<CreatePlanningStepsAction>
-];
+import { CreatePlanningStepsContextType } from "./types";
 
 const initialContext: CreatePlanningStepsContextType = [initialState, () => null];
 

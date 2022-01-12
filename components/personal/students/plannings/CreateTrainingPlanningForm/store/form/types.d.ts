@@ -2,6 +2,11 @@ import { Exercise } from "@prisma/client";
 import { Swiper } from 'swiper/types';
 import { ADD_EXERCISES_SERIES, ADD_TRAINING, REMOVE_EXERCISES_SERIES, REMOVE_TRAINING } from "./actions";
 
+export type CreatePlanningFormContextType = [
+  CreateTrainingPlanningState, Dispatch<TrainingAction>
+];
+
+
 export type ExerciseSerieBeingCreated = {
   exercises: Exercise[],
   times: number,
