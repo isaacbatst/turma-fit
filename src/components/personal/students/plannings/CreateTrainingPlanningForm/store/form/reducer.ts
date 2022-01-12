@@ -1,8 +1,9 @@
 import { letterMap } from "../../../../../../../lib/letters";
 import { v4 as uuid } from 'uuid';
-import { ADD_EXERCISES_SERIES, ADD_TRAINING, REMOVE_TRAINING } from "./actions";
+import { ADD_EXERCISES_SERIES, ADD_TRAINING, REMOVE_EXERCISES_SERIES, REMOVE_TRAINING, SET_PLANNING_TYPE } from "./actions";
 import { CreateTrainingPlanningState, ExerciseSerieBeingCreated, TrainingAction, TrainingBeingCreated } from "./types";
 import update from 'immutability-helper';
+import { TrainingPlanningType } from "@prisma/client";
 
 const getLetter = (index: number) => {
   return letterMap[index];
@@ -60,7 +61,16 @@ const addExercisesSeries = (state: CreateTrainingPlanningState, trainingId: stri
   })
 }
 
+const setPlanningType = (state: CreateTrainingPlanningState, type: TrainingPlanningType): CreateTrainingPlanningState => {
+  return update(state, {
+    type: {
+      $set: type
+    }
+  })
+}
+
 const createTrainingPlanningReducer = (state: CreateTrainingPlanningState, action: TrainingAction) => {
+  console.log('reducer disparou')
   switch (action.type) {
   case ADD_TRAINING:
     return addTraining(state)
@@ -68,6 +78,10 @@ const createTrainingPlanningReducer = (state: CreateTrainingPlanningState, actio
     return removeTraining(state, action.payload.index)
   case ADD_EXERCISES_SERIES:
     return addExercisesSeries(state, action.payload.trainingId)
+  case REMOVE_EXERCISES_SERIES:
+    return state;
+  case SET_PLANNING_TYPE:
+    return setPlanningType(state, action.payload.type)
   default:
     return state;
   }

@@ -1,9 +1,9 @@
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useEffect, useReducer } from "react";
 import createTrainingPlanningReducer from "./reducer";
 import { CreatePlanningFormContextType, CreateTrainingPlanningState } from "./types";
 
 const initialState: CreateTrainingPlanningState = {
-  type: '',
+  type: null,
   trainings: [],
 };
 
@@ -11,7 +11,7 @@ const initialContext: CreatePlanningFormContextType = [initialState, () => null]
 
 const CreatePlanningForm = createContext(initialContext);
 
-export const useCreatePlanningForm = () => useContext(CreatePlanningForm);
+export const useCreatePlanningFormContext = () => useContext(CreatePlanningForm);
 
 export const CreatePlanningFormProvider: React.FC = ({ children }) => {
   const [state, dispatch] = useReducer(createTrainingPlanningReducer, initialState)

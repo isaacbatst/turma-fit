@@ -1,3 +1,4 @@
+import { TrainingPlanningType } from "@prisma/client";
 import { TrainingAction } from "./types";
 
 export const ADD_TRAINING = 'ADD_TRAINING';
@@ -5,6 +6,8 @@ export const REMOVE_TRAINING = 'REMOVE_TRAINING';
 
 export const ADD_EXERCISES_SERIES = 'ADD_EXERCISES_SERIES';
 export const REMOVE_EXERCISES_SERIES = 'REMOVE_EXERCISES_SERIES';
+
+export const SET_PLANNING_TYPE = 'SET_PLANNING_TYPE'
 
 export const addTrainingAction = (): TrainingAction => ({
   type: ADD_TRAINING
@@ -31,3 +34,12 @@ export const removeExercisesSeriesAction = (index: number, trainingId: string): 
     index
   }
 })
+
+export const setPlanningTypeAction = (type: TrainingPlanningType): TrainingAction => {
+  return {
+    type: SET_PLANNING_TYPE,
+    payload: {
+      type
+    }
+  }
+}

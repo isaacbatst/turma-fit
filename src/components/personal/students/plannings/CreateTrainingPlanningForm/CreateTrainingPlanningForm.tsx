@@ -6,27 +6,12 @@ import { CreateTrainingForm } from './CreateTrainingForm/CreateTrainingForm';
 import styles from './CreateTrainingPlanningForm.module.scss';
 import PlanningTypesRadios from './PlanningTypesRadios';
 import { addTrainingAction } from './store/form/actions';
-import { CreatePlanningFormProvider, useCreatePlanningForm } from './store/form/context';
+import { CreatePlanningFormProvider, useCreatePlanningFormContext } from './store/form/context';
 import { removeSwiper, setSwiperAction } from './store/steps/actions';
 import { CreatePlanningStepsProvider, useCreatePlanningStepsContext } from './store/steps/context';
 
-
-const TrainingsBeingCreated: React.FC = () => {
-  const [state] = useCreatePlanningForm();
-
-  return (
-    <div className={styles.trainings}>
-      {
-        state.trainings.map((training, index) => (
-          <CreateTrainingForm key={training.id} training={training} index={index} />
-        ))
-      }
-    </div>
-  )
-}
-
 const AddTrainingButton: React.FC = () => {
-  const [,dispatch] = useCreatePlanningForm();
+  const [,dispatch] = useCreatePlanningFormContext();
   return (
     <AddButton
       text='Treino'
@@ -36,6 +21,7 @@ const AddTrainingButton: React.FC = () => {
 }
 
 const CreatePlanningSteps: React.FC = () => {
+  const [state] = useCreatePlanningFormContext();
   const [, dispatch] = useCreatePlanningStepsContext();
 
   return (
@@ -50,8 +36,14 @@ const CreatePlanningSteps: React.FC = () => {
         onDestroy={() => dispatch(removeSwiper())}
       >
         <SwiperSlide><PlanningTypesRadios /></SwiperSlide>
-        <SwiperSlide><AddTrainingButton /></SwiperSlide>
-        <SwiperSlide><TrainingsBeingCreated /></SwiperSlide>
+        {
+          state.trainings.map((training, index) => (
+            <SwiperSlide key={training.id} >
+              <CreateTrainingForm training={training} index={index} />
+              <AddTrainingButton />
+            </SwiperSlide>
+          ))
+        }
       </Swiper>
     </div>
   )
