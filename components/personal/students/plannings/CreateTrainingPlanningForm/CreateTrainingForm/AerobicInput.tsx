@@ -1,5 +1,5 @@
 import React from 'react';
-import { TrainingBeingCreated } from '../CreateTrainingPlanningFormReducer';
+import { TrainingBeingCreated } from '../store/actions';
 
 type Props = {
   training: TrainingBeingCreated;

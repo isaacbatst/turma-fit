@@ -4,7 +4,7 @@ import CloseButton from '../../../../common/CloseButton';
 import { CreateTrainingForm } from './CreateTrainingForm/CreateTrainingForm';
 import { CreatePlanningProvider, useCreatePlanningContext } from './CreateTrainingPlanningContext';
 import styles from './CreateTrainingPlanningForm.module.scss';
-import { addTrainingAction } from './CreateTrainingPlanningFormReducer';
+import { addTrainingAction } from './store/actions';
 import PlanningTypesRadios from './PlanningTypesRadios';
 
 const TrainingsBeingCreated: React.FC = () => {

@@ -1,7 +1,8 @@
 import AddButton from "../../../../../common/AddButton";
 import CloseButton from "../../../../../common/CloseButton";
 import { useCreatePlanningContext } from "../CreateTrainingPlanningContext";
-import { removeTrainingAction, TrainingBeingCreated } from "../CreateTrainingPlanningFormReducer";
+import { addExercisesSeriesAction, removeTrainingAction } from "../store/actions";
+import { TrainingBeingCreated } from "../store/types";
 import { AerobicInput } from "./AerobicInput";
 import styles from './CreateTrainingForm.module.scss';
 
@@ -19,9 +20,14 @@ export const CreateTrainingForm: React.FC<Props> = ({ training, index }) => {
       <p className={styles.name}>Treino {training.letter}</p>
       <AddButton 
         text="Série de Exercícios"
-        onClick={() => {}}
+        onClick={() => dispatch(addExercisesSeriesAction(training.id))}
       />
       <AerobicInput training={training}/>
+      {
+        training.exercisesSeries.map(exercisesSeries => (
+          <div key={exercisesSeries.id}>{exercisesSeries.times}x{exercisesSeries.repetitions}</div>
+        ))
+      }
     </div>
   )
 }
