@@ -32,3 +32,8 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
+.swiper-wrapper {
+  display: flex;
+  align-items: center;
+}

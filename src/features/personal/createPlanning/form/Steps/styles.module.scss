@@ -1,0 +1,14 @@
+.swiper {
+  padding-bottom: 40px;
+
+  .trainingSlide {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .buttonsWrapper {
+      display: flex;
+    }
+  }
+}

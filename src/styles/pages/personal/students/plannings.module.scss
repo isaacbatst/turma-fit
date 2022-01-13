@@ -1,5 +1,5 @@
 @use '../../../common/box-shadow';
-@use '../../../components/iconButton.module';
+@use '../../../components/iconButtonWithText.module';
 @import "~/node_modules/bootstrap/scss/functions";
 @import "~/node_modules/bootstrap/scss/variables";
 @import "~/node_modules/bootstrap/scss/mixins";
@@ -13,7 +13,7 @@
   }
 
   .addPlanning {
-    @extend .iconButton;
+    @extend .iconButtonWithText;
 
     padding: 25px 15px
   }

@@ -1,29 +1,15 @@
-@use '../common/box-shadow';
-
 .iconButton {
-  @include box-shadow.default();  
-  padding: 15px;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-  cursor: pointer;
-  font-size: 16px;
-  transition: 0.1s;
   border: 0;
   background-color: white;
-
-  svg {
-    margin-bottom: 5px;
-    font-size: 16px;
-  }
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 7px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
 
   &:hover {
-    transform: scale(1.03);
-    @include box-shadow.strong;
-  }
-
-  &:active {
-    transform: scale(1.1);
+    background-color: darken($color: white, $amount: 5)
   }
 }
