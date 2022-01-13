@@ -6,9 +6,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  align-self: stretch;
 
   .name {
     margin-top: 0;
+    font-size: 22px;
   }
 
   label {

@@ -32,30 +32,5 @@
 
   .planningTypesWrapper {
     margin-bottom: 20px;
-
-    input[type="radio"] {
-      display: none;
-    }
-
-    input[type="radio"] {
-      + label {
-        display: inline-block;
-        padding: 10px;
-        border: 2px solid #2b2b2b;
-        cursor: pointer;
-        margin: 5px;
-
-        &:hover {
-          transform: scale(1.03);
-        }
-      }
-
-      &:checked {
-        + label {
-          background-color: #2b2b2b;
-          color: white;
-        }
-      }
-    }
   }
 }

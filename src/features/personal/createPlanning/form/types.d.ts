@@ -1,8 +1,12 @@
-import { Exercise, TrainingPlanningType } from "@prisma/client";
+import { Exercise, ExerciseTechnique, TrainingPlanningType } from "@prisma/client";
 
 export type CreateTrainingPlanningState = {
   type: TrainingPlanningType | null;
   trainings: TrainingBeingCreated[],
+  apiData: {
+    planningTypes: TrainingPlanningType[],
+    exerciseTechniques: ExerciseTechnique[]
+  }
 }
 
 export type ExerciseSerieBeingCreated = {

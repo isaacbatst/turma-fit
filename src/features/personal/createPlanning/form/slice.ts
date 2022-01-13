@@ -5,6 +5,10 @@ import { addExercisesSeries, addTraining, removeTraining, setPlanningType } from
 const initialState: CreateTrainingPlanningState = {
   type: null,
   trainings: [],
+  apiData: {
+    exerciseTechniques: [],
+    planningTypes: []
+  }
 };
 
 export const formSlice = createSlice({
