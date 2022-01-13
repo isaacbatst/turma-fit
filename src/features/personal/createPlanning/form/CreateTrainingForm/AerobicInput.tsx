@@ -1,5 +1,5 @@
 import React from 'react';
-import { TrainingBeingCreated } from '../store/form/types';
+import { TrainingBeingCreated } from '../types';
 
 type Props = {
   training: TrainingBeingCreated;

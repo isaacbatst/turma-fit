@@ -1,5 +1,5 @@
-@use '~/styles/common/box-shadow';
-@use '~/styles/common/colors.module';
+@use '~/src/styles/common/box-shadow';
+@use '~/src/styles/common/colors.module';
 
 .card {
   @include box-shadow.default();  

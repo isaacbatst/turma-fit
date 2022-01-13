@@ -1,6 +1,6 @@
 import React from 'react';
 import usePlanningTypes from '../../../../../lib/swr/usePlanningTypes';
-import styles from './CreateTrainingPlanningForm.module.scss';
+import styles from '../styles.module.scss';
 import { PlanningTypeRadio } from './PlanningTypeRadio';
 
 type Props = {

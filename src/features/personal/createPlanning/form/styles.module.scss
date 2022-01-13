@@ -1,6 +1,6 @@
-@use '~/styles/common/box-shadow';
-@use '~/styles/components/iconButton.module';
-@use '~/styles/components/closeButton.module';
+@use '~/src/styles/common/box-shadow';
+@use '~/src/styles/components/iconButton.module';
+@use '~/src/styles/components/closeButton.module';
 
 .formWrapper {
   @include box-shadow.default();  

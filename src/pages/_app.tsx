@@ -2,7 +2,8 @@ import '../styles/common/global.scss'
 import type { AppProps } from 'next/app'
 import { SessionProvider, signIn, useSession } from 'next-auth/react';
 import { NextComponentType, NextPageContext } from 'next';
-import { Session } from 'next-auth';
+import { Provider } from 'react-redux';
+import { store } from '../store/index';
 
 type MyAppProps = AppProps & {
   Component: NextComponentType<NextPageContext, any, {}> & {
@@ -13,15 +14,17 @@ type MyAppProps = AppProps & {
 function MyApp({ Component, pageProps: { session, ...pageProps } }: MyAppProps) {
   return (
     <SessionProvider session={session}>
-      {
-        Component.auth ? (
-          <Auth>
+      <Provider store={store}>
+        {
+          Component.auth ? (
+            <Auth>
+              <Component {...pageProps} />
+            </Auth>
+          ) : (
             <Component {...pageProps} />
-          </Auth>
-        ) : (
-          <Component {...pageProps} />
-        )
-      }
+          )
+        }
+      </Provider>
     </SessionProvider>
   )
 }
