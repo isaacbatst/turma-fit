@@ -3,12 +3,12 @@ import { ChangeEventHandler, MouseEventHandler, useState } from "react";
 
 type Props = {
   exerciseTechnique: ExerciseTechnique;
-  trainingId: string;
+  trainingIndex: number;
   checked: boolean;
   setChecked: (checked: number | null) => void
 }
 
-const ExerciseTechniqueRadio: React.FC<Props> = ({ exerciseTechnique: { id, name }, trainingId, checked, setChecked }) => {
+const ExerciseTechniqueRadio: React.FC<Props> = ({ exerciseTechnique: { id, name }, trainingIndex, checked, setChecked }) => {
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     if(event.target.checked){
       setChecked(id)
@@ -21,13 +21,13 @@ const ExerciseTechniqueRadio: React.FC<Props> = ({ exerciseTechnique: { id, name
     <>
       <input 
         type="checkbox" 
-        id={`exerciseTechniqueRadio-${id}-${trainingId}`} 
+        id={`exerciseTechniqueRadio-${id}-${trainingIndex}`} 
         name="planningType" 
         value={id} 
         checked={checked}
         onChange={handleChange}
       />
-      <label htmlFor={`exerciseTechniqueRadio-${id}-${trainingId}`}>
+      <label htmlFor={`exerciseTechniqueRadio-${id}-${trainingIndex}`}>
         {name}
       </label>
     </>

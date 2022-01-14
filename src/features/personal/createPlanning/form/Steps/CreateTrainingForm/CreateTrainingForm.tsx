@@ -23,18 +23,17 @@ export const CreateTrainingForm: React.FC<Props> = ({ training, index }) => {
   return (
     <div key={training.id} className={styles.trainingForm}>           
       <p className={styles.name}>Treino {training.letter} </p>
-      <AerobicInput training={training}/>
+      {
+        training.exercisesSeries.map((exercisesSeries, index) => (
+          <CreateExercisesSeriesForm index={index} trainingIndex={index} exercisesSeries={exercisesSeries} key={exercisesSeries.id} />
+        ))
+      }
       <IconButtonWithText 
         text="Série de Exercícios"
         onClick={handleAddExercisesSeriesClick}
         Icon={MdOutlineAdd}
       />
-      {
-        training.exercisesSeries.map(exercisesSeries => (
-          <CreateExercisesSeriesForm trainingId={training.id} exercisesSeries={exercisesSeries} key={exercisesSeries.id} />
-        ))
-      }
-
+      <AerobicInput training={training}/>
     </div>
   )
 }

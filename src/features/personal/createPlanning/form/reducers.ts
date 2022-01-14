@@ -4,6 +4,7 @@ import update from 'immutability-helper';
 import { TrainingPlanningType } from "@prisma/client";
 import { letterMap } from '../../../../lib/letters';
 import { PayloadAction } from '@reduxjs/toolkit';
+import { ExerciseWithMuscleGroups } from '../../../../types/schema';
 
 export const addTraining = (state: CreateTrainingPlanningState): CreateTrainingPlanningState => {
   const training: TrainingBeingCreated = {
@@ -67,4 +68,17 @@ export const setPlanningType = (state: CreateTrainingPlanningState, action: Payl
       $set: action.payload
     }
   })
+}
+
+type SetExercisesPayload = {
+  exercises: ExerciseWithMuscleGroups[],
+  trainingIndex: number,
+  exerciseSeriesIndex: number
+}
+
+export const setExercises = (state: CreateTrainingPlanningState, action: PayloadAction<SetExercisesPayload>) => {
+  state
+    .trainings[action.payload.trainingIndex]
+    .exercisesSeries[action.payload.exerciseSeriesIndex]
+    .exercises = action.payload.exercises
 }

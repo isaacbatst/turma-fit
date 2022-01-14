@@ -63,3 +63,4 @@ export type TrainingPlanningWithDetails = PersonalStudentWithTrainings["training
 export type TrainingWithExercisesSeries = TrainingPlanningWithDetails["trainings"][number] 
 export type ExerciseSeriesWithExercises = TrainingWithExercisesSeries["exercisesSeries"][number];
 export type ExerciseWithMuscleGroups = ExerciseSeriesWithExercises["exercises"][number] 
+

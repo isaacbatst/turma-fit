@@ -2,29 +2,25 @@ import React from 'react'
 import { ExerciseSerieBeingCreated } from '../../../types';
 import styles from './CreateExercisesSeriesForm.module.scss';
 import ExerciseTechniquesRadios from './ExerciseTechniquesRadios';
-import { useGetExercisesQuery } from '../../../../api';
 import ExercisesSelect from './ExercisesSelect';
+import MuscleGroupsPreview from './MuscleGroupsPreview';
+import SeriesAndRepetitions from './SeriesAndRepetitions';
 
 type Props = {
   exercisesSeries: ExerciseSerieBeingCreated,
-  trainingId: string
+  trainingIndex: number,
+  index: number
 }
 
-const CreateExercisesSeriesForm: React.FC<Props> = ({ exercisesSeries, trainingId }) => {
+const CreateExercisesSeriesForm: React.FC<Props> = ({ exercisesSeries, trainingIndex, index }) => {
   return (
     <div className={styles.seriesForm}>
-      <div className={styles.seriesAndRepetitions}>
-        <label htmlFor="">
-        Séries
-          <input type="text" name="" id="" />
-        </label>
-        <label htmlFor="">
-        Repetições
-          <input type="text" name="" id="" />
-        </label>
-      </div>
-      <ExerciseTechniquesRadios trainingId={trainingId} />
-      <ExercisesSelect />
+      <hr />
+      <ExercisesSelect trainingIndex={trainingIndex} index={index} />
+      <MuscleGroupsPreview exercisesSeries={exercisesSeries} trainingIndex={trainingIndex} index={index} />
+      <SeriesAndRepetitions />
+      <ExerciseTechniquesRadios trainingIndex={trainingIndex} />
+      <hr />
     </div>
   )
 }

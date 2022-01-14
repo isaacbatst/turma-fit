@@ -4,10 +4,10 @@ import ExerciseTechniqueRadio from "./ExerciseTechniqueRadio";
 import styles from './styles.module.scss';
 
 type Props = {
-  trainingId: string
+  trainingIndex: number
 }
 
-const ExerciseTechniquesRadios: React.FC<Props> = ({ trainingId }) => {
+const ExerciseTechniquesRadios: React.FC<Props> = ({ trainingIndex }) => {
   const [checked, setChecked] = useState<number | null>(null)
   const { data: exerciseTechniques } = useGetExerciseTechniquesQuery();
 
@@ -20,7 +20,7 @@ const ExerciseTechniquesRadios: React.FC<Props> = ({ trainingId }) => {
           <ExerciseTechniqueRadio 
             exerciseTechnique={exerciseTechnique} 
             key={exerciseTechnique.id} 
-            trainingId={trainingId} 
+            trainingIndex={trainingIndex} 
             checked={checked === exerciseTechnique.id}
             setChecked={setChecked}
           />

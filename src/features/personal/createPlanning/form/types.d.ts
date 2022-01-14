@@ -1,4 +1,5 @@
-import { Exercise, ExerciseTechnique, TrainingPlanningType } from "@prisma/client";
+import { ExerciseTechnique, TrainingPlanningType } from "@prisma/client";
+import { ExerciseWithMuscleGroups } from "../../../../types/schema";
 
 export type CreateTrainingPlanningState = {
   type: TrainingPlanningType | null;
@@ -10,7 +11,7 @@ export type CreateTrainingPlanningState = {
 }
 
 export type ExerciseSerieBeingCreated = {
-  exercises: Exercise[],
+  exercises: ExerciseWithMuscleGroups[],
   times: number,
   repetitions: string,
   id: string
