@@ -1,21 +1,22 @@
-import { ExerciseTechnique } from "@prisma/client";
 import { useState } from "react";
-import styles from '../../../../../../../../styles/components/options.module.scss';
+import { useGetExerciseTechniquesQuery } from "../../../../../api";
 import ExerciseTechniqueRadio from "./ExerciseTechniqueRadio";
+import styles from './styles.module.scss';
 
 type Props = {
-  exerciseTechniques: ExerciseTechnique[],
   trainingId: string
 }
 
-const ExerciseTechniquesRadios: React.FC<Props> = ({ exerciseTechniques, trainingId }) => {
+const ExerciseTechniquesRadios: React.FC<Props> = ({ trainingId }) => {
   const [checked, setChecked] = useState<number | null>(null)
+  const { data: exerciseTechniques } = useGetExerciseTechniquesQuery();
+
 
   return (
     <div className={styles.wrapper}>
       <p>Técnica avançada</p>
       {
-        exerciseTechniques.map(exerciseTechnique => (
+        exerciseTechniques && exerciseTechniques.map(exerciseTechnique => (
           <ExerciseTechniqueRadio 
             exerciseTechnique={exerciseTechnique} 
             key={exerciseTechnique.id} 

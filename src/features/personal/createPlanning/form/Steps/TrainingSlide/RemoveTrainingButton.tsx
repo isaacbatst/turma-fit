@@ -1,7 +1,7 @@
 import { MdDelete } from "react-icons/md";
-import IconButtonWithText from "../../../../../components/common/IconButtonWithText";
-import { useAppDispatch } from "../../../../../store/hooks";
-import { removeTrainingAction } from "../slice";
+import IconButtonWithText from "../../../../../../components/common/IconButtonWithText";
+import { useAppDispatch } from "../../../../../../store/hooks";
+import { removeTrainingAction } from "../../slice";
 
 type Props = {
   index: number

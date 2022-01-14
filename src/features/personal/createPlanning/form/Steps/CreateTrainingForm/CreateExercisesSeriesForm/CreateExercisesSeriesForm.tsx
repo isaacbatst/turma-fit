@@ -1,8 +1,9 @@
 import React from 'react'
-import { useGetExerciseTechniquesQuery } from '../../../../api';
 import { ExerciseSerieBeingCreated } from '../../../types';
 import styles from './CreateExercisesSeriesForm.module.scss';
 import ExerciseTechniquesRadios from './ExerciseTechniquesRadios';
+import { useGetExercisesQuery } from '../../../../api';
+import ExercisesSelect from './ExercisesSelect';
 
 type Props = {
   exercisesSeries: ExerciseSerieBeingCreated,
@@ -10,8 +11,6 @@ type Props = {
 }
 
 const CreateExercisesSeriesForm: React.FC<Props> = ({ exercisesSeries, trainingId }) => {
-  const { data: exerciseTechniques } = useGetExerciseTechniquesQuery();
-
   return (
     <div className={styles.seriesForm}>
       <div className={styles.seriesAndRepetitions}>
@@ -24,12 +23,8 @@ const CreateExercisesSeriesForm: React.FC<Props> = ({ exercisesSeries, trainingI
           <input type="text" name="" id="" />
         </label>
       </div>
-      {exerciseTechniques && (
-        <ExerciseTechniquesRadios  
-          exerciseTechniques={exerciseTechniques}
-          trainingId={trainingId}
-        />
-      )}
+      <ExerciseTechniquesRadios trainingId={trainingId} />
+      <ExercisesSelect />
     </div>
   )
 }

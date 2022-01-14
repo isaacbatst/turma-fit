@@ -6,6 +6,7 @@ import { TrainingBeingCreated } from "../../types";
 import { AerobicInput } from "./AerobicInput";
 import CreateExercisesSeriesForm from "./CreateExercisesSeriesForm/CreateExercisesSeriesForm";
 import styles from './CreateTrainingForm.module.scss';
+import Select from 'react-select'
 
 type Props = {
   training: TrainingBeingCreated,
@@ -33,6 +34,7 @@ export const CreateTrainingForm: React.FC<Props> = ({ training, index }) => {
           <CreateExercisesSeriesForm trainingId={training.id} exercisesSeries={exercisesSeries} key={exercisesSeries.id} />
         ))
       }
+
     </div>
   )
 }

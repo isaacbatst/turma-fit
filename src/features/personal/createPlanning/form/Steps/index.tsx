@@ -4,7 +4,7 @@ import { useAppSelector } from "../../../../../store/hooks";
 import PlanningTypesRadios from "./PlanningTypeRadios/PlanningTypesRadios";
 import styles from './styles.module.scss';
 import { SwiperContextProvider, useSwiperContext } from "./contexts/SwiperContext";
-import TrainingSlide from "./TrainingSlide";
+import TrainingSlide from "./TrainingSlide/TrainingSlide";
 
 const Steps: React.FC = () => {
   const trainings = useAppSelector(state => state.personal.createPlanning.form.trainings);
@@ -17,6 +17,7 @@ const Steps: React.FC = () => {
       spaceBetween={50}
       slidesPerView={1}
       modules={[ Navigation, Pagination ]}
+      allowTouchMove={false}
       pagination={{
         clickable: true
       }}

@@ -1,2 +1,13 @@
 $primary: #FF472D;
+$primary25: #ff452d48;
+$primary50: #ff452d81;
 $black: #2E2E2E;
+$neutral10: #f4f5f6;
+
+:export {
+  primary: $primary;
+  primary25: $primary25;
+  primary50: $primary50;
+  black: $black;
+  neutral10: $neutral10;
+}

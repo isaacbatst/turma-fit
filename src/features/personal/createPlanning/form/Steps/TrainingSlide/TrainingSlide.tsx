@@ -1,9 +1,8 @@
-import { SwiperSlide } from "swiper/react"
-import { TrainingBeingCreated } from "../types"
+import { TrainingBeingCreated } from "../../types"
+import { CreateTrainingForm } from "../CreateTrainingForm/CreateTrainingForm"
 import AddTrainingButton from "./AddTrainingButton"
-import { CreateTrainingForm } from "./CreateTrainingForm/CreateTrainingForm"
 import RemoveTrainingButton from "./RemoveTrainingButton"
-import styles from './styles.module.scss'
+import styles from '../styles.module.scss'
 
 type Props = {
   training: TrainingBeingCreated,

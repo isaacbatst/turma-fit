@@ -32,6 +32,10 @@ export const removeTraining = (state: CreateTrainingPlanningState, action: Paylo
   })
 }
 
+export const removeAllTrainings = (state: CreateTrainingPlanningState) => {
+  state.trainings = [];
+}
+
 export const addExercisesSeries = (state: CreateTrainingPlanningState, action: PayloadAction<string>): CreateTrainingPlanningState => {
   const updatedTrainings = state.trainings.map(training => {
     const defaultExerciseSeries: ExerciseSerieBeingCreated = {

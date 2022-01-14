@@ -1,4 +1,4 @@
-import { ExerciseTechnique, TrainingPlanningType } from "@prisma/client";
+import { Exercise, ExerciseTechnique, TrainingPlanningType } from "@prisma/client";
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const createPlanningApi = createApi({
@@ -10,8 +10,15 @@ export const createPlanningApi = createApi({
     }),
     getExerciseTechniques: builder.query<ExerciseTechnique[], void>({
       query: () => 'exerciseTechniques'
+    }),
+    getExercises: builder.query<Exercise[], void>({
+      query: () => 'exercises'
     })
   })
 })
 
-export const { useGetExerciseTechniquesQuery, useGetPlanningTypesQuery } = createPlanningApi;
+export const { 
+  useGetExerciseTechniquesQuery, 
+  useGetPlanningTypesQuery,
+  useGetExercisesQuery
+} = createPlanningApi;

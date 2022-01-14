@@ -1,8 +1,8 @@
 import { MdOutlineAdd } from "react-icons/md";
-import IconButtonWithText from "../../../../../components/common/IconButtonWithText";
-import { useAppDispatch } from "../../../../../store/hooks";
-import { addTrainingAction } from "../slice";
-import { useSwiperContext } from "./contexts/SwiperContext";
+import IconButtonWithText from "../../../../../../components/common/IconButtonWithText";
+import { useAppDispatch } from "../../../../../../store/hooks";
+import { addTrainingAction } from "../../slice";
+import { useSwiperContext } from "../contexts/SwiperContext";
 
 const AddTrainingButton: React.FC = () => {
   const dispatch = useAppDispatch();
