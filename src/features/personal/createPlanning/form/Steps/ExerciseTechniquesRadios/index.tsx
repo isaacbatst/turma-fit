@@ -11,7 +11,7 @@ const ExerciseTechniquesRadios: React.FC = () => {
 
   return (
     <div className={styles.wrapper}>
-      <p>Técnica avançada</p>
+      <p className={styles.mainLabel}>Técnica avançada</p>
       {
         exerciseTechniques && exerciseTechniques.map(exerciseTechnique => (
           <ExerciseTechniqueRadio 

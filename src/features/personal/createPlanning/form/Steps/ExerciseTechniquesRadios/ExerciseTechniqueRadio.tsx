@@ -1,5 +1,5 @@
 import { ExerciseTechnique } from "@prisma/client";
-import { ChangeEventHandler, MouseEventHandler, useState } from "react";
+import { ChangeEventHandler } from "react";
 
 type Props = {
   exerciseTechnique: ExerciseTechnique;
