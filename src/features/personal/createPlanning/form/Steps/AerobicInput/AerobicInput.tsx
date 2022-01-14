@@ -1,5 +1,6 @@
 import React from 'react';
 import { TrainingBeingCreated } from '../../types';
+import styles from './AerobicInput.module.scss'
 
 type Props = {
   training: TrainingBeingCreated;
@@ -7,7 +8,7 @@ type Props = {
 
 export const AerobicInput: React.FC<Props> = ({ training }) => {
   return (
-    <label htmlFor={`aerobic-minutes-${training.letter}`}>
+    <label className={styles.inputLabel} htmlFor={`aerobic-minutes-${training.letter}`}>
       <span>
         Tempo de Aeróbico (minutos)
       </span>

@@ -3,7 +3,7 @@ import { useAppDispatch } from '../../../../../../store/hooks';
 import colors from '../../../../../../styles/common/_colors.module.scss';
 import { useGetExercisesQuery } from '../../../api';
 import { setExercisesAction } from '../../slice';
-import { useExercisesSeriesSlideContext } from '../contexts/ExercisesSeriesSlideContext';
+import { useExercisesSeriesSlideContext } from '../ExercisesSeriesSlide/ExercisesSeriesSlideContext';
 import MuscleGroupsPreview from '../MuscleGroupsPreview';
 
 const ExercisesSelect: React.FC = () => {

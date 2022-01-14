@@ -89,3 +89,12 @@ export const setExercises = (state: CreateTrainingPlanningState, action: Payload
     .exercisesSeries[action.payload.exercisesSeriesIndex]
     .exercises = action.payload.exercises
 }
+
+type SaveTrainingPayload = {
+  trainingIndex: number,
+  training: TrainingBeingCreated
+}
+
+export const saveTraining = (state: CreateTrainingPlanningState, action: PayloadAction<SaveTrainingPayload>) => {
+  state.trainings[action.payload.trainingIndex] = action.payload.training
+}

@@ -1,4 +1,4 @@
-import { useExercisesSeriesSlideContext } from '../contexts/ExercisesSeriesSlideContext';
+import { useExercisesSeriesSlideContext } from '../ExercisesSeriesSlide/ExercisesSeriesSlideContext';
 import badge from './styles.module.scss';
 
 const MuscleGroupsPreview: React.FC = () => {

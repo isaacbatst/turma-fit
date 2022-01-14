@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect, useContext } from "react";
+import { createContext, useContext } from "react";
 import { ExerciseSerieBeingCreated, TrainingBeingCreated } from "../../types";
 
 type SeriesSlideContextType = {

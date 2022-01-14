@@ -3,7 +3,7 @@ import { MdOutlineAdd } from 'react-icons/md';
 import IconButtonWithText from '../../../../../../components/common/IconButtonWithText';
 import { useAppDispatch } from '../../../../../../store/hooks';
 import { addExercisesSeriesAction } from '../../slice';
-import { useExercisesSeriesSlideContext } from '../contexts/ExercisesSeriesSlideContext';
+import { useExercisesSeriesSlideContext } from '../ExercisesSeriesSlide/ExercisesSeriesSlideContext';
 import { useSwiperContext } from '../contexts/SwiperContext';
 
 const AddExercisesSeriesButton: React.FC = () => {

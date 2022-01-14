@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useGetExerciseTechniquesQuery } from "../../../api";
-import { useExercisesSeriesSlideContext } from "../contexts/ExercisesSeriesSlideContext";
+import { useExercisesSeriesSlideContext } from "../ExercisesSeriesSlide/ExercisesSeriesSlideContext";
 import ExerciseTechniqueRadio from "./ExerciseTechniqueRadio";
 import styles from './styles.module.scss';
 
