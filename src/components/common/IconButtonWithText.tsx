@@ -15,7 +15,7 @@ const IconButtonWithText: React.FC<Props> = ({ text, onClick, Icon, styles = def
       className={styles}
       onClick={onClick}
     >
-      <Icon /> {text}
+      <Icon /><span>{text}</span>
     </button>
   )
 }

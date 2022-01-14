@@ -1,4 +1,4 @@
-import styles from '../CreateExercisesSeriesForm.module.scss'
+import styles from './styles.module.scss'
 
 const SeriesAndRepetitions: React.FC = () => (
   <div className={styles.seriesAndRepetitions}>

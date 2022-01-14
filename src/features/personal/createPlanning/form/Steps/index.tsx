@@ -1,45 +1,44 @@
-import { Navigation, Pagination } from "swiper";
-import { Swiper, SwiperSlide } from "swiper/react";
+import { SwiperSlide } from "swiper/react";
 import { useAppSelector } from "../../../../../store/hooks";
+import { SeriesSlideContextProvider } from "./contexts/ExercisesSeriesSlideContext";
+import { SwiperContextProvider } from "./contexts/SwiperContext";
+import { AerobicInput } from "./AerobicInput/AerobicInput";
+import CreateTrainingSwiper from "./CreateTrainingSwiper/CreateTrainingSwiper";
+import ExercisesSeriesSlide from "./ExercisesSeriesSlide/ExercisesSeriesSlide";
 import PlanningTypesRadios from "./PlanningTypeRadios/PlanningTypesRadios";
-import styles from './styles.module.scss';
-import { SwiperContextProvider, useSwiperContext } from "./contexts/SwiperContext";
-import TrainingSlide from "./TrainingSlide/TrainingSlide";
 
 const Steps: React.FC = () => {
   const trainings = useAppSelector(state => state.personal.createPlanning.form.trainings);
-  const { setSwiper } = useSwiperContext();
-
-  const lastTrainingIndex = trainings.length - 1;
 
   return (
-    <Swiper
-      spaceBetween={50}
-      slidesPerView={1}
-      modules={[ Navigation, Pagination ]}
-      allowTouchMove={false}
-      pagination={{
-        clickable: true
-      }}
-      onSwiper={(thisSwiper) => {
-        setSwiper(thisSwiper)
-      }}
-      className={styles.swiper}
-      onDestroy={() => setSwiper(null)}
-    >
+    <CreateTrainingSwiper>
       <SwiperSlide><PlanningTypesRadios /></SwiperSlide>
       {
-        trainings.map((training, index) => (
-          <SwiperSlide key={training.id}>
-            <TrainingSlide
-              index={index}
-              lastTrainingIndex={lastTrainingIndex}
-              training={training}
-            />
-          </SwiperSlide>
+        trainings.map((training, trainingIndex) => (
+          training.exercisesSeries.map((exercisesSeries, exercisesSeriesIndex) => (
+            <>
+              {/* <SwiperSlide>
+                <AerobicInput training={training} />
+                Botão salvar e passar
+                pegar estilos
+              </SwiperSlide> */}
+              <SwiperSlide key={training.id}>
+                <SeriesSlideContextProvider value={{
+                  exercisesSeries,
+                  exercisesSeriesIndex,
+                  training,
+                  trainingIndex,
+                  lastExerciseSeriesIndex: training.exercisesSeries.length - 1,
+                  lastTrainingIndex: trainings.length - 1,
+                }}>
+                  <ExercisesSeriesSlide />
+                </SeriesSlideContextProvider>
+              </SwiperSlide>
+            </>
+          ))
         ))
       }
-    </Swiper>
+    </CreateTrainingSwiper>
   )
 } 
 

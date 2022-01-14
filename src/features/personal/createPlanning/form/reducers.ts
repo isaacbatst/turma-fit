@@ -7,15 +7,22 @@ import { PayloadAction } from '@reduxjs/toolkit';
 import { ExerciseWithMuscleGroups } from '../../../../types/schema';
 
 export const addTraining = (state: CreateTrainingPlanningState): CreateTrainingPlanningState => {
-  const training: TrainingBeingCreated = {
+  const initialSet: ExerciseSerieBeingCreated = {
+    id: uuid(),
+    exercises: [],
+    repetitions: '',
+    times: 0
+  }
+  
+  const initialTraining: TrainingBeingCreated = {
     letter: letterMap[state.trainings.length],
     id: uuid(),
-    exercisesSeries: [],
+    exercisesSeries: [initialSet],
   }
 
   return update(state, {
     trainings: {
-      $push: [training]
+      $push: [initialTraining]
     }
   })
 }
@@ -73,12 +80,12 @@ export const setPlanningType = (state: CreateTrainingPlanningState, action: Payl
 type SetExercisesPayload = {
   exercises: ExerciseWithMuscleGroups[],
   trainingIndex: number,
-  exerciseSeriesIndex: number
+  exercisesSeriesIndex: number
 }
 
 export const setExercises = (state: CreateTrainingPlanningState, action: PayloadAction<SetExercisesPayload>) => {
   state
     .trainings[action.payload.trainingIndex]
-    .exercisesSeries[action.payload.exerciseSeriesIndex]
+    .exercisesSeries[action.payload.exercisesSeriesIndex]
     .exercises = action.payload.exercises
 }

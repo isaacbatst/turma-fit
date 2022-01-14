@@ -1,23 +1,15 @@
-@use '~/src/styles/components/iconButton.module';
-@use '~/src/styles/common/box-shadow';
-
-.trainingForm {
-  margin-bottom: 25px;
+.seriesAndRepetitions {
+  justify-content: space-around;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  align-self: stretch;
-
-  .name {
-    margin-top: 0;
-    font-size: 22px;
-  }
-
+  margin-bottom: 20px;
+  
   label {
     display: flex;
+    flex: 1;
     flex-direction: column;
     align-items: center;
-
+    font-size: 14px;
+  
     input {
       margin-top: 10px;
       width: 65px;
@@ -25,7 +17,7 @@
       font-size: 20px;
       text-align: center;
       padding: 7px;
-
+  
       &:focus {
         border: 1px solid #9b9b9b;
         outline: none;

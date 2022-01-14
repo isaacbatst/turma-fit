@@ -1,16 +1,13 @@
 import { useState } from "react";
-import { useGetExerciseTechniquesQuery } from "../../../../../api";
+import { useGetExerciseTechniquesQuery } from "../../../api";
+import { useExercisesSeriesSlideContext } from "../contexts/ExercisesSeriesSlideContext";
 import ExerciseTechniqueRadio from "./ExerciseTechniqueRadio";
 import styles from './styles.module.scss';
 
-type Props = {
-  trainingIndex: number
-}
-
-const ExerciseTechniquesRadios: React.FC<Props> = ({ trainingIndex }) => {
+const ExerciseTechniquesRadios: React.FC = () => {
   const [checked, setChecked] = useState<number | null>(null)
   const { data: exerciseTechniques } = useGetExerciseTechniquesQuery();
-
+  const { trainingIndex } = useExercisesSeriesSlideContext();
 
   return (
     <div className={styles.wrapper}>
