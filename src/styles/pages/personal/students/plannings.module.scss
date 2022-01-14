@@ -4,6 +4,10 @@
 @import "~/node_modules/bootstrap/scss/variables";
 @import "~/node_modules/bootstrap/scss/mixins";
 
+.title {
+  text-align: center
+}
+
 .plannings {
   display: flex;
   flex-direction: column;
@@ -11,7 +15,6 @@
   > * {
     margin-bottom: 15px;
   }
-
   .addPlanning {
     @extend .iconButtonWithText;
 

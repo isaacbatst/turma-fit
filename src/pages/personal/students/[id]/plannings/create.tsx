@@ -26,7 +26,7 @@ const CreatePlannings: NextPageWithAuth = () => {
         {
           student && (
             <>
-              <h2>Planejamentos de {student.user.name}</h2>
+              <h2 className={styles.title}>Planejamentos de {student.user.name}</h2>
               {shouldShowForm && <CreateTrainingPlanningForm setShouldShowForm={setShouldShowForm} />}
               <div className={styles.plannings}>
                 {!shouldShowForm && (
