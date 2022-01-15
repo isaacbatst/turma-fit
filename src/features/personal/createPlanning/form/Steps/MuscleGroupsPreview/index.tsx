@@ -2,9 +2,9 @@ import { useExercisesSeriesSlideContext } from '../ExercisesSeriesSlide/Exercise
 import badge from './styles.module.scss';
 
 const MuscleGroupsPreview: React.FC = () => {
-  const { exercisesSeries } = useExercisesSeriesSlideContext();
+  const { training, exercisesSeriesIndex } = useExercisesSeriesSlideContext();
 
-  const muscleGroups = exercisesSeries.exercises
+  const muscleGroups = training.exercisesSeries[exercisesSeriesIndex].exercises
     .flatMap(exercise => exercise.muscleGroups)
     .map(muscleGroup => muscleGroup.name)
     .filter((muscleGroup, index, array) => array.indexOf(muscleGroup) === index)

@@ -1,8 +1,7 @@
 import { SwiperSlide } from "swiper/react";
 import { useAppSelector } from "../../../../../store/hooks";
-import { SeriesSlideContextProvider } from "./ExercisesSeriesSlide/ExercisesSeriesSlideContext";
+import { ExercisesSeriesSlideContextProvider } from "./ExercisesSeriesSlide/ExercisesSeriesSlideContext";
 import { SwiperContextProvider } from "./contexts/SwiperContext";
-import { AerobicInput } from "./AerobicInput/AerobicInput";
 import CreateTrainingSwiper from "./CreateTrainingSwiper/CreateTrainingSwiper";
 import ExercisesSeriesSlide from "./ExercisesSeriesSlide/ExercisesSeriesSlide";
 import PlanningTypesRadios from "./PlanningTypeRadios/PlanningTypesRadios";
@@ -22,8 +21,7 @@ const Steps: React.FC = () => {
             {
               training.exercisesSeries.map((exercisesSeries, exercisesSeriesIndex) => (
                 <SwiperSlide key={exercisesSeries.id}>
-                  <SeriesSlideContextProvider value={{
-                    exercisesSeries,
+                  <ExercisesSeriesSlideContextProvider value={{
                     exercisesSeriesIndex,
                     training,
                     trainingIndex,
@@ -31,7 +29,7 @@ const Steps: React.FC = () => {
                     lastTrainingIndex: trainings.length - 1,
                   }}>
                     <ExercisesSeriesSlide />
-                  </SeriesSlideContextProvider>
+                  </ExercisesSeriesSlideContextProvider>
                 </SwiperSlide>
               ))
             }

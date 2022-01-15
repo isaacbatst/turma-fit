@@ -1,4 +1,4 @@
-import { Exercise, ExerciseTechnique, TrainingPlanningType } from "@prisma/client";
+import { ExerciseTechnique, TrainingPlanningType } from "@prisma/client";
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { ExerciseWithMuscleGroups } from "../../../types/schema";
 

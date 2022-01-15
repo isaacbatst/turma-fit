@@ -14,7 +14,8 @@ export type ExerciseSerieBeingCreated = {
   exercises: ExerciseWithMuscleGroups[],
   times: number,
   repetitions: string,
-  id: string
+  id: string,
+  exerciseTechnique: ExerciseTechnique | null
 }
 
 export type TrainingBeingCreated = {

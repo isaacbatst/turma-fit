@@ -2,13 +2,13 @@ import React from 'react';
 import { MdCheck } from 'react-icons/md';
 import IconButtonWithText from '../../../../../../components/common/IconButtonWithText';
 import { useAppDispatch } from '../../../../../../store/hooks';
-import { saveTrainingAction } from '../../slice';
+import { saveExercisesSeriesAction } from '../../slice';
 import { useSwiperContext } from '../contexts/SwiperContext';
 import { useExercisesSeriesSlideContext } from '../ExercisesSeriesSlide/ExercisesSeriesSlideContext';
 
 const GoToTrainingCheckoutButton: React.FC = () => {
   const { setShouldMoveToNext } = useSwiperContext();
-  const { training, trainingIndex } = useExercisesSeriesSlideContext()
+  const { training, trainingIndex, exercisesSeriesIndex } = useExercisesSeriesSlideContext()
   const dispatch = useAppDispatch();
 
   return (
@@ -16,10 +16,11 @@ const GoToTrainingCheckoutButton: React.FC = () => {
       Icon={MdCheck}
       text="Treino"
       onClick={() => {
-        dispatch(saveTrainingAction({
-          training,
-          trainingIndex
-        }));
+        dispatch(saveExercisesSeriesAction({
+          exercisesSeries: training.exercisesSeries[exercisesSeriesIndex],
+          trainingIndex,
+          exercisesSeriesIndex
+        }))
         setShouldMoveToNext(true)
       }}
     />
