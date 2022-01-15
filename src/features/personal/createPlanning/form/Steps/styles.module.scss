@@ -1,6 +1,10 @@
 .swiper {
   padding-bottom: 40px;
 
+  .planningTypesSlide {
+    align-self: center;
+  }
+
   .trainingSlide {
     display: flex;
     flex-direction: column;

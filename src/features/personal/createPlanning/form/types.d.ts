@@ -4,10 +4,6 @@ import { ExerciseWithMuscleGroups } from "../../../../types/schema";
 export type CreateTrainingPlanningState = {
   type: TrainingPlanningType | null;
   trainings: TrainingBeingCreated[],
-  apiData: {
-    planningTypes: TrainingPlanningType[],
-    exerciseTechniques: ExerciseTechnique[]
-  }
 }
 
 export type ExerciseSerieBeingCreated = {

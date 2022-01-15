@@ -1,14 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { CreateTrainingPlanningState } from "./types";
-import { addExercisesSeries, addTraining, removeTraining, setPlanningType, removeAllTrainings, saveExercisesSeries, saveTraining } from "./reducers";
+import { addExercisesSeries, addTraining, removeTraining, setPlanningType, resetPlanning, initPlanning, saveExercisesSeries, saveTraining, createTraining } from "./reducers";
 
 const initialState: CreateTrainingPlanningState = {
   type: null,
   trainings: [],
-  apiData: {
-    exerciseTechniques: [],
-    planningTypes: []
-  }
 };
 
 export const formSlice = createSlice({
@@ -19,9 +15,10 @@ export const formSlice = createSlice({
     removeTraining,
     addExercisesSeries,
     setPlanningType,
-    removeAllTrainings,
+    resetPlanning,
     saveExercisesSeries,
     saveTraining,
+    initPlanning,
   }
 })
 
@@ -30,7 +27,8 @@ export const {
   addTraining: addTrainingAction,
   removeTraining: removeTrainingAction,
   setPlanningType: setPlanningTypeAction, 
-  removeAllTrainings: removeAllTrainingsAction,
+  resetPlanning: resetPlanningAction,
+  initPlanning: initPlanningAction,
   saveExercisesSeries: saveExercisesSeriesAction,
   saveTraining: saveTrainingAction
 } = formSlice.actions; 

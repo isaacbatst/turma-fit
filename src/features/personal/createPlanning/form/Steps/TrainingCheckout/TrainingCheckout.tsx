@@ -12,10 +12,12 @@ const TrainingCheckout: React.FC = () => {
       <h3>Checkout do Treino {training.letter}</h3>
       <AerobicInput training={training} />
       <div>
+        <p>Exercícios</p>
         {
           training.exercisesSeries
-            .flatMap(series => series.exercises)
-            .map(exercise => `${exercise.name}`)
+            .map(series => series.exercises
+              .map(exercise => `${exercise.name} - ${series.times}x${series.repetitions}`)
+            )
         }
       </div>
       <div>

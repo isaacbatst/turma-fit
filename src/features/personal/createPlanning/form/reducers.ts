@@ -13,13 +13,15 @@ const createExerciseSeries: () => ExerciseSerieBeingCreated = () => ({
   exerciseTechnique: null
 })
 
+export const createTraining: (index: number) => TrainingBeingCreated = (index) => ({
+  letter: letterMap[index],
+  id: uuid(),
+  exercisesSeries: [createExerciseSeries()],
+})
+
 export const addTraining = (state: CreateTrainingPlanningState): CreateTrainingPlanningState => {
 
-  const initialTraining: TrainingBeingCreated = {
-    letter: letterMap[state.trainings.length],
-    id: uuid(),
-    exercisesSeries: [createExerciseSeries()],
-  }
+  const initialTraining = createTraining(state.trainings.length)
 
   return update(state, {
     trainings: {
@@ -41,8 +43,13 @@ export const removeTraining = (state: CreateTrainingPlanningState, action: Paylo
   })
 }
 
-export const removeAllTrainings = (state: CreateTrainingPlanningState) => {
+export const resetPlanning = (state: CreateTrainingPlanningState) => {
   state.trainings = [];
+  state.type = null;
+}
+
+export const initPlanning = (state: CreateTrainingPlanningState) => {
+  state.trainings.push(createTraining(0));
 }
 
 export const addExercisesSeries = (state: CreateTrainingPlanningState, action: PayloadAction<string>): CreateTrainingPlanningState => {

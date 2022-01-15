@@ -8,13 +8,14 @@ import PlanningTypesRadios from "./PlanningTypeRadios/PlanningTypesRadios";
 import React from "react";
 import { TrainingCheckoutContextProvider } from "./TrainingCheckout/TrainingCheckoutContext";
 import TrainingCheckout from "./TrainingCheckout/TrainingCheckout";
+import styles from './styles.module.scss'
 
 const Steps: React.FC = () => {
   const trainings = useAppSelector(state => state.personal.createPlanning.form.trainings);
 
   return (
     <CreateTrainingSwiper>
-      <SwiperSlide><PlanningTypesRadios /></SwiperSlide>
+      <SwiperSlide className={styles.planningTypesSlide}><PlanningTypesRadios /></SwiperSlide>
       {
         trainings.map((training, trainingIndex) => (
           <React.Fragment key={training.id}>

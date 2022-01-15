@@ -1,23 +1,33 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { MouseEventHandler, useState } from "react";
 import { MdOutlineAdd } from "react-icons/md";
 import Header from "../../../../../components/Header";
 import Layout from "../../../../../components/Layout";
 import TrainingPlanningCard from "../../../../../components/personal/students/plannings/TrainingPlanningCard/TrainingPlanningCard";
 import CreateTrainingPlanningForm from "../../../../../features/personal/createPlanning/form";
+import { initPlanningAction } from "../../../../../features/personal/createPlanning/form/slice";
 import usePersonalStudent from "../../../../../lib/swr/usePersonalStudent";
+import { useAppDispatch } from "../../../../../store/hooks";
 import containers from '../../../../../styles/common/containers.module.scss';
 import styles from '../../../../../styles/pages/personal/students/plannings.module.scss';
 import { NextPageWithAuth } from "../../../../../types/page";
 
 const CreatePlannings: NextPageWithAuth = () => {
   const router = useRouter();
-  const [shouldShowForm, setShouldShowForm] = useState(false);
   const { id }  = router.query;
+
+  const [shouldShowForm, setShouldShowForm] = useState(false);
   
   const { data: session } = useSession();
   const { student } = usePersonalStudent(session?.user.email || '', Number(id));
+
+  const dispatch = useAppDispatch();
+
+  const handleAddPlanningClick: MouseEventHandler = () => {
+    dispatch(initPlanningAction());
+    setShouldShowForm(true);
+  }
 
   return (
     <Layout>
@@ -32,7 +42,7 @@ const CreatePlannings: NextPageWithAuth = () => {
                 {!shouldShowForm && (
                   <button 
                     className={styles.addPlanning} 
-                    onClick={() => setShouldShowForm(true)} 
+                    onClick={handleAddPlanningClick} 
                   >
                     <MdOutlineAdd /> Planejamento
                   </button>

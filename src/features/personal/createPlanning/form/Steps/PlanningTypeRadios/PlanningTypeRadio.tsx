@@ -1,7 +1,7 @@
 import { TrainingPlanningType } from "@prisma/client";
 import { ChangeEventHandler } from "react";
-import { useAppDispatch, useAppSelector } from "../../../../../../store/hooks";
-import { addTrainingAction, setPlanningTypeAction } from "../../slice";
+import { useAppDispatch } from "../../../../../../store/hooks";
+import { setPlanningTypeAction } from "../../slice";
 import { useSwiperContext } from "../contexts/SwiperContext";
 
 type Props = {
@@ -10,17 +10,11 @@ type Props = {
 
 export const PlanningTypeRadio: React.FC<Props> = ({ planningType }) => {
   const dispatch = useAppDispatch();
-  const trainingsLength = useAppSelector(state => state.personal.createPlanning.form.trainings.length)
   const { setShouldMoveToNext } = useSwiperContext();
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     if(event.target.checked) {
       dispatch(setPlanningTypeAction(planningType))
-
-      if(trainingsLength === 0){
-        dispatch(addTrainingAction());
-      }
-
       setShouldMoveToNext(true);
     }
   }
