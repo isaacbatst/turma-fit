@@ -1,4 +1,19 @@
 .checkoutWrapper {
   display: flex;
   flex-direction: column;
+
+  .exercises {
+    margin-bottom: 10px;
+  }
+
+  .checkoutItem {
+    padding: 7px;
+    box-shadow: 0px 0px 5px 0px #ddd;
+    margin: 0 5px 15px
+  }
+
+  .title {
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
 }
