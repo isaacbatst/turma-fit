@@ -37,7 +37,6 @@ const ExercisesSelect: React.FC = () => {
             getOptionLabel={(option) => option.name} 
             placeholder="Selecione o(s) exercício(s) da série"
             onChange={(selectedOptions) => {
-              console.log(selectedOptions)
               setTraining(update(training, {
                 exercisesSeries: {
                   [exercisesSeriesIndex]: {
