@@ -1,4 +1,35 @@
+@use '../../common/box-shadow';
+
+.title {
+  text-align: center;
+}
+
 .studentCards {
   display: flex;
-  padding: 40px 0;
+}
+
+.noStudents {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  p {
+    margin-bottom: 15px;
+  }
+
+  button {
+    display: flex;
+    background-color: white;
+    border: 2px solid black;
+    flex-direction: column;
+    align-items: center;
+    font-size: 24px;
+    padding: 10px 15px;
+    cursor: pointer;
+
+    &:hover {
+      transform: scale(1.1);
+      @include box-shadow.default;
+    }
+  }
 }

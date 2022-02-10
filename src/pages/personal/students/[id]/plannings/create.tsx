@@ -44,7 +44,7 @@ const CreatePlannings: NextPageWithAuth = () => {
                     className={styles.addPlanning} 
                     onClick={handleAddPlanningClick} 
                   >
-                    <MdOutlineAdd /> Planejamento
+                    <MdOutlineAdd /> Planejamento Semanal
                   </button>
                 )}
                 {student.trainingPlannings.map(trainingPlanning => (

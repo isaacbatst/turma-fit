@@ -5,12 +5,14 @@
 @import "~/node_modules/bootstrap/scss/mixins";
 
 .title {
-  text-align: center
+  text-align: center;
+  margin-bottom: 50px;
 }
 
 .plannings {
   display: flex;
   flex-direction: column;
+  justify-content: center;
 
   > * {
     margin-bottom: 15px;

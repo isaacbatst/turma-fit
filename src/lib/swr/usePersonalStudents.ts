@@ -1,5 +1,5 @@
 import axios from "axios";
-import useSWR from "swr";
+import useSWR, { useSWRConfig } from "swr";
 import { PersonalStudentWithTrainings } from "../../types/schema";
 
 const fetchPersonalStudents = (email: string) => (url: string) => axios.get<PersonalStudentWithTrainings[]>(url, {

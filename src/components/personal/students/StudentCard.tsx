@@ -18,9 +18,13 @@ const StudentCard: React.FC<Props> = ({ student }) => {
         <Image src={student.user.image || ''} height={40} width={40} alt={student.user.image || 'Foto de estudante'} />
         <span className={styles.studentName}>{student.user.name}</span>
       </div>
-      <p className={styles.lastTrainingPlanning}>
-        Último Treino: <span>{ lastTrainingPlanning.type.name }</span>
-      </p>
+      {
+        lastTrainingPlanning && (
+          <p className={styles.lastTrainingPlanning}>
+            Último Treino: <span>{ lastTrainingPlanning.type.name }</span>
+          </p>
+        )
+      }
       <div className={styles.buttons}>
         <Link href={`/personal/students/${student.id}/plannings/create`}>
           <a>

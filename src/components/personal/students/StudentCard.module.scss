@@ -3,12 +3,12 @@
 
 .card {
   @include box-shadow.default();  
-  padding: 15px;
+  padding: 25px;
 
   .imageAndName {
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 
     img {
       border-radius: 50%;

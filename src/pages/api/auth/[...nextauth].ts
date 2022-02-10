@@ -23,11 +23,17 @@ export default NextAuth({
             select: {
               id: true
             }
+          },
+          student: {
+            select: {
+              id: true
+            }
           }
         }
       })
 
       session.user.isPersonal = !!user?.personal;
+      session.user.isStudent = !!user?.student;
 
       return session;
     }
