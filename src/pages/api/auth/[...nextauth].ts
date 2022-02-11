@@ -11,7 +11,6 @@ export default NextAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || ''
     })
   ],
-  secret: process.env.JWT_SECRET,
   callbacks: {
     async session ({ session }) {
       const user = await prisma.user.findUnique({
