@@ -63,25 +63,7 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
---
--- Data for Name: User; Type: TABLE DATA; Schema: public; Owner: postgres
---
 
-COPY public."User" (name, id, email, "emailVerified", image) FROM stdin;
-Isaac Batista	1	isaacbatst@gmail.com	\N	https://lh3.googleusercontent.com/a-/AOh14Ghf5ZmF_xssNepBHWtdGGSHyadsgPZio8j3v1bXQw=s96-c
-\.
-
-
---
--- Data for Name: Account; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public."Account" (id, "userId", type, provider, "providerAccountId", refresh_token, access_token, expires_at, token_type, scope, id_token, session_state, oauth_token_secret, oauth_token) FROM stdin;
-1	1	oauth	google	114636629990439222624	\N	ya29.A0ARrdaM8a0HyG7vIhiGlhQiQANUG3xHX4P52ajZIGK0uavlJGaMrmUxwlO_vkx0Swmk0pS76WOQCB9skxo80GTfTzSoA1cgwaMzGI2rWBTmmhXNhLAwObmAbG5vdwp4_foQHY9FRW1D_gXoJ3ypXNMLNE5b6N	1642483145	Bearer	openid https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile	eyJhbGciOiJSUzI1NiIsImtpZCI6ImNhMDA2MjBjNWFhN2JlOGNkMDNhNmYzYzY4NDA2ZTQ1ZTkzYjNjYWIiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIxNzM1MDEyMDIzNjYtZDZsajZlN3I1cmxnNjJpYmtncWkxZ3YyN3M0OHVkazcuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiIxNzM1MDEyMDIzNjYtZDZsajZlN3I1cmxnNjJpYmtncWkxZ3YyN3M0OHVkazcuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMTQ2MzY2Mjk5OTA0MzkyMjI2MjQiLCJlbWFpbCI6ImlzYWFjYmF0c3RAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X2hhc2giOiJyTnlCTHVxdDY4dzlKazFoOXBZeWVBIiwibmFtZSI6IklzYWFjIEJhdGlzdGEiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EtL0FPaDE0R2hmNVptRl94c3NOZXBCSFd0ZEdHU0h5YWRzZ1BaaW84ajN2MWJYUXc9czk2LWMiLCJnaXZlbl9uYW1lIjoiSXNhYWMiLCJmYW1pbHlfbmFtZSI6IkJhdGlzdGEiLCJsb2NhbGUiOiJwdC1CUiIsImlhdCI6MTY0MjQ3OTU0NiwiZXhwIjoxNjQyNDgzMTQ2fQ.bT6qHDWSoqh984bu0s5gzh8TzYy-UUUAjfDaTND2xaMiW0uL7JIXL2RGXzYuGzWiHLU9TbEPlvVSkXHLbye8hZPwYY96XQGD85-x9c2NA59hY-9gM5ROPSogElB0zj1bHkcW2pVxl1GhcWS4ko09cFuyPGC2Fx3_eJDRj0-h2Tvvi3UiJ6bPklYJ2Mw7F0gdytWonsrTA9HiKwoGA5KBNZOoIHVfOSbPs6yabyS6EpTJ0WM8-4EC_4E2nDiOxSoYLqO2fFQst_wd20fE0h9CcEnwjOGQwXMBQ9vttdSxs8z9PP-_nLUtyymn0C2lyqGbhi3Lw1ZyRWNTIaNEs03i9w	\N	\N	\N
-\.
-
-
---
 -- Data for Name: Exercise; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -120,25 +102,6 @@ COPY public."ExerciseTechnique" (name, id, explanation) FROM stdin;
 COPY public."ExerciseSerie" (id, repetitions, times, "exerciseTechniqueId", "maxRestTime", "minRestTime") FROM stdin;
 \.
 
-
---
--- Data for Name: Personal; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public."Personal" (id, "userId") FROM stdin;
-1	1
-\.
-
-
---
--- Data for Name: Student; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public."Student" (id, age, "trainingPlanningsOrder", "personalId", "userId") FROM stdin;
-4	\N	\N	1	1
-\.
-
-
 --
 -- Data for Name: Measurement; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -170,17 +133,6 @@ Antebraço	8
 --
 
 COPY public."Picture" (url, id, student_id) FROM stdin;
-\.
-
-
---
--- Data for Name: Session; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public."Session" (id, "sessionToken", "userId", expires) FROM stdin;
-1	7fd7c540-f66f-4820-a44c-4fcd0867616d	1	2022-02-17 04:19:07.125
-2	2d97a122-a3ae-4329-b642-e7f1fb2fea6c	1	2022-03-12 20:00:38.828
-3	8252ab88-c532-4336-aa91-171047b21fb9	1	2022-03-12 20:19:50.585
 \.
 
 
