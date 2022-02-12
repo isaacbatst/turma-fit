@@ -6,7 +6,7 @@ export type CreateTrainingPlanningState = {
   trainings: TrainingBeingCreated[],
 }
 
-export type ExerciseSerieBeingCreated = {
+export type SetBeingCreated = {
   exercises: ExerciseWithMuscleGroups[],
   times: number,
   repetitions: string,
@@ -17,5 +17,5 @@ export type ExerciseSerieBeingCreated = {
 export type TrainingBeingCreated = {
   letter: string,
   id: string,
-  exercisesSeries: ExerciseSerieBeingCreated[]
+  sets: SetBeingCreated[]
 }

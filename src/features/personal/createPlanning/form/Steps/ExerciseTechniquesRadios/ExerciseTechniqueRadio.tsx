@@ -1,6 +1,6 @@
 import { ExerciseTechnique } from "@prisma/client";
 import { ChangeEventHandler } from "react";
-import { useExercisesSeriesSlideContext } from "../ExercisesSeriesSlide/ExercisesSeriesSlideContext";
+import { useSetSlideContext } from "../SetSlide/SetSlideContext";
 
 type Props = {
   exerciseTechnique: ExerciseTechnique;
@@ -9,26 +9,26 @@ type Props = {
 }
 
 const ExerciseTechniqueRadio: React.FC<Props> = ({ exerciseTechnique, exerciseTechnique: { id, name }, checked, setChecked }) => {
-  const { exercisesSeriesIndex, trainingIndex, setTrainingSeriesTechnique } = useExercisesSeriesSlideContext()
+  const { setIndex, trainingIndex, setSetTechnique: setTrainingSetsTechnique } = useSetSlideContext()
   
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     const value = event.target.checked ? exerciseTechnique : null;
 
     setChecked(value);
-    setTrainingSeriesTechnique(value, exercisesSeriesIndex);
+    setTrainingSetsTechnique(value, setIndex);
   }
   
   return (
     <>
       <input 
         type="checkbox" 
-        id={`exerciseTechniqueRadio-${id}-${trainingIndex}-${exercisesSeriesIndex}`} 
+        id={`exerciseTechniqueRadio-${id}-${trainingIndex}-${setIndex}`} 
         name="planningType" 
         value={id} 
         checked={checked}
         onChange={handleChange}
       />
-      <label htmlFor={`exerciseTechniqueRadio-${id}-${trainingIndex}-${exercisesSeriesIndex}`}>
+      <label htmlFor={`exerciseTechniqueRadio-${id}-${trainingIndex}-${setIndex}`}>
         {name}
       </label>
     </>

@@ -2,12 +2,12 @@ import React from 'react'
 import { MdOutlineAdd } from 'react-icons/md';
 import IconButtonWithText from '../../../../../../components/common/IconButtonWithText';
 import { useAppDispatch } from '../../../../../../store/hooks';
-import { addExercisesSeriesAction, saveExercisesSeriesAction } from '../../slice';
-import { useExercisesSeriesSlideContext } from '../ExercisesSeriesSlide/ExercisesSeriesSlideContext';
+import { addSetAction, saveSetAction } from '../../slice';
+import { useSetSlideContext } from '../SetSlide/SetSlideContext';
 import { useSwiperContext } from '../contexts/SwiperContext';
 
-const AddExercisesSeriesButton: React.FC = () => {
-  const { exercisesSeriesIndex, training, trainingIndex } = useExercisesSeriesSlideContext();
+const AddSetButton: React.FC = () => {
+  const { setIndex, training, trainingIndex } = useSetSlideContext();
   const { setShouldMoveToNext } = useSwiperContext()
   const dispatch = useAppDispatch();
 
@@ -16,16 +16,16 @@ const AddExercisesSeriesButton: React.FC = () => {
       Icon={MdOutlineAdd}
       text="Série de Exercícios"
       onClick={() => {
-        dispatch(saveExercisesSeriesAction({
-          exercisesSeries: training.exercisesSeries[exercisesSeriesIndex],
+        dispatch(saveSetAction({
+          set: training.sets[setIndex],
           trainingIndex,
-          exercisesSeriesIndex
+          setIndex
         }))
-        dispatch(addExercisesSeriesAction(training.id))
+        dispatch(addSetAction(training.id))
         setShouldMoveToNext(true);
       }}
     />
   )
 }
 
-export default AddExercisesSeriesButton
+export default AddSetButton

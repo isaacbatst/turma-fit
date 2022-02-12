@@ -1,7 +1,7 @@
 import { ExerciseTechnique } from "@prisma/client";
 import { useState } from "react";
 import { useGetExerciseTechniquesQuery } from "../../../api";
-import { useExercisesSeriesSlideContext } from "../ExercisesSeriesSlide/ExercisesSeriesSlideContext";
+import { useSetSlideContext } from "../SetSlide/SetSlideContext";
 import ExerciseTechniqueRadio from "./ExerciseTechniqueRadio";
 import styles from './styles.module.scss';
 

@@ -13,15 +13,15 @@ const TrainingCheckout: React.FC = () => {
       <div className={styles.exercises}>
         <p className={styles.title}>Exercícios</p>
         {
-          training.exercisesSeries
-            .map(series => {
-              const exercises = series.exercises
+          training.sets
+            .map(set => {
+              const exercises = set.exercises
                 .map(exercise => exercise.name)
               
               return <div 
                 className={styles.checkoutItem} 
-                key={series.id}>
-                {`${exercises.join(' + ')} - ${series.times}x${series.repetitions} ${series.exerciseTechnique && `(${series.exerciseTechnique.name})`}`}
+                key={set.id}>
+                {`${exercises.join(' + ')} - ${set.times}x${set.repetitions} ${set.exerciseTechnique && `(${set.exerciseTechnique.name})`}`}
               </div>
             })
         }
@@ -29,8 +29,8 @@ const TrainingCheckout: React.FC = () => {
       <div>
         <p className={styles.title}>Grupos musculares</p>
         {
-          training.exercisesSeries
-            .flatMap(series => series.exercises)
+          training.sets
+            .flatMap(set => set.exercises)
             .flatMap(exercise => exercise.muscleGroups)
             .map(muscleGroup => muscleGroup.name)
             .filter((muscleGroup, index, array) => array.indexOf(muscleGroup) === index)
