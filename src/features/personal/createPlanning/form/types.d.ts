@@ -1,9 +1,15 @@
-import { ExerciseTechnique, TrainingPlanningType } from "@prisma/client";
-import { ExerciseWithDetails, ExerciseWithMuscleGroups } from "../../../../types/schema";
+import { Equipment, ExerciseTechnique, Grip, TrainingPlanningType } from "@prisma/client";
+import { ExerciseWithDetails, ExerciseWithMuscleGroups, MovementWithMuscleGroup } from "../../../../types/schema";
 
 export type CreateTrainingPlanningState = {
   type: TrainingPlanningType | null;
   trainings: TrainingBeingCreated[],
+}
+
+export type TrainingBeingCreated = {
+  letter: string,
+  id: string,
+  sets: SetBeingCreated[]
 }
 
 export type SetBeingCreated = {
@@ -14,10 +20,8 @@ export type SetBeingCreated = {
   exerciseTechnique: ExerciseTechnique | null
 }
 
-export type TrainingBeingCreated = {
-  letter: string,
-  id: string,
-  sets: SetBeingCreated[]
+export type ExerciseBeingCreated = {
+  movement: MovementWithMuscleGroup | null,
+  grip: Grip | null,
+  equipment: Equipment | null
 }
-
-export type ExerciseBeingCreated = Omit<ExerciseWithDetails, 'id' | 'equipmentId' | 'movementId'>

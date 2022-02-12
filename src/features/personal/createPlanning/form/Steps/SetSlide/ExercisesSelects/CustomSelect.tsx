@@ -16,7 +16,6 @@ type Props<OptionType extends BaseOptionType> = {
 function CustomSelect<OptionType extends BaseOptionType>({
   onChange, options, placeholder, clearable
 }: Props<OptionType>) {
-  console.log(clearable, placeholder)
   return (
     <Select
       options={options}

@@ -9,25 +9,6 @@ const ExercisesSelects = () => {
   const { data: equipments } = useGetEquipmentsQuery()
   const { data: movements } = useGetMovementsQuery()
 
-
-  // function handleMovementChange(selectedMovement) {
-  //   if(selectedMovement){
-  //     setTraining(update(training, {
-  //       sets: {
-  //         [setIndex]: {
-  //           exercises: {
-  //             [exerciseIndex]: {
-  //               movement: {
-  //                 $set: selectedMovement
-  //               }
-  //             }
-  //           }
-  //         }
-  //       }
-  //     }))
-  //   }
-  // }
-
   return (
     <>
       <MovementsSelect movements={movements || []} />

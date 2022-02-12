@@ -9,7 +9,7 @@ import styles from '../styles.module.scss'
 import ExercisesSelects from './ExercisesSelects/ExercisesSelects'
 
 const SetSlide = () => {
-  const { training, setIndex, lastSetIndex, lastTrainingIndex } = useSetSlideContext();
+  const { training, setIndex, lastSetIndex } = useSetSlideContext();
 
   return (
     <div className={styles.formWrapper}>

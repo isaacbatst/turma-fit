@@ -1,7 +1,8 @@
 import { Equipment } from '@prisma/client';
+import { useDispatch } from 'react-redux';
 import { SingleValue } from 'react-select';
-import { MovementWithMuscleGroup } from '../../../../../../../../types/schema';
-import { useGetMovementsQuery } from '../../../../../api';
+import { selectEquipmentAction } from '../../../../slice';
+import { useSetSlideContext } from '../../SetSlideContext';
 import CustomSelect from '../CustomSelect';
 
 type Props = {
@@ -9,10 +10,15 @@ type Props = {
 }
 
 const ExercisesSelects: React.FC<Props> = ({ equipments }) => {
+  const dispatch = useDispatch();
+  const { trainingIndex, setIndex } = useSetSlideContext();
+  
   function handleMovementChange(selectedEquipment: SingleValue<Equipment>) {
-    if(selectedEquipment){
-      // set Movement on exercise of set of training
-    }
+    dispatch(selectEquipmentAction({
+      trainingIndex,
+      setIndex,
+      equipment: selectedEquipment
+    }))
   }
 
   return (

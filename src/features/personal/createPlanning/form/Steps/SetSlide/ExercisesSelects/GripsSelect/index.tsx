@@ -1,5 +1,8 @@
 import { Grip } from '@prisma/client';
+import { useDispatch } from 'react-redux';
 import { SingleValue } from 'react-select';
+import { selectGripAction } from '../../../../slice';
+import { useSetSlideContext } from '../../SetSlideContext';
 import CustomSelect from '../CustomSelect';
 
 type Props = {
@@ -17,7 +20,16 @@ const gripMapToLabel = {
   NEUTRAL: 'Neutra'
 }
 
+const labelMapToGrip: Record<string, Grip> = {
+  Supinada: 'SUPINE',
+  Pronada: 'PRONATE',
+  Neutra: 'NEUTRAL',
+}
+
 const ExercisesSelects: React.FC<Props> = ({ grips }) => {
+  const dispatch = useDispatch();
+  const { trainingIndex, setIndex } = useSetSlideContext();
+
   const gripsObjects = grips.map((grip, index) => ({
     id:  index,
     name: gripMapToLabel[grip]
@@ -25,10 +37,13 @@ const ExercisesSelects: React.FC<Props> = ({ grips }) => {
 
   
   function handleGripChange(selectedGrip: SingleValue<GripObject>) {
-    if(selectedGrip){
-      // set grip on exercise of set of training
-    }
+    dispatch(selectGripAction({
+      trainingIndex,
+      setIndex,
+      grip: selectedGrip && labelMapToGrip[selectedGrip.name]
+    }))    
   }
+
   return (
     <>
       <CustomSelect<GripObject> 

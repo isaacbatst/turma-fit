@@ -1,16 +1,24 @@
+import { useDispatch } from 'react-redux';
 import { SingleValue } from 'react-select';
 import { MovementWithMuscleGroup } from '../../../../../../../../types/schema';
+import { selectMovementAction } from '../../../../slice';
+import { useSetSlideContext } from '../../SetSlideContext';
 import CustomSelect from '../CustomSelect';
 
 type Props = {
   movements: MovementWithMuscleGroup[]
 }
 
-const ExercisesSelects: React.FC<Props> = ({ movements }) => {
+const MovementsSelect: React.FC<Props> = ({ movements }) => {
+  const dispatch = useDispatch();
+  const { trainingIndex, setIndex } = useSetSlideContext();
+  
   function handleMovementChange(selectedMovement: SingleValue<MovementWithMuscleGroup>) {
-    if(selectedMovement){
-      // set Movement on exercise of set of training
-    }
+    dispatch(selectMovementAction({
+      trainingIndex,
+      setIndex,
+      movement: selectedMovement
+    }))
   }
 
   return (
@@ -24,4 +32,4 @@ const ExercisesSelects: React.FC<Props> = ({ movements }) => {
   )
 }
 
-export default ExercisesSelects
+export default MovementsSelect
