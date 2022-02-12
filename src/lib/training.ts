@@ -1,12 +1,9 @@
 import { MuscleGroup } from "@prisma/client";
-import { ExerciseWithMuscleGroups, SetsWithExercises, TrainingPlanningWithDetails } from "../types/schema";
+import { ExerciseWithDetails, SetsWithExercises, TrainingPlanningWithDetails } from "../types/schema";
 
-const getMuscleGroupsFromExercises = (exercises: ExerciseWithMuscleGroups[], muscleGroups: MuscleGroup[]) => {
+const getMuscleGroupsFromExercises = (exercises: ExerciseWithDetails[], muscleGroups: MuscleGroup[]) => {
   exercises.forEach(exercise => {
-    const notIncludedMuscleGroups = exercise.muscleGroups
-      .filter(muscleGroup => !muscleGroups.includes(muscleGroup))
-    
-    muscleGroups.push(...notIncludedMuscleGroups);
+    muscleGroups.push(exercise.movement.focusedMuscleGroup);
   })
 
   return muscleGroups;
