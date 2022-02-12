@@ -1,4 +1,4 @@
-import { Exercise, ExerciseSerie, Personal, Prisma, Student, Training, TrainingPlanning, TrainingPlanningType, User } from "@prisma/client"
+import { Exercise, Set, Personal, Prisma, Student, Training, TrainingPlanning, TrainingPlanningType, User } from "@prisma/client"
 
 const personalUserWithStudentsPlannings = Prisma.validator<Prisma.UserArgs>()({
   include: {
@@ -36,7 +36,7 @@ const personalUserWithStudentsTrainings = Prisma.validator<Prisma.UserArgs>()({
                 type: true,
                 trainings: {
                   include: {
-                    exercisesSeries:{
+                    sets:{
                       include: {
                         exercises: {
                           include: {
@@ -60,7 +60,7 @@ export type PersonalUserWithStudentsTrainings = Prisma.UserGetPayload<typeof per
 
 export type PersonalStudentWithTrainings = NonNullable<PersonalUserWithStudentsTrainings["personal"]>["students"][number]
 export type TrainingPlanningWithDetails = PersonalStudentWithTrainings["trainingPlannings"][number]
-export type TrainingWithExercisesSeries = TrainingPlanningWithDetails["trainings"][number] 
-export type ExerciseSeriesWithExercises = TrainingWithExercisesSeries["exercisesSeries"][number];
-export type ExerciseWithMuscleGroups = ExerciseSeriesWithExercises["exercises"][number] 
+export type TrainingWithSets = TrainingPlanningWithDetails["trainings"][number] 
+export type SetsWithExercises = TrainingWithSets["sets"][number];
+export type ExerciseWithMuscleGroups = SetsWithExercises["exercises"][number] 
 

@@ -1,11 +1,11 @@
 import { v4 as uuid } from 'uuid';
-import { CreateTrainingPlanningState, ExerciseSerieBeingCreated, TrainingBeingCreated } from "./types";
+import { CreateTrainingPlanningState, SetBeingCreated, TrainingBeingCreated } from "./types";
 import update from 'immutability-helper';
 import { TrainingPlanningType } from "@prisma/client";
 import { letterMap } from '../../../../lib/letters';
 import { PayloadAction } from '@reduxjs/toolkit';
 
-const createExerciseSeries: () => ExerciseSerieBeingCreated = () => ({
+const createSet: () => SetBeingCreated = () => ({
   exercises: [],
   repetitions: '0',
   times: 0,
@@ -16,7 +16,7 @@ const createExerciseSeries: () => ExerciseSerieBeingCreated = () => ({
 export const createTraining: (index: number) => TrainingBeingCreated = (index) => ({
   letter: letterMap[index],
   id: uuid(),
-  exercisesSeries: [createExerciseSeries()],
+  sets: [createSet()],
 })
 
 export const addTraining = (state: CreateTrainingPlanningState): CreateTrainingPlanningState => {
@@ -52,14 +52,14 @@ export const initPlanning = (state: CreateTrainingPlanningState) => {
   state.trainings.push(createTraining(0));
 }
 
-export const addExercisesSeries = (state: CreateTrainingPlanningState, action: PayloadAction<string>): CreateTrainingPlanningState => {
+export const addSet = (state: CreateTrainingPlanningState, action: PayloadAction<string>): CreateTrainingPlanningState => {
   const updatedTrainings = state.trainings.map(training => {
 
 
     return training.id === action.payload ?
       (
         update(training, {
-          exercisesSeries: { $push: [createExerciseSeries()] }
+          sets: { $push: [createSet()] }
         })
       )
       : training
@@ -80,17 +80,17 @@ export const setPlanningType = (state: CreateTrainingPlanningState, action: Payl
   })
 }
 
-type SaveExercisesSeriesPayload = {
-  exercisesSeries: ExerciseSerieBeingCreated, 
+type SaveSetPayload = {
+  set: SetBeingCreated, 
   trainingIndex: number,
-  exercisesSeriesIndex: number
+  setIndex: number
 }
 
-export const saveExercisesSeries = (state: CreateTrainingPlanningState, action: PayloadAction<SaveExercisesSeriesPayload>) => {
+export const saveSet = (state: CreateTrainingPlanningState, action: PayloadAction<SaveSetPayload>) => {
   state
     .trainings[action.payload.trainingIndex]
-    .exercisesSeries[action.payload.exercisesSeriesIndex]
-  = action.payload.exercisesSeries
+    .sets[action.payload.setIndex]
+  = action.payload.set
 }
 
 type SaveTrainingPayload = {

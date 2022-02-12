@@ -71,7 +71,6 @@ model Student {
   measures               Measurement[]
   pictures               Picture[]
   trainingPlannings      TrainingPlanning[]
-  trainingPlanningsOrder Int[]
   personal               Personal?          @relation(fields: [personalId], references: [id])
   personalId             Int?
   user                   User               @relation(fields: [userId], references: [id])
@@ -114,17 +113,18 @@ model MuscleGroup {
 enum Grip {
   PRONATE
   SUPINE
+  NEUTRAL
 }
 
 model Exercise {
   name           String
   id             Int             @id @default(autoincrement())
   grip           Grip?
-  exerciseSeries ExerciseSerie[]
+  sets Set[]
   muscleGroups   MuscleGroup[]
 }
 
-model ExerciseSerie {
+model Set {
   exercises           Exercise[]
   id                  Int                @id @default(autoincrement())
   times               Int
@@ -140,7 +140,7 @@ model ExerciseTechnique {
   name           String
   id             Int             @id @default(autoincrement())
   explanation    String
-  exerciseSeries ExerciseSerie[]
+  sets Set[]
 }
 
 model TrainingPlanning {
@@ -167,8 +167,7 @@ enum Day {
 model Training {
   id                   Int               @id @default(autoincrement())
   letter               String
-  exercisesSeries      ExerciseSerie[]
-  exercisesSeriesOrder Int[]
+  sets      Set[]
   aerobicMinutes       Int
   trainingPlanning     TrainingPlanning? @relation(fields: [trainingPlanningId], references: [id])
   trainingPlanningId   Int?

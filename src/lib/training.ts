@@ -1,5 +1,5 @@
 import { MuscleGroup } from "@prisma/client";
-import { ExerciseWithMuscleGroups, ExerciseSeriesWithExercises, TrainingPlanningWithDetails } from "../types/schema";
+import { ExerciseWithMuscleGroups, SetsWithExercises, TrainingPlanningWithDetails } from "../types/schema";
 
 const getMuscleGroupsFromExercises = (exercises: ExerciseWithMuscleGroups[], muscleGroups: MuscleGroup[]) => {
   exercises.forEach(exercise => {
@@ -12,10 +12,10 @@ const getMuscleGroupsFromExercises = (exercises: ExerciseWithMuscleGroups[], mus
   return muscleGroups;
 }
 
-const getMuscleGroupsFromExercisesSeries = (exercisesSeries: ExerciseSeriesWithExercises[]) => {
+const getMuscleGroupsFromSets = (sets: SetsWithExercises[]) => {
   const muscleGroups: MuscleGroup[] = [];
   
-  exercisesSeries.forEach(exercisesSerie => getMuscleGroupsFromExercises(exercisesSerie.exercises, muscleGroups));
+  sets.forEach(set => getMuscleGroupsFromExercises(set.exercises, muscleGroups));
 
   return muscleGroups;
 }
@@ -24,7 +24,7 @@ export const getTrainingPlanningMuscleGroupsPerTraining = (trainingPlanning: Tra
   trainingPlanning.trainings.map(training => (
     {
       ...training,
-      muscleGroups: getMuscleGroupsFromExercisesSeries(training.exercisesSeries)
+      muscleGroups: getMuscleGroupsFromSets(training.sets)
     }
   ))
 )

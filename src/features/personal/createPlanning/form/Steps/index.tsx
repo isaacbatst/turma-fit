@@ -1,9 +1,9 @@
 import { SwiperSlide } from "swiper/react";
 import { useAppSelector } from "../../../../../store/hooks";
-import { ExercisesSeriesSlideContextProvider } from "./ExercisesSeriesSlide/ExercisesSeriesSlideContext";
+import { SetSlideContextProvider } from "./SetSlide/SetSlideContext";
 import { SwiperContextProvider } from "./contexts/SwiperContext";
 import CreateTrainingSwiper from "./CreateTrainingSwiper/CreateTrainingSwiper";
-import ExercisesSeriesSlide from "./ExercisesSeriesSlide/ExercisesSeriesSlide";
+import SetSlide from "./SetSlide/SetSlide";
 import PlanningTypesRadios from "./PlanningTypeRadios/PlanningTypesRadios";
 import React from "react";
 import { TrainingCheckoutContextProvider } from "./TrainingCheckout/TrainingCheckoutContext";
@@ -20,17 +20,17 @@ const Steps: React.FC = () => {
         trainings.map((training, trainingIndex) => (
           <React.Fragment key={training.id}>
             {
-              training.exercisesSeries.map((exercisesSeries, exercisesSeriesIndex) => (
-                <SwiperSlide key={exercisesSeries.id}>
-                  <ExercisesSeriesSlideContextProvider value={{
-                    exercisesSeriesIndex,
+              training.sets.map((set, setIndex) => (
+                <SwiperSlide key={set.id}>
+                  <SetSlideContextProvider value={{
+                    setIndex,
                     training,
                     trainingIndex,
-                    lastExerciseSeriesIndex: training.exercisesSeries.length - 1,
+                    lastSetIndex: training.sets.length - 1,
                     lastTrainingIndex: trainings.length - 1,
                   }}>
-                    <ExercisesSeriesSlide />
-                  </ExercisesSeriesSlideContextProvider>
+                    <SetSlide />
+                  </SetSlideContextProvider>
                 </SwiperSlide>
               ))
             }

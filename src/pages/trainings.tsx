@@ -1,4 +1,4 @@
-import { Exercise, ExerciseSerie, PrismaClient, Training, TrainingPlanning } from "@prisma/client";
+import { Exercise, Set, PrismaClient, Training, TrainingPlanning } from "@prisma/client";
 import { GetServerSideProps, NextPage } from "next";
 import { getSession } from "next-auth/react";
 import Header from "../components/Header";
@@ -10,7 +10,7 @@ import { NextPageWithAuth } from "../types/page";
 type Props = {
   trainingPlannings: (TrainingPlanning & {
     trainings: (Training & {
-        exercisesSeries: (ExerciseSerie & {
+        sets: (Set & {
             exercises: Exercise[];
         })[];
     })[];
@@ -27,7 +27,7 @@ const Trainings: NextPageWithAuth<Props> = ({ trainingPlannings }) => {
             <div key={training.id}>
               <span>Treino {training.letter}</span>
               <div>
-                { training.exercisesSeries.map(serie => (
+                { training.sets.map(serie => (
                   <div key={serie.id}>{serie.exercises.map(exercise => (
                     <span key={exercise.id}>{exercise.name}</span>
                   ))}</div>
@@ -56,7 +56,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
               include: {
                 trainings: {
                   include: {
-                    exercisesSeries: {
+                    sets: {
                       include: {
                         exercises: true
                       }
