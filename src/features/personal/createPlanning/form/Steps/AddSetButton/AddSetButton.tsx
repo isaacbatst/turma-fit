@@ -4,7 +4,7 @@ import IconButtonWithText from '../../../../../../components/common/IconButtonWi
 import { useAppDispatch } from '../../../../../../store/hooks';
 import { addSetAction, saveSetAction } from '../../slice';
 import { useSetSlideContext } from '../SetSlide/SetSlideContext';
-import { useSwiperContext } from '../contexts/SwiperContext';
+import { useSwiperContext } from '../SwiperContext';
 
 const AddSetButton: React.FC = () => {
   const { setIndex, training, trainingIndex } = useSetSlideContext();

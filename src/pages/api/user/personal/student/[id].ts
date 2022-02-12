@@ -17,19 +17,6 @@ const handler: NextApiHandler = async (req, res) => {
               trainingPlannings: {
                 include: {
                   type: true,
-                  trainings: {
-                    include: {
-                      sets: {
-                        include: {
-                          exercises: {
-                            include: {
-                              muscleGroups: true
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
                 }
               },
             }

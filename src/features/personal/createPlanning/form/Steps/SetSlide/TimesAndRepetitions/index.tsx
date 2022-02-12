@@ -1,5 +1,5 @@
 import styles from './styles.module.scss'
-import {useSetSlideContext} from '../SetSlide/SetSlideContext';
+import {useSetSlideContext} from '../SetSlideContext';
 
 
 const TimesAndRepetitions: React.FC = () => {

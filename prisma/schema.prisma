@@ -66,15 +66,15 @@ model Personal {
 }
 
 model Student {
-  id                     Int                @id @default(autoincrement())
-  age                    Int?
-  measures               Measurement[]
-  pictures               Picture[]
-  trainingPlannings      TrainingPlanning[]
-  personal               Personal?          @relation(fields: [personalId], references: [id])
-  personalId             Int?
-  user                   User               @relation(fields: [userId], references: [id])
-  userId                 Int                @unique
+  id                Int                @id @default(autoincrement())
+  age               Int?
+  measures          Measurement[]
+  pictures          Picture[]
+  trainingPlannings TrainingPlanning[]
+  personal          Personal?          @relation(fields: [personalId], references: [id])
+  personalId        Int?
+  user              User               @relation(fields: [userId], references: [id])
+  userId            Int                @unique
 }
 
 model Picture {
@@ -105,9 +105,23 @@ model Measurement {
 }
 
 model MuscleGroup {
-  name      String     @unique
-  id        Int        @id @default(autoincrement())
-  exercises Exercise[]
+  name     String     @unique
+  id       Int        @id @default(autoincrement())
+  Movement Movement[]
+}
+
+model Movement {
+  name               String
+  id                 Int         @id @default(autoincrement())
+  focusedMuscleGroup MuscleGroup @relation(fields: [muscleGroupId], references: [id])
+  muscleGroupId      Int
+  Exercise           Exercise[]
+}
+
+model Equipment {
+  name     String
+  id       Int        @id @default(autoincrement())
+  Exercise Exercise[]
 }
 
 enum Grip {
@@ -117,11 +131,13 @@ enum Grip {
 }
 
 model Exercise {
-  name           String
-  id             Int             @id @default(autoincrement())
-  grip           Grip?
-  sets Set[]
-  muscleGroups   MuscleGroup[]
+  id          Int       @id @default(autoincrement())
+  movement    Movement  @relation(fields: [movementId], references: [id])
+  equipment   Equipment? @relation(fields: [equipmentId], references: [id])
+  grip        Grip?
+  sets        Set[]
+  movementId  Int
+  equipmentId Int
 }
 
 model Set {
@@ -137,10 +153,10 @@ model Set {
 }
 
 model ExerciseTechnique {
-  name           String
-  id             Int             @id @default(autoincrement())
-  explanation    String
-  sets Set[]
+  name        String
+  id          Int    @id @default(autoincrement())
+  explanation String
+  sets        Set[]
 }
 
 model TrainingPlanning {
@@ -165,13 +181,13 @@ enum Day {
 }
 
 model Training {
-  id                   Int               @id @default(autoincrement())
-  letter               String
-  sets      Set[]
-  aerobicMinutes       Int
-  trainingPlanning     TrainingPlanning? @relation(fields: [trainingPlanningId], references: [id])
-  trainingPlanningId   Int?
-  day                  Day
+  id                 Int               @id @default(autoincrement())
+  letter             String
+  sets               Set[]
+  aerobicMinutes     Int
+  trainingPlanning   TrainingPlanning? @relation(fields: [trainingPlanningId], references: [id])
+  trainingPlanningId Int?
+  day                Day
 }
 
 model TrainingPlanningType {

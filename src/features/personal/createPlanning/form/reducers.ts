@@ -1,12 +1,19 @@
 import { v4 as uuid } from 'uuid';
-import { CreateTrainingPlanningState, SetBeingCreated, TrainingBeingCreated } from "./types";
+import { CreateTrainingPlanningState, ExerciseBeingCreated, SetBeingCreated, TrainingBeingCreated } from "./types";
 import update from 'immutability-helper';
-import { TrainingPlanningType } from "@prisma/client";
+import { Equipment, Grip, TrainingPlanningType } from "@prisma/client";
 import { letterMap } from '../../../../lib/letters';
 import { PayloadAction } from '@reduxjs/toolkit';
+import { MovementWithMuscleGroup } from '../../../../types/schema';
+
+const createExercise: () => ExerciseBeingCreated = () => ({ 
+  equipment: null,
+  grip: null,
+  movement: null
+})
 
 const createSet: () => SetBeingCreated = () => ({
-  exercises: [],
+  exercises: [createExercise()],
   repetitions: '0',
   times: 0,
   id: uuid(),
@@ -100,4 +107,49 @@ type SaveTrainingPayload = {
 
 export const saveTraining = (state: CreateTrainingPlanningState, action: PayloadAction<SaveTrainingPayload>) => {
   state.trainings[action.payload.trainingIndex] = action.payload.training
+}
+
+type SelectExerciseKeyPayload = {
+  exerciseIndex?: number,
+  setIndex: number,
+  trainingIndex: number,
+}
+
+interface SelectMovementPayload extends SelectExerciseKeyPayload {
+  movement: MovementWithMuscleGroup | null
+}
+
+export const selectMovement = (state: CreateTrainingPlanningState, action: PayloadAction<SelectMovementPayload>) => {
+  const { exerciseIndex = 0, movement, setIndex, trainingIndex } = action.payload;
+
+  state
+    .trainings[trainingIndex]
+    .sets[setIndex]
+    .exercises[exerciseIndex].movement = movement
+}
+
+interface SelectEquipmentPayload extends SelectExerciseKeyPayload {
+  equipment: Equipment | null
+}
+
+export const selectEquipment = (state: CreateTrainingPlanningState, action: PayloadAction<SelectEquipmentPayload>) => {
+  const { exerciseIndex = 0, equipment, setIndex, trainingIndex } = action.payload;
+
+  state
+    .trainings[trainingIndex]
+    .sets[setIndex]
+    .exercises[exerciseIndex].equipment = equipment
+}
+
+interface SelectGripPayload extends SelectExerciseKeyPayload {
+  grip: Grip | null
+}
+
+export const selectGrip = (state: CreateTrainingPlanningState, action: PayloadAction<SelectGripPayload>) => {
+  const { exerciseIndex = 0, grip, setIndex, trainingIndex } = action.payload;
+
+  state
+    .trainings[trainingIndex]
+    .sets[setIndex]
+    .exercises[exerciseIndex].grip = grip
 }

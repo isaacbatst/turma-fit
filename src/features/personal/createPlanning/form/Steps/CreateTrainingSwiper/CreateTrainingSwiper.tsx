@@ -1,6 +1,6 @@
 import { Navigation, Pagination } from "swiper";
 import {Swiper} from "swiper/react";
-import { useSwiperContext } from "../contexts/SwiperContext";
+import { useSwiperContext } from "../SwiperContext";
 import styles from '../styles.module.scss';
 
 const CreateTrainingSwiper: React.FC = ({ children }) => {

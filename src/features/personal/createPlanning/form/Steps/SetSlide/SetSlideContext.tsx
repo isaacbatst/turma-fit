@@ -45,19 +45,19 @@ export const SetSlideContextProvider: React.FC<Props> = ({ children, value }) =>
     }
   }
 
-  function setTrainingSetsTechnique(technique: ExerciseTechnique | null, setIndex: number){
+  function setSetTechnique(technique: ExerciseTechnique | null, setIndex: number){
     setTraining(update(training, {
       ...updateSetsKey(setIndex, 'exerciseTechnique', technique)
     }))
   }
 
-  function setTrainingSetsRepetitions(repetitions: string, setIndex: number){
+  function setSetRepetitions(repetitions: string, setIndex: number){
     setTraining(update(training, {
       ...updateSetsKey(setIndex, 'repetitions', repetitions)
     }))
   }
 
-  function setTrainingSetsTimes(times: number, setIndex: number){
+  function setSetTimes(times: number, setIndex: number){
     setTraining(update(training, {
       ...updateSetsKey(setIndex, 'times', times)
     }))
@@ -68,9 +68,9 @@ export const SetSlideContextProvider: React.FC<Props> = ({ children, value }) =>
     ...value,
     training,
     setTraining,
-    setSetRepetitions: setTrainingSetsRepetitions,
-    setSetTechnique: setTrainingSetsTechnique,
-    setSetTimes: setTrainingSetsTimes
+    setSetRepetitions,
+    setSetTechnique,
+    setSetTimes
   }}>
     {children}
   </SetSlideContext.Provider>

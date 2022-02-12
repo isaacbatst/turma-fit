@@ -6,12 +6,13 @@ import Layout from "../components/Layout";
 import { prisma } from "../lib/prisma";
 import containers from '../styles/common/containers.module.scss';
 import { NextPageWithAuth } from "../types/page";
+import { ExerciseWithDetails } from "../types/schema";
 
 type Props = {
   trainingPlannings: (TrainingPlanning & {
     trainings: (Training & {
         sets: (Set & {
-            exercises: Exercise[];
+            exercises: ExerciseWithDetails[];
         })[];
     })[];
   })[];
@@ -29,7 +30,7 @@ const Trainings: NextPageWithAuth<Props> = ({ trainingPlannings }) => {
               <div>
                 { training.sets.map(serie => (
                   <div key={serie.id}>{serie.exercises.map(exercise => (
-                    <span key={exercise.id}>{exercise.name}</span>
+                    <span key={exercise.id}>{exercise.movement.name}</span>
                   ))}</div>
                 )) }
               </div>
@@ -58,7 +59,16 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
                   include: {
                     sets: {
                       include: {
-                        exercises: true
+                        exercises: {
+                          include: {
+                            movement: {
+                              include: {
+                                focusedMuscleGroup: true
+                              }
+                            },
+                            equipment: true,
+                          }
+                        }
                       }
                     }
                   }
