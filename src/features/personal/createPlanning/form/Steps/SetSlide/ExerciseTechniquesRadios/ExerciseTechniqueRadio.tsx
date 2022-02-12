@@ -1,6 +1,6 @@
 import { ExerciseTechnique } from "@prisma/client";
 import { ChangeEventHandler } from "react";
-import { useSetSlideContext } from "../SetSlide/SetSlideContext";
+import { useSetSlideContext } from "../SetSlideContext";
 
 type Props = {
   exerciseTechnique: ExerciseTechnique;

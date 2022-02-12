@@ -2,7 +2,7 @@ import { TrainingPlanningType } from "@prisma/client";
 import { ChangeEventHandler } from "react";
 import { useAppDispatch } from "../../../../../../store/hooks";
 import { setPlanningTypeAction } from "../../slice";
-import { useSwiperContext } from "../contexts/SwiperContext";
+import { useSwiperContext } from "../SwiperContext";
 
 type Props = {
   planningType: TrainingPlanningType

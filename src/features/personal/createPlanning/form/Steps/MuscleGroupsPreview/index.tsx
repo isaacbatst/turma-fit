@@ -5,7 +5,7 @@ const MuscleGroupsPreview: React.FC = () => {
   const { training, setIndex } = useSetSlideContext();
 
   const muscleGroups = training.sets[setIndex].exercises
-    .flatMap(exercise => exercise.muscleGroups)
+    .flatMap(exercise => exercise.movement.focusedMuscleGroup)
     .map(muscleGroup => muscleGroup.name)
     .filter((muscleGroup, index, array) => array.indexOf(muscleGroup) === index)
   

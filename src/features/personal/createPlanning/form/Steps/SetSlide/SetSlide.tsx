@@ -1,11 +1,12 @@
 import React from 'react'
 import AddSetButton from '../AddSetButton/AddSetButton'
 import { useSetSlideContext } from './SetSlideContext'
-import ExercisesSelect from '../ExercisesSelect'
-import ExerciseTechniquesRadios from '../ExerciseTechniquesRadios'
+import MovementsSelect from './ExercisesSelects/MovementsSelect'
+import ExerciseTechniquesRadios from './ExerciseTechniquesRadios'
 import GoToTrainingCheckoutButton from '../GoToTrainingCheckoutButton/GoToTrainingCheckoutButton'
-import TimesAndRepetitions from '../TimesAndRepetitions'
+import TimesAndRepetitions from './TimesAndRepetitions'
 import styles from '../styles.module.scss'
+import ExercisesSelects from './ExercisesSelects/ExercisesSelects'
 
 const SetSlide = () => {
   const { training, setIndex, lastSetIndex, lastTrainingIndex } = useSetSlideContext();
@@ -14,7 +15,7 @@ const SetSlide = () => {
     <div className={styles.formWrapper}>
       <p className={styles.title}>Treino {training.letter}</p>
       <p className={styles.subtitle}>Série de Exercícios {setIndex + 1}</p>
-      <ExercisesSelect />
+      <ExercisesSelects />
       <TimesAndRepetitions  />
       <ExerciseTechniquesRadios />
       {

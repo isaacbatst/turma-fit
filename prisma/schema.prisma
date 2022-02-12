@@ -131,7 +131,6 @@ enum Grip {
 }
 
 model Exercise {
-  name        String
   id          Int       @id @default(autoincrement())
   movement    Movement  @relation(fields: [movementId], references: [id])
   equipment   Equipment? @relation(fields: [equipmentId], references: [id])

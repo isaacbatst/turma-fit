@@ -40,7 +40,12 @@ const personalUserWithStudentsTrainings = Prisma.validator<Prisma.UserArgs>()({
                       include: {
                         exercises: {
                           include: {
-                            muscleGroups: true
+                            movement: {
+                              include: {
+                                focusedMuscleGroup: true,
+                              }
+                            },
+                            equipment: true
                           }
                         }
                       }
@@ -62,5 +67,5 @@ export type PersonalStudentWithTrainings = NonNullable<PersonalUserWithStudentsT
 export type TrainingPlanningWithDetails = PersonalStudentWithTrainings["trainingPlannings"][number]
 export type TrainingWithSets = TrainingPlanningWithDetails["trainings"][number] 
 export type SetsWithExercises = TrainingWithSets["sets"][number];
-export type ExerciseWithMuscleGroups = SetsWithExercises["exercises"][number] 
-
+export type ExerciseWithDetails = SetsWithExercises["exercises"][number] 
+export type MovementWithMuscleGroup = ExerciseWithDetails["movement"]

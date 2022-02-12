@@ -3,7 +3,7 @@ import { MdCheck } from 'react-icons/md';
 import IconButtonWithText from '../../../../../../components/common/IconButtonWithText';
 import { useAppDispatch } from '../../../../../../store/hooks';
 import { saveSetAction } from '../../slice';
-import { useSwiperContext } from '../contexts/SwiperContext';
+import { useSwiperContext } from '../SwiperContext';
 import { useSetSlideContext } from '../SetSlide/SetSlideContext';
 
 const GoToTrainingCheckoutButton: React.FC = () => {

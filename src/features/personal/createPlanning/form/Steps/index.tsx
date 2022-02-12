@@ -1,7 +1,7 @@
 import { SwiperSlide } from "swiper/react";
 import { useAppSelector } from "../../../../../store/hooks";
 import { SetSlideContextProvider } from "./SetSlide/SetSlideContext";
-import { SwiperContextProvider } from "./contexts/SwiperContext";
+import { SwiperContextProvider } from "./SwiperContext";
 import CreateTrainingSwiper from "./CreateTrainingSwiper/CreateTrainingSwiper";
 import SetSlide from "./SetSlide/SetSlide";
 import PlanningTypesRadios from "./PlanningTypeRadios/PlanningTypesRadios";

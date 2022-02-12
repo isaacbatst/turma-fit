@@ -16,7 +16,7 @@ const TrainingCheckout: React.FC = () => {
           training.sets
             .map(set => {
               const exercises = set.exercises
-                .map(exercise => exercise.name)
+                .map(exercise => exercise.movement.name)
               
               return <div 
                 className={styles.checkoutItem} 
@@ -31,7 +31,7 @@ const TrainingCheckout: React.FC = () => {
         {
           training.sets
             .flatMap(set => set.exercises)
-            .flatMap(exercise => exercise.muscleGroups)
+            .flatMap(exercise => exercise.movement.focusedMuscleGroup)
             .map(muscleGroup => muscleGroup.name)
             .filter((muscleGroup, index, array) => array.indexOf(muscleGroup) === index)
             .map(muscleGroup => (
