@@ -1,0 +1,41 @@
+@use '../common/colors.module';
+
+.wrap {
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px 0;
+    font-size: 20px;
+
+    label {
+      margin-bottom: 20px;
+    }
+
+    input {
+      margin-bottom: 20px;
+      font-size: 16px;
+      padding: 5px;
+    }
+
+    button {
+      background-color: white;
+      display: flex;
+      align-items: center;
+      padding: 15px 20px;
+      border:1px solid colors.$black;
+      cursor: pointer;
+      font-size: 16px;
+
+      svg {
+        font-size: 20px;
+        margin-left: 8px;
+      }
+
+      &:hover {
+        background-color: colors.$black;
+        color: white;
+      }
+    }
+  }
+}
