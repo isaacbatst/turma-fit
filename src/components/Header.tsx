@@ -15,14 +15,14 @@ const Header: React.FC<Props> = ({ title = 'Turma Fit' }) => {
   return (
     <header className={styles.header}>
       <div className={styles.content}>
-        <h1>{ title }</h1>
+        <h1>{title}</h1>
         <div className={styles.right}>
-          { session && (
+          {session && (
             <>
-                <div className={styles.pictureAndName}>
-                {session.user.image && <Image 
-                  src={session.user?.image || ''} 
-                  alt='Foto de perfil' 
+              <div className={styles.pictureAndName}>
+                {session.user.image && <Image
+                  src={session.user?.image || ''}
+                  alt='Foto de perfil'
                   height={40}
                   width={40}
                 />}
@@ -41,7 +41,7 @@ const Header: React.FC<Props> = ({ title = 'Turma Fit' }) => {
                 <MdLogout />
               </button>
             </>
-          ) }
+          )}
 
         </div>
       </div>
