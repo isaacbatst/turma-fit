@@ -19,14 +19,14 @@ const Header: React.FC<Props> = ({ title = 'Turma Fit' }) => {
         <div className={styles.right}>
           { session && (
             <>
-              <div className={styles.pictureAndName}>
-                <Image 
+                <div className={styles.pictureAndName}>
+                {session.user.image && <Image 
                   src={session.user?.image || ''} 
                   alt='Foto de perfil' 
                   height={40}
                   width={40}
-                />
-                <span>Olá, {session.user?.name}!</span>
+                />}
+                {session.user.name && <span>Olá, {session.user?.name}!</span>}
               </div>
               {
                 session.user.isPersonal && (
