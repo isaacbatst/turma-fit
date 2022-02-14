@@ -14,7 +14,7 @@ export async function middleware(req: NextRequest, ev: NextFetchEvent) {
   }
 
   if(session && isHome(req)){
-    return redirectTo('/personal/stuudents', req);
+    return redirectTo('/personal/students', req);
   }
 
   return NextResponse.next();
