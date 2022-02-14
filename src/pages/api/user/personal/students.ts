@@ -10,7 +10,7 @@ const handler: NextApiHandler = async (req, res) => {
     return listStudents(req, res)
   }
 
-  res.status(405)
+  res.status(405).end();
 }
 
 const createStudent: NextApiHandler = async (req, res) => {
