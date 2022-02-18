@@ -1,14 +1,14 @@
 import React from 'react';
 import { MdCheck } from 'react-icons/md';
+import { useSwiper } from 'swiper/react';
 import IconButtonWithText from '../../../../../../components/common/IconButtonWithText';
 import { useAppDispatch } from '../../../../../../store/hooks';
 import { saveSetAction } from '../../slice';
-import { useSwiperContext } from '../SwiperContext';
 import { useSetSlideContext } from '../SetSlide/SetSlideContext';
 
 const GoToTrainingCheckoutButton: React.FC = () => {
-  const { setShouldMoveToNext } = useSwiperContext();
   const { training, trainingIndex, setIndex } = useSetSlideContext()
+  const swiper = useSwiper();
   const dispatch = useAppDispatch();
 
   return (
@@ -21,7 +21,7 @@ const GoToTrainingCheckoutButton: React.FC = () => {
           trainingIndex,
           setIndex
         }))
-        setShouldMoveToNext(true)
+        swiper.slideNext();
       }}
     />
   )

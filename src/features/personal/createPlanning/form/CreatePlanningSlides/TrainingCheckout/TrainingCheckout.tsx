@@ -4,7 +4,7 @@ import { useTrainingCheckoutContext } from './TrainingCheckoutContext'
 import styles from './TrainingCheckout.module.scss'
 
 const TrainingCheckout: React.FC = () => {
-  const { training } = useTrainingCheckoutContext();  
+  const { training } = useTrainingCheckoutContext();
 
   return (
     <div className={styles.checkoutWrapper}>
@@ -16,13 +16,14 @@ const TrainingCheckout: React.FC = () => {
             .filter(set => set.exercises.every(exercise => exercise.movement))
             .map(set => {
               const exercises = set.exercises
-                .filter((exercise) => exercise.movement)
                 .map(exercise => {
                   return exercise.movement?.name
                 })
-              
-              return <div 
-                className={styles.checkoutItem} 
+
+              console.log('id', set.id)
+
+              return <div
+                className={styles.checkoutItem}
                 key={set.id}>
                 {`${exercises.join(' + ')} - ${set.times}x${set.repetitions} ${set.exerciseTechnique && `(${set.exerciseTechnique.name})`}`}
               </div>
@@ -34,12 +35,17 @@ const TrainingCheckout: React.FC = () => {
         {
           training.sets
             .flatMap(set => set.exercises)
-            .flatMap(exercise => exercise.movement?.focusedMuscleGroup)
+            .flatMap(exercise => exercise.movement)
+            .filter(movement => movement)
+            .flatMap(movement => movement?.focusedMuscleGroup)
             .map(muscleGroup => muscleGroup?.name)
             .filter((muscleGroup, index, array) => array.indexOf(muscleGroup) === index)
-            .map(muscleGroup => (
-              <div key={muscleGroup} className={styles.checkoutItem}>{muscleGroup}</div>
-            ))
+            .map(muscleGroup => {
+
+              return (
+                <div key={muscleGroup} className={styles.checkoutItem}>{muscleGroup}</div>
+              )
+            })
         }
       </div>
       <AerobicInput training={training} />

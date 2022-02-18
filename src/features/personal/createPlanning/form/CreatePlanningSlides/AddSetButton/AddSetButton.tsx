@@ -1,15 +1,15 @@
 import React from 'react'
 import { MdOutlineAdd } from 'react-icons/md';
+import { useSwiper } from 'swiper/react';
 import IconButtonWithText from '../../../../../../components/common/IconButtonWithText';
 import { useAppDispatch } from '../../../../../../store/hooks';
 import { addSetAction, saveSetAction } from '../../slice';
 import { useSetSlideContext } from '../SetSlide/SetSlideContext';
-import { useSwiperContext } from '../SwiperContext';
 
 const AddSetButton: React.FC = () => {
   const { setIndex, training, trainingIndex } = useSetSlideContext();
-  const { setShouldMoveToNext } = useSwiperContext()
   const dispatch = useAppDispatch();
+  const swiper = useSwiper();
 
   return (
     <IconButtonWithText
@@ -22,7 +22,7 @@ const AddSetButton: React.FC = () => {
           setIndex
         }))
         dispatch(addSetAction(training.id))
-        setShouldMoveToNext(true);
+        swiper.slideNext();
       }}
     />
   )
