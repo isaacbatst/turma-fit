@@ -1,8 +1,10 @@
+import { useAppSelector } from '../../../../../../store/hooks';
 import { useSetSlideContext } from '../SetSlide/SetSlideContext';
 import badge from './styles.module.scss';
 
 const MuscleGroupsPreview: React.FC = () => {
-  const { training, setIndex } = useSetSlideContext();
+  const { trainingIndex, setIndex } = useSetSlideContext();
+  const training = useAppSelector((state) => state.personal.createPlanning.form.trainings[trainingIndex]);
 
   const muscleGroups = training.sets[setIndex].exercises
     .flatMap(exercise => exercise.movement?.focusedMuscleGroup)

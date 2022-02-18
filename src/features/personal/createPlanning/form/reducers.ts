@@ -1,7 +1,7 @@
 import { v4 as uuid } from 'uuid';
 import { CreateTrainingPlanningState, ExerciseBeingCreated, SetBeingCreated, TrainingBeingCreated } from "./types";
 import update from 'immutability-helper';
-import { Equipment, Grip, TrainingPlanningType } from "@prisma/client";
+import { Equipment, ExerciseTechnique, Grip, TrainingPlanningType } from "@prisma/client";
 import { letterMap } from '../../../../lib/letters';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { MovementWithMuscleGroup } from '../../../../types/schema';
@@ -184,6 +184,17 @@ export const setRepetitions = (state: CreateTrainingPlanningState, action: Paylo
     .sets[setIndex].repetitions = repetitions
 }
 
+interface SetTechniquePayload extends SetSetKeyPayload {
+  exerciseTechnique: ExerciseTechnique | null
+}
 
+
+export const setTechnique = (state: CreateTrainingPlanningState, action: PayloadAction<SetTechniquePayload>) => {
+  const { exerciseTechnique, setIndex, trainingIndex } = action.payload;
+
+  state
+    .trainings[trainingIndex]
+    .sets[setIndex].exerciseTechnique = exerciseTechnique
+}
 
 

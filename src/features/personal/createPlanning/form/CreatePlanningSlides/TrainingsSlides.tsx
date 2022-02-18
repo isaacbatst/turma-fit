@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react'
 import { SwiperSlide, useSwiper } from 'swiper/react'
 import { useAppSelector } from '../../../../../store/hooks'
-import SetSlide from './SetSlide/SetSlide'
-import { SetSlideContextProvider } from './SetSlide/SetSlideContext'
 import SetsSlides from './SetsSlides'
 import TrainingCheckout from './TrainingCheckout/TrainingCheckout'
 import { TrainingCheckoutContextProvider } from './TrainingCheckout/TrainingCheckoutContext'

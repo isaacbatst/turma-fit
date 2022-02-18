@@ -8,6 +8,7 @@ import TimesAndRepetitions from './TimesAndRepetitions/TimesAndRepetitions'
 import styles from '../styles.module.scss'
 import ExercisesSelects from './ExercisesSelects/ExercisesSelects'
 import { useAppSelector } from '../../../../../../store/hooks'
+import MuscleGroupsPreview from '../MuscleGroupsPreview/MuscleGroupPreview'
 
 const SetSlide = () => {
   const { trainingIndex, setIndex } = useSetSlideContext();
@@ -21,6 +22,7 @@ const SetSlide = () => {
       <p className={styles.title}>Treino {training.letter}</p>
       <p className={styles.subtitle}>Série de Exercícios {setIndex + 1}</p>
       <ExercisesSelects />
+      <MuscleGroupsPreview  />
       <TimesAndRepetitions  />
       <ExerciseTechniquesRadios />
       {

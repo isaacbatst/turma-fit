@@ -37,7 +37,7 @@ const TrainingCheckout: React.FC = () => {
                 {
                   set.exerciseTechnique && (
                     <span className="exerciseTechnique">
-                      {set.exerciseTechnique.name}
+                      {` - `}{set.exerciseTechnique.name}
                     </span>
                   )
                 }

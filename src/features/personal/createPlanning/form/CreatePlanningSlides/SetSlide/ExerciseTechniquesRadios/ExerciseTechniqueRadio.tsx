@@ -1,5 +1,7 @@
 import { ExerciseTechnique } from "@prisma/client";
 import { ChangeEventHandler } from "react";
+import { useAppDispatch } from "../../../../../../../store/hooks";
+import { setTechniqueAction } from "../../../slice";
 import { useSetSlideContext } from "../SetSlideContext";
 
 type Props = {
@@ -9,13 +11,14 @@ type Props = {
 }
 
 const ExerciseTechniqueRadio: React.FC<Props> = ({ exerciseTechnique, exerciseTechnique: { id, name }, checked, setChecked }) => {
-  const { setIndex, trainingIndex, setSetTechnique: setTrainingSetsTechnique } = useSetSlideContext()
-  
+  const { setIndex, trainingIndex } = useSetSlideContext()
+  const dispatch = useAppDispatch();
+
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     const value = event.target.checked ? exerciseTechnique : null;
 
     setChecked(value);
-    setTrainingSetsTechnique(value, setIndex);
+    dispatch(setTechniqueAction({ exerciseTechnique: value, setIndex, trainingIndex }))
   }
   
   return (
