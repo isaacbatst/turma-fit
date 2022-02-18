@@ -4,12 +4,17 @@ import { useSetSlideContext } from './SetSlideContext'
 import MovementsSelect from './ExercisesSelects/MovementsSelect'
 import ExerciseTechniquesRadios from './ExerciseTechniquesRadios'
 import GoToTrainingCheckoutButton from '../GoToTrainingCheckoutButton/GoToTrainingCheckoutButton'
-import TimesAndRepetitions from './TimesAndRepetitions'
+import TimesAndRepetitions from './TimesAndRepetitions/TimesAndRepetitions'
 import styles from '../styles.module.scss'
 import ExercisesSelects from './ExercisesSelects/ExercisesSelects'
+import { useAppSelector } from '../../../../../../store/hooks'
 
 const SetSlide = () => {
-  const { training, setIndex, lastSetIndex } = useSetSlideContext();
+  const { trainingIndex, setIndex } = useSetSlideContext();
+  const training = useAppSelector((state) => state.personal.createPlanning.form.trainings[trainingIndex]);
+
+  
+  const lastSetIndex = training.sets.length - 1;
 
   return (
     <div className={styles.formWrapper}>

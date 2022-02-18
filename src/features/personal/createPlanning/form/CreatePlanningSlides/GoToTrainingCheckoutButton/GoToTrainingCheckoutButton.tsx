@@ -2,12 +2,13 @@ import React from 'react';
 import { MdCheck } from 'react-icons/md';
 import { useSwiper } from 'swiper/react';
 import IconButtonWithText from '../../../../../../components/common/IconButtonWithText';
-import { useAppDispatch } from '../../../../../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../../../../../store/hooks';
 import { saveSetAction } from '../../slice';
 import { useSetSlideContext } from '../SetSlide/SetSlideContext';
 
 const GoToTrainingCheckoutButton: React.FC = () => {
-  const { training, trainingIndex, setIndex } = useSetSlideContext()
+  const { trainingIndex, setIndex } = useSetSlideContext()
+  const training = useAppSelector((state) => state.personal.createPlanning.form.trainings[trainingIndex]);
   const swiper = useSwiper();
   const dispatch = useAppDispatch();
 
@@ -16,11 +17,6 @@ const GoToTrainingCheckoutButton: React.FC = () => {
       Icon={MdCheck}
       text="Treino"
       onClick={() => {
-        dispatch(saveSetAction({
-          set: training.sets[setIndex],
-          trainingIndex,
-          setIndex
-        }))
         swiper.slideNext();
       }}
     />

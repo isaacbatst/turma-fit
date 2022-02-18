@@ -1,6 +1,5 @@
 import React from 'react'
 import { SwiperSlide } from 'swiper/react'
-import trainings from '../../../../../pages/trainings'
 import { TrainingBeingCreated } from '../types'
 import SetSlide from './SetSlide/SetSlide'
 import { SetSlideContextProvider } from './SetSlide/SetSlideContext'
@@ -18,10 +17,7 @@ const SetsSlides: React.FC<Props> = ({ training, trainingIndex }) => {
           <SwiperSlide key={set.id}>
             <SetSlideContextProvider value={{
               setIndex,
-              training,
               trainingIndex,
-              lastSetIndex: training.sets.length - 1,
-              lastTrainingIndex: trainings.length - 1,
             }}>
               <SetSlide />
             </SetSlideContextProvider>

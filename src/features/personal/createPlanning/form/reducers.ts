@@ -153,3 +153,37 @@ export const selectGrip = (state: CreateTrainingPlanningState, action: PayloadAc
     .sets[setIndex]
     .exercises[exerciseIndex].grip = grip
 }
+
+type SetSetKeyPayload = {
+  setIndex: number,
+  trainingIndex: number,
+}
+
+
+interface SetTimesPayload extends SetSetKeyPayload {
+  times: number
+}
+
+export const setTimes = (state: CreateTrainingPlanningState, action: PayloadAction<SetTimesPayload>) => {
+  const { times, setIndex, trainingIndex } = action.payload;
+
+  state
+    .trainings[trainingIndex]
+    .sets[setIndex].times = times
+}
+
+interface SetRepetitionsPayload extends SetSetKeyPayload {
+  repetitions: string
+}
+
+export const setRepetitions = (state: CreateTrainingPlanningState, action: PayloadAction<SetRepetitionsPayload>) => {
+  const { repetitions, setIndex, trainingIndex } = action.payload;
+
+  state
+    .trainings[trainingIndex]
+    .sets[setIndex].repetitions = repetitions
+}
+
+
+
+

@@ -1,7 +1,8 @@
 import React from 'react'
-import { AerobicInput } from '../AerobicInput/AerobicInput'
+import AerobicInput  from '../AerobicInput/AerobicInput'
 import { useTrainingCheckoutContext } from './TrainingCheckoutContext'
 import styles from './TrainingCheckout.module.scss'
+import { gripMapToLabel } from '../../../../../../lib/grips'
 
 const TrainingCheckout: React.FC = () => {
   const { training } = useTrainingCheckoutContext();
@@ -10,22 +11,36 @@ const TrainingCheckout: React.FC = () => {
     <div className={styles.checkoutWrapper}>
       <h3>Checkout do Treino {training.letter}</h3>
       <div className={styles.exercises}>
-        <p className={styles.title}>Exercícios</p>
+        <p className={styles.title}>Séries de Exercícios</p>
         {
           training.sets
             .filter(set => set.exercises.every(exercise => exercise.movement))
             .map(set => {
               const exercises = set.exercises
                 .map(exercise => {
-                  return exercise.movement?.name
+                  return `
+                    ${exercise.movement?.name} 
+                    ${exercise.equipment ? exercise.equipment.name : ''}
+                    ${exercise.grip ? `Pegada ${gripMapToLabel[exercise.grip]}` : ''}
+                  `
                 })
-
-              console.log('id', set.id)
 
               return <div
                 className={styles.checkoutItem}
                 key={set.id}>
-                {`${exercises.join(' + ')} - ${set.times}x${set.repetitions} ${set.exerciseTechnique && `(${set.exerciseTechnique.name})`}`}
+                <span className='exercises'>
+                  {exercises.join(' + ')}
+                </span>
+                <span className='timesAndRepetitions'>
+                  {` - ${set.times}x${set.repetitions}`}
+                </span>
+                {
+                  set.exerciseTechnique && (
+                    <span className="exerciseTechnique">
+                      {set.exerciseTechnique.name}
+                    </span>
+                  )
+                }
               </div>
             })
         }

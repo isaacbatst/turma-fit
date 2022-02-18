@@ -6,13 +6,16 @@ type Props = {
   training: TrainingBeingCreated;
 }
 
-export const AerobicInput: React.FC<Props> = ({ training }) => {
+const AerobicInput: React.FC<Props> = ({ training }) => {
   return (
     <label className={styles.inputLabel} htmlFor={`aerobic-minutes-${training.letter}`}>
-      <span>
+      <span className={styles.title}>
         Tempo de Aeróbico (minutos)
       </span>
       <input type="number" />
     </label>
   )
 }
+
+
+export default AerobicInput
