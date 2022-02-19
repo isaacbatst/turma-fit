@@ -15,7 +15,9 @@ const StudentCard: React.FC<Props> = ({ student }) => {
   return (
     <div className={styles.card}>
       <div className={styles.imageAndName}>
-        <Image src={student.user.image || ''} height={40} width={40} alt={student.user.image || 'Foto de estudante'} />
+        {student.user.image && 
+          <Image src={student.user.image} height={40} width={40} alt={student.user.image || 'Foto de estudante'} />
+        }
         <span className={styles.studentName}>{student.user.name}</span>
       </div>
       {
