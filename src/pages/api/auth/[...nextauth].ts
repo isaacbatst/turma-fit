@@ -3,6 +3,7 @@ import GoogleProvider from 'next-auth/providers/google';
 import EmailProvider from 'next-auth/providers/email';
 import { prisma } from "../../../lib/prisma";
 import { PrismaAdapter } from "@next-auth/prisma-adapter"
+import { getSession } from "next-auth/react";
 
 export default NextAuth({
   adapter: PrismaAdapter(prisma),
@@ -47,8 +48,11 @@ export default NextAuth({
         }
       })
 
+      console.log('name on session callb', user?.name)
+
       session.user.isPersonal = !!user?.personal;
       session.user.isStudent = !!user?.student;
+      session.user.name = user?.name ?? undefined;
 
       return session;
     }

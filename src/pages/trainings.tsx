@@ -18,7 +18,7 @@ type Props = {
   })[];
 }
 
-const Trainings: NextPageWithAuth<Props> = ({ trainingPlannings }) => {
+const Trainings: NextPage<Props> = ({ trainingPlannings }) => {
   return (
     <Layout>
       <Header title="Meus treinos" />
@@ -93,7 +93,5 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
     props: {}
   };
 }
-
-Trainings.auth = true;
 
 export default Trainings;

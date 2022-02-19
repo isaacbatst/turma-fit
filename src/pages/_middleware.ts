@@ -1,39 +1,29 @@
-import { JWT } from 'next-auth/jwt';
+import { NextRequestWithAuth } from 'next-auth';
 import { withAuth } from 'next-auth/middleware';
-import { NextURL } from 'next/dist/server/web/next-url';
 import { NextRequest, NextResponse } from 'next/server';
-import { validate } from '../services/validation';
+import { createMiddlewareUrl } from '../lib/url';
+import { isApi, validate } from '../services/middleware/validation';
 
-// While NextAuth has not typed request param inside WithAuth
-type NextRequestWithAuth = NextRequest & { nextauth: { token: JWT } };
+export default withAuth(
+  function middleware(req: NextRequest) {
+    const { nextauth: { token } } = req as NextRequestWithAuth;
+    const pathToRedirect = validate({ path: req.nextUrl.pathname });
 
-export default withAuth(function middleware(req: NextRequest) {
-  const { nextauth: { token } } = req as NextRequestWithAuth;
+    if (pathToRedirect) {
+      const url = createMiddlewareUrl(pathToRedirect, req.nextUrl);
+      return NextResponse.redirect(url);
+    }
 
-  const pathToRedirect = validate({ token, path: req.nextUrl.pathname });
+    return NextResponse.next();
+  }, {
+    callbacks: {
+      authorized: async ({ token, req }) => {
+        if (isApi(req.nextUrl.pathname) || token) {
+          return true;
+        }
 
-  if(pathToRedirect){
-    return redirectTo(pathToRedirect, req.nextUrl)
-  }
-
-  return NextResponse.next();
-}, {
-  callbacks: {
-    authorized: async ({ token }) => {
-      if (token) {
-        return true;
+        return false;
       }
-
-      return false;
     }
   }
-})
-
-const redirectTo = (pathname: string, nextUrl: NextURL) => {
-  const url = nextUrl.clone()
-  url.pathname = pathname
-
-  return NextResponse.redirect(url);
-}
-
-
+)

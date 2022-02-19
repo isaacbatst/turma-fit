@@ -4,6 +4,8 @@ import { SessionProvider, signIn, useSession } from 'next-auth/react';
 import { NextComponentType, NextPageContext } from 'next';
 import { Provider } from 'react-redux';
 import { store } from '../store/index';
+import { useRouter } from 'next/router';
+import LoadingPage from '../components/common/LoadingPage';
 
 type MyAppProps = AppProps & {
   Component: NextComponentType<NextPageContext, any, {}> & {
@@ -15,35 +17,35 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: MyAppProps) 
   return (
     <SessionProvider session={session}>
       <Provider store={store}>
-        {
-          Component.auth ? (
-            <Auth>
-              <Component {...pageProps} />
-            </Auth>
-          ) : (
-            <Component {...pageProps} />
-          )
-        }
+        <RedirectHandler>
+          <Component {...pageProps} />
+        </RedirectHandler>
       </Provider>
     </SessionProvider>
   )
 }
 
-const Auth: React.FC = function ({ children }) {
-  const { data: session } = useSession({
-    required: true,
-    onUnauthenticated() {
-      signIn() 
-    }
-  })
+const RedirectHandler: React.FC = function ({ children }) {
+  const { data: session } = useSession();
+  const router = useRouter();
 
-  if (session?.user) {
-    return (<>
-      {children}
-    </>)
+  if (!session) {
+    return <LoadingPage />
   }
 
-  return <div>Loading...</div>
+  if (router.pathname !== '/fill-profile' && !session.user.name) {
+    router.push('/fill-profile');
+    return <LoadingPage />
+  }
+
+  if (router.pathname === '/fill-profile' && session.user.name) {
+    router.push('/personal/students')
+    return <LoadingPage />
+  }
+
+  return (<>
+    {children}
+  </>)
 }
 
 export default MyApp;
