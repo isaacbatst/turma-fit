@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 import CloseFormButton from './CloseFormButton/CloseFormButton';
-import CreatePlanningSteps from './Steps';
+import CreatePlanningSlides from './CreatePlanningSlides/CreatePlanningSlides';
 import styles from './styles.module.scss';
 
 type CreateTrainingPlanningFormProps = {
@@ -12,7 +12,7 @@ const CreateTrainingPlanningForm: React.FC<CreateTrainingPlanningFormProps> = ({
   return (
     <div className={styles.formWrapper}>
       <CloseFormButton setShouldShowForm={setShouldShowForm} />
-      <CreatePlanningSteps />
+      <CreatePlanningSlides />
     </div>
   )
 }
