@@ -1,9 +1,9 @@
-import { NextApiHandler } from 'next'
-import { getSession } from 'next-auth/react'
-import { prisma } from '../../../lib/prisma';
+import { NextApiHandler } from 'next';
+import { getToken } from 'next-auth/jwt';
+import { getByEmail, update } from '../../../models/user';
 
 const handler: NextApiHandler = async (req, res) => {
-  if(req.method === 'PATCH'){
+  if (req.method === 'PATCH') {
     return patchUser(req, res);
   }
 
@@ -11,30 +11,31 @@ const handler: NextApiHandler = async (req, res) => {
 }
 
 const patchUser: NextApiHandler = async (req, res) => {
-  const session = await getSession({ req });
+  const { name } = req.body;
+  const token = await getToken({ req });
 
-  if(!session) {
-    return res.status(401).end()
+  if (!token || !token.email) {
+    return res.status(401).end();
   }
 
-  const { name } = req.body;
-
-  if(!name || name.trim().length === 0){
+  if (!name || name.trim().length === 0) {
     return res.status(400).end();
   }
 
   try {
-    await prisma.user.update({
-      where: {
-        email: session.user.email
-      }, 
-      data: {
-        name
-      }
+    const user = await getByEmail(token.email);
+
+    if(!user){
+      return res.status(404).end();
+    }
+
+    const updated = await update({
+      ...user,
+      name
     })
 
-    return res.status(200).end();
-  } catch(err) {
+    return res.status(200).json(updated);
+  } catch (err) {
     return res.status(500).end();
   }
 }
