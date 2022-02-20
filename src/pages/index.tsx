@@ -6,7 +6,7 @@ import Header from '../components/Header'
 import NavMenu from '../components/home/NavMenu'
 import { NextPageWithAuth } from '../types/page'
 
-const Home: NextPageWithAuth = () => {
+const Home: NextPage = () => {
   return (
     <Layout>
       <div className={styles.wrap}>
@@ -21,7 +21,5 @@ const Home: NextPageWithAuth = () => {
     </Layout>
   )
 }
-
-Home.auth = true;
 
 export default Home;

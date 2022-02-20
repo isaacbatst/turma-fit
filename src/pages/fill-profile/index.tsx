@@ -14,18 +14,24 @@ const FillProfile: NextPageWithAuth = () => {
   const [name, setName] = useState("");
   const router = useRouter()
   const handleSubmit:FormEventHandler<HTMLFormElement> = async (event) => {
-    event.preventDefault();
+    try {
+      event.preventDefault();
     
-    if(name.trim().length === 0){
-      return
-    }
+      if(name.trim().length === 0){
+        return
+      }
 
-    const response = await axios.patch<User>('/api/user', {
-      name
-    });
+      const response = await axios.patch<User>('/api/user', {
+        name
+      });
 
-    if(response.status === 200) {
-      router.push('/')
+      if(response.status === 200) {
+        // router.push('/personal/students') is not triggering session callback
+        // so, user name is just setted is not considered
+        router.reload();
+      }
+    } catch (error) {
+      console.log(error)
     }
   }
  
