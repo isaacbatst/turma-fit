@@ -48,8 +48,6 @@ export default NextAuth({
         }
       })
 
-      console.log('name on session callb', user?.name)
-
       session.user.isPersonal = !!user?.personal;
       session.user.isStudent = !!user?.student;
       session.user.name = user?.name ?? undefined;
