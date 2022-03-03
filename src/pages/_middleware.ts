@@ -6,7 +6,6 @@ import { isApi, validate } from '../services/middleware/validation';
 
 export default withAuth(
   function middleware(req: NextRequest) {
-    const { nextauth: { token } } = req as NextRequestWithAuth;
     const pathToRedirect = validate({ path: req.nextUrl.pathname });
 
     if (pathToRedirect) {
