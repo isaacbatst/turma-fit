@@ -1,7 +1,8 @@
 import { User } from "@prisma/client";
-import { prisma } from "../lib/prisma";
+import { prisma } from "../../lib/prisma";
 
-export async function update(user: User){
+
+export async function update(user: Partial<User>){
   const updated = await prisma.user.update({
     where: {
       email: user.email || ''

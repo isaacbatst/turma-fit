@@ -1,4 +1,5 @@
 import { NextApiHandler } from 'next'
+import { getToken, JWT } from 'next-auth/jwt'
 import { prisma } from '../../../../lib/prisma'
 
 const handler: NextApiHandler = async (req, res) => {
@@ -58,11 +59,13 @@ const createStudent: NextApiHandler = async (req, res) => {
 }
 
 const listStudents: NextApiHandler = async (req, res) => {
-  const { email } = req.query
+  const token = await getToken({ req });
+
+  const { email } = token as JWT;
 
   const user = await prisma.user.findUnique({
     where: {
-      email: email.toString()
+      email: (email as string).toString()
     },
     include: {
       personal: {
