@@ -19,7 +19,7 @@ const PersonalAdmin: NextPage = () => {
   function handleTrainMyself() {
     mutate('/api/user/personal/students', async (students: PersonalStudentWithTrainings[]) => {
       const { data: newStudent } = await axios.post<PersonalStudentWithTrainings>('/api/user/personal/students', {
-        email: session?.user.email
+        studentEmail: session?.user.email
       })
 
       return [...students, newStudent];

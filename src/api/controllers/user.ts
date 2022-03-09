@@ -7,12 +7,15 @@ export const patchUserHandler: NextApiHandler = async (req, res) => {
 
   const token = await getToken({ req }) as JWT;
 
+  if(!token.email){
+    return res.status(401).end();
+  }
+
   if (!name || name.trim().length === 0) {
     return res.status(400).end();
   }
 
-  // as string, because its already handled on middleware
-  const { error, data } = await patchUser(token.email as string, { name });
+  const { error, data } = await patchUser(token.email, { name });
 
   if(error) {
     res.status(error.status).json({
