@@ -2,7 +2,7 @@ import { NextRequestWithAuth } from 'next-auth';
 import { withAuth } from 'next-auth/middleware';
 import { NextRequest, NextResponse } from 'next/server';
 import { createMiddlewareUrl } from '../lib/url';
-import { isApi, validate } from '../services/middleware/validation';
+import { isApi, validate } from '../middlewares/validation';
 
 export default withAuth(
   function middleware(req: NextRequest) {
