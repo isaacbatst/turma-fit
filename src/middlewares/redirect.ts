@@ -1,13 +1,9 @@
-type Params = {
-  path: string,
-}
-const isThisPath = (path: string, reqPath: string) => reqPath === path
-export const isApi = (path: string) => path.includes('/api/')
+import { isApi } from "../lib/url";
 
 export const pathShouldBeRedirected = (path: string) => {
   if(isApi(path)) return
 
-  if (isThisPath('/', path)) {
+  if (path === "/") {
     return '/personal/students';
   }
 }

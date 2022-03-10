@@ -1,7 +1,7 @@
 import { withAuth } from 'next-auth/middleware';
 import { NextRequest, NextResponse } from 'next/server';
-import { createMiddlewareUrl } from '../lib/url';
-import { isApi, pathShouldBeRedirected } from '../middlewares/redirect';
+import { createMiddlewareUrl, isApi } from '../lib/url';
+import { pathShouldBeRedirected } from '../middlewares/redirect';
 
 export default withAuth(
   function middleware(req: NextRequest) {
