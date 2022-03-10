@@ -27,7 +27,7 @@ export async function create(studentEmail: string, personalId: number) {
   return created;
 }
 
-export async function getByPersonalEmail(email: string){
+export async function getStudentsByPersonalEmail(email: string){
   const user = await prisma.user.findUnique({
     where: {
       email
@@ -51,4 +51,17 @@ export async function getByPersonalEmail(email: string){
   })
 
   return user?.personal?.students
+}
+
+export async function getStudentById(studentId: string){
+  const student = await prisma.student.findUnique({
+    where: {
+      id: Number(studentId)
+    },
+    include: {
+      user: true
+    }
+  })
+
+  return student
 }
