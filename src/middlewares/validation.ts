@@ -1,5 +1,3 @@
-import { JWT } from "next-auth/jwt"
-
 type ValidateParams = {
   path: string,
 }
