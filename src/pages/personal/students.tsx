@@ -8,7 +8,7 @@ import StudentCard from "../../components/personal/students/StudentCard";
 import useUser from "../../lib/swr/usePersonalStudents";
 import containers from '../../styles/common/containers.module.scss';
 import styles from '../../styles/pages/personal/students.module.scss';
-import { PersonalStudentWithTrainings } from "../../types/schema";
+import { PersonalStudentWithTrainings } from "../../../types/schema";
 
 const PersonalAdmin: NextPage = () => {
   const { data: session } = useSession();

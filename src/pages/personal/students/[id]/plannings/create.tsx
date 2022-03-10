@@ -11,7 +11,7 @@ import usePersonalStudent from "../../../../../lib/swr/usePersonalStudent";
 import { useAppDispatch } from "../../../../../store/hooks";
 import containers from '../../../../../styles/common/containers.module.scss';
 import styles from '../../../../../styles/pages/personal/students/plannings.module.scss';
-import { NextPageWithAuth } from "../../../../../types/page";
+import { NextPageWithAuth } from "../../../../../../types/page";
 
 const CreatePlannings: NextPageWithAuth = () => {
   const router = useRouter();
