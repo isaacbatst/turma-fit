@@ -8,21 +8,30 @@ export const createStudent = async (personalEmail: string, studentEmail: string)
     return null
   }
 
-  const student = await StudentRepository.getStudentByEmailWithUserAndPlannings(studentEmail);
+  const student = await StudentRepository.getStudentByEmail(studentEmail, {
+    trainingPlannings: true,
+    user: true
+  });
 
   if(student) return student;
 
   const created = await StudentRepository.createStudentConnectedToPersonal(studentEmail, personal.id)
 
   const studentWithUserAndTrainingPlanning = await 
-    StudentRepository.getStudentByIdWithUserAndPlannings(created.id)
+    StudentRepository.getStudentById(created.id, {
+      trainingPlannings: true,
+      user: true
+    })
 
   return studentWithUserAndTrainingPlanning;
 }
 
 export const getStudent = async (requesterEmail: string, studentId: string) => {
   const student = await StudentRepository
-    .getStudentByIdAndPersonalEmailWithUserAndPlannings(Number(studentId), requesterEmail)
+    .getStudentByIdAndPersonalEmail(Number(studentId), requesterEmail, {
+      trainingPlannings: true,
+      user: true
+    })
   
   if(!student){
     return null;
@@ -31,8 +40,11 @@ export const getStudent = async (requesterEmail: string, studentId: string) => {
   return student
 }
 
-export const getPersonalStudentsWithTrainings = async (personalEmail: string) => {
-  const students = await StudentRepository.getStudentsByPersonalEmailWithUserAndPlannings(personalEmail);
+export const getPersonalStudents = async (personalEmail: string) => {
+  const students = await StudentRepository.getStudentsByPersonalEmail(personalEmail, {
+    trainingPlannings: true,
+    user: true
+  });
 
   return students;
 }

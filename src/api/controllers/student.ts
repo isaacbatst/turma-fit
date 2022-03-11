@@ -30,7 +30,7 @@ export const getPersonalStudents: NextApiHandler = async (req, res) => {
     return res.status(401).end()
   }
 
-  const students = await StudentService.getPersonalStudentsWithTrainings(email);
+  const students = await StudentService.getPersonalStudents(email);
 
   return res.status(200).json(students);
 }
