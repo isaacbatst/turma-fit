@@ -9,10 +9,7 @@ export const patchUser = async (email: string, updatedData: PatchUserUpdatedData
 
   if (!user) {
     return {
-      error: {
-        message: 'user not found',
-        status: 404,
-      }
+      error: 'USER_NOT_FOUND'
     }
   }
 

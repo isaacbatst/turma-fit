@@ -1,6 +1,6 @@
 import { NextApiHandler } from "next";
 import { getToken, JWT } from "next-auth/jwt";
-import { patchUser } from '../services/user';
+import * as UserService from '../services/user';
 
 export const patchUserHandler: NextApiHandler = async (req, res) => {
   try {
@@ -16,16 +16,14 @@ export const patchUserHandler: NextApiHandler = async (req, res) => {
       return res.status(400).end();
     }
 
-    const { error, data } = await patchUser(token.email, { name });
+    const { error, data } = await UserService.patchUser(token.email, { name });
 
-    if (error) {
-      res.status(error.status).json({
-        message: error.message
-      })
-    }
+    if (error || !data) {
+      if(error === 'USER_NOT_FOUND'){
+        return res.status(404).end();
+      }
 
-    if (!data) {
-      res.status(500).end();
+      return res.status(500).end();
     }
 
     return res.status(200).json(data);

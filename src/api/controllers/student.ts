@@ -6,22 +6,21 @@ import * as StudentService from '../services/student';
 
 export const createStudent: NextApiHandler = async (req, res) => {
   const { studentEmail } = req.body
+
   const token = await getToken({ req })
   const { email } = token as JWT;
 
   if (!email) {
-    return res.status(401).end()
+    return res.status(401).end();
   }
 
-  const personal = await PersonalModel.getByUserEmail(email);
+  const student = await StudentService.createStudent(email, studentEmail);
 
-  if (!personal) {
-    return res.status(422).json({ message: 'personal not found' })
+  if(!student){
+    res.status(422).end();
   }
 
-  const student = StudentModel.create(studentEmail, personal.id)
-
-  res.status(200).json(student)
+  res.status(201).json(student)
 }
 
 export const listStudents: NextApiHandler = async (req, res) => {
@@ -33,11 +32,7 @@ export const listStudents: NextApiHandler = async (req, res) => {
     return res.status(401).end()
   }
 
-  const students = await StudentModel.getStudentsByPersonalEmail(email)
-
-  if (!students) {
-    return res.status(422).json({ message: 'personal or user not found' })
-  }
+  const students = StudentService.getPersonalStudents(email);
 
   res.status(200).json(students);
 }
@@ -48,10 +43,10 @@ export const getStudent: NextApiHandler = async (req, res) => {
     const token = await getToken({ req });
     const { email } = token as JWT
 
-    const student = await StudentService.getStudent(email, id.toString());
+    const student = await StudentService.getStudent(email as string, id.toString());
   
     if(!student){
-      return res.json({ error: 'student does not exist or is not related to personal' })
+      return res.status(404).json({ error: 'student does not exist or is not related to personal]' })
     }
 
     return res.json(student);

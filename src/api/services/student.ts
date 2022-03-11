@@ -1,35 +1,36 @@
-import * as StudentModel from '../models/student'
-import * as PersonalModel from '../models/personal'
-import { Student, User } from '@prisma/client';
+import * as PersonalModel from '../models/personal';
+import * as StudentModel from '../models/student';
 
-export const getStudent = async (userEmail: string | null | undefined, studentId: string) => {
-  if(!userEmail){
-    return null;
+export const createStudent = async (personalEmail: string, studentEmail: string) => {
+  const personal = await PersonalModel.getByEmail(personalEmail);
+
+  if (!personal) {
+    return null
   }
 
-  const student = await StudentModel.getStudentById(studentId);
+  const student = StudentModel.getStudentByEmail(studentEmail);
 
-  if(!student || !userHasPermission(student, userEmail)){
+  if(student) return student;
+
+  const created = StudentModel.create(studentEmail, personal.id)
+
+  return created;
+}
+
+export const getStudent = async (requesterEmail: string, studentId: string) => {
+  const students = await StudentModel.getStudentsByPersonalEmail(requesterEmail);
+
+  const student = students.find(student => student.id === Number(studentId))
+  
+  if(!student){
     return null;
   }
   
   return student
 }
 
-async function userHasPermission(student: Student & { user: User }, userEmail: string){
-  if(student.user.email === userEmail){
-    return true;
-  }
+export const getPersonalStudents = async (personalEmail: string) => {
+  const students = await StudentModel.getStudentsByPersonalEmail(personalEmail)
 
-  if(!student.personalId){
-    return false
-  }
-
-  const personal = await PersonalModel.getById(student.personalId);
-
-  if(!personal || personal.user.email !== userEmail) {
-    return false
-  }
-
-  return true;
-} 
+  return students
+}

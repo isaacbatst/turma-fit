@@ -4,8 +4,13 @@ export async function create(studentEmail: string, personalId: number) {
   const created = await prisma.student.create({
     data: {
       user: {
-        connect: {
-          email: studentEmail
+        connectOrCreate: {
+          create: {
+            email: studentEmail
+          },
+          where: {
+            email: studentEmail
+          }
         }
       },
       personal: {
@@ -14,43 +19,23 @@ export async function create(studentEmail: string, personalId: number) {
         }
       }
     },
-    select: {
-      user: true,
-      trainingPlannings: {
-        include: {
-          type: true,
-        }
-      },
-    }
   })
 
   return created;
 }
 
 export async function getStudentsByPersonalEmail(email: string){
-  const user = await prisma.user.findUnique({
+  const students = await prisma.student.findMany({
     where: {
-      email
-    },
-    include: {
       personal: {
-        include: {
-          students: {
-            include: {
-              trainingPlannings: {
-                include: {
-                  type: true,
-                }
-              },
-              user: true
-            }
-          }
+        user: {
+          email
         }
       }
     }
   })
 
-  return user?.personal?.students
+  return students
 }
 
 export async function getStudentById(studentId: string){
@@ -58,9 +43,18 @@ export async function getStudentById(studentId: string){
     where: {
       id: Number(studentId)
     },
-    include: {
-      user: true
-    }
+  })
+
+  return student
+}
+
+export async function getStudentByEmail(studentEmail: string){
+  const student = await prisma.student.findFirst({
+    where: {
+      user: {
+        email: studentEmail
+      }
+    },
   })
 
   return student
