@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 import { prisma } from "../../lib/prisma";
 
 export async function create(studentEmail: string, personalId: number) {
@@ -24,7 +25,7 @@ export async function create(studentEmail: string, personalId: number) {
   return created;
 }
 
-export async function getStudentsByPersonalEmail(email: string){
+export async function getStudentsByPersonalEmail(email: string, include?: Prisma.StudentInclude){
   const students = await prisma.student.findMany({
     where: {
       personal: {
@@ -32,13 +33,31 @@ export async function getStudentsByPersonalEmail(email: string){
           email
         }
       }
-    }
+    }, include
   })
 
   return students
 }
 
-export async function getStudentById(studentId: string){
+export async function getStudentsByIdAndPersonalEmail(id: number, personalEmail: string, include?: Prisma.StudentInclude){
+  const student = await prisma.student.findFirst({
+    where: {
+      AND: {
+        id,
+        personal: {
+          user: {
+            email: personalEmail
+          }
+        }
+      }
+    },
+    include
+  })
+
+  return student;
+}
+
+export async function getStudentById(studentId: string, include?: Prisma.StudentInclude){
   const student = await prisma.student.findUnique({
     where: {
       id: Number(studentId)
@@ -48,7 +67,7 @@ export async function getStudentById(studentId: string){
   return student
 }
 
-export async function getStudentByEmail(studentEmail: string){
+export async function getStudentByEmail(studentEmail: string, include?: Prisma.StudentInclude){
   const student = await prisma.student.findFirst({
     where: {
       user: {

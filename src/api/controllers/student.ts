@@ -23,7 +23,7 @@ export const createStudent: NextApiHandler = async (req, res) => {
   res.status(201).json(student)
 }
 
-export const listStudents: NextApiHandler = async (req, res) => {
+export const getPersonalStudents: NextApiHandler = async (req, res) => {
   const token = await getToken({ req });
 
   const { email } = token as JWT;
@@ -32,7 +32,7 @@ export const listStudents: NextApiHandler = async (req, res) => {
     return res.status(401).end()
   }
 
-  const students = StudentService.getPersonalStudents(email);
+  const students = await StudentService.getPersonalStudentsWithTrainings(email);
 
   res.status(200).json(students);
 }
@@ -43,7 +43,7 @@ export const getStudent: NextApiHandler = async (req, res) => {
     const token = await getToken({ req });
     const { email } = token as JWT
 
-    const student = await StudentService.getStudent(email as string, id.toString());
+    const student = await StudentService.getStudent(email as string, id as string);
   
     if(!student){
       return res.status(404).json({ error: 'student does not exist or is not related to personal]' })

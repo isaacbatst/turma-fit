@@ -1,5 +1,5 @@
 import { NextApiHandler } from 'next'
-import { createStudent, listStudents } from '../../../../api/controllers/student'
+import { createStudent, getPersonalStudents } from '../../../../api/controllers/student'
 
 const handler: NextApiHandler = async (req, res) => {
   if(req.method === 'POST'){
@@ -7,7 +7,7 @@ const handler: NextApiHandler = async (req, res) => {
   }
 
   if(req.method === 'GET'){
-    return listStudents(req, res)
+    return getPersonalStudents(req, res)
   }
 
   res.status(405).end();

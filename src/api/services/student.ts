@@ -1,5 +1,6 @@
 import * as PersonalModel from '../models/personal';
 import * as StudentModel from '../models/student';
+import * as TrainingPlanningModel from '../models/trainingPlanning';
 
 export const createStudent = async (personalEmail: string, studentEmail: string) => {
   const personal = await PersonalModel.getByEmail(personalEmail);
@@ -18,9 +19,10 @@ export const createStudent = async (personalEmail: string, studentEmail: string)
 }
 
 export const getStudent = async (requesterEmail: string, studentId: string) => {
-  const students = await StudentModel.getStudentsByPersonalEmail(requesterEmail);
-
-  const student = students.find(student => student.id === Number(studentId))
+  const student = StudentModel.getStudentsByIdAndPersonalEmail(Number(studentId), requesterEmail, {
+    user: true,
+    trainingPlannings: true
+  })
   
   if(!student){
     return null;
@@ -29,8 +31,11 @@ export const getStudent = async (requesterEmail: string, studentId: string) => {
   return student
 }
 
-export const getPersonalStudents = async (personalEmail: string) => {
-  const students = await StudentModel.getStudentsByPersonalEmail(personalEmail)
+export const getPersonalStudentsWithTrainings = async (personalEmail: string) => {
+  const students = await StudentModel.getStudentsByPersonalEmail(personalEmail, { 
+    trainingPlannings: true, 
+    user: true 
+  });
 
-  return students
+  return students;
 }
