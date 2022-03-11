@@ -17,10 +17,10 @@ export const createStudent: NextApiHandler = async (req, res) => {
   const student = await StudentService.createStudent(email, studentEmail);
 
   if(!student){
-    res.status(422).end();
+    return res.status(422).end();
   }
 
-  res.status(201).json(student)
+  return res.status(201).json(student)
 }
 
 export const getPersonalStudents: NextApiHandler = async (req, res) => {
