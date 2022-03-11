@@ -1,6 +1,5 @@
 import * as PersonalModel from '../models/personal';
 import * as StudentModel from '../models/student';
-import * as TrainingPlanningModel from '../models/trainingPlanning';
 
 export const createStudent = async (personalEmail: string, studentEmail: string) => {
   const personal = await PersonalModel.getByEmail(personalEmail);
@@ -9,11 +8,14 @@ export const createStudent = async (personalEmail: string, studentEmail: string)
     return null
   }
 
-  const student = StudentModel.getStudentByEmail(studentEmail);
+  const student = await StudentModel.getStudentByEmail(studentEmail);
 
   if(student) return student;
 
-  const created = StudentModel.create(studentEmail, personal.id)
+  const created = await StudentModel.create(studentEmail, personal.id, {
+    trainingPlannings: true,
+    user: true
+  })
 
   return created;
 }

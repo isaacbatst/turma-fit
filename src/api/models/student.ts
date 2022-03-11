@@ -1,7 +1,7 @@
 import { Prisma } from "@prisma/client";
 import { prisma } from "../../lib/prisma";
 
-export async function create(studentEmail: string, personalId: number) {
+export async function create(studentEmail: string, personalId: number, include?: Prisma.StudentInclude) {
   const created = await prisma.student.create({
     data: {
       user: {
@@ -20,6 +20,7 @@ export async function create(studentEmail: string, personalId: number) {
         }
       }
     },
+    include,
   })
 
   return created;

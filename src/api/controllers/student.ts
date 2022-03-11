@@ -1,7 +1,5 @@
-import { NextApiHandler } from "next"
-import { getToken, JWT } from "next-auth/jwt"
-import * as PersonalModel from "../models/personal"
-import * as StudentModel from "../models/student";
+import { NextApiHandler } from "next";
+import { getToken, JWT } from "next-auth/jwt";
 import * as StudentService from '../services/student';
 
 export const createStudent: NextApiHandler = async (req, res) => {
@@ -34,7 +32,7 @@ export const getPersonalStudents: NextApiHandler = async (req, res) => {
 
   const students = await StudentService.getPersonalStudentsWithTrainings(email);
 
-  res.status(200).json(students);
+  return res.status(200).json(students);
 }
 
 export const getStudent: NextApiHandler = async (req, res) => {

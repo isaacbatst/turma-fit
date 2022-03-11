@@ -5,19 +5,24 @@ import { useSWRConfig } from "swr";
 import Header from "../../components/Header";
 import Layout from "../../components/Layout";
 import StudentCard from "../../components/personal/students/StudentCard";
-import useUser from "../../lib/swr/usePersonalStudents";
+import usePersonalStudents from "../../lib/swr/usePersonalStudents";
 import containers from '../../styles/common/containers.module.scss';
 import styles from '../../styles/pages/personal/students.module.scss';
 import { PersonalStudentWithTrainings } from "../../../types/schema";
+import { Personal } from "@prisma/client";
 
 const PersonalAdmin: NextPage = () => {
   const { data: session } = useSession();
   const { mutate } = useSWRConfig();
 
-  const { students } = useUser(session?.user.email || '');
+  const { students } = usePersonalStudents(session?.user.email || '');
 
   function handleTrainMyself() {
     mutate('/api/user/personal/students', async (students: PersonalStudentWithTrainings[]) => {
+      if(!session?.user.isPersonal){
+        await axios.post<Personal>('/api/user/personal')
+      }
+
       const { data: newStudent } = await axios.post<PersonalStudentWithTrainings>('/api/user/personal/students', {
         studentEmail: session?.user.email
       })
