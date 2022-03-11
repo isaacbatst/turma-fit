@@ -1,11 +1,11 @@
-import * as UserModel from "../models/user";
+import * as UserRepository from "../repositories/user";
 
 type PatchUserUpdatedDataDTO = {
   name: string,
 }
 
 export const patchUser = async (email: string, updatedData: PatchUserUpdatedDataDTO) => {
-  const user = await UserModel.getByEmail(email);
+  const user = await UserRepository.getByEmail(email);
 
   if (!user) {
     return {
@@ -13,7 +13,7 @@ export const patchUser = async (email: string, updatedData: PatchUserUpdatedData
     }
   }
 
-  const updated = await UserModel.update({
+  const updated = await UserRepository.update({
     ...updatedData,
     email
   });

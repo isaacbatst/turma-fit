@@ -1,7 +1,7 @@
-import * as PersonalModel from '../models/personal';
+import * as PersonalRepository from '../repositories/personal';
 
 export const createPersonal = async (email: string) => {
-  const created = PersonalModel.create(email)
+  const created = PersonalRepository.create(email)
 
   return created;
 }

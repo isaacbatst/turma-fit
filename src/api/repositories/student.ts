@@ -1,32 +1,26 @@
 import { Prisma } from "@prisma/client";
 import { prisma } from "../../lib/prisma";
 
-export async function create(studentEmail: string, personalId: number, include?: Prisma.StudentInclude) {
+export async function createStudentConnectedToPersonal(studentEmail: string, personalId: number) {
   const created = await prisma.student.create({
     data: {
       user: {
-        connectOrCreate: {
-          create: {
-            email: studentEmail
-          },
-          where: {
-            email: studentEmail
-          }
-        }
+        connect: {
+          email: studentEmail
+        },
       },
       personal: {
         connect: {
-          id: personalId,
+          id: personalId
         }
       }
     },
-    include,
   })
 
   return created;
 }
 
-export async function getStudentsByPersonalEmail(email: string, include?: Prisma.StudentInclude){
+export async function getStudentsByPersonalEmailWithUserAndPlannings(email: string) {
   const students = await prisma.student.findMany({
     where: {
       personal: {
@@ -34,13 +28,17 @@ export async function getStudentsByPersonalEmail(email: string, include?: Prisma
           email
         }
       }
-    }, include
+    },
+    include: {
+      trainingPlannings: true,
+      user: true
+    }
   })
 
   return students
 }
 
-export async function getStudentsByIdAndPersonalEmail(id: number, personalEmail: string, include?: Prisma.StudentInclude){
+export async function getStudentByIdAndPersonalEmailWithUserAndPlannings(id: number, personalEmail: string) {
   const student = await prisma.student.findFirst({
     where: {
       AND: {
@@ -52,29 +50,40 @@ export async function getStudentsByIdAndPersonalEmail(id: number, personalEmail:
         }
       }
     },
-    include
+    include: {
+      trainingPlannings: true,
+      user: true
+    }
   })
 
   return student;
 }
 
-export async function getStudentById(studentId: string, include?: Prisma.StudentInclude){
+export async function getStudentByIdWithUserAndPlannings(studentId: number) {
   const student = await prisma.student.findUnique({
     where: {
       id: Number(studentId)
     },
+    include: {
+      trainingPlannings: true,
+      user: true
+    }
   })
 
   return student
 }
 
-export async function getStudentByEmail(studentEmail: string, include?: Prisma.StudentInclude){
+export async function getStudentByEmailWithUserAndPlannings(studentEmail: string) {
   const student = await prisma.student.findFirst({
     where: {
       user: {
         email: studentEmail
       }
     },
+    include: {
+      trainingPlannings: true,
+      user: true
+    }
   })
 
   return student

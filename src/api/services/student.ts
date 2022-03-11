@@ -1,30 +1,28 @@
-import * as PersonalModel from '../models/personal';
-import * as StudentModel from '../models/student';
+import * as PersonalRepository from '../repositories/personal';
+import * as StudentRepository from '../repositories/student';
 
 export const createStudent = async (personalEmail: string, studentEmail: string) => {
-  const personal = await PersonalModel.getByEmail(personalEmail);
+  const personal = await PersonalRepository.getByEmail(personalEmail);
 
   if (!personal) {
     return null
   }
 
-  const student = await StudentModel.getStudentByEmail(studentEmail);
+  const student = await StudentRepository.getStudentByEmailWithUserAndPlannings(studentEmail);
 
   if(student) return student;
 
-  const created = await StudentModel.create(studentEmail, personal.id, {
-    trainingPlannings: true,
-    user: true
-  })
+  const created = await StudentRepository.createStudentConnectedToPersonal(studentEmail, personal.id)
 
-  return created;
+  const studentWithUserAndTrainingPlanning = await 
+    StudentRepository.getStudentByIdWithUserAndPlannings(created.id)
+
+  return studentWithUserAndTrainingPlanning;
 }
 
 export const getStudent = async (requesterEmail: string, studentId: string) => {
-  const student = StudentModel.getStudentsByIdAndPersonalEmail(Number(studentId), requesterEmail, {
-    user: true,
-    trainingPlannings: true
-  })
+  const student = await StudentRepository
+    .getStudentByIdAndPersonalEmailWithUserAndPlannings(Number(studentId), requesterEmail)
   
   if(!student){
     return null;
@@ -34,10 +32,7 @@ export const getStudent = async (requesterEmail: string, studentId: string) => {
 }
 
 export const getPersonalStudentsWithTrainings = async (personalEmail: string) => {
-  const students = await StudentModel.getStudentsByPersonalEmail(personalEmail, { 
-    trainingPlannings: true, 
-    user: true 
-  });
+  const students = await StudentRepository.getStudentsByPersonalEmailWithUserAndPlannings(personalEmail);
 
   return students;
 }
