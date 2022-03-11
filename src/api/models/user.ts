@@ -22,3 +22,27 @@ export async function getByEmail(email: string){
 
   return user;
 }
+
+export async function getByStudentId(id: number){
+  const user = await prisma.user.findFirst({
+    where: {
+      student: {
+        id
+      }
+    },
+  })
+
+  return user;
+}
+
+export async function getByPersonalId(id: number){
+  const user = await prisma.user.findFirst({
+    where: {
+      personal: {
+        id
+      }
+    },
+  })
+
+  return user;
+}
