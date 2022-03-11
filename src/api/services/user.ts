@@ -1,11 +1,11 @@
-import { getByEmail, update } from "../models/user";
+import * as UserModel from "../models/user";
 
 type PatchUserUpdatedDataDTO = {
-  name: string
+  name: string,
 }
 
 export const patchUser = async (email: string, updatedData: PatchUserUpdatedDataDTO) => {
-  const user = await getByEmail(email);
+  const user = await UserModel.getByEmail(email);
 
   if (!user) {
     return {
@@ -13,7 +13,10 @@ export const patchUser = async (email: string, updatedData: PatchUserUpdatedData
     }
   }
 
-  const updated = await update(updatedData);
+  const updated = await UserModel.update({
+    ...updatedData,
+    email
+  });
 
   return {
     data: updated
