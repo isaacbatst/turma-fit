@@ -1,4 +1,10 @@
 -- CreateEnum
+CREATE TYPE "AdviceRequestStatus" AS ENUM ('ACCEPTED', 'REJECTED', 'PENDING');
+
+-- CreateEnum
+CREATE TYPE "AdviceRequestOrigin" AS ENUM ('STUDENT', 'PERSONAL');
+
+-- CreateEnum
 CREATE TYPE "Grip" AS ENUM ('PRONATE', 'SUPINE', 'NEUTRAL');
 
 -- CreateEnum
@@ -64,10 +70,41 @@ CREATE TABLE "Personal" (
 CREATE TABLE "Student" (
     "id" SERIAL NOT NULL,
     "age" INTEGER,
-    "personalId" INTEGER,
     "userId" INTEGER NOT NULL,
 
     CONSTRAINT "Student_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Advice" (
+    "active" BOOLEAN NOT NULL,
+    "studentId" INTEGER NOT NULL,
+    "personalId" INTEGER NOT NULL,
+
+    CONSTRAINT "Advice_pkey" PRIMARY KEY ("studentId","personalId")
+);
+
+-- CreateTable
+CREATE TABLE "AdviceChange" (
+    "id" SERIAL NOT NULL,
+    "activeChangedTo" BOOLEAN NOT NULL,
+    "date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "adviceStudentId" INTEGER NOT NULL,
+    "advicePersonalId" INTEGER NOT NULL,
+
+    CONSTRAINT "AdviceChange_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "AdviceRequest" (
+    "id" SERIAL NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "origin" "AdviceRequestOrigin" NOT NULL,
+    "status" "AdviceRequestStatus" NOT NULL,
+    "fromUserId" INTEGER NOT NULL,
+    "toUserId" INTEGER NOT NULL,
+
+    CONSTRAINT "AdviceRequest_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -247,10 +284,22 @@ ALTER TABLE "Session" ADD CONSTRAINT "Session_userId_fkey" FOREIGN KEY ("userId"
 ALTER TABLE "Personal" ADD CONSTRAINT "Personal_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Student" ADD CONSTRAINT "Student_personalId_fkey" FOREIGN KEY ("personalId") REFERENCES "Personal"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Student" ADD CONSTRAINT "Student_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Student" ADD CONSTRAINT "Student_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Advice" ADD CONSTRAINT "Advice_studentId_fkey" FOREIGN KEY ("studentId") REFERENCES "Student"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Advice" ADD CONSTRAINT "Advice_personalId_fkey" FOREIGN KEY ("personalId") REFERENCES "Personal"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "AdviceChange" ADD CONSTRAINT "AdviceChange_adviceStudentId_advicePersonalId_fkey" FOREIGN KEY ("adviceStudentId", "advicePersonalId") REFERENCES "Advice"("studentId", "personalId") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "AdviceRequest" ADD CONSTRAINT "AdviceRequest_toUserId_fkey" FOREIGN KEY ("toUserId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "AdviceRequest" ADD CONSTRAINT "AdviceRequest_fromUserId_fkey" FOREIGN KEY ("fromUserId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Picture" ADD CONSTRAINT "Picture_student_id_fkey" FOREIGN KEY ("student_id") REFERENCES "Student"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

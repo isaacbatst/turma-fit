@@ -39,14 +39,16 @@ model Session {
 
 model User {
   name          String?
-  id            Int       @id @default(autoincrement())
-  email         String   @unique
+  id            Int             @id @default(autoincrement())
+  email         String          @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
   personal      Personal?
   student       Student?
+  sentAdviceRequests AdviceRequest[] @relation("SentAdviceRequests")
+  receivedAdviceRequests AdviceRequest[] @relation("ReceivedAdviceRequests")
 }
 
 model VerificationToken {
@@ -59,10 +61,10 @@ model VerificationToken {
 
 model Personal {
   id                Int                @id @default(autoincrement())
-  students          Student[]
   trainingPlannings TrainingPlanning[]
   user              User               @relation(fields: [userId], references: [id])
   userId            Int                @unique
+  Advice            Advice[]
 }
 
 model Student {
@@ -71,10 +73,51 @@ model Student {
   measures          Measurement[]
   pictures          Picture[]
   trainingPlannings TrainingPlanning[]
-  personal          Personal?          @relation(fields: [personalId], references: [id])
-  personalId        Int?
   user              User               @relation(fields: [userId], references: [id])
   userId            Int                @unique
+  Advice            Advice[]
+}
+
+model Advice {
+  active     Boolean
+  student    Student  @relation(fields: [studentId], references: [id])
+  personal   Personal @relation(fields: [personalId], references: [id])
+  studentId  Int
+  personalId Int
+
+  AdviceChange AdviceChange[]
+  @@id([studentId, personalId])
+}
+
+model AdviceChange {
+  id               Int      @id @default(autoincrement())
+  activeChangedTo  Boolean
+  advice           Advice   @relation(fields: [adviceStudentId, advicePersonalId], references: [studentId, personalId])
+  date             DateTime @default(now())
+  adviceStudentId  Int
+  advicePersonalId Int
+}
+
+enum AdviceRequestStatus {
+  ACCEPTED
+  REJECTED
+  PENDING
+}
+
+enum AdviceRequestOrigin {
+  STUDENT
+  PERSONAL
+}
+
+model AdviceRequest {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  origin AdviceRequestOrigin
+  status AdviceRequestStatus
+  to     User @relation(name: "ReceivedAdviceRequests", fields: [toUserId], references: [id])
+  from   User @relation(name: "SentAdviceRequests", fields: [fromUserId], references: [id])
+  fromUserId Int
+  toUserId Int
 }
 
 model Picture {
@@ -131,8 +174,8 @@ enum Grip {
 }
 
 model Exercise {
-  id          Int       @id @default(autoincrement())
-  movement    Movement  @relation(fields: [movementId], references: [id])
+  id          Int        @id @default(autoincrement())
+  movement    Movement   @relation(fields: [movementId], references: [id])
   equipment   Equipment? @relation(fields: [equipmentId], references: [id])
   grip        Grip?
   sets        Set[]
@@ -194,7 +237,7 @@ model TrainingPlanningType {
   name               String
   id                 Int                @id @default(autoincrement())
   explanation        String
-  defaultMinRestTime Int                
-  defaultMaxRestTime Int                
+  defaultMinRestTime Int
+  defaultMaxRestTime Int
   TrainingPlanning   TrainingPlanning[]
 }
