@@ -58,7 +58,7 @@ const TrainingCheckout: React.FC = () => {
             .map(muscleGroup => {
 
               return (
-                <div key={muscleGroup} className={styles.checkoutItem}>{muscleGroup}</div>
+                <div key={muscleGroup} className={styles.badge}>{muscleGroup}</div>
               )
             })
         }

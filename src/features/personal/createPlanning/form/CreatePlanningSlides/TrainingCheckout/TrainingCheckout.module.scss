@@ -1,6 +1,13 @@
+@use '~/src/styles/components/badge.module';
+
 .checkoutWrapper {
   display: flex;
   flex-direction: column;
+
+  .badge {
+    @extend .badge;
+    margin: 0 10px 20px
+  }
 
   h3 {
     margin-bottom: 20px;

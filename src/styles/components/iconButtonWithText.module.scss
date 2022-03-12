@@ -26,3 +26,14 @@
     transform: scale(1.1);
   }
 }
+
+.success {
+  @extend .iconButtonWithText;
+  @include box-shadow.strongOnHover(rgba(55, 182, 122, 0.233));  
+
+  &:hover {
+    transform: scale(1.03);
+  }
+
+  color: rgb(14, 197, 84);
+}
