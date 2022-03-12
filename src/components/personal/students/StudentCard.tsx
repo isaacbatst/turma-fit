@@ -2,7 +2,7 @@ import Image from "next/image";
 import styles from './StudentCard.module.scss';
 import { MdAddCircleOutline, MdSettings, MdViewList } from 'react-icons/md';
 import Link from "next/link";
-import { PersonalStudentWithPlannings } from "../../../types/schema";
+import { PersonalStudentWithPlannings } from "../../../../types/schema";
 
 type Props = {
   student: PersonalStudentWithPlannings

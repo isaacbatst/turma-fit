@@ -1,5 +1,5 @@
 import { NextApiHandler } from 'next'
-import { prisma } from '../../../../lib/prisma'
+import { createStudent, getPersonalStudents } from '../../../../api/controllers/student'
 
 const handler: NextApiHandler = async (req, res) => {
   if(req.method === 'POST'){
@@ -7,82 +7,12 @@ const handler: NextApiHandler = async (req, res) => {
   }
 
   if(req.method === 'GET'){
-    return listStudents(req, res)
+    return getPersonalStudents(req, res)
   }
 
   res.status(405).end();
 }
 
-const createStudent: NextApiHandler = async (req, res) => {
-  const { email } = req.body
 
-  const user = await prisma.user.findUnique({
-    where: {
-      email
-    }
-  })
-
-  const student = await prisma.student.create({
-    data: {  
-      user: {
-        connect: {
-          email
-        }
-      },
-      personal: {
-        connectOrCreate: {
-          where: {
-            userId: user?.id
-          },
-          create: {
-            user: {
-              connect: {
-                email
-              }
-            }
-          }
-        }
-      }
-    },
-    select: {
-      user: true, 
-      trainingPlannings: {
-        include: {
-          type: true,
-        }
-      },
-    }
-  })
-
-  res.status(200).json(student)
-}
-
-const listStudents: NextApiHandler = async (req, res) => {
-  const { email } = req.query
-
-  const user = await prisma.user.findUnique({
-    where: {
-      email: email.toString()
-    },
-    include: {
-      personal: {
-        include: {
-          students: {
-            include: {
-              trainingPlannings: {
-                include: {
-                  type: true,
-                }
-              },
-              user: true
-            }
-          }
-        }
-      }
-    }
-  })
-
-  res.status(200).json(user?.personal?.students);
-}
 
 export default handler

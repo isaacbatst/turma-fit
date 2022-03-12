@@ -1,5 +1,5 @@
 import { Equipment, ExerciseTechnique, Grip, TrainingPlanningType } from "@prisma/client";
-import { ExerciseWithDetails, ExerciseWithMuscleGroups, MovementWithMuscleGroup } from "../../../../types/schema";
+import { ExerciseWithDetails, ExerciseWithMuscleGroups, MovementWithMuscleGroup } from "../../../../../types/schema";
 
 export type CreateTrainingPlanningState = {
   type: TrainingPlanningType | null;

@@ -4,7 +4,7 @@ import update from 'immutability-helper';
 import { Equipment, ExerciseTechnique, Grip, TrainingPlanningType } from "@prisma/client";
 import { letterMap } from '../../../../lib/letters';
 import { PayloadAction } from '@reduxjs/toolkit';
-import { MovementWithMuscleGroup } from '../../../../types/schema';
+import { MovementWithMuscleGroup } from '../../../../../types/schema';
 
 const createExercise: () => ExerciseBeingCreated = () => ({ 
   equipment: null,

@@ -1,16 +1,14 @@
-import { NextRequestWithAuth } from 'next-auth';
 import { withAuth } from 'next-auth/middleware';
 import { NextRequest, NextResponse } from 'next/server';
-import { createMiddlewareUrl } from '../lib/url';
-import { isApi, validate } from '../services/middleware/validation';
+import { createMiddlewareUrl, isApi } from '../lib/url';
+import { pathShouldBeRedirected } from '../middlewares/redirect';
 
 export default withAuth(
   function middleware(req: NextRequest) {
-    const { nextauth: { token } } = req as NextRequestWithAuth;
-    const pathToRedirect = validate({ path: req.nextUrl.pathname });
+    const pathToRedirectTo = pathShouldBeRedirected(req.nextUrl.pathname);
 
-    if (pathToRedirect) {
-      const url = createMiddlewareUrl(pathToRedirect, req.nextUrl);
+    if (pathToRedirectTo) {
+      const url = createMiddlewareUrl(pathToRedirectTo, req.nextUrl);
       return NextResponse.redirect(url);
     }
 

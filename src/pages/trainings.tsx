@@ -5,8 +5,8 @@ import Header from "../components/Header";
 import Layout from "../components/Layout";
 import { prisma } from "../lib/prisma";
 import containers from '../styles/common/containers.module.scss';
-import { NextPageWithAuth } from "../types/page";
-import { ExerciseWithDetails } from "../types/schema";
+import { NextPageWithAuth } from "../../types/page";
+import { ExerciseWithDetails } from "../../types/schema";
 
 type Props = {
   trainingPlannings: (TrainingPlanning & {

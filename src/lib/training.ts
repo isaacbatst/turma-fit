@@ -1,5 +1,5 @@
 import { MuscleGroup } from "@prisma/client";
-import { ExerciseWithDetails, SetsWithExercises, TrainingPlanningWithDetails } from "../types/schema";
+import { ExerciseWithDetails, SetsWithExercises, TrainingPlanningWithDetails } from "../../types/schema";
 
 const getMuscleGroupsFromExercises = (exercises: ExerciseWithDetails[], muscleGroups: MuscleGroup[]) => {
   exercises.forEach(exercise => {
