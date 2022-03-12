@@ -194,7 +194,7 @@ model TrainingPlanningType {
   name               String
   id                 Int                @id @default(autoincrement())
   explanation        String
-  defaultMaxRestTime Int                @default(45)
-  defaultMinRestTime Int                @default(60)
+  defaultMinRestTime Int                
+  defaultMaxRestTime Int                
   TrainingPlanning   TrainingPlanning[]
 }

@@ -183,8 +183,8 @@ CREATE TABLE "TrainingPlanningType" (
     "name" TEXT NOT NULL,
     "id" SERIAL NOT NULL,
     "explanation" TEXT NOT NULL,
-    "defaultMaxRestTime" INTEGER NOT NULL DEFAULT 45,
-    "defaultMinRestTime" INTEGER NOT NULL DEFAULT 60,
+    "defaultMinRestTime" INTEGER NOT NULL,
+    "defaultMaxRestTime" INTEGER NOT NULL,
 
     CONSTRAINT "TrainingPlanningType_pkey" PRIMARY KEY ("id")
 );
