@@ -4,7 +4,7 @@ import styles from '../styles/pages/home.module.scss'
 import Layout from '../components/Layout'
 import Header from '../components/Header'
 import NavMenu from '../components/home/NavMenu'
-import { NextPageWithAuth } from '../types/page'
+import { NextPageWithAuth } from '../../types/page'
 
 const Home: NextPage = () => {
   return (

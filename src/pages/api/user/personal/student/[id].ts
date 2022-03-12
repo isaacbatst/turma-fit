@@ -1,39 +1,12 @@
 import { NextApiHandler } from 'next'
-import { prisma } from '../../../../../lib/prisma'
+import { getStudent } from '../../../../../api/controllers/student'
 
 const handler: NextApiHandler = async (req, res) => {
-  const { email, id } = req.query
-
-  const user = await prisma.user.findUnique({
-    where: {
-      email: email.toString()
-    },
-    include: {
-      personal: {
-        include: {
-          students: {
-            include: {
-              user: true,
-              trainingPlannings: {
-                include: {
-                  type: true,
-                }
-              },
-            }
-          }
-        }
-      }
-    }
-  })
-
-  if(user && user.personal){
-    const student = user.personal.students.find(student => student.id === Number(id))
-
-    res.json(student);
-  } else {
-    res.json({ error: 'personal not found' })
+  if(req.method === 'GET'){
+    return getStudent(req, res)
   }
 
+  return res.status(405).end();
 }
 
 export default handler

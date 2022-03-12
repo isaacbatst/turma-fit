@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { SingleValue } from 'react-select';
-import { MovementWithMuscleGroup } from '../../../../../../../../types/schema';
+import { MovementWithMuscleGroup } from '../../../../../../../../../types/schema';
 import { selectMovementAction } from '../../../../slice';
 import { useSetSlideContext } from '../../SetSlideContext';
 import CustomSelect from '../CustomSelect';
