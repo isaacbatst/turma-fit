@@ -14,7 +14,7 @@ const RepetitionsInput: React.FC<Props> = ({ getId, setIndex, repetitions, train
 
   return (
     <label htmlFor={getId('repetitions', 'label')}>
-      Séries
+      Repetições
       <input type="text" name="" value={repetitions} id={getId('repetitions', 'input')}
         onChange={(event) => dispatch(setRepetitionsAction({
           repetitions: event.target.value,
