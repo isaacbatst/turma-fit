@@ -1,5 +1,5 @@
 import { NextApiHandler } from 'next'
-import { getStudent } from '../../../../../api/controllers/student'
+import { getStudent } from '../../../../api/controllers/student'
 
 const handler: NextApiHandler = async (req, res) => {
   if(req.method === 'GET'){

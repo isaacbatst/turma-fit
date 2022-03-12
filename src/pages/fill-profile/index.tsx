@@ -26,8 +26,8 @@ const FillProfile: NextPageWithAuth = () => {
       });
 
       if(response.status === 200) {
-        // router.push('/personal/students') is not triggering session callback
-        // so, user name is just setted is not considered
+        // router.push() is not triggering session callback
+        // so, to refresh the session
         router.reload();
       }
     } catch (error) {

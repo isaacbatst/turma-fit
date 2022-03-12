@@ -8,7 +8,7 @@ module.exports = {
     return [
       {
         source: '/',
-        destination: '/personal/students',
+        destination: '/personal/advices',
         permanent: false
       }
     ]

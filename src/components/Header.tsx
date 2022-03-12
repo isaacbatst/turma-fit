@@ -30,7 +30,7 @@ const Header: React.FC<Props> = ({ title = 'Turma Fit' }) => {
               </div>
               {
                 session.user.isPersonal && (
-                  <Link href='/personal/students'>
+                  <Link href='/personal/advices'>
                     <a className={styles.button}>
                       <MdAdminPanelSettings />
                     </a>

@@ -4,6 +4,6 @@ export const pathShouldBeRedirected = (path: string) => {
   if(isApi(path)) return
 
   if (path === "/") {
-    return '/personal/students';
+    return '/personal/advices';
   }
 }

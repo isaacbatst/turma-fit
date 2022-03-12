@@ -39,7 +39,7 @@ const RedirectHandler: React.FC = function ({ children }) {
   }
 
   if (router.pathname === '/fill-profile' && session.user.name) {
-    router.push('/personal/students')
+    router.push('/personal/advices')
     return <LoadingPage />
   }
 
