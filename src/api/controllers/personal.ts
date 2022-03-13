@@ -16,5 +16,16 @@ export const createPersonal: NextApiHandler = async (req, res) => {
     return res.status(500).end();
   }
 
-  return res.status(201).json(personal)
+  return res.status(201).json(personal);
 }
+
+export const getPersonalAdvices: NextApiHandler = async (req, res) => {
+  const token = await getToken({ req });
+
+  const { email } = token as JWT;
+
+  const students = await PersonalService.getPersonalAdvices(email as string);
+
+  return res.status(200).json(students);
+}
+

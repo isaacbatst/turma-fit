@@ -21,20 +21,6 @@ export const createStudent: NextApiHandler = async (req, res) => {
   return res.status(201).json(student)
 }
 
-export const getPersonalStudents: NextApiHandler = async (req, res) => {
-  const token = await getToken({ req });
-
-  const { email } = token as JWT;
-
-  if (!email) {
-    return res.status(401).end()
-  }
-
-  const students = await StudentService.getPersonalStudents(email);
-
-  return res.status(200).json(students);
-}
-
 export const getStudent: NextApiHandler = async (req, res) => {
   try {
     const { id } = req.query;
