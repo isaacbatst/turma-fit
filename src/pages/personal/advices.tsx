@@ -18,7 +18,7 @@ const PersonalAdmin: NextPage = () => {
   const { students } = usePersonalStudents(session?.user.email || '');
 
   function handleTrainMyself() {
-    mutate('/api/user/personal/students', async (students: PersonalStudentWithTrainings[]) => {
+    mutate('/api/personal/advices', async (students: PersonalStudentWithTrainings[]) => {
       if(!session?.user.isPersonal){
         await axios.post<Personal>('/api/user/personal')
       }
@@ -36,12 +36,11 @@ const PersonalAdmin: NextPage = () => {
     <Layout>
       <Header />
       <section className={containers.container}>
-        <h2 className={styles.title}>Seus alunos</h2>
         {students && (
           <div className={styles.studentCards}>
-            {students.map(student => (
+            {/* {students.map(student => (
               <StudentCard key={student.id} student={student} />
-            ))}
+            ))} */}
           </div>
         )
         }

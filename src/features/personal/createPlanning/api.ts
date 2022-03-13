@@ -4,19 +4,19 @@ import { MovementWithMuscleGroup } from "../../../../types/schema";
 
 export const createPlanningApi = createApi({
   reducerPath: 'personal/createPlanning/apiData',
-  baseQuery: fetchBaseQuery({ baseUrl: '/api/' }),
+  baseQuery: fetchBaseQuery({ baseUrl: '/api' }),
   endpoints: (builder) => ({
     getPlanningTypes: builder.query<TrainingPlanningType[], void>({
-      query: () => 'plannings/types'
+      query: () => '/plannings/types'
     }),
     getExerciseTechniques: builder.query<ExerciseTechnique[], void>({
-      query: () => 'exerciseTechniques'
+      query: () => '/exerciseTechniques'
     }),
     getMovements: builder.query<MovementWithMuscleGroup[], void>({
-      query: () => 'movements'
+      query: () => '/movements'
     }),
     getEquipments: builder.query<Equipment[], void>({
-      query: () => 'equipments'
+      query: () => '/equipments'
     })
   })
 })

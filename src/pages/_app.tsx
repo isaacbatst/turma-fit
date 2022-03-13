@@ -1,6 +1,7 @@
 import '../styles/common/global.scss'
-import type { AppProps } from 'next/app'
-import { SessionProvider, signIn, useSession } from 'next-auth/react';
+import type { AppContext, AppProps } from 'next/app'
+import App from 'next/app'
+import { getSession, SessionProvider, signIn, useSession } from 'next-auth/react';
 import { NextComponentType, NextPageContext } from 'next';
 import { Provider } from 'react-redux';
 import { store } from '../store/index';
@@ -23,6 +24,12 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: MyAppProps) 
       </Provider>
     </SessionProvider>
   )
+}
+
+MyApp.getInitialProps = async (appContext: AppContext) => {
+  const appProps = await App.getInitialProps(appContext);
+  appProps.pageProps.session = await getSession(appContext.ctx)
+  return { ...appProps }
 }
 
 const RedirectHandler: React.FC = function ({ children }) {
