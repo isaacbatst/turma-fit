@@ -1,4 +1,4 @@
-import { act, screen } from '@testing-library/react';
+import { act, queryByText, render, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import { getPage } from 'next-page-tester';
@@ -16,25 +16,38 @@ const server = setupServer(
 )
 
 
+
 beforeAll(() => server.listen())
 afterEach(() => server.resetHandlers())
 afterAll(() => server.close())
 
+
+
 describe('Personal Advices Page - List Section', () => {
-  it('renders page header', async () => {
+
+  beforeEach(async () => {
     await act(async () => {
-      const { render } = await getPage({
+      const { render, page } = await getPage({
         route: '/personal/advices',
       })
-
-      render()
+      render();
     });
+  })
 
-    await screen.findByText('Turma Fit')
+  it('renders list section', async () => {
+    await screen.findByRole('region', { name: "Seção de Listagem" })
+  })
 
-    // const heading = screen.getByRole('heading', {
-    //   name: /welcome to next\.js!/i,
-    // })
-    // expect(heading).toBeInTheDocument()
+  describe('Given Personal has Advices', () => {
+    it('renders list element', async () => {
+      await screen.findByRole('list', { name: 'Lista de Alunos' })
+    })
+
+    
+    it('renders adviced student name', async () => {
+      const [ { student } ] = Mocks.existingAdvices;
+
+      await screen.findByRole('listitem', { name: student.user.name as string })
+    })    
   })
 })

@@ -1,37 +1,8 @@
-import * as PersonalRepository from '../repositories/personal';
-import * as StudentRepository from '../repositories/student';
+import { Student } from '@prisma/client';
 
-export const createStudent = async (personalEmail: string, studentEmail: string) => {
-  const personal = await PersonalRepository.getByEmail(personalEmail);
-
-  if (!personal) {
-    return null
-  }
-
-  const student = await StudentRepository.getStudentByEmail(studentEmail, {
-    trainingPlannings: true,
-    user: true
-  });
-
-  if(student) return student;
-
-  const created = await StudentRepository.createStudentConnectedToPersonal(studentEmail, personal.id)
-
-  const studentWithUserAndTrainingPlanning = await 
-    StudentRepository.getStudentById(created.id, {
-      trainingPlannings: true,
-      user: true
-    })
-
-  return studentWithUserAndTrainingPlanning;
-}
 
 export const getStudent = async (requesterEmail: string, studentId: string) => {
-  const student = await StudentRepository
-    .getStudentByIdAndPersonalEmail(Number(studentId), requesterEmail, {
-      trainingPlannings: true,
-      user: true
-    })
+  const student = null
   
   if(!student){
     return null;
@@ -41,10 +12,6 @@ export const getStudent = async (requesterEmail: string, studentId: string) => {
 }
 
 export const getPersonalStudents = async (personalEmail: string) => {
-  const students = await StudentRepository.getStudentsByPersonalEmail(personalEmail, {
-    trainingPlannings: true,
-    user: true
-  });
-
+  const students: Student[] = []
   return students;
 }

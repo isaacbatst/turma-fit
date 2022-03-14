@@ -38,17 +38,18 @@ model Session {
 }
 
 model User {
-  name          String?
-  id            Int             @id @default(autoincrement())
-  email         String          @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-  personal      Personal?
-  student       Student?
-  sentAdviceRequests AdviceRequest[] @relation("SentAdviceRequests")
-  receivedAdviceRequests AdviceRequest[] @relation("ReceivedAdviceRequests")
+  name                   String?
+  id                     Int                @id @default(autoincrement())
+  email                  String             @unique
+  emailVerified          DateTime?
+  image                  String?
+  accounts               Account[]
+  sessions               Session[]
+  personal               Personal?
+  student                Student?
+  sentAdviceRequests     AdviceRequest[]    @relation("SentAdviceRequests")
+  receivedAdviceRequests AdviceRequest[]    @relation("ReceivedAdviceRequests")
+  trainingPlannings      TrainingPlanning[]
 }
 
 model VerificationToken {
@@ -60,30 +61,29 @@ model VerificationToken {
 }
 
 model Personal {
-  id                Int                @id @default(autoincrement())
-  trainingPlannings TrainingPlanning[]
-  user              User               @relation(fields: [userId], references: [id])
-  userId            Int                @unique
-  Advice            Advice[]
+  id     Int      @id @default(autoincrement())
+  user   User     @relation(fields: [userId], references: [id])
+  userId Int      @unique
+  advices Advice[]
 }
 
 model Student {
-  id                Int                @id @default(autoincrement())
-  age               Int?
-  measures          Measurement[]
-  pictures          Picture[]
-  trainingPlannings TrainingPlanning[]
-  user              User               @relation(fields: [userId], references: [id])
-  userId            Int                @unique
-  Advice            Advice[]
+  id       Int           @id @default(autoincrement())
+  age      Int?
+  measures Measurement[]
+  pictures Picture[]
+  user     User          @relation(fields: [userId], references: [id])
+  userId   Int           @unique
+  advices   Advice[]
 }
 
 model Advice {
-  active     Boolean
-  student    Student  @relation(fields: [studentId], references: [id])
-  personal   Personal @relation(fields: [personalId], references: [id])
-  studentId  Int
-  personalId Int
+  active            Boolean
+  student           Student            @relation(fields: [studentId], references: [id])
+  personal          Personal           @relation(fields: [personalId], references: [id])
+  studentId         Int
+  personalId        Int
+  trainingPlannings TrainingPlanning[]
 
   AdviceChange AdviceChange[]
   @@id([studentId, personalId])
@@ -110,14 +110,14 @@ enum AdviceRequestOrigin {
 }
 
 model AdviceRequest {
-  id Int @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  origin AdviceRequestOrigin
-  status AdviceRequestStatus
-  to     User @relation(name: "ReceivedAdviceRequests", fields: [toUserId], references: [id])
-  from   User @relation(name: "SentAdviceRequests", fields: [fromUserId], references: [id])
+  id         Int                 @id @default(autoincrement())
+  createdAt  DateTime            @default(now())
+  origin     AdviceRequestOrigin
+  status     AdviceRequestStatus
+  to         User                @relation(name: "ReceivedAdviceRequests", fields: [toUserId], references: [id])
+  from       User                @relation(name: "SentAdviceRequests", fields: [fromUserId], references: [id])
   fromUserId Int
-  toUserId Int
+  toUserId   Int
 }
 
 model Picture {
@@ -207,10 +207,11 @@ model TrainingPlanning {
   id                     Int                  @id @default(autoincrement())
   type                   TrainingPlanningType @relation(fields: [trainingPlanningTypeId], references: [id])
   trainingPlanningTypeId Int
-  student                Student?             @relation(fields: [studentId], references: [id])
-  studentId              Int?
-  personal               Personal?            @relation(fields: [personalId], references: [id])
-  personalId             Int?
+  Advice                 Advice?              @relation(fields: [adviceStudentId, advicePersonalId], references: [studentId, personalId])
+  adviceStudentId        Int?
+  advicePersonalId       Int?
+  User                   User?                @relation(fields: [userId], references: [id])
+  userId                 Int?
 }
 
 enum Day {

@@ -1,16 +1,16 @@
 import axios from "axios";
 import useSWR from "swr";
-import { PersonalStudentWithTrainings } from "../../../types/schema";
+import { AdviceWithPlanningAndStudentUser } from "../../../types/schema";
 
 const fetchPersonalStudents = (url: string) => 
-  axios.get<PersonalStudentWithTrainings[]>(url).then(res => res.data)
+  axios.get<AdviceWithPlanningAndStudentUser[]>(url).then(res => res.data)
 
 
-export default function usePersonalStudents(email: string){
+export default function usePersonalAdvices(){
   const { data, error } = useSWR('/api/personal/advices', fetchPersonalStudents);
 
   return {
-    students: data,
+    advices: data,
     isLoading: !error && !data,
     isError: error
   }

@@ -53,20 +53,24 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
       include: {
         student: {
           include: {
-            trainingPlannings: {
+            advices: {
               include: {
-                trainings: {
+                trainingPlannings: {
                   include: {
-                    sets: {
+                    trainings: {
                       include: {
-                        exercises: {
+                        sets: {
                           include: {
-                            movement: {
+                            exercises: {
                               include: {
-                                focusedMuscleGroup: true
+                                movement: {
+                                  include: {
+                                    focusedMuscleGroup: true
+                                  }
+                                },
+                                equipment: true,
                               }
-                            },
-                            equipment: true,
+                            }
                           }
                         }
                       }
@@ -83,7 +87,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
     if(user?.student){
       return {
         props: {
-          trainingPlannings: user.student.trainingPlannings
+          trainingPlannings: user.student.advices.flatMap(advice => advice.trainingPlannings)
         }
       }  
     }

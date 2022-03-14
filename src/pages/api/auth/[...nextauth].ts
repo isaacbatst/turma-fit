@@ -29,6 +29,17 @@ export default NextAuth({
   ],
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
+    async jwt({ token, account, profile }){
+      const user = await prisma.user.findUnique({
+        where: {
+          email: token.email || '', 
+        }
+      })
+      
+      token.name = user?.name;
+      
+      return token
+    },
     async session ({ session }) {
       const user = await prisma.user.findUnique({
         where: {

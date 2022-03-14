@@ -2,25 +2,6 @@ import { NextApiHandler } from "next";
 import { getToken, JWT } from "next-auth/jwt";
 import * as StudentService from '../services/student';
 
-export const createStudent: NextApiHandler = async (req, res) => {
-  const { studentEmail } = req.body
-
-  const token = await getToken({ req })
-  const { email } = token as JWT;
-
-  if (!email) {
-    return res.status(401).end();
-  }
-
-  const student = await StudentService.createStudent(email, studentEmail);
-
-  if(!student){
-    return res.status(422).end();
-  }
-
-  return res.status(201).json(student)
-}
-
 export const getStudent: NextApiHandler = async (req, res) => {
   try {
     const { id } = req.query;

@@ -1,51 +1,47 @@
-import axios from "axios";
 import { NextPage } from "next";
 import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 import { useSWRConfig } from "swr";
 import Header from "../../components/Header";
 import Layout from "../../components/Layout";
 import StudentCard from "../../components/personal/students/StudentCard";
-import usePersonalStudents from "../../lib/swr/usePersonalStudents";
+import usePersonalAdvices from "../../lib/swr/usePersonalAdvices";
 import containers from '../../styles/common/containers.module.scss';
 import styles from '../../styles/pages/personal/students.module.scss';
-import { PersonalStudentWithTrainings } from "../../../types/schema";
-import { Personal } from "@prisma/client";
 
 const PersonalAdmin: NextPage = () => {
   const { data: session } = useSession();
   const { mutate } = useSWRConfig();
-
-  const { students } = usePersonalStudents(session?.user.email || '');
+  const [mounted, setMounted] = useState(false)
+  const { advices, isLoading } = usePersonalAdvices();
 
   function handleTrainMyself() {
-    mutate('/api/personal/advices', async (students: PersonalStudentWithTrainings[]) => {
-      if(!session?.user.isPersonal){
-        await axios.post<Personal>('/api/user/personal')
-      }
-
-      const { data: newStudent } = await axios.post<PersonalStudentWithTrainings>('/api/user/personal/students', {
-        studentEmail: session?.user.email
-      })
-
-      return [...students, newStudent];
-    })
-
+    // TODO: user already has plannings
+    // should router.push() to create planning
   }
+
+  useEffect(() => {
+    setMounted(true);
+  }, [])
 
   return (
     <Layout>
       <Header />
       <section className={containers.container}>
-        {students && (
-          <div className={styles.studentCards}>
-            {/* {students.map(student => (
-              <StudentCard key={student.id} student={student} />
-            ))} */}
+        <section aria-label="Seção de Listagem">
+          <div role="list" aria-label="Lista de Alunos" className={styles.studentCards}>
+            {
+              mounted && advices &&  advices.map((advice) => {
+                return <StudentCard
+                  key={`${advice.personalId}-${advice.studentId}`}
+                  advice={advice}
+                />
+              })
+            }
           </div>
-        )
-        }
+        </section>
         {
-          students?.length === 0 && (
+          advices?.length === 0 && (
             <div className={styles.noStudents}>
               <p>Você não tem alunos!</p>
               <button onClick={handleTrainMyself}>Quero fazer um treino pra mim mesmo</button>

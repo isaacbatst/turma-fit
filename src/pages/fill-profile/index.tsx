@@ -1,5 +1,7 @@
 import { User } from '@prisma/client'
 import axios from 'axios'
+import { GetServerSideProps } from 'next'
+import { getSession } from 'next-auth/react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React, { FormEventHandler, useState } from 'react'
@@ -62,5 +64,23 @@ const FillProfile: NextPageWithAuth = () => {
 }
 
 FillProfile.auth = true;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getSession({ req: context.req });
+
+  if(session?.user.name){
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/personal/advices'
+      }
+    }
+  }
+
+
+  return {
+    props: {}
+  }
+}
 
 export default FillProfile

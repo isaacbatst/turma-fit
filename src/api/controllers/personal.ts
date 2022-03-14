@@ -24,8 +24,8 @@ export const getPersonalAdvices: NextApiHandler = async (req, res) => {
 
   const { email } = token as JWT;
 
-  const students = await PersonalService.getPersonalAdvices(email as string);
+  const advices = await PersonalService.getPersonalAdvices(email as string);
 
-  return res.status(200).json(students);
+  return res.status(200).json(advices);
 }
 

@@ -1,19 +1,20 @@
 import Image from "next/image";
-import styles from './StudentCard.module.scss';
-import { MdAddCircleOutline, MdSettings, MdViewList } from 'react-icons/md';
 import Link from "next/link";
-import { PersonalStudentWithPlannings } from "../../../../types/schema";
+import { MdAddCircleOutline, MdSettings, MdViewList } from 'react-icons/md';
+import { AdviceWithPlanningAndStudentUser, StudentUser } from "../../../../types/schema";
+import styles from './StudentCard.module.scss';
 
 type Props = {
-  student: PersonalStudentWithPlannings
+  advice: AdviceWithPlanningAndStudentUser
 }
 
-const StudentCard: React.FC<Props> = ({ student }) => {
-  const lastTrainingPlanningIndex = student.trainingPlannings.length - 1;
-  const lastTrainingPlanning = student.trainingPlannings[lastTrainingPlanningIndex];
+const StudentCard: React.FC<Props> = ({ advice }) => {
+  const { student, trainingPlannings } = advice;
+  const lastTrainingPlanningIndex = trainingPlannings.length - 1;
+  const lastTrainingPlanning = trainingPlannings[lastTrainingPlanningIndex];
 
   return (
-    <div className={styles.card}>
+    <div className={styles.card} role="listitem" aria-label={student.user.name || 'Aluno sem nome cadastrado'}>
       <div className={styles.imageAndName}>
         {student.user.image && 
           <Image src={student.user.image} height={40} width={40} alt={student.user.image || 'Foto de estudante'} />

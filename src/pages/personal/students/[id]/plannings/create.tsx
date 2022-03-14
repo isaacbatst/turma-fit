@@ -47,9 +47,10 @@ const CreatePlannings: NextPageWithAuth = () => {
                     <MdOutlineAdd /> Planejamento Semanal
                   </button>
                 )}
-                {student.trainingPlannings.map(trainingPlanning => (
+                {/* Should show advice's training plannings  */}
+                {/* {student.trainingPlannings.map(trainingPlanning => (
                   <TrainingPlanningCard trainingPlanning={trainingPlanning} key={trainingPlanning.id} />
-                ))}
+                ))} */}
               </div>
             </>
           )

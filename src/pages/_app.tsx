@@ -29,6 +29,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: MyAppProps) 
 MyApp.getInitialProps = async (appContext: AppContext) => {
   const appProps = await App.getInitialProps(appContext);
   appProps.pageProps.session = await getSession(appContext.ctx)
+
   return { ...appProps }
 }
 
