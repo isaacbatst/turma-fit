@@ -23,6 +23,7 @@ const PersonalAdmin: NextPage = () => {
   useEffect(() => {
     setMounted(true);
   }, [])
+  
 
   return (
     <Layout>
