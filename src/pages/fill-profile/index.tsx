@@ -1,18 +1,16 @@
 import { User } from '@prisma/client'
 import axios from 'axios'
-import { GetServerSideProps } from 'next'
-import { getSession } from 'next-auth/react'
+import { NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React, { FormEventHandler, useState } from 'react'
 import { MdSend } from 'react-icons/md'
-import { NextPageWithAuth } from '../../../types/page'
 import Header from '../../components/Header'
 import Layout from '../../components/Layout'
 import styles from '../../styles/pages/fill-data.module.scss'
 
 
-const FillProfile: NextPageWithAuth = () => {
+const FillProfile: NextPage = () => {
   const [name, setName] = useState("");
   const router = useRouter()
   const handleSubmit:FormEventHandler<HTMLFormElement> = async (event) => {
@@ -61,26 +59,6 @@ const FillProfile: NextPageWithAuth = () => {
       </div>
     </Layout>  
   )
-}
-
-FillProfile.auth = true;
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const session = await getSession({ req: context.req });
-
-  if(session?.user.name){
-    return {
-      redirect: {
-        permanent: false,
-        destination: '/personal/advices'
-      }
-    }
-  }
-
-
-  return {
-    props: {}
-  }
 }
 
 export default FillProfile
