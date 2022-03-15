@@ -35,19 +35,28 @@ describe('Personal Advices Page - List Section', () => {
   })
 
   it('renders list section', async () => {
-    await screen.findByRole('region', { name: "Seção de Listagem" })
+    const section = await screen.findByRole('region', { name: "Seção de Listagem" })
+    expect(section).toBeInTheDocument();
   })
 
   describe('Given Personal has Advices', () => {
     it('renders list element', async () => {
-      await screen.findByRole('list', { name: 'Lista de Alunos' })
+      const list = await screen.findByRole('list', { name: 'Lista de Alunos' })
+      expect(list).toBeInTheDocument();
     })
-
     
     it('renders adviced student name', async () => {
       const [ { student } ] = Mocks.existingAdvices;
 
-      await screen.findByRole('listitem', { name: student.user.name as string })
+      const [first] = await screen.findAllByRole('listitem')
+      
+      expect(first).toHaveAccessibleName(student.user.name as string);
     })    
+
+    it('renders adviced student without name', async () => {
+      const [_, second] = await screen.findAllByRole('listitem')
+      
+      expect(second).toHaveAccessibleName('Nome não cadastrado');
+    })  
   })
 })

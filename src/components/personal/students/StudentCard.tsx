@@ -13,13 +13,16 @@ const StudentCard: React.FC<Props> = ({ advice }) => {
   const lastTrainingPlanningIndex = trainingPlannings.length - 1;
   const lastTrainingPlanning = trainingPlannings[lastTrainingPlanningIndex];
 
+  const firstNames = student.user.name && student.user.name.split(' ').slice(0, 2).join(' '); 
+  const printedName = firstNames || 'Nome não cadastrado';
+
   return (
-    <div className={styles.card} role="listitem" aria-label={student.user.name || 'Aluno sem nome cadastrado'}>
+    <div className={styles.card} role="listitem" aria-label={printedName}>
       <div className={styles.imageAndName}>
         {student.user.image && 
           <Image src={student.user.image} height={40} width={40} alt={student.user.image || 'Foto de estudante'} />
         }
-        <span className={styles.studentName}>{student.user.name}</span>
+        <span className={styles.studentName}>{printedName}</span>
       </div>
       {
         lastTrainingPlanning && (
