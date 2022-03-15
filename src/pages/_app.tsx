@@ -1,59 +1,63 @@
-import '../styles/common/global.scss'
-import type { AppContext, AppProps } from 'next/app'
-import App from 'next/app'
-import { getSession, SessionProvider, signIn, useSession } from 'next-auth/react';
 import { NextComponentType, NextPageContext } from 'next';
+import { Session } from 'next-auth';
+import { getSession, SessionProvider } from 'next-auth/react';
+import type { AppContext, AppProps } from 'next/app';
+import App from 'next/app';
 import { Provider } from 'react-redux';
-import { store } from '../store/index';
-import { useRouter } from 'next/router';
 import LoadingPage from '../components/common/LoadingPage';
+import { store } from '../store/index';
+import '../styles/common/global.scss';
 
 type MyAppProps = AppProps & {
-  Component: NextComponentType<NextPageContext, any, {}> & {
-    auth: boolean;
+  pageProps: {
+    session: Session,
+    redirect?: boolean
   }
 }
-
-function MyApp({ Component, pageProps: { session, ...pageProps } }: MyAppProps) {
+function MyApp({ Component, pageProps: { session, redirect, ...pageProps } }: MyAppProps) {
   return (
     <SessionProvider session={session}>
       <Provider store={store}>
-        <RedirectHandler>
-          <Component {...pageProps} />
-        </RedirectHandler>
+        <Component {...pageProps} />
       </Provider>
     </SessionProvider>
   )
 }
-
 MyApp.getInitialProps = async (appContext: AppContext) => {
   const appProps = await App.getInitialProps(appContext);
-  appProps.pageProps.session = await getSession(appContext.ctx)
+  const session = await getSession(appContext.ctx)
+  appProps.pageProps.session = session;
+  
+  const { ctx: { res }, router } = appContext;
+
+  const pathToRedirect = shouldRedirectTo(session, router.pathname);
+ 
+  if(pathToRedirect && res){
+    res.writeHead(307, { Location: pathToRedirect })
+    res.end()
+
+    return { ...appProps }
+  }
+
+  if(pathToRedirect) {
+    router.push(pathToRedirect)
+  }
 
   return { ...appProps }
 }
 
-const RedirectHandler: React.FC = function ({ children }) {
-  const { data: session } = useSession();
-  const router = useRouter();
-
-  if (!session) {
-    return <LoadingPage />
+function shouldRedirectTo(session: Session | null, pathname: string){
+  if(!session){
+    return '/'
   }
 
-  if (router.pathname !== '/fill-profile' && !session.user.name) {
-    router.push('/fill-profile');
-    return <LoadingPage />
+  if (!session.user.name && pathname !== '/fill-profile' ) {
+    return '/fill-profile'
   }
 
-  if (router.pathname === '/fill-profile' && session.user.name) {
-    router.push('/personal/advices')
-    return <LoadingPage />
+  if (session.user.name && pathname === '/fill-profile') {
+    return '/personal/advices'
   }
-
-  return (<>
-    {children}
-  </>)
 }
 
 export default MyApp;
