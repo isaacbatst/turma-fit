@@ -1,4 +1,4 @@
-import { act, queryByText, render, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
+import { act, screen } from '@testing-library/react';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import { getPage } from 'next-page-tester';
@@ -27,7 +27,7 @@ describe('Personal Advices Page - List Section', () => {
 
   beforeEach(async () => {
     await act(async () => {
-      const { render, page } = await getPage({
+      const { render } = await getPage({
         route: '/personal/advices',
       })
       render();
