@@ -40,7 +40,7 @@
     "eslint-config-next": "11.1.2",
     "faker": "5.5.3",
     "jest": "^27.5.1",
-    "msw": "^0.39.1",
+    "msw": "~0.38",
     "next-page-tester": "^0.31.0",
     "prisma": "^3.8.1",
     "ts-node": "10.3.0",
