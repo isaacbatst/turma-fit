@@ -4,6 +4,7 @@ import exerciseTechniques from "./seedData/exerciseTechniques";
 import movements from "./seedData/movements";
 import muscleGroups from "./seedData/muscleGroups";
 import trainingPlanningTypes from "./seedData/trainingPlanningTypes";
+import users from "./seedData/users";
 
 async function main(){
   const prisma = new PrismaClient();
@@ -47,6 +48,13 @@ async function seedAll(prisma: PrismaClient){
   await prisma.trainingPlanningType.createMany({
     data: trainingPlanningTypes
   })
+
+  console.log('Seeding users')
+  for(const user of users){
+    await prisma.user.create({
+      data: user
+    })
+  }
 }
 
 main();
