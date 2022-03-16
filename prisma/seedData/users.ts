@@ -5,13 +5,15 @@ const users: Prisma.UserCreateInput[] = [
     email: 'aluno@mockado.com',
     name: 'Aluno Mockado',
     student: {
-      create: {}
+      create: {
+      }
     }
   },
   {
     email: 'aluno@semnome.com',
     student: {
-      create: {}
+      create: {
+      }
     }
   },
   {
@@ -23,11 +25,19 @@ const users: Prisma.UserCreateInput[] = [
           create: [
             {
               active: true,
-              studentId: 1
+              student: {
+                connect: {
+                  id: 1
+                }
+              } 
             },
             {
               active: true,
-              studentId: 2
+              student: {
+                connect: {
+                  id: 2
+                }
+              }, 
             }
           ]
         }
@@ -43,6 +53,15 @@ const users: Prisma.UserCreateInput[] = [
   {
     email: 'auto@didata.com',
     name: 'autodidata',
+    userTrainingPlannings: {
+      create: {
+        trainingPlanning: {
+          connect: {
+            id: 1
+          }
+        }
+      }
+    }
   },
   {
     email: 'auto@didata.semnome'

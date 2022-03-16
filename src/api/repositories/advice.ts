@@ -5,7 +5,7 @@ export async function getAdvicesByPersonalUserEmail(email: string){
     where: {
       personal: {
         user: {
-          email
+          email: 'professor@mockdo.com'
         }
       }
     },

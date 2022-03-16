@@ -168,7 +168,7 @@ CREATE TABLE "Exercise" (
     "id" SERIAL NOT NULL,
     "grip" "Grip",
     "movementId" INTEGER NOT NULL,
-    "equipmentId" INTEGER NOT NULL,
+    "equipmentId" INTEGER,
 
     CONSTRAINT "Exercise_pkey" PRIMARY KEY ("id")
 );
@@ -195,12 +195,26 @@ CREATE TABLE "ExerciseTechnique" (
 );
 
 -- CreateTable
+CREATE TABLE "UserTrainingPlanning" (
+    "trainingPlanningId" INTEGER NOT NULL,
+    "userId" INTEGER,
+
+    CONSTRAINT "UserTrainingPlanning_pkey" PRIMARY KEY ("trainingPlanningId")
+);
+
+-- CreateTable
+CREATE TABLE "AdviceTrainingPlanning" (
+    "trainingPlanningId" INTEGER NOT NULL,
+    "adviceStudentId" INTEGER NOT NULL,
+    "advicePersonalId" INTEGER NOT NULL,
+
+    CONSTRAINT "AdviceTrainingPlanning_pkey" PRIMARY KEY ("trainingPlanningId")
+);
+
+-- CreateTable
 CREATE TABLE "TrainingPlanning" (
     "id" SERIAL NOT NULL,
     "trainingPlanningTypeId" INTEGER NOT NULL,
-    "adviceStudentId" INTEGER,
-    "advicePersonalId" INTEGER,
-    "userId" INTEGER,
 
     CONSTRAINT "TrainingPlanning_pkey" PRIMARY KEY ("id")
 );
@@ -288,10 +302,10 @@ ALTER TABLE "Personal" ADD CONSTRAINT "Personal_userId_fkey" FOREIGN KEY ("userI
 ALTER TABLE "Student" ADD CONSTRAINT "Student_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Advice" ADD CONSTRAINT "Advice_studentId_fkey" FOREIGN KEY ("studentId") REFERENCES "Student"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Advice" ADD CONSTRAINT "Advice_personalId_fkey" FOREIGN KEY ("personalId") REFERENCES "Personal"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Advice" ADD CONSTRAINT "Advice_personalId_fkey" FOREIGN KEY ("personalId") REFERENCES "Personal"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Advice" ADD CONSTRAINT "Advice_studentId_fkey" FOREIGN KEY ("studentId") REFERENCES "Student"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "AdviceChange" ADD CONSTRAINT "AdviceChange_adviceStudentId_advicePersonalId_fkey" FOREIGN KEY ("adviceStudentId", "advicePersonalId") REFERENCES "Advice"("studentId", "personalId") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -315,19 +329,25 @@ ALTER TABLE "Movement" ADD CONSTRAINT "Movement_muscleGroupId_fkey" FOREIGN KEY 
 ALTER TABLE "Exercise" ADD CONSTRAINT "Exercise_movementId_fkey" FOREIGN KEY ("movementId") REFERENCES "Movement"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Exercise" ADD CONSTRAINT "Exercise_equipmentId_fkey" FOREIGN KEY ("equipmentId") REFERENCES "Equipment"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Exercise" ADD CONSTRAINT "Exercise_equipmentId_fkey" FOREIGN KEY ("equipmentId") REFERENCES "Equipment"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Set" ADD CONSTRAINT "Set_exerciseTechniqueId_fkey" FOREIGN KEY ("exerciseTechniqueId") REFERENCES "ExerciseTechnique"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "UserTrainingPlanning" ADD CONSTRAINT "UserTrainingPlanning_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "UserTrainingPlanning" ADD CONSTRAINT "UserTrainingPlanning_trainingPlanningId_fkey" FOREIGN KEY ("trainingPlanningId") REFERENCES "TrainingPlanning"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "AdviceTrainingPlanning" ADD CONSTRAINT "AdviceTrainingPlanning_adviceStudentId_advicePersonalId_fkey" FOREIGN KEY ("adviceStudentId", "advicePersonalId") REFERENCES "Advice"("studentId", "personalId") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "AdviceTrainingPlanning" ADD CONSTRAINT "AdviceTrainingPlanning_trainingPlanningId_fkey" FOREIGN KEY ("trainingPlanningId") REFERENCES "TrainingPlanning"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "TrainingPlanning" ADD CONSTRAINT "TrainingPlanning_trainingPlanningTypeId_fkey" FOREIGN KEY ("trainingPlanningTypeId") REFERENCES "TrainingPlanningType"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "TrainingPlanning" ADD CONSTRAINT "TrainingPlanning_adviceStudentId_advicePersonalId_fkey" FOREIGN KEY ("adviceStudentId", "advicePersonalId") REFERENCES "Advice"("studentId", "personalId") ON DELETE SET NULL ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "TrainingPlanning" ADD CONSTRAINT "TrainingPlanning_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Training" ADD CONSTRAINT "Training_trainingPlanningId_fkey" FOREIGN KEY ("trainingPlanningId") REFERENCES "TrainingPlanning"("id") ON DELETE SET NULL ON UPDATE CASCADE;

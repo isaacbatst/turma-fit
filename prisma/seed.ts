@@ -1,9 +1,12 @@
 import { PrismaClient } from "@prisma/client";
 import equipments from "./seedData/equipments";
+import exercises from "./seedData/exercises";
 import exerciseTechniques from "./seedData/exerciseTechniques";
 import movements from "./seedData/movements";
 import muscleGroups from "./seedData/muscleGroups";
+import trainingPlannings from "./seedData/trainingPlanning";
 import trainingPlanningTypes from "./seedData/trainingPlanningTypes";
+import trainings from "./seedData/trainings";
 import users from "./seedData/users";
 
 async function main(){
@@ -49,12 +52,36 @@ async function seedAll(prisma: PrismaClient){
     data: trainingPlanningTypes
   })
 
+  console.log('Seeding exercises')
+  for(const exercise of exercises){
+    await prisma.exercise.create({
+      data: exercise
+    })
+  }
+
+  console.log('Seeding trainings')
+  for(const training of trainings){
+    await prisma.training.create({
+      data: training
+    })
+  }
+
+
+  console.log('Seeding training plannings')
+  for(const trainingPlanning of trainingPlannings){
+    await prisma.trainingPlanning.create({
+      data: trainingPlanning
+    })
+  }
+
   console.log('Seeding users')
   for(const user of users){
     await prisma.user.create({
       data: user
     })
   }
+
+  
 }
 
 main();

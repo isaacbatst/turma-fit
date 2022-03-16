@@ -1,5 +1,5 @@
 import { Session } from "next-auth"
-import { AdviceWithPlanningAndStudentUser } from "../../types/schema"
+import { AdviceWithPlanningsAndStudentUser } from "../../types/schema"
 
 const PERSONAL_ID = 13
 
@@ -13,7 +13,7 @@ const SECOND_STUDENT_USER_ID = 12;
 const SECOND_TRAINING_PLANNING_ID = 15;
 const SECOND_PLANNING_TYPE_ID = 132
 
-export const existingAdvices: AdviceWithPlanningAndStudentUser[] = [
+export const existingAdvices: AdviceWithPlanningsAndStudentUser[] = [
   {
     active: true,
     student: {
@@ -28,19 +28,21 @@ export const existingAdvices: AdviceWithPlanningAndStudentUser[] = [
         image: null
       }
     },
-    trainingPlannings: [
+    adviceTrainingPlannings: [
       {
         advicePersonalId: PERSONAL_ID,
         adviceStudentId: FIRST_STUDENT_ID,
-        id: FIRST_TRAINING_PLANNING_ID,
-        userId: null,
-        trainingPlanningTypeId: FIRST_PLANNING_TYPE_ID,
-        type: {
-          name: 'Hipertrofia',
-          explanation: '',
-          id: FIRST_PLANNING_TYPE_ID,
-          defaultMinRestTime: 30,
-          defaultMaxRestTime: 45,
+        trainingPlanningId: FIRST_TRAINING_PLANNING_ID,
+        trainingPlanning: {
+          id: FIRST_TRAINING_PLANNING_ID,
+          trainingPlanningTypeId: FIRST_PLANNING_TYPE_ID,
+          type: {
+            name: 'Hipertrofia',
+            explanation: '',
+            id: FIRST_PLANNING_TYPE_ID,
+            defaultMinRestTime: 30,
+            defaultMaxRestTime: 45,
+          }
         }
       }
     ],
@@ -61,19 +63,21 @@ export const existingAdvices: AdviceWithPlanningAndStudentUser[] = [
         image: null
       }
     },
-    trainingPlannings: [
+    adviceTrainingPlannings: [
       {
+        trainingPlanningId: SECOND_TRAINING_PLANNING_ID,
         advicePersonalId: PERSONAL_ID,
         adviceStudentId: SECOND_STUDENT_ID,
-        id: SECOND_TRAINING_PLANNING_ID,
-        userId: null,
-        trainingPlanningTypeId: SECOND_PLANNING_TYPE_ID,
-        type: {
-          name: 'Hipertrofia',
-          explanation: '',
-          id: SECOND_PLANNING_TYPE_ID,
-          defaultMinRestTime: 30,
-          defaultMaxRestTime: 45,
+        trainingPlanning: {
+          id: SECOND_TRAINING_PLANNING_ID,
+          trainingPlanningTypeId: SECOND_PLANNING_TYPE_ID,
+          type: {
+            name: 'Hipertrofia',
+            explanation: '',
+            id: SECOND_PLANNING_TYPE_ID,
+            defaultMinRestTime: 30,
+            defaultMaxRestTime: 45,
+          }
         }
       }
     ],

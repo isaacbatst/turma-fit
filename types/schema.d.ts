@@ -82,14 +82,18 @@ const adviceWithPlanningAndStudentUser = Prisma.validator<Prisma.AdviceArgs>()({
         user: true
       }
     },
-    trainingPlannings: {
+    adviceTrainingPlannings: {
       include: {
-        type: true
+        trainingPlanning: {
+          include: {
+            type: true
+          }
+        }
       }
     }
   }
 });
 
-export type AdviceWithPlanningAndStudentUser = Prisma.AdviceGetPayload<typeof adviceWithPlanningAndStudentUser>
-export type StudentUser = AdviceWithPlanningAndStudentUser["student"]
-export type TrainingPlanningWithType = AdviceWithPlanningAndStudentUser["trainingPlannings"][number]
+export type AdviceWithPlanningsAndStudentUser = Prisma.AdviceGetPayload<typeof adviceWithPlanningAndStudentUser>
+export type StudentUser = AdviceWithPlanningsAndStudentUser["student"]
+export type TrainingPlanningWithType = AdviceWithPlanningsAndStudentUser["adviceTrainingPlannings"][number]["trainingPlanning"]

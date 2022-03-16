@@ -1,15 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import { MdAddCircleOutline, MdSettings, MdViewList } from 'react-icons/md';
-import { AdviceWithPlanningAndStudentUser, StudentUser } from "../../../../types/schema";
+import { AdviceWithPlanningsAndStudentUser, StudentUser } from "../../../../types/schema";
 import styles from './StudentCard.module.scss';
 
 type Props = {
-  advice: AdviceWithPlanningAndStudentUser
+  advice: AdviceWithPlanningsAndStudentUser
 }
 
 const StudentCard: React.FC<Props> = ({ advice }) => {
-  const { student, trainingPlannings } = advice;
+  const { student, adviceTrainingPlannings: trainingPlannings } = advice;
   const lastTrainingPlanningIndex = trainingPlannings.length - 1;
   const lastTrainingPlanning = trainingPlannings[lastTrainingPlanningIndex];
 
@@ -27,7 +27,7 @@ const StudentCard: React.FC<Props> = ({ advice }) => {
       {
         lastTrainingPlanning && (
           <p className={styles.lastTrainingPlanning}>
-            Último Treino: <span>{ lastTrainingPlanning.type.name }</span>
+            Último Treino: <span>{ lastTrainingPlanning.trainingPlanning.type.name }</span>
           </p>
         )
       }
