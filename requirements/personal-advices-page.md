@@ -36,11 +36,11 @@
 
   Given User is a Personal
     And this Personal has no Advices
-  When User access /personal/students
+  When User access /personal/advices
   Then TrainMyselfButton should be rendered
 
   Given User is not a Personal
-  When User access /personal/students
+  When User access /personal/advices
   Then TrainMyselfButton should be rendered
 
 # Feature: TrainMyself button
