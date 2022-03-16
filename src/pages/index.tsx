@@ -16,7 +16,7 @@ const Home: NextPage = () => {
   useEffect(() => {
     setMounted(true);
   }, [])
-  
+
   return (
     <Layout>
       <div className={styles.wrap}>
@@ -44,7 +44,7 @@ const Home: NextPage = () => {
           {
             advices?.length === 0 && (
               <div className={styles.noStudents}>
-                <p>Você não tem alunos!</p>
+                <p>Nenhum aluno encontrado</p>
               </div>
             )
           }
