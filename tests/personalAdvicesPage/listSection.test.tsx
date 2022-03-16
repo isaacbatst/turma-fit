@@ -39,24 +39,30 @@ describe('Personal Advices Page - List Section', () => {
     expect(section).toBeInTheDocument();
   })
 
-  describe('Given Personal has Advices', () => {
-    it('renders list element', async () => {
-      const list = await screen.findByRole('list', { name: 'Lista de Alunos' })
-      expect(list).toBeInTheDocument();
+  describe('Given User is a Personal', () => {
+    describe('Given Personal has Advices', () => {
+      it('renders list element', async () => {
+        const list = await screen.findByRole('list', { name: 'Lista de Alunos' })
+        expect(list).toBeInTheDocument();
+      })
+      
+      it('renders adviced student name', async () => {
+        const [ { student } ] = Mocks.existingAdvices;
+  
+        const [first] = await screen.findAllByRole('listitem')
+        
+        expect(first).toHaveAccessibleName(student.user.name as string);
+      })    
+  
+      it('renders adviced student without name', async () => {
+        const [_, second] = await screen.findAllByRole('listitem')
+        
+        expect(second).toHaveAccessibleName('Nome não cadastrado');
+      })  
     })
-    
-    it('renders adviced student name', async () => {
-      const [ { student } ] = Mocks.existingAdvices;
 
-      const [first] = await screen.findAllByRole('listitem')
+    describe('Given Personal has no Advices', () => {
       
-      expect(first).toHaveAccessibleName(student.user.name as string);
-    })    
-
-    it('renders adviced student without name', async () => {
-      const [_, second] = await screen.findAllByRole('listitem')
-      
-      expect(second).toHaveAccessibleName('Nome não cadastrado');
-    })  
+    })
   })
 })
