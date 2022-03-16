@@ -37,7 +37,7 @@ const PersonalAdmin: NextPage = () => {
         {
           advices?.length === 0 && (
             <div className={styles.noStudents}>
-              <p>Você não tem alunos!</p>
+              <p>Nenhum aluno encontrado</p>
             </div>
           )
         }
