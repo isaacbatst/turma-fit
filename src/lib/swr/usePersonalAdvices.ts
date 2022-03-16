@@ -2,8 +2,11 @@ import axios from "axios";
 import useSWR from "swr";
 import { AdviceWithPlanningsAndStudentUser } from "../../../types/schema";
 
-const fetchPersonalStudents = (url: string) => 
-  axios.get<AdviceWithPlanningsAndStudentUser[]>(url).then(res => res.data)
+const fetchPersonalStudents = async (url: string) => {
+  const { data } = await axios.get<AdviceWithPlanningsAndStudentUser[]>(url);
+
+  return data
+}
 
 
 export default function usePersonalAdvices(){
