@@ -23,12 +23,12 @@ afterAll(() => server.close())
 
 
 
-describe('Personal Advices Page - List Section', () => {
+describe('Home Page - List Advices Section', () => {
 
   beforeEach(async () => {
     await act(async () => {
       const { render } = await getPage({
-        route: '/personal/advices',
+        route: '/',
       })
       render();
     });
@@ -62,7 +62,7 @@ describe('Personal Advices Page - List Section', () => {
     })
 
     describe('Given Personal has no Advices', () => {
-      
+
     })
   })
 })
