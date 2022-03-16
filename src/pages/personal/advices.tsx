@@ -10,15 +10,8 @@ import containers from '../../styles/common/containers.module.scss';
 import styles from '../../styles/pages/personal/students.module.scss';
 
 const PersonalAdmin: NextPage = () => {
-  const { data: session } = useSession();
-  const { mutate } = useSWRConfig();
   const [mounted, setMounted] = useState(false)
-  const { advices, isLoading } = usePersonalAdvices();
-
-  function handleTrainMyself() {
-    // TODO: user already has plannings
-    // should router.push() to create planning
-  }
+  const { advices } = usePersonalAdvices();
 
   useEffect(() => {
     setMounted(true);
@@ -45,7 +38,6 @@ const PersonalAdmin: NextPage = () => {
           advices?.length === 0 && (
             <div className={styles.noStudents}>
               <p>Você não tem alunos!</p>
-              <button onClick={handleTrainMyself}>Quero fazer um treino pra mim mesmo</button>
             </div>
           )
         }
