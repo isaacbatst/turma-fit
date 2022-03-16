@@ -15,9 +15,13 @@ export async function getAdvicesByPersonalUserEmail(email: string){
           user: true
         }
       },
-      trainingPlannings: {
+      adviceTrainingPlannings:{
         include: {
-          type: true
+          trainingPlanning: {
+            include: {
+              type: true
+            }
+          }
         }
       }
     }
