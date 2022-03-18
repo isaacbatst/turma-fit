@@ -1,5 +1,5 @@
 import fetch from 'cross-fetch';
-import server from './tests/mocks/server';
+import server from './tests/mocks/Server';
 import '@testing-library/jest-dom';
 
 beforeAll(() => server.listen())

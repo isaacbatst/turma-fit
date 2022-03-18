@@ -1,19 +1,12 @@
-import { act, screen } from '@testing-library/react';
-import { getPage } from 'next-page-tester';
-import * as Mocks from '../mocks/listSection';
-
-const renderPage = async () => await act(async () => {
-  const { render } = await getPage({
-    route: '/',
-    wrappers: 'tests/wrappers.tsx'
-  })
-  render();
-});
+import { screen } from '@testing-library/react';
+import * as Mocks from '../mocks/HomePage';
+import * as Cookies from '../mocks/Cookies';
+import renderPage from '../renderPage';
 
 describe('Home Page - List Advices Section', () => {
   it('renders list section', async () => {
-    document.cookie = 'auth=personal-with-advice';
-    await renderPage();
+    document.cookie = Cookies.getAuthCookie(Cookies.PERSONAL_WITH_ADVICE);
+    await renderPage('/');
 
     const section = await screen.findByRole('region', { name: "Seção de Listagem" })
     expect(section).toBeInTheDocument();
@@ -21,19 +14,19 @@ describe('Home Page - List Advices Section', () => {
 
   describe('Given User is a Personal', () => {
     describe('Given Personal has Advices', () => {
-      beforeAll(async () => {
-        document.cookie = 'auth=personal-with-advice';
+      beforeEach(async () => {
+        document.cookie = Cookies.getAuthCookie(Cookies.PERSONAL_WITH_ADVICE);
       })        
 
       it('renders list element', async () => {
-        await renderPage();
+        await renderPage('/');
 
         const list = await screen.findByRole('list', { name: 'Lista de Alunos' })
         expect(list).toBeInTheDocument();
       })
       
       it('renders adviced student name', async () => {
-        await renderPage();
+        await renderPage('/');
 
         const [first] = await screen.findAllByRole('listitem')
 
@@ -42,7 +35,7 @@ describe('Home Page - List Advices Section', () => {
       })    
   
       it('renders adviced student without name', async () => {
-        await renderPage();
+        await renderPage('/');
 
         const [_, second] = await screen.findAllByRole('listitem')
         expect(second).toHaveAccessibleName('Nome não cadastrado');
@@ -50,12 +43,12 @@ describe('Home Page - List Advices Section', () => {
     })
 
     describe('Given Personal has no Advices', () => {
-      beforeAll(async () => {
-        document.cookie = 'auth=personal-without-advice';
+      beforeEach(async () => {
+        document.cookie = Cookies.getAuthCookie(Cookies.PERSONAL_WITHOUT_ADVICE);
       })   
       
       it('renders no advice', async () => {  
-        await renderPage()
+        await renderPage('/')
 
         const el = await screen.findByText('Nenhum aluno encontrado')
         expect(el).toBeInTheDocument();

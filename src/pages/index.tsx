@@ -1,17 +1,26 @@
 import type { NextPage } from 'next'
+import { useSession } from 'next-auth/react'
 import Head from 'next/head'
-import { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 import Header from '../components/Header'
-import NavMenu from '../components/home/NavMenu'
 import Layout from '../components/Layout'
 import StudentCard from '../components/personal/students/StudentCard'
 import usePersonalAdvices from '../lib/swr/usePersonalAdvices'
+import containers from '../styles/common/containers.module.scss'
 import styles from '../styles/pages/home.module.scss'
-import containers from '../styles/common/containers.module.scss';
 
 const Home: NextPage = () => {
+  const { data: session } = useSession();
+  const router = useRouter();
   const [mounted, setMounted] = useState(false)
   const { advices } = usePersonalAdvices();
+
+  useEffect(() => {
+    if(session && !session.user.name){
+      router.push('/fill-data');
+    }
+  }, [session, router])
 
   useEffect(() => {
     setMounted(true);
@@ -26,8 +35,7 @@ const Home: NextPage = () => {
         </Head>
 
         <Header />
-        <NavMenu />
-
+        {/* <NavMenu /> */}
         <section className={containers.container}>
           <section aria-label="Seção de Listagem">
             <div role="list" aria-label="Lista de Alunos" className={styles.studentCards}>
