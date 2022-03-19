@@ -9,10 +9,11 @@ describe('Home Page - Missing Profile Data', () => {
       document.cookie = Cookies.getAuthCookie(Cookies.UNAMED_USER);
     })     
 
-    it('should be redirected to /fill-profile', async () => {
+    it('should render fill name input', async () => {
       await renderPage('/')
 
-      await screen.findByText('Como você se chama?');
+      const fillNameLabel = screen.getByRole("textbox", { name: "Como você se chama?" });
+      expect(fillNameLabel).toBeInTheDocument();
     });
   })
 
@@ -21,10 +22,14 @@ describe('Home Page - Missing Profile Data', () => {
       document.cookie = Cookies.getAuthCookie(Cookies.USER_WITHOUT_ROLE);
     })  
 
-    it('should be redirected to /fill-profile', async () => {
+    it('should render role radio buttons', async () => {
       await renderPage('/')
 
-      await screen.findByText('Como você se chama?');
+      const studentButton = screen.getByRole("radio", { name: "Aluno" });
+      expect(studentButton).toBeInTheDocument();
+      
+      const personalButton = screen.getByRole("radio", { name: "Personal" });
+      expect(personalButton).toBeInTheDocument();
     });
   })
 })
