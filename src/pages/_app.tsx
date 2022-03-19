@@ -32,7 +32,7 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
   
   
   const pathToRedirect = shouldRedirectTo(session, router.pathname);
-  console.log(pathToRedirect)
+
   if(pathToRedirect && res){
 
     res.writeHead(307, { Location: pathToRedirect })

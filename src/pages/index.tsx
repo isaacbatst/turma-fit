@@ -39,23 +39,23 @@ const Home: NextPage = () => {
         <section className={containers.container}>
           <section aria-label="Seção de Listagem">
             <div role="list" aria-label="Lista de Alunos" className={styles.studentCards}>
-              {/* {
+              {
                 mounted && advices &&  advices.map((advice) => {
                   return <StudentCard
                     key={`${advice.personalId}-${advice.studentId}`}
                     advice={advice}
                   />
                 })
-              } */}
+              }
             </div>
           </section>
-          {/* {
+          {
             advices?.length === 0 && (
               <div className={styles.noStudents}>
                 <p>Nenhum aluno encontrado</p>
               </div>
             )
-          } */}
+          }
         </section>
       </div>
     </Layout>
