@@ -14,15 +14,23 @@ const server = setupServer(
       return res(ctx.status(200), ctx.json([]))
     }
 
+    if (req.cookies.auth === Cookies.UNAMED_USER){
+      return res(ctx.status(200), ctx.json([]))
+    }
+
     return res(ctx.status(401))
   }),
-  rest.get(`${process.env.NEXTAUTH_URL}api/auth/session`, (req, res, ctx) => {
+  rest.get(`${process.env.NEXTAUTH_URL}/api/auth/session`, (req, res, ctx) => {
     if (req.cookies.auth === Cookies.PERSONAL_WITHOUT_ADVICE) {
       return res(ctx.json(Mocks.loggedSession))
     }
 
     if (req.cookies.auth === Cookies.PERSONAL_WITH_ADVICE) {
       return res(ctx.json(Mocks.loggedSession))
+    }
+
+    if (req.cookies.auth === Cookies.UNAMED_USER){
+      return res(ctx.json(Mocks.loggedSessionUnamed))
     }
 
     return res(ctx.json(Mocks.loggedSession))
