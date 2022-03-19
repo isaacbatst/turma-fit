@@ -15,7 +15,7 @@ const SECOND_PLANNING_TYPE_ID = 132
 
 const DEFAULT_SESSION_EXPIRES = '2025-04-12T04:13:28.913Z'
 
-export const existingAdvices: AdviceWithPlanningsAndStudentUser[] = [
+export const EXISTING_ADVICES_MOCK: AdviceWithPlanningsAndStudentUser[] = [
   {
     active: true,
     student: {
@@ -88,7 +88,7 @@ export const existingAdvices: AdviceWithPlanningsAndStudentUser[] = [
   },
 ]
 
-export const loggedSession: Session = {
+export const LOGGED_SESSION_MOCK: Session = {
   expires: DEFAULT_SESSION_EXPIRES,
   user: {
     email: 'tes@tando.com',
@@ -98,7 +98,7 @@ export const loggedSession: Session = {
   }
 }
 
-export const loggedSessionUnamed: Session = {
+export const LOGGED_SESSION_UNAMED_MOCK: Session = {
   expires: DEFAULT_SESSION_EXPIRES,
   user: {
     email: 'tes@tando.com',
@@ -107,7 +107,7 @@ export const loggedSessionUnamed: Session = {
   }
 }
 
-export const userWithoutRole: Session = {
+export const LOGGED_SESSION_WITHOUT_ROLE: Session = {
   expires: DEFAULT_SESSION_EXPIRES,
   user: {
     email: 'user@without.role',

@@ -1,11 +1,11 @@
 import { screen } from '@testing-library/react';
-import * as Mocks from '../../mocks/HomePage';
-import * as Cookies from '../../mocks/Cookies';
+import { getAuthCookie, PERSONAL_WITHOUT_ADVICE_COOKIE, PERSONAL_WITH_ADVICE_COOKIE } from '../../mocks/Cookies';
+import { EXISTING_ADVICES_MOCK } from '../../mocks/HomePage';
 import renderPage from '../../renderPage';
 
 describe('Home Page - List Advices Section', () => {
   it('renders list section', async () => {
-    document.cookie = Cookies.getAuthCookie(Cookies.PERSONAL_WITH_ADVICE);
+    document.cookie = getAuthCookie(PERSONAL_WITH_ADVICE_COOKIE);
     await renderPage('/');
 
     const section = await screen.findByRole('region', { name: "Seção de Listagem" })
@@ -15,7 +15,7 @@ describe('Home Page - List Advices Section', () => {
   describe('Given User is a Personal', () => {
     describe('Given Personal has Advices', () => {
       beforeEach(async () => {
-        document.cookie = Cookies.getAuthCookie(Cookies.PERSONAL_WITH_ADVICE);
+        document.cookie = getAuthCookie(PERSONAL_WITH_ADVICE_COOKIE);
       })        
 
       it('renders list element', async () => {
@@ -30,7 +30,7 @@ describe('Home Page - List Advices Section', () => {
 
         const [first] = await screen.findAllByRole('listitem')
 
-        const [ { student } ] = Mocks.existingAdvices;
+        const [ { student } ] = EXISTING_ADVICES_MOCK;
         expect(first).toHaveAccessibleName(student.user.name as string);
       })    
   
@@ -44,7 +44,7 @@ describe('Home Page - List Advices Section', () => {
 
     describe('Given Personal has no Advices', () => {
       beforeEach(async () => {
-        document.cookie = Cookies.getAuthCookie(Cookies.PERSONAL_WITHOUT_ADVICE);
+        document.cookie = getAuthCookie(PERSONAL_WITHOUT_ADVICE_COOKIE);
       })   
       
       it('renders no advice', async () => {  

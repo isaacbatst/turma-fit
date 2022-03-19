@@ -1,12 +1,12 @@
 import { screen } from '@testing-library/react';
-import * as Cookies from '../../mocks/Cookies';
+import { getAuthCookie, UNAMED_USER_COOKIE, USER_WITHOUT_ROLE_COOKIE } from '../../mocks/Cookies';
 import renderPage from '../../renderPage';
 
 describe('Home Page - Missing Profile Data', () => {
   describe('Given User has no name', () => {
 
     beforeEach(async () => {
-      document.cookie = Cookies.getAuthCookie(Cookies.UNAMED_USER);
+      document.cookie = getAuthCookie(UNAMED_USER_COOKIE);
     })     
 
     it('should render fill name input', async () => {
@@ -19,7 +19,7 @@ describe('Home Page - Missing Profile Data', () => {
 
   describe('Given User is not a Personal And User is not a Student', () => {
     beforeEach(async () => {
-      document.cookie = Cookies.getAuthCookie(Cookies.USER_WITHOUT_ROLE);
+      document.cookie = getAuthCookie(USER_WITHOUT_ROLE_COOKIE);
     })  
 
     it('should render role radio buttons', async () => {
