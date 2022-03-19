@@ -1,7 +1,9 @@
 import { rest } from "msw"
 import { setupServer } from 'msw/node';
-import { PERSONAL_WITH_ADVICE_COOKIE, PERSONAL_WITHOUT_ADVICE_COOKIE, UNAMED_USER_COOKIE, USER_WITHOUT_ROLE_COOKIE } from "./Cookies";
-import { EXISTING_ADVICES_MOCK, LOGGED_SESSION_MOCK, LOGGED_SESSION_UNAMED_MOCK, LOGGED_SESSION_WITHOUT_ROLE } from "./HomePage";
+import { PERSONAL_WITH_ADVICE_COOKIE, PERSONAL_WITHOUT_ADVICE_COOKIE, UNAMED_USER_COOKIE, USER_WITHOUT_ROLE_COOKIE, UNAMED_USER_WITHOUT_ROLE_COOKIE } from "./mocks/cookies";
+import { EXISTING_ADVICES_MOCK } from "./mocks/advices";
+import { LOGGED_SESSION_MOCK, LOGGED_SESSION_UNAMED_MOCK, LOGGED_SESSION_WITHOUT_ROLE } from "./mocks/sessions";
+
 
 const server = setupServer(
   // server.use should set custom responses for specific tests
@@ -35,6 +37,10 @@ const server = setupServer(
 
     if (req.cookies.auth === USER_WITHOUT_ROLE_COOKIE) {
       return res(ctx.json(LOGGED_SESSION_WITHOUT_ROLE))
+    }
+
+    if(req.cookies.auth === UNAMED_USER_WITHOUT_ROLE_COOKIE){
+      return 
     }
 
     return res(ctx.json(LOGGED_SESSION_MOCK))

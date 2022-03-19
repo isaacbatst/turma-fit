@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react';
-import { getAuthCookie, PERSONAL_WITHOUT_ADVICE_COOKIE, PERSONAL_WITH_ADVICE_COOKIE } from '../../mocks/Cookies';
-import { EXISTING_ADVICES_MOCK } from '../../mocks/HomePage';
+import { getAuthCookie, PERSONAL_WITHOUT_ADVICE_COOKIE, PERSONAL_WITH_ADVICE_COOKIE } from '../../mocks/cookies';
+import { EXISTING_ADVICES_MOCK } from '../../mocks/advices';
 import renderPage from '../../renderPage';
 
 describe('Home Page - List Advices Section', () => {

@@ -1,5 +1,5 @@
 import { screen } from '@testing-library/react';
-import { getAuthCookie, UNAMED_USER_COOKIE, USER_WITHOUT_ROLE_COOKIE } from '../../mocks/Cookies';
+import { getAuthCookie, UNAMED_USER_COOKIE, USER_WITHOUT_ROLE_COOKIE } from '../../mocks/cookies';
 import renderPage from '../../renderPage';
 
 describe('Home Page - Missing Profile Data', () => {
