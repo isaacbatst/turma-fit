@@ -14,7 +14,11 @@ import styles from '../../styles/pages/fill-data.module.scss'
 const FillProfile: NextPage = () => {
   const session = useSession()
   const router = useRouter()
+
   const [name, setName] = useState("");
+  const [role, setRole] = useState("");
+  
+  const [submitSuccess, setSubmitSuccess] = useState(false)
 
   useEffect(() => {
     if(session.data && session.data.user.name){
@@ -31,16 +35,18 @@ const FillProfile: NextPage = () => {
       }
 
       const response = await axios.patch<User>('/api/user', {
-        name
+        name,
+        role
       });
 
       if(response.status === 200) {
         // router.push() is not triggering session callback
         // so, to refresh the session
+        setSubmitSuccess(true);
         router.reload();
       }
     } catch (error) {
-      console.log(error)
+      console.log((error as Error).message)
     }
   }
  
@@ -73,9 +79,16 @@ const FillProfile: NextPage = () => {
                   <fieldset>
                     <legend>Você é:</legend>
                     <div className={styles.radioWrapper}>
-                      <input type="radio" name="role" id="radio-role-student" />
+                      <input type="radio" name="role" id="radio-role-student" 
+                        onChange={() => setRole("student")}  
+                        checked={role==="student"}
+                      />
                       <label htmlFor="radio-role-student">Aluno</label>
-                      <input type="radio" name="role" id="radio-role-personal" />
+
+                      <input type="radio" name="role" id="radio-role-personal" 
+                        onChange={() => setRole("personal")}
+                        checked={role==="personal"}
+                      />
                       <label htmlFor="radio-role-personal">Personal</label>
                     </div>
                   </fieldset>
@@ -83,6 +96,13 @@ const FillProfile: NextPage = () => {
               }
               <button type="submit" >Continuar<MdSend /></button>
             </form>
+            {
+              submitSuccess && (
+                <div role="alert" aria-label='Você será redirecionado em instantes'>
+                  Você será redirecionado em instantes
+                </div>
+              )
+            }
               
           </section>
         </div>
@@ -90,5 +110,6 @@ const FillProfile: NextPage = () => {
     </Layout>  
   )
 }
+
 
 export default FillProfile
