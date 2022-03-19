@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react';
-import * as Cookies from '../mocks/Cookies';
-import renderPage from '../renderPage';
+import * as Cookies from '../../mocks/Cookies';
+import renderPage from '../../renderPage';
 
 describe('Home Page - Missing Profile Data', () => {
   describe('Given User has no name', () => {

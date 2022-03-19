@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react';
-import * as Mocks from '../mocks/HomePage';
-import * as Cookies from '../mocks/Cookies';
-import renderPage from '../renderPage';
+import * as Mocks from '../../mocks/HomePage';
+import * as Cookies from '../../mocks/Cookies';
+import renderPage from '../../renderPage';
 
 describe('Home Page - List Advices Section', () => {
   it('renders list section', async () => {
