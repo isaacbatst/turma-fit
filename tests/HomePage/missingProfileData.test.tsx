@@ -14,9 +14,17 @@ describe('Home Page - Missing Profile Data', () => {
 
       await screen.findByText('Como você se chama?');
     });
+  })
 
-    describe('Given User is not a Personal And User is not a Student', () => {
+  describe('Given User is not a Personal And User is not a Student', () => {
+    beforeEach(async () => {
+      document.cookie = Cookies.getAuthCookie(Cookies.USER_WITHOUT_ROLE);
+    })  
 
-    })
+    it('should be redirected to /fill-profile', async () => {
+      await renderPage('/')
+
+      await screen.findByText('Como você se chama?');
+    });
   })
 })

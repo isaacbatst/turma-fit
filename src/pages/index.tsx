@@ -7,6 +7,7 @@ import Header from '../components/Header'
 import Layout from '../components/Layout'
 import StudentCard from '../components/personal/students/StudentCard'
 import usePersonalAdvices from '../lib/swr/usePersonalAdvices'
+import { shouldFillProfile } from '../lib/user'
 import containers from '../styles/common/containers.module.scss'
 import styles from '../styles/pages/home.module.scss'
 
@@ -74,7 +75,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
     }
   }
 
-  if(!session.user.name){
+  if(shouldFillProfile(session.user)){
     return {
       redirect: {
         destination: '/fill-profile',

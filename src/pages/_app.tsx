@@ -5,6 +5,7 @@ import type { AppContext, AppProps } from 'next/app';
 import App from 'next/app';
 import { Provider } from 'react-redux';
 import LoadingPage from '../components/common/LoadingPage';
+import { shouldFillProfile } from '../lib/user';
 import { store } from '../store/index';
 import '../styles/common/global.scss';
 
@@ -53,13 +54,14 @@ function shouldRedirectTo(session: Session | null, pathname: string){
     return '/'
   }
 
-  if (!session.user.name && pathname !== '/fill-profile' ) {
+  if (shouldFillProfile(session.user) && pathname !== '/fill-profile' ) {
     return '/fill-profile'
   }
 
-  if (session.user.name && pathname === '/fill-profile') {
+  if (!shouldFillProfile(session.user) && pathname === '/fill-profile') {
     return '/'
   }
 }
+
 
 export default MyApp;

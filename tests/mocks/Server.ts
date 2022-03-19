@@ -14,7 +14,7 @@ const server = setupServer(
       return res(ctx.status(200), ctx.json([]))
     }
 
-    if (req.cookies.auth === Cookies.UNAMED_USER){
+    if (req.cookies.auth){
       return res(ctx.status(200), ctx.json([]))
     }
 
@@ -31,6 +31,10 @@ const server = setupServer(
 
     if (req.cookies.auth === Cookies.UNAMED_USER){
       return res(ctx.json(Mocks.loggedSessionUnamed))
+    }
+
+    if (req.cookies.auth === Cookies.USER_WITHOUT_ROLE){
+      return res(ctx.json(Mocks.userWithoutRole))
     }
 
     return res(ctx.json(Mocks.loggedSession))

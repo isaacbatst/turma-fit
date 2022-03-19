@@ -13,6 +13,8 @@ const SECOND_STUDENT_USER_ID = 12;
 const SECOND_TRAINING_PLANNING_ID = 15;
 const SECOND_PLANNING_TYPE_ID = 132
 
+const DEFAULT_SESSION_EXPIRES = '2025-04-12T04:13:28.913Z'
+
 export const existingAdvices: AdviceWithPlanningsAndStudentUser[] = [
   {
     active: true,
@@ -87,7 +89,7 @@ export const existingAdvices: AdviceWithPlanningsAndStudentUser[] = [
 ]
 
 export const loggedSession: Session = {
-  expires: '2025-04-12T04:13:28.913Z',
+  expires: DEFAULT_SESSION_EXPIRES,
   user: {
     email: 'tes@tando.com',
     name: 'Isaac Personal',
@@ -97,10 +99,20 @@ export const loggedSession: Session = {
 }
 
 export const loggedSessionUnamed: Session = {
-  expires: '2025-04-12T04:13:28.913Z',
+  expires: DEFAULT_SESSION_EXPIRES,
   user: {
     email: 'tes@tando.com',
     isPersonal: true,
     isStudent: true,
+  }
+}
+
+export const userWithoutRole: Session = {
+  expires: DEFAULT_SESSION_EXPIRES,
+  user: {
+    email: 'user@without.role',
+    name: 'User Without Role',
+    isPersonal: false,
+    isStudent: false,
   }
 }

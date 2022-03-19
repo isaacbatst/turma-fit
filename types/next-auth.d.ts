@@ -11,14 +11,16 @@ declare module "next-auth" {
   /**
    * Returned by `useSession`, `getSession` and received as a prop on the `SessionProvider` React Context
    */
+
+  interface SessionUser {
+    name?: string;
+    email: string;
+    image?: string;
+    isPersonal: boolean;
+    isStudent: boolean;
+  }
   interface Session {
-    user: {
-      name?: string;
-      email: string;
-      image?: string;
-      isPersonal: boolean;
-      isStudent: boolean;
-    }
+    user: SessionUser
   }
 
   // While NextAuth does not type request param inside WithAuth
