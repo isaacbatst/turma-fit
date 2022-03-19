@@ -1,12 +1,12 @@
 import { screen } from '@testing-library/react';
-import { getAuthCookie, UNAMED_USER_COOKIE, USER_WITHOUT_ROLE_COOKIE } from '../../mocks/cookies';
+import { getAuthCookie, USER_WITHOUT_NAME_COOKIE, USER_WITHOUT_ROLE_COOKIE } from '../../mocks/cookies';
 import renderPage from '../../renderPage';
 
 describe('Home Page - Missing Profile Data', () => {
   describe('Given User has no name', () => {
 
     beforeEach(async () => {
-      document.cookie = getAuthCookie(UNAMED_USER_COOKIE);
+      document.cookie = getAuthCookie(USER_WITHOUT_NAME_COOKIE);
     })     
 
     it('should render fill name input', async () => {
