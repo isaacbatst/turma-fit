@@ -1,7 +1,7 @@
 import { rest } from "msw";
 import { setupServer } from 'msw/node';
 import { getPersonalAdvicesResolver } from "./mocks/api/personal/advices";
-import { getAuthSessionResolver } from "./mocks/api/personal/auth/session";
+import { getAuthSessionResolver } from "./mocks/api/auth/session";
 import { patchUserResolver } from "./mocks/api/user";
 
 const server = setupServer(

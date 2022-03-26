@@ -21,7 +21,7 @@ export const LOGGED_SESSION_WITHOUT_NAME_MOCK: Session = {
   }
 }
 
-export const LOGGED_SESSION_WITHOUT_ROLE: Session = {
+export const LOGGED_SESSION_WITHOUT_ROLE_MOCK: Session = {
   expires: DEFAULT_SESSION_EXPIRES,
   user: {
     email: 'user@without.role',
@@ -31,11 +31,21 @@ export const LOGGED_SESSION_WITHOUT_ROLE: Session = {
   }
 }
 
-export const LOGGED_SESSION_WITHOUT_NAME_AND_ROLE: Session = {
+export const LOGGED_SESSION_WITHOUT_NAME_AND_ROLE_MOCK: Session = {
   expires: DEFAULT_SESSION_EXPIRES,
   user: {
     email: 'user@without.nameandrole',
     isPersonal: false,
     isStudent: false,
+  }
+}
+
+export const LOGGED_STUDENT_MOCK: Session = {
+  expires: DEFAULT_SESSION_EXPIRES,
+  user: {
+    email: 'student@default.com',
+    isStudent: true,
+    isPersonal: false,
+    name: 'Estudante'
   }
 }
