@@ -1,13 +1,8 @@
-import Joi from "joi";
 import { ResponseResolver, RestContext, RestRequest } from "msw";
+import { patchUserSchema } from "../../../../src/api/schemas/user";
 
 export const patchUserResolver: ResponseResolver<RestRequest, RestContext> = (req, res, ctx) => {
-  const schema = Joi.object({
-    name: Joi.string().min(2).required(),
-    role: Joi.string().valid('student', 'personal').required()
-  })
-
-  const validation = schema.validate(req.body);
+  const validation = patchUserSchema.validate(req.body);
 
   if(validation.error){
     return res(ctx.status(400))

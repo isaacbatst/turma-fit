@@ -28,3 +28,17 @@ export async function getStudentByEmail(studentEmail: string, include?: StudentI
 
   return student
 }
+
+export async function createStudentConnectedByEmail(email: string){
+  const student = await prisma.student.create({
+    data: { 
+      user: {
+        connect: {
+          email
+        }
+      }
+    },
+  })
+
+  return student;
+}

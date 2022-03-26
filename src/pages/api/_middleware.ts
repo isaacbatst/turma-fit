@@ -7,6 +7,14 @@ export default async function middleware(req: NextRequest, ev: NextFetchEvent){
       return NextResponse.next();
     }
 
+    if(!req.cookies){
+      const response = new Response(null, {
+        status: 401
+      })
+
+      return response;
+    }
+
     const token = await getToken({ req: { cookies: req.cookies } } as any);
 
     if(!token || !token.email){
