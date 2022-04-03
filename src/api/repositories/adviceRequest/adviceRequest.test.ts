@@ -1,55 +1,13 @@
-import { AdviceRequest, Prisma } from "@prisma/client";
-import { prisma } from '../../lib/prisma';
-import { CreateAdviceParams, createAdviceRequest } from "./adviceRequest";
-
-const STUDENT_ADVICE_REQUEST_FROM_ID = 1;
-const STUDENT_ADVICE_REQUEST_TO_ID = 2;
-
-const STUDENT_ADVICE_REQUEST_CREATE_DATA: CreateAdviceParams = {
-  fromId: STUDENT_ADVICE_REQUEST_FROM_ID,
-  toId: STUDENT_ADVICE_REQUEST_TO_ID,
-  origin: "STUDENT"
-}
+import { prisma } from '../../../lib/prisma';
+import { createAdviceRequest } from "./";
+import { prismaAdviceRequestMock, STUDENT_ADVICE_REQUEST_CREATE_DATA } from "./adviceRequest.mock";
+import { getPrismaCreateDataInput } from './utils';
 
 jest.mock('../../lib/prisma', () => ({
   prisma: {
-    adviceRequest: {
-      create: jest.fn(
-        async (createArgs: Prisma.AdviceRequestCreateArgs):
-          Promise<Partial<AdviceRequest>> => {
-          const { data } = createArgs;
-
-          const { origin, status, from, to  } = data;
- 
-          return {
-            id: 2,
-            createdAt: new Date(),
-            fromUserId: from?.connect?.id,
-            toUserId: to?.connect?.id,
-            origin,
-            status
-          }
-        })
-    }
+    adviceRequest: prismaAdviceRequestMock
   }
 }));
-
-const getPrismaCreateDataInput = ({
-  fromId, origin, toId
-}: CreateAdviceParams): Prisma.AdviceRequestCreateInput => ({
-  from: {
-    connect: {
-      id: fromId,
-    }
-  },
-  to: {
-    connect: {
-      id: toId
-    }
-  },
-  origin,
-  status: 'PENDING'
-})
 
 describe('Advice Request Repository', () => {
   describe('Create Personal Advice Request', () => {

@@ -1,5 +1,5 @@
 import { AdviceRequest, AdviceRequestOrigin } from "@prisma/client"
-import { prisma } from "../../lib/prisma"
+import { prisma } from "../../../lib/prisma"
 
 export interface CreateAdviceParams {
   origin: AdviceRequestOrigin,
