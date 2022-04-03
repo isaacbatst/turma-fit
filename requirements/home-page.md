@@ -4,7 +4,7 @@
   When User Access /
   Then User should be redirected to /fill-profile
 
-# Feature: / CreateAdviceSection
+# Feature: / CreateAdviceRequestSection
   Given User is a Personal
   When User access /
   Then PersonalAdviceRequestForm should be rendered
