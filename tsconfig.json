@@ -6,6 +6,14 @@
       "dom.iterable",
       "esnext"
     ],
+    "baseUrl": "./",
+    "paths": {
+      "@pages/*": ["src/pages/*"],
+      "@api/*": ["src/api/*"],
+      "@styles/*": ["src/styles/*"],
+      "@tests/*": ["tests/*"],
+      "@types/*": ["types/*"]
+    },
     "skipLibCheck": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
