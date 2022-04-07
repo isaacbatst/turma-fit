@@ -11,6 +11,7 @@
       "@pages/*": ["src/pages/*"],
       "@api/*": ["src/api/*"],
       "@styles/*": ["src/styles/*"],
+      "@domain/*": ["src/domain/*"],
       "@tests/*": ["tests/*"],
       "@types/*": ["types/*"]
     },
