@@ -9,8 +9,8 @@ datasource db {
 }
 
 model Account {
-  id                 Int     @id @default(autoincrement())
-  userId             Int
+  id                 String     @id @default(uuid())
+  userId             String
   type               String
   provider           String
   providerAccountId  String
@@ -30,16 +30,16 @@ model Account {
 }
 
 model Session {
-  id           Int      @id @default(autoincrement())
+  id           String      @id @default(uuid())
   sessionToken String   @unique
-  userId       Int
+  userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model User {
   name                   String?
-  id                     Int                    @id @default(autoincrement())
+  id                     String                    @id @default(uuid())
   email                  String                 @unique
   emailVerified          DateTime?
   image                  String?
@@ -61,19 +61,19 @@ model VerificationToken {
 }
 
 model Personal {
-  id      Int      @id @default(autoincrement())
+  id      String      @id @default(uuid())
   user    User     @relation(fields: [userId], references: [id])
-  userId  Int      @unique
+  userId  String      @unique
   advices Advice[]
 }
 
 model Student {
-  id       Int           @id @default(autoincrement())
+  id       String           @id @default(uuid())
   age      Int?
   measures Measurement[]
   pictures Picture[]
   user     User          @relation(fields: [userId], references: [id])
-  userId   Int           @unique
+  userId   String           @unique
   advices  Advice[]
 }
 
@@ -81,8 +81,8 @@ model Advice {
   active                  Boolean
   student                 Student                  @relation(fields: [studentId], references: [id])
   personal                Personal                 @relation(fields: [personalId], references: [id])
-  studentId               Int
-  personalId              Int
+  studentId               String
+  personalId              String
   adviceChange            AdviceChange[]
   adviceTrainingPlannings AdviceTrainingPlanning[]
 
@@ -90,12 +90,12 @@ model Advice {
 }
 
 model AdviceChange {
-  id               Int      @id @default(autoincrement())
+  id               String      @id @default(uuid())
   activeChangedTo  Boolean
   advice           Advice   @relation(fields: [adviceStudentId, advicePersonalId], references: [studentId, personalId])
   date             DateTime @default(now())
-  adviceStudentId  Int
-  advicePersonalId Int
+  adviceStudentId  String
+  advicePersonalId String
 }
 
 enum AdviceRequestStatus {
@@ -110,26 +110,26 @@ enum AdviceRequestOrigin {
 }
 
 model AdviceRequest {
-  id         Int                 @id @default(autoincrement())
+  id         String                 @id @default(uuid())
   createdAt  DateTime            @default(now())
   origin     AdviceRequestOrigin
   status     AdviceRequestStatus
   to         User                @relation(name: "ReceivedAdviceRequests", fields: [toUserId], references: [id])
   from       User                @relation(name: "SentAdviceRequests", fields: [fromUserId], references: [id])
-  fromUserId Int
-  toUserId   Int
+  fromUserId String
+  toUserId   String
 }
 
 model Picture {
   url        String
-  id         Int     @id @default(autoincrement())
-  student_id Int
+  id         String     @id @default(uuid())
+  student_id String
   student    Student @relation(fields: [student_id], references: [id])
 }
 
 model Measurement {
   createdAt     DateTime @default(now())
-  id            Int      @id @default(autoincrement())
+  id            String      @id @default(uuid())
   weight        Float
   shoulders     Float
   chest         Float
@@ -143,27 +143,27 @@ model Measurement {
   thigh_right   Float
   calf_left     Float
   calf_right    Float
-  student_id    Int
+  student_id    String
   student       Student  @relation(fields: [student_id], references: [id])
 }
 
 model MuscleGroup {
   name     String     @unique
-  id       Int        @id @default(autoincrement())
+  id       String        @id @default(uuid())
   Movement Movement[]
 }
 
 model Movement {
   name               String
-  id                 Int         @id @default(autoincrement())
+  id                 String         @id @default(uuid())
   focusedMuscleGroup MuscleGroup @relation(fields: [muscleGroupId], references: [id])
-  muscleGroupId      Int
+  muscleGroupId      String
   exercise           Exercise[]
 }
 
 model Equipment {
   name     String
-  id       Int        @id @default(autoincrement())
+  id       String        @id @default(uuid())
   Exercise Exercise[]
 }
 
@@ -174,22 +174,22 @@ enum Grip {
 }
 
 model Exercise {
-  id          Int        @id @default(autoincrement())
+  id          String        @id @default(uuid())
   movement    Movement   @relation(fields: [movementId], references: [id])
   equipment   Equipment? @relation(fields: [equipmentId], references: [id])
   grip        Grip?
   sets        Set[]
-  movementId  Int
-  equipmentId Int?
+  movementId  String
+  equipmentId String?
 }
 
 model Set {
   exercises           Exercise[]
-  id                  Int                @id @default(autoincrement())
+  id                  String                @id @default(uuid())
   times               Int
   repetitions         String
   technique           ExerciseTechnique? @relation(fields: [exerciseTechniqueId], references: [id])
-  exerciseTechniqueId Int?
+  exerciseTechniqueId String?
   minRestTime         Int?
   maxRestTime         Int?
   trainings           Training[]
@@ -197,32 +197,32 @@ model Set {
 
 model ExerciseTechnique {
   name        String
-  id          Int    @id @default(autoincrement())
+  id          String    @id @default(uuid())
   explanation String
   sets        Set[]
 }
 
 model UserTrainingPlanning {
   trainingPlanning   TrainingPlanning @relation(fields: [trainingPlanningId], references: [id])
-  trainingPlanningId Int              @id
+  trainingPlanningId String              @id
 
   user   User? @relation(fields: [userId], references: [id])
-  userId Int?
+  userId String?
 }
 
 model AdviceTrainingPlanning {
   trainingPlanning   TrainingPlanning @relation(fields: [trainingPlanningId], references: [id])
-  trainingPlanningId Int              @id
+  trainingPlanningId String              @id
   advice             Advice           @relation(fields: [adviceStudentId, advicePersonalId], references: [studentId, personalId])
-  adviceStudentId    Int
-  advicePersonalId   Int
+  adviceStudentId    String
+  advicePersonalId   String
 }
 
 model TrainingPlanning {
   trainings              Training[]
-  id                     Int                     @id @default(autoincrement())
+  id                     String                     @id @default(uuid())
   type                   TrainingPlanningType    @relation(fields: [trainingPlanningTypeId], references: [id])
-  trainingPlanningTypeId Int
+  trainingPlanningTypeId String
   userTrainingPlanning   UserTrainingPlanning?
   adviceTrainingPlanning AdviceTrainingPlanning?
 }
@@ -238,18 +238,18 @@ enum Day {
 }
 
 model Training {
-  id                 Int               @id @default(autoincrement())
+  id                 String               @id @default(uuid())
   letter             String
   sets               Set[]
   aerobicMinutes     Int
   trainingPlanning   TrainingPlanning? @relation(fields: [trainingPlanningId], references: [id])
-  trainingPlanningId Int?
+  trainingPlanningId String?
   day                Day
 }
 
 model TrainingPlanningType {
   name               String
-  id                 Int                @id @default(autoincrement())
+  id                 String                @id @default(uuid())
   explanation        String
   defaultMinRestTime Int
   defaultMaxRestTime Int
