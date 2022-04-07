@@ -1,19 +1,17 @@
+import { AdviceRequest } from "@domain/adviceRequest/entity/AdviceRequest";
 import { Prisma } from "@prisma/client";
-import { CreateAdviceParams } from "./";
 
-export const getPrismaCreateDataInput = ({
-  fromId, origin, toId
-}: CreateAdviceParams): Prisma.AdviceRequestCreateInput => ({
+export const getPrismaAdviceRequestCreateDataInput = (adviceRequest: AdviceRequest): Prisma.AdviceRequestCreateInput => ({
   from: {
     connect: {
-      id: fromId,
+      id: adviceRequest.getFromUserId(),
     }
   },
   to: {
     connect: {
-      id: toId
+      id: adviceRequest.getToUserId()
     }
   },
-  origin,
+  origin: adviceRequest.getOrigin(),
   status: 'PENDING'
 })
