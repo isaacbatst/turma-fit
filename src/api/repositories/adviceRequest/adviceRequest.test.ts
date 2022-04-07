@@ -1,7 +1,7 @@
 import { prisma } from '../../../lib/prisma';
-import { createAdviceRequest } from "./";
-import { prismaAdviceRequestMock, STUDENT_ADVICE_REQUEST_CREATE_DATA } from "./adviceRequest.mock";
-import { getPrismaCreateDataInput } from './utils';
+import { PrismaAdviceRequestRepository } from "./";
+import { prismaAdviceRequestMock, STUDENT_ADVICE_REQUEST_CREATE_MOCK } from "./adviceRequest.mock";
+import { getPrismaAdviceRequestCreateDataInput } from './utils';
 
 jest.mock('../../lib/prisma', () => ({
   prisma: {
@@ -13,30 +13,37 @@ describe('Advice Request Repository', () => {
   describe('Create Personal Advice Request', () => {
     describe('Given a created student request', () => {
       it('should call prisma create advice with expected parameters', async () => {
-        await createAdviceRequest(STUDENT_ADVICE_REQUEST_CREATE_DATA);
+        const repository = new PrismaAdviceRequestRepository(prisma);
+        await repository.create(STUDENT_ADVICE_REQUEST_CREATE_MOCK);
         
-        const dataInput = getPrismaCreateDataInput(STUDENT_ADVICE_REQUEST_CREATE_DATA);
+        const dataInput = getPrismaAdviceRequestCreateDataInput(STUDENT_ADVICE_REQUEST_CREATE_MOCK);
         expect(prisma.adviceRequest.create).toHaveBeenCalledWith({ data: dataInput })
       })
 
       it('should return same fromId', async () => {
-        const request = await createAdviceRequest(STUDENT_ADVICE_REQUEST_CREATE_DATA);
-        expect(request.fromUserId).toBe(STUDENT_ADVICE_REQUEST_CREATE_DATA.fromId)
+        const repository = new PrismaAdviceRequestRepository(prisma);
+        const request = await repository.create(STUDENT_ADVICE_REQUEST_CREATE_MOCK);
+        expect(request.getFromUserId()).toBe(STUDENT_ADVICE_REQUEST_CREATE_MOCK.getFromUserId())
       })
 
       it('should return same toId', async () => {
-        const request = await createAdviceRequest(STUDENT_ADVICE_REQUEST_CREATE_DATA);
-        expect(request.toUserId).toBe(STUDENT_ADVICE_REQUEST_CREATE_DATA.toId);
+        const repository = new PrismaAdviceRequestRepository(prisma);
+        const request = await repository.create(STUDENT_ADVICE_REQUEST_CREATE_MOCK);
+        expect(request.getToUserId()).toBe(STUDENT_ADVICE_REQUEST_CREATE_MOCK.getToUserId());
       })
 
       it('should return same origin', async () => {
-        const request = await createAdviceRequest(STUDENT_ADVICE_REQUEST_CREATE_DATA);
-        expect(request.origin).toBe(STUDENT_ADVICE_REQUEST_CREATE_DATA.origin);
+        const repository = new PrismaAdviceRequestRepository(prisma);
+        const request = await repository.create(STUDENT_ADVICE_REQUEST_CREATE_MOCK);
+        expect(request.getOrigin()).toBe(STUDENT_ADVICE_REQUEST_CREATE_MOCK.getOrigin());
       })
 
       it('should return status "PENDING"', async () => {
-        const request = await createAdviceRequest(STUDENT_ADVICE_REQUEST_CREATE_DATA);
-        expect(request.status).toBe("PENDING");
+        const repository = new PrismaAdviceRequestRepository(prisma);
+        const request = await repository.create(STUDENT_ADVICE_REQUEST_CREATE_MOCK);
+
+        const INITIAL_STATUS = "PENDING"
+        expect(request.getStatus()).toBe(INITIAL_STATUS);
       })
     })
   })
