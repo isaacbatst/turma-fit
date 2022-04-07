@@ -9,7 +9,7 @@ jest.mock('../../lib/prisma', () => ({
   }
 }));
 
-describe('Advice Request Repository', () => {
+describe('Advice Request Repository - Prisma', () => {
   describe('Create Personal Advice Request', () => {
     describe('Given a created student request', () => {
       it('should call prisma create advice with expected parameters', async () => {
