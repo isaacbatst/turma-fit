@@ -11,8 +11,8 @@ export enum AdviceRequestOrigin {
   PERSONAL = "PERSONAL",
 }
 
-type AdviceRequestOriginType = keyof typeof AdviceRequestOrigin
-type AdviceRequestStatusType = keyof typeof AdviceRequestStatus
+export type AdviceRequestOriginType = keyof typeof AdviceRequestOrigin
+export type AdviceRequestStatusType = keyof typeof AdviceRequestStatus
 
 export interface CreateAdviceRequestEntityParams {
   id?: string,
