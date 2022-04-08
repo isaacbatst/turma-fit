@@ -1,4 +1,4 @@
-import { AdviceRequest } from "@domain/adviceRequest/entity/AdviceRequest";
+import { AdviceRequest } from "@domain/entities/adviceRequest/entity/AdviceRequest";
 import { PrismaClient, AdviceRequest as PrismaAdviceRequest } from "@prisma/client";
 
 export interface AdviceRequestRepository {

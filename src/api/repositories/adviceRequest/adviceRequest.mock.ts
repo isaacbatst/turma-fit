@@ -1,5 +1,5 @@
 import { AdviceRequest as PrismaAdviceRequest, Prisma } from "@prisma/client";
-import { AdviceRequest } from "@domain/adviceRequest/entity/AdviceRequest";
+import { AdviceRequest } from "@domain/entities/adviceRequest/entity/AdviceRequest";
 
 export const STUDENT_ADVICE_REQUEST_FROM_ID = 'student-advice-request-from-id';
 export const STUDENT_ADVICE_REQUEST_TO_ID = 'student-advice-request-to-id';

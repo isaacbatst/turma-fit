@@ -1,4 +1,4 @@
-import { AdviceRequest } from "@domain/adviceRequest/entity/AdviceRequest";
+import { AdviceRequest } from "@domain/entities/adviceRequest/entity/AdviceRequest";
 import { Prisma } from "@prisma/client";
 
 export const getPrismaAdviceRequestCreateDataInput = (adviceRequest: AdviceRequest): Prisma.AdviceRequestCreateInput => ({

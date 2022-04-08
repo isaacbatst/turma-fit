@@ -1,5 +1,5 @@
 import { AdviceRequestRepository } from "@api/repositories/adviceRequest/AdviceRequest";
-import { AdviceRequest, AdviceRequestOrigin, AdviceRequestOriginType, AdviceRequestStatusType } from "@domain/adviceRequest/entity/AdviceRequest";
+import { AdviceRequest, AdviceRequestOrigin, AdviceRequestOriginType, AdviceRequestStatusType } from "@domain/entities/AdviceRequest/AdviceRequest";
 
 export interface CreateAdviceRequestUseCasePort {
   fromId: string,

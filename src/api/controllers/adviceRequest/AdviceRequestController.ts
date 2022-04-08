@@ -1,5 +1,5 @@
 import { CreateAdviceRequestDTO, CreateAdviceRequestUseCase } from "@api/services/adviceRequest/CreateAdviceRequestService";
-import { AdviceRequestOrigin, AdviceRequestOriginType, AdviceRequestStatusType } from "@domain/adviceRequest/entity/AdviceRequest";
+import { AdviceRequestStatusType, AdviceRequestOriginType, AdviceRequestOrigin } from "@domain/entities/AdviceRequest/AdviceRequest";
 
 interface ApiResponse<TResponseBody> {
   code: number,
