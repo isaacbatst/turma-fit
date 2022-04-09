@@ -12,19 +12,6 @@ export interface CreateAdviceRequestDTO {
   createdAt: Date,
   status: AdviceRequestStatusType,
 }
-
-class CreateAdviceRequestPortValidator {
-  public static validate(port: CreateAdviceRequestUseCasePort){
-    if(!port.fromId || typeof port.fromId !== 'string'){
-      throw new Error('INVALID_FROM_ID');
-    }
-
-    if(!port.toId || typeof port.toId !== 'string'){
-      throw new Error('INVALID_TO_ID');
-    }  
-  }
-}
-
 export class CreateAdviceRequestUseCase {
   constructor(
     private adviceServiceRepository: AdviceRequestRepository,
@@ -32,8 +19,6 @@ export class CreateAdviceRequestUseCase {
   ) {}
   
   async execute(port: CreateAdviceRequestUseCasePort): Promise<CreateAdviceRequestDTO> {
-    CreateAdviceRequestPortValidator.validate(port);   
-    
     const adviceRequest = new AdviceRequest({})
 
     const fromProfile = await this.profileRepository.get(port.fromId);
