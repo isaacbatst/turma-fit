@@ -1,5 +1,4 @@
 import { v4 } from "uuid";
-import WorkoutPlan from "../WorkoutPlan/WorkoutPlan";
 
 interface CreateUserEntityParams {
   id?: string;
@@ -7,7 +6,7 @@ interface CreateUserEntityParams {
   name: string;
   email: string;
   image: string;
-  age: number
+  age: number;
 }
 export class User {
   private id: string;
@@ -16,10 +15,6 @@ export class User {
   private emailVerifiedAt: Date | null;
   private image: string;
   private age: number
-  // private workoutPlans: WorkoutPlan[]
-  // private sentAdviceRequests: AdviceRequest[]        
-  // private receivedAdviceRequests: AdviceRequest[]     
-  // private userTrainingPlannings: UserTrainingPlanning[]
 
   constructor(params: CreateUserEntityParams) {
     this.id = params.id || v4();
@@ -29,15 +24,16 @@ export class User {
     this.image = params.image;
     this.age = params.age;
   }
+
+  public getName(): string {
+    return this.name;
+  }
+
+  public getId(): string {
+    return this.id;
+  }
+
+  public getEmail(): string {
+    return this.email;
+  }
 } 
-
-// export class Personal extends User {
-//   private advices: Advice[]
-// }
-
-// export class Student extends User {
-//   private measures: Measurement[]
-//   private pictures: Picture[]
-//   private advices : Advice[]
-// }
-
