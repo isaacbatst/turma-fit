@@ -10,7 +10,8 @@ class UserRepositoryMock implements UserRepository {
 }
 
 class ProfileRepositoryMock implements ProfileRepository {
-  create: (profile: Profile) => Promise<Profile> = async (profile: Profile) => profile
+  create: (profile: Profile) => Promise<Profile> = async (profile: Profile) => profile;
+  get: (id: string) => Promise<Profile | null> = async () => null;
 }
 
 const PERSONAL_USER_CREATE_DATA_MOCK = {
