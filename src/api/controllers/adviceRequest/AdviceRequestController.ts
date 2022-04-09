@@ -1,5 +1,4 @@
-import { CreateAdviceRequestDTO, CreateAdviceRequestUseCase } from "@api/services/adviceRequest/CreateAdviceRequestService";
-import { AdviceRequestStatusType, AdviceRequestOriginType, AdviceRequestOrigin } from "@domain/entities/AdviceRequest/AdviceRequest";
+import { AdviceRequestStatusType, AdviceRequestOriginType, ADVICE_REQUEST_ORIGIN } from "@domain/entities/AdviceRequest/AdviceRequest";
 
 interface ApiResponse<TResponseBody> {
   code: number,
@@ -13,7 +12,7 @@ interface ErrorResponse {
 interface ApiCreateAdviceRequestBody {
   fromUserId: string,
   toUserId: string,
-  origin: AdviceRequestOrigin
+  origin: ADVICE_REQUEST_ORIGIN
 }
 
 interface CreateAdviceRequestViewModel {

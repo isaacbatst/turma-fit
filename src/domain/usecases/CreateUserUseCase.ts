@@ -1,5 +1,7 @@
-import { PersonalProfile, Profile, ProfileType, PROFILE_TYPES, StudentProfile } from "@domain/entities/User/Profile";
+import { PersonalProfile, ProfileType, PROFILE_TYPES, StudentProfile } from "@domain/entities/User/Profile";
 import { User } from "@domain/entities/User/User";
+import { ProfileRepository } from "@domain/repositories/ProfileRepository";
+import { UserRepository } from "@domain/repositories/UserRepository";
 interface CreateUserUseCasePort {
   name: string,
   email: string,
@@ -7,13 +9,6 @@ interface CreateUserUseCasePort {
   age: number,
   profile: ProfileType
 }
-export interface UserRepository {
-  create: (user: User) => Promise<User>
-}
-export interface ProfileRepository {
-  create: (profile: Profile) => Promise<Profile>
-}
-
 interface CreateUserUseCaseDTO {
   user: {
     id: string,

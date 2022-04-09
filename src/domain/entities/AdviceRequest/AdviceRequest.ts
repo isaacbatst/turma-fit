@@ -6,39 +6,29 @@ export enum AdviceRequestStatus {
   PENDING = "PENDING",
 }
 
-export enum AdviceRequestOrigin {
+export enum ADVICE_REQUEST_ORIGIN {
   STUDENT = "STUDENT",
   PERSONAL = "PERSONAL",
 }
 
-export type AdviceRequestOriginType = keyof typeof AdviceRequestOrigin
+export type AdviceRequestOriginType = keyof typeof ADVICE_REQUEST_ORIGIN
 export type AdviceRequestStatusType = keyof typeof AdviceRequestStatus
 
 export interface CreateAdviceRequestEntityParams {
   id?: string,
   createdAt?: Date,
   status?: AdviceRequestStatusType,
-  origin: AdviceRequestOriginType,
-  fromUserId: string,
-  toUserId: string,
 }
 
 export class AdviceRequest {
   private id: string
   private createdAt: Date
-  private origin: AdviceRequestOriginType
   private status: AdviceRequestStatusType
-  private fromUserId: string
-  private toUserId: string
 
-  constructor(params: CreateAdviceRequestEntityParams) {
-    this.id = params.id || v4();
-    this.createdAt = params.createdAt || new Date();
-    this.status = params.status || AdviceRequestStatus.PENDING;
-
-    this.origin = params.origin;
-    this.fromUserId = params.fromUserId;
-    this.toUserId = params.toUserId;
+  constructor(params?: CreateAdviceRequestEntityParams) {
+    this.id = params?.id || v4();
+    this.createdAt = params?.createdAt || new Date();
+    this.status = params?.status || AdviceRequestStatus.PENDING;
   }
 
   getId() {
@@ -47,16 +37,7 @@ export class AdviceRequest {
   getCreatedAt() {
     return this.createdAt
   }
-  getOrigin() {
-    return this.origin
-  }
   getStatus() {
     return this.status
-  }
-  getFromUserId() {
-    return this.fromUserId
-  }
-  getToUserId() {
-    return this.toUserId
   }
 }

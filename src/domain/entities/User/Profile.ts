@@ -30,10 +30,8 @@ export class StudentProfile extends Profile {
   protected readonly type = PROFILE_TYPES.STUDENT
   //   private measures: Measurement[]
   //   private pictures: Picture[]
-  //   private advices : Advice[]
 }
 export class PersonalProfile extends Profile {
   protected readonly type = PROFILE_TYPES.PERSONAL
-  //   private advices: Advice[]
 }
 

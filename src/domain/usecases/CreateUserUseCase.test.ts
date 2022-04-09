@@ -1,9 +1,12 @@
 import { Profile, PROFILE_TYPES } from "@domain/entities/User/Profile";
 import { User } from "@domain/entities/User/User";
-import CreateUserUseCase, { ProfileRepository, UserRepository } from "./CreateUserUseCase"
+import { ProfileRepository } from "@domain/repositories/ProfileRepository";
+import { UserRepository } from "@domain/repositories/UserRepository";
+import CreateUserUseCase from "./CreateUserUseCase";
 
 class UserRepositoryMock implements UserRepository {
   create: (user: User) => Promise<User> = async (user: User) => user
+  get: (id: string) => Promise<User | null> = async (id: string) => null
 }
 
 class ProfileRepositoryMock implements ProfileRepository {

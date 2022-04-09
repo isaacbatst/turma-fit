@@ -1,9 +1,5 @@
-import { AdviceRequest } from "@domain/entities/adviceRequest/entity/AdviceRequest";
+import { AdviceRequest } from "@domain/entities/AdviceRequest/AdviceRequest";
 import { PrismaClient, AdviceRequest as PrismaAdviceRequest } from "@prisma/client";
-
-export interface AdviceRequestRepository {
-  create: (adviceRequest: AdviceRequest) => Promise<AdviceRequest>
-}
 
 class PrismaAdviceRequestMapper {
   public static toORM(domainAdviceRequest: AdviceRequest): PrismaAdviceRequest {
@@ -19,9 +15,7 @@ class PrismaAdviceRequestMapper {
 
   public static toDomain(ormAdviceRequest: PrismaAdviceRequest): AdviceRequest {
     const adviceRequest = new AdviceRequest({
-      fromUserId: ormAdviceRequest.fromUserId,
       origin: ormAdviceRequest.origin,
-      toUserId: ormAdviceRequest.toUserId,
       createdAt: ormAdviceRequest.createdAt,
       id: ormAdviceRequest.id,
       status: ormAdviceRequest.status
