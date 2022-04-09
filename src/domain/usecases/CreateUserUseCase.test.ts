@@ -22,6 +22,14 @@ const PERSONAL_USER_CREATE_DATA_MOCK = {
   profile: PROFILE_TYPES.PERSONAL
 }
 
+const STUDENT_USER_CREATE_DATA_MOCK = {
+  age: 23,
+  email: 'test@email2',
+  image: 'image-url2',
+  name: 'Tester2',
+  profile: PROFILE_TYPES.STUDENT
+}
+
 describe('CreateUserUseCase', () => {
   it('should create a user with personal profile', async () => {
     const userRepository = new UserRepositoryMock();
@@ -31,5 +39,15 @@ describe('CreateUserUseCase', () => {
     const { profile } = await createUserUseCase.execute(PERSONAL_USER_CREATE_DATA_MOCK);
     
     expect(profile.type).toBe(PROFILE_TYPES.PERSONAL)
+  })
+
+  it('should create a user with student profile', async () => {
+    const userRepository = new UserRepositoryMock();
+    const profileRepository = new ProfileRepositoryMock();
+    const createUserUseCase = new CreateUserUseCase(userRepository, profileRepository);
+
+    const { profile } = await createUserUseCase.execute(STUDENT_USER_CREATE_DATA_MOCK);
+    
+    expect(profile.type).toBe(PROFILE_TYPES.STUDENT)
   })
 })
