@@ -2,12 +2,13 @@ import { PersonalProfile, ProfileType, PROFILE_TYPES, StudentProfile } from "@do
 import { User } from "@domain/entities/User/User";
 import { ProfileRepository } from "@domain/repositories/ProfileRepository";
 import { UserRepository } from "@domain/repositories/UserRepository";
-interface CreateUserUseCasePort {
+export interface CreateUserUseCasePort {
   name: string,
   email: string,
   image: string,
   age: number,
   profile: ProfileType
+  password: string,
 }
 interface CreateUserUseCaseDTO {
   user: {
@@ -20,18 +21,29 @@ interface CreateUserUseCaseDTO {
     type: ProfileType
   }
 }
+
+export interface Encrypter {
+  compare: (value: string, hashedValue: string) => Promise<boolean>
+  hash: (value: string) => Promise<string>
+}
+
 export default class CreateUserUseCase {
   constructor(
     private userRepository: UserRepository, 
-    private profileRepository: ProfileRepository) 
+    private profileRepository: ProfileRepository,
+    private encrypter: Encrypter
+  ) 
   {}
 
   async execute(port: CreateUserUseCasePort): Promise<CreateUserUseCaseDTO> {
+    const hashedPassword = await this.encrypter.hash(port.password);
+
     const user = new User({
       age: port.age,
       email: port.email,
       image: port.image,
       name: port.name,
+      password: hashedPassword
     })
 
     await this.userRepository.create(user);
