@@ -1,15 +1,11 @@
-import { Profile, PROFILE_TYPES } from "@domain/entities/User/Profile";
+import { PROFILE_TYPES } from "@domain/entities/User/Profile";
 import { User } from "@domain/entities/User/User";
-import { ProfileRepository } from "@domain/repositories/ProfileRepository";
-import { UserRepository } from "@domain/repositories/UserRepository";
-import { v4 } from "uuid";
-import CreateUserUseCase, { CreateUserUseCasePort, Encrypter } from "./CreateUserUseCase";
-import { UserRepositoryMock, ProfileRepositoryMock, EncrypterMock } from "./CreateUserUseCase.mocks";
+import CreateUserUseCase, { CreateUserUseCasePort } from "./CreateUserUseCase";
+import { EncrypterMock, ProfileRepositoryMock, UserRepositoryMock } from "./CreateUserUseCase.mocks";
 
 jest.mock('uuid',  () => {
   const originalModule = jest.requireActual('uuid');
 
-  //Mock the default export and named export 'foo'
   return {
     __esModule: true,
     ...originalModule,

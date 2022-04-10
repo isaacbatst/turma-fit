@@ -1,8 +1,8 @@
+import { Encrypter } from "@domain/Encrypter";
 import { Profile } from "@domain/entities/User/Profile";
 import { CreateUserEntityParams, User } from "@domain/entities/User/User";
 import { ProfileRepository } from "@domain/repositories/ProfileRepository";
 import { UserRepository } from "@domain/repositories/UserRepository";
-import { Encrypter } from "./CreateUserUseCase";
 
 const createMockedUserEntity = ({ id, email }: { id?: string, email?: string  }) => {
   const params: CreateUserEntityParams = {

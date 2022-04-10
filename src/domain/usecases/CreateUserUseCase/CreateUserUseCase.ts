@@ -1,7 +1,9 @@
+import { Encrypter } from "@domain/Encrypter";
 import { PersonalProfile, ProfileType, PROFILE_TYPES, StudentProfile } from "@domain/entities/User/Profile";
 import { User } from "@domain/entities/User/User";
 import { ProfileRepository } from "@domain/repositories/ProfileRepository";
 import { UserRepository } from "@domain/repositories/UserRepository";
+
 export interface CreateUserUseCasePort {
   name: string,
   email: string,
@@ -20,11 +22,6 @@ interface CreateUserUseCaseDTO {
     id: string,
     type: ProfileType
   }
-}
-
-export interface Encrypter {
-  compare: (value: string, hashedValue: string) => Promise<boolean>
-  hash: (value: string) => Promise<string>
 }
 
 export default class CreateUserUseCase {
