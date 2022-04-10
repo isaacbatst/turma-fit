@@ -1,4 +1,4 @@
-import { AdviceRequest, AdviceRequestOriginType, AdviceRequestStatusType } from "@domain/entities/AdviceRequest/AdviceRequest";
+import { AdviceRequest, AdviceRequestStatusType } from "@domain/entities/AdviceRequest/AdviceRequest";
 import { AdviceRequestRepository } from "@domain/repositories/AdviceRequestRepository";
 import { ProfileRepository } from "@domain/repositories/ProfileRepository";
 

@@ -1,6 +1,5 @@
-import { AdviceRequest, ADVICE_REQUEST_ORIGIN } from "@domain/entities/AdviceRequest/AdviceRequest"
+import { AdviceRequest } from "@domain/entities/AdviceRequest/AdviceRequest"
 import { PersonalProfile, Profile, StudentProfile } from "@domain/entities/User/Profile"
-import { User } from "@domain/entities/User/User"
 import { AdviceRequestRepository } from "@domain/repositories/AdviceRequestRepository"
 import { ProfileRepository } from "@domain/repositories/ProfileRepository"
 import { CreateAdviceRequestUseCase } from "./CreateAdviceRequestUseCase"
