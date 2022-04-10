@@ -1,4 +1,4 @@
-import { Encrypter } from "@domain/Encrypter";
+import { Encrypter } from "@domain/common/Encrypter";
 import { PersonalProfile, ProfileType, PROFILE_TYPES, StudentProfile } from "@domain/entities/User/Profile";
 import { User } from "@domain/entities/User/User";
 import { ProfileRepository } from "@domain/repositories/ProfileRepository";
