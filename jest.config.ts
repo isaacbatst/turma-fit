@@ -1,6 +1,6 @@
 // jest.config.js
 import nextJest from 'next/jest'
-import { pathsToModuleNameMapper } from 'ts-jest/utils'
+import { pathsToModuleNameMapper } from 'ts-jest'
 import type {Config} from '@jest/types';
 import { compilerOptions } from './tsconfig.json';
 
