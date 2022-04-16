@@ -13,7 +13,8 @@
       "@styles/*": ["src/styles/*"],
       "@domain/*": ["src/domain/*"],
       "@tests/*": ["tests/*"],
-      "@types/*": ["types/*"]
+      "@types/*": ["types/*"],
+      "@application/*": ["src/application/*"]
     },
     "skipLibCheck": true,
     "strict": true,
