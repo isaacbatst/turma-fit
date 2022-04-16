@@ -1,6 +1,6 @@
 import { PROFILE_TYPES } from "@domain/entities/User/Profile";
 import { User } from "@domain/entities/User/User";
-import CreateUserUseCase, { CreateUserUseCasePort } from "./CreateUserUseCase";
+import { CreateUserService, CreateUserUseCase, CreateUserUseCasePort } from "./CreateUserUseCase";
 import { EncrypterMock, ProfileRepositoryMock, UserRepositoryMock } from "../_mocks";
 
 jest.mock('uuid',  () => {
@@ -36,7 +36,7 @@ describe('CreateUserUseCase', () => {
     const userRepository = new UserRepositoryMock();
     const profileRepository = new ProfileRepositoryMock();
     const encrypter = new EncrypterMock();
-    const createUserUseCase = new CreateUserUseCase(userRepository, profileRepository, encrypter);
+    const createUserUseCase = new CreateUserService(userRepository, profileRepository, encrypter);
 
     await createUserUseCase.execute(PERSONAL_USER_CREATE_DATA_MOCK)
 
@@ -55,7 +55,7 @@ describe('CreateUserUseCase', () => {
     const userRepository = new UserRepositoryMock();
     const profileRepository = new ProfileRepositoryMock();
     const encrypter = new EncrypterMock();
-    const createUserUseCase = new CreateUserUseCase(userRepository, profileRepository, encrypter);
+    const createUserUseCase = new CreateUserService(userRepository, profileRepository, encrypter);
 
     const { profile } = await createUserUseCase.execute(PERSONAL_USER_CREATE_DATA_MOCK);
     
@@ -66,7 +66,7 @@ describe('CreateUserUseCase', () => {
     const userRepository = new UserRepositoryMock();
     const profileRepository = new ProfileRepositoryMock();
     const encrypter = new EncrypterMock();
-    const createUserUseCase = new CreateUserUseCase(userRepository, profileRepository, encrypter);
+    const createUserUseCase = new CreateUserService(userRepository, profileRepository, encrypter);
 
     const { profile } = await createUserUseCase.execute(STUDENT_USER_CREATE_DATA_MOCK);
     

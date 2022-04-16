@@ -17,7 +17,6 @@ const cookiesMapToResponse: Record<string, CustomMockedResponse<Session>> = {
 export const getAuthSessionResolver: ResponseResolver<RestRequest, RestContext> = (req, res, ctx) => {
   if(cookiesMapToResponse[req.cookies.auth]){
     const { json } = cookiesMapToResponse[req.cookies.auth];
-    console.log(json)
     return res(ctx.json(json))
   }
 
