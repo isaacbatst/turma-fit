@@ -1,5 +1,5 @@
-import { BodyValidatorMock, CreateUserServiceMock } from '../__mocks__';
-import { CreateUserController } from './CreateUserController';
+import { BodyValidatorMock, CreateUserServiceMock } from "../_mocks";
+import { CreateUserController } from "./CreateUserController";
 
 function makeSut() {
   const validator = new BodyValidatorMock();

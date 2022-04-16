@@ -1,4 +1,4 @@
-import { EncrypterMock, TokenGeneratorMock, UserRepositoryMock } from "../__mocks__";
+import { EncrypterMock, TokenGeneratorMock, UserRepositoryMock } from "../_mocks";
 import AuthenticateUserUseCase from "./AuthenticateUserUseCase";
 
 describe('AuthenticateUserUseCase', () => {
