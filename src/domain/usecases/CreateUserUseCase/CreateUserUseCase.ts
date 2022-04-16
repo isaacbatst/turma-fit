@@ -12,7 +12,7 @@ export interface CreateUserUseCasePort {
   profile: ProfileType
   password: string,
 }
-interface CreateUserUseCaseDTO {
+export interface CreateUserUseCaseDTO {
   user: {
     id: string,
     name: string,
@@ -23,8 +23,11 @@ interface CreateUserUseCaseDTO {
     type: ProfileType
   }
 }
+export interface CreateUserUseCase {
+  execute(port: CreateUserUseCasePort): Promise<CreateUserUseCaseDTO>
+}
 
-export default class CreateUserUseCase {
+export class CreateUserService implements CreateUserUseCase {
   constructor(
     private userRepository: UserRepository, 
     private profileRepository: ProfileRepository,
