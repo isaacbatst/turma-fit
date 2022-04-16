@@ -1,4 +1,4 @@
-import { BodyValidatorMock, CreateUserServiceMock } from "../_mocks";
+import { BodyValidatorMock, CreateUserServiceMock } from "./_mocks";
 import { CreateUserController } from "./CreateUserController";
 
 function makeSut() {
