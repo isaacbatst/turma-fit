@@ -15,6 +15,7 @@ model User {
   emailVerifiedAt   DateTime?
   image             String
   age               Int
+  password          String
   trainingPlannings TrainingPlanning[]
   profile           Profile[]
 }
