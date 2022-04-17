@@ -43,4 +43,12 @@ export class User {
   public getPassword(): string {
     return this.password;
   }
+
+  public getImage(): string {
+    return this.image;
+  }
+
+  public getAge(): number {
+    return this.age;
+  }
 } 
