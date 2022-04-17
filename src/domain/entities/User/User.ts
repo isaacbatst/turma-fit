@@ -2,7 +2,7 @@ import { v4 } from "uuid";
 
 export interface CreateUserEntityParams {
   id?: string;
-  emailVerifiedAt?: Date;
+  emailVerifiedAt?: Date | null;
   name: string;
   email: string;
   image: string;
@@ -50,5 +50,9 @@ export class User {
 
   public getAge(): number {
     return this.age;
+  }
+
+  public getEmailVerifiedAt(): Date | null {
+    return this.emailVerifiedAt;
   }
 } 
