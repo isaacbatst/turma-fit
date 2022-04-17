@@ -1,6 +1,6 @@
 import { BodyValidator, HttpRequest, HttpResponse } from "@application/api/interfaces";
 import { CreateUserUseCasePort, CreateUserUseCase } from "@domain/usecases/CreateUserUseCase/CreateUserUseCase";
-import { ValidationError } from "./CreateUserBodyValidator.test";
+import { ValidationError } from "./CreateUserBodyValidator";
 
 export interface CreateUserResponse {
   id: string

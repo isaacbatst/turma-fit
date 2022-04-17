@@ -9,7 +9,7 @@ export interface CreateUserUseCasePort {
   email: string,
   image: string,
   age: number,
-  profile: ProfileType
+  profile: string,
   password: string,
 }
 export interface CreateUserUseCaseDTO {
@@ -50,8 +50,14 @@ export class CreateUserService implements CreateUserUseCase {
 
     const profile = port.profile === PROFILE_TYPES.PERSONAL
       ? new PersonalProfile()
-      : new StudentProfile()
-  
+      : port.profile === PROFILE_TYPES.STUDENT
+        ? new StudentProfile()
+        : null;
+    
+    if(!profile) {
+      throw new Error('UNKNOWN_PROFILE')
+    }
+
     await this.profileRepository.create(profile)
 
     return { 
