@@ -16,7 +16,7 @@ model User {
   image             String
   age               Int
   trainingPlannings TrainingPlanning[]
-  Profile           Profile[]
+  profile           Profile[]
 }
 
 enum ProfileType {
