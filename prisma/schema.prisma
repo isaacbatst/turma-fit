@@ -9,14 +9,14 @@ datasource db {
 }
 
 model User {
-  name                  String
-  id                    String                 @id @default(uuid())
-  email                 String                 @unique
-  emailVerifiedAt       DateTime?
-  image                 String
-  age                   Int
-  userTrainingPlannings UserTrainingPlanning[]
-  Profile               Profile[]
+  name              String
+  id                String             @id
+  email             String             @unique
+  emailVerifiedAt   DateTime?
+  image             String
+  age               Int
+  trainingPlannings TrainingPlanning[]
+  Profile           Profile[]
 }
 
 enum ProfileType {
@@ -46,13 +46,13 @@ model PersonalProfile {
 }
 
 model Advice {
-  active                  Boolean
-  student                 StudentProfile           @relation(fields: [studentId], references: [id])
-  personal                PersonalProfile          @relation(fields: [personalId], references: [id])
-  studentId               String
-  personalId              String
-  adviceChange            AdviceChange[]
-  adviceTrainingPlannings AdviceTrainingPlanning[]
+  active            Boolean
+  student           StudentProfile     @relation(fields: [studentId], references: [id])
+  personal          PersonalProfile    @relation(fields: [personalId], references: [id])
+  studentId         String
+  personalId        String
+  adviceChange      AdviceChange[]
+  trainingPlannings TrainingPlanning[]
 
   @@id([studentId, personalId])
 }
@@ -166,29 +166,22 @@ model ExerciseTechnique {
   sets        Set[]
 }
 
-model UserTrainingPlanning {
-  trainingPlanning   TrainingPlanning @relation(fields: [trainingPlanningId], references: [id])
-  trainingPlanningId String           @id
-
-  user   User?   @relation(fields: [userId], references: [id])
-  userId String?
-}
-
-model AdviceTrainingPlanning {
-  trainingPlanning   TrainingPlanning @relation(fields: [trainingPlanningId], references: [id])
-  trainingPlanningId String           @id
-  advice             Advice           @relation(fields: [adviceStudentId, advicePersonalId], references: [studentId, personalId])
-  adviceStudentId    String
-  advicePersonalId   String
+enum TrainingPlanningType {
+  ADVICE
+  USER
 }
 
 model TrainingPlanning {
+  id                     String                @id @default(uuid())
   trainings              Training[]
-  id                     String                  @id @default(uuid())
-  type                   TrainingPlanningType    @relation(fields: [trainingPlanningTypeId], references: [id])
+  type                   TrainingPlanningType
+  focus                  TrainingPlanningFocus @relation(fields: [trainingPlanningTypeId], references: [id])
   trainingPlanningTypeId String
-  userTrainingPlanning   UserTrainingPlanning?
-  adviceTrainingPlanning AdviceTrainingPlanning?
+  user                   User?                 @relation(fields: [userId], references: [id])
+  userId                 String?
+  advice                 Advice                @relation(fields: [adviceStudentId, advicePersonalId], references: [studentId, personalId])
+  adviceStudentId        String
+  advicePersonalId       String
 }
 
 enum Day {
@@ -211,7 +204,7 @@ model Training {
   day                Day
 }
 
-model TrainingPlanningType {
+model TrainingPlanningFocus {
   name               String
   id                 String             @id @default(uuid())
   explanation        String
