@@ -1,20 +1,22 @@
-import { BodyValidator, BodyValidatorReturn } from "@application/api/interfaces"
+import { BodyValidator } from "@application/api/interfaces"
 import { CreateUserUseCasePort, CreateUserUseCase, CreateUserUseCaseDTO } from "@domain/usecases/CreateUserUseCase/CreateUserUseCase"
+import { ValidationError } from "../CreateUserBodyValidator.test"
 
 export class BodyValidatorMock implements BodyValidator<CreateUserUseCasePort> {
   public error: string | null = null
   
-  validate = jest.fn((req: Record<string, any>): BodyValidatorReturn<CreateUserUseCasePort> => {
+  validate = jest.fn((req: Record<string, any>): CreateUserUseCasePort => {
+    if(this.error){
+      throw new ValidationError(this.error)
+    }
+
     return {
-      error: this.error,
-      data: {
-        age: 23,
-        email: 'valid_email',
-        image: 'valid_image',
-        name: 'valid_name',
-        password: 'valid_password',
-        profile: 'PERSONAL'
-      }
+      age: 23,
+      email: 'valid_email',
+      image: 'valid_image',
+      name: 'valid_name',
+      password: 'valid_password',
+      profile: 'PERSONAL'
     }
   })
 }

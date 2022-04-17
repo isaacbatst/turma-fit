@@ -7,11 +7,6 @@ export interface HttpResponse<T = {}> {
   statusCode: number
 }
 
-export interface BodyValidatorReturn<T> {
-  error: string | null,
-  data: T
-}
-
 export interface BodyValidator<T> {
-  validate(body: Record<string, any>): BodyValidatorReturn<T>
+  validate(body: Record<string, any>): T
 }

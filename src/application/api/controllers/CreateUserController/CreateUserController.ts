@@ -1,5 +1,6 @@
 import { BodyValidator, HttpRequest, HttpResponse } from "@application/api/interfaces";
 import { CreateUserUseCasePort, CreateUserUseCase } from "@domain/usecases/CreateUserUseCase/CreateUserUseCase";
+import { ValidationError } from "./CreateUserBodyValidator.test";
 
 export interface CreateUserResponse {
   id: string
@@ -12,20 +13,26 @@ export class CreateUserController {
   ){}
 
   async handle(req: HttpRequest): Promise<HttpResponse<CreateUserResponse>> {
-    const { error, data } = this.bodyValidator.validate(req.body);
+    try {
+      const data = this.bodyValidator.validate(req.body);
 
-    if(error){
+      const created = await this.createUserUseCase.execute(data);
+      
       return {
-        statusCode: 400
+        statusCode: 201,
+        body: {
+          id: created.user.id
+        }
       }
-    }
+    } catch (error) {
+      if(error instanceof ValidationError) {
+        return {
+          statusCode: 400
+        }
+      }
 
-    const created = await this.createUserUseCase.execute(data);
-    
-    return {
-      statusCode: 201,
-      body: {
-        id: created.user.id
+      return {
+        statusCode: 500
       }
     }
   }
