@@ -14,7 +14,8 @@
       "@domain/*": ["src/domain/*"],
       "@tests/*": ["tests/*"],
       "@types/*": ["types/*"],
-      "@application/*": ["src/application/*"]
+      "@application/*": ["src/application/*"],
+      "@infra/*": ["src/infra/*"]
     },
     "skipLibCheck": true,
     "strict": true,
