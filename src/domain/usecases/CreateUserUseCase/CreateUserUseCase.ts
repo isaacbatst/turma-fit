@@ -1,3 +1,4 @@
+import { ValidationError } from "@application/api/controllers/CreateUserController/CreateUserBodyValidator";
 import { Encrypter } from "@domain/common/Encrypter";
 import { PersonalProfile, ProfileType, PROFILE_TYPES, StudentProfile } from "@domain/entities/User/Profile";
 import { User } from "@domain/entities/User/User";
@@ -46,18 +47,17 @@ export class CreateUserService implements CreateUserUseCase {
       password: hashedPassword
     })
 
-    const createdUser = await this.userRepository.create(user);
-
     const profile = port.profile === PROFILE_TYPES.PERSONAL
       ? new PersonalProfile()
       : port.profile === PROFILE_TYPES.STUDENT
         ? new StudentProfile()
         : null;
-    
+  
     if(!profile) {
-      throw new Error('UNKNOWN_PROFILE')
+      throw new ValidationError('UNKNOWN_PROFILE')
     }
 
+    const createdUser = await this.userRepository.create(user);
     await this.profileRepository.create(profile, createdUser.getId())
 
     return { 
