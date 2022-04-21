@@ -30,7 +30,7 @@ interface CreateUserUseCasePortValidated {
   email: string,
   image: string,
   age: number,
-  profile: PROFILE_TYPES.PERSONAL | PROFILE_TYPES.STUDENT,
+  profile: ProfileType,
   password: string,
 }
 class CreateUserPortValidator {
