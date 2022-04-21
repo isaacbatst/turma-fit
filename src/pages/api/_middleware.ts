@@ -1,4 +1,3 @@
-import { getToken } from 'next-auth/jwt';
 import { NextFetchEvent, NextRequest, NextResponse } from 'next/server'
 
 export default async function middleware(req: NextRequest, ev: NextFetchEvent){
@@ -13,16 +12,6 @@ export default async function middleware(req: NextRequest, ev: NextFetchEvent){
       })
 
       return response;
-    }
-
-    const token = await getToken({ req: { cookies: req.cookies } } as any);
-
-    if(!token || !token.email){
-      const response = new Response(null, {
-        status: 401
-      })
-
-      return response
     }
 
     return NextResponse.next();
