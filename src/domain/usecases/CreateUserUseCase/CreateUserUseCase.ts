@@ -15,7 +15,7 @@ export interface CreateUserUseCaseDTO {
   profile: {
     id: string,
     type: ProfileType
-  }
+  },
 }
 
 export interface CreateUserUseCase {
@@ -45,7 +45,7 @@ export class CreateUserService implements CreateUserUseCase {
     const profile = this.getProfile(port.profile);
 
     await this.userRepository.create(user);
-    await this.profileRepository.create(profile, user.getId())
+    await this.profileRepository.create(profile, user.getId());
 
     return { 
       user: {
