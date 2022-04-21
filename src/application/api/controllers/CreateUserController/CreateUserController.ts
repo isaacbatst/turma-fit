@@ -34,6 +34,8 @@ export class CreateUserController implements Controller<CreateUserResponse> {
         }
       }
 
+      console.error(error);
+
       return {
         statusCode: 500
       }
