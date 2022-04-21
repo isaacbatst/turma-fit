@@ -1,6 +1,7 @@
 import { BodyValidator } from "@application/api/interfaces"
 import { ProfileType } from "@domain/entities/User/Profile"
-import { CreateUserUseCasePort, CreateUserUseCase, CreateUserUseCaseDTO } from "@domain/usecases/CreateUserUseCase/CreateUserUseCase"
+import { CreateUserUseCasePort } from "@domain/usecases/CreateUserUseCase/CreateUserPortValidator"
+import { CreateUserUseCase, CreateUserUseCaseDTO } from "@domain/usecases/CreateUserUseCase/CreateUserUseCase"
 import { ValidationError } from "../CreateUserBodyValidator"
 
 export class BodyValidatorMock implements BodyValidator<CreateUserUseCasePort> {

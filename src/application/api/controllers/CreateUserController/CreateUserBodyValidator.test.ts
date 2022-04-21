@@ -1,4 +1,4 @@
-import { CreateUserUseCasePort } from "@domain/usecases/CreateUserUseCase/CreateUserUseCase";
+import { CreateUserUseCasePort } from "@domain/usecases/CreateUserUseCase/CreateUserPortValidator";
 import { CreateUserBodyValidator } from "./CreateUserBodyValidator";
 
 describe('CreateUserBodyValidator', () => {
