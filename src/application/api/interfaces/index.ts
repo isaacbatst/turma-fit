@@ -10,3 +10,6 @@ export interface HttpResponse<T = {}> {
 export interface BodyValidator<T> {
   validate(body: Record<string, any>): T
 }
+export interface Controller<T=any> {
+  handle(request: HttpRequest): Promise<HttpResponse<T>>
+}

@@ -3,10 +3,11 @@ import { PrismaProfileRepository } from "@infra/persistence/prisma/adapters/Pris
 import { PrismaUserRepository } from "@infra/persistence/prisma/adapters/PrismaUserRepository";
 import { prisma } from "src/lib/prisma";
 import { BcryptEncrypter } from "src/utils/BcryptEncrypter";
+import { NextApiHandlerAdapter } from "../adapters/NextApiHandlerAdapter";
 import { CreateUserBodyValidator } from "../controllers/CreateUserController/CreateUserBodyValidator";
 import { CreateUserController } from "../controllers/CreateUserController/CreateUserController";
 
-function makeCreateUserController() {
+export function makeCreateUserHandler() {
   const userRepository = new PrismaUserRepository(prisma);
   const profileRepository = new PrismaProfileRepository(prisma);
   const bcryptEncrypter = new BcryptEncrypter();
@@ -23,7 +24,7 @@ function makeCreateUserController() {
     createUserService
   )
 
-  return createUserController;
-}
+  const createUserHandleAdapter = new NextApiHandlerAdapter(createUserController);
 
-export default makeCreateUserController;
+  return createUserHandleAdapter;
+}
