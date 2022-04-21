@@ -1,7 +1,8 @@
 import { PROFILE_TYPES } from "@domain/entities/User/Profile";
 import { User } from "@domain/entities/User/User";
-import { CreateUserService, CreateUserUseCase, CreateUserUseCasePort } from "./CreateUserUseCase";
 import { EncrypterMock, ProfileRepositoryMock, UserRepositoryMock } from "../_mocks";
+import { CreateUserUseCasePort } from "./CreateUserPortValidator";
+import { CreateUserService } from "./CreateUserUseCase";
 
 jest.mock('uuid',  () => {
   const originalModule = jest.requireActual('uuid');

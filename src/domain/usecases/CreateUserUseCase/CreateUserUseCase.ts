@@ -1,18 +1,11 @@
 import { ValidationError } from "@application/api/controllers/CreateUserController/CreateUserBodyValidator";
 import { Encrypter } from "@domain/common/Encrypter";
-import { PersonalProfile, Profile, ProfileType, PROFILE_TYPES, StudentProfile } from "@domain/entities/User/Profile";
+import { PersonalProfile, Profile, ProfileType, StudentProfile } from "@domain/entities/User/Profile";
 import { User } from "@domain/entities/User/User";
 import { ProfileRepository } from "@domain/repositories/ProfileRepository";
 import { UserRepository } from "@domain/repositories/UserRepository";
+import { CreateUserPortValidator, CreateUserUseCasePort } from "./CreateUserPortValidator";
 
-export interface CreateUserUseCasePort {
-  name: string,
-  email: string,
-  image: string,
-  age: number,
-  profile: string,
-  password: string,
-}
 export interface CreateUserUseCaseDTO {
   user: {
     id: string,
@@ -22,37 +15,6 @@ export interface CreateUserUseCaseDTO {
   profile: {
     id: string,
     type: ProfileType
-  }
-}
-
-interface CreateUserUseCasePortValidated {
-  name: string,
-  email: string,
-  image: string,
-  age: number,
-  profile: ProfileType,
-  password: string,
-}
-class CreateUserPortValidator {
-  static readonly EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-
-  static validate(port: CreateUserUseCasePort): CreateUserUseCasePortValidated {
-    if(port.profile !== PROFILE_TYPES.PERSONAL && port.profile !== PROFILE_TYPES.STUDENT) {
-      throw new ValidationError('UNKNOWN_PROFILE')
-    }
-
-    if(!CreateUserPortValidator.EMAIL_REGEX.test(port.email)){
-      throw new ValidationError('INVALID_EMAIL')
-    }
-
-    if(port.password.length < 8){
-      throw new ValidationError('INVALID_PASSWORD')
-    }
-
-    return {
-      ...port,
-      profile: port.profile
-    };
   }
 }
 
