@@ -15,7 +15,7 @@ jest.mock('uuid',  () => {
 
 const PERSONAL_USER_CREATE_DATA_MOCK: CreateUserUseCasePort = {
   age: 23,
-  email: 'test@email',
+  email: 'test-personal@email.com',
   image: 'image-url',
   name: 'Tester',
   profile: PROFILE_TYPES.PERSONAL,
@@ -24,7 +24,7 @@ const PERSONAL_USER_CREATE_DATA_MOCK: CreateUserUseCasePort = {
 
 const STUDENT_USER_CREATE_DATA_MOCK: CreateUserUseCasePort = {
   age: 23,
-  email: 'test@email2',
+  email: 'test-student@email2.com',
   image: 'image-url2',
   name: 'Tester2',
   profile: PROFILE_TYPES.STUDENT,
