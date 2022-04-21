@@ -7,7 +7,6 @@ export enum PROFILE_TYPES {
 
 export type ProfileType = keyof typeof PROFILE_TYPES
 
-
 export abstract class Profile {
   protected id: string;
   protected abstract readonly type: ProfileType;
