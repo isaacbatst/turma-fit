@@ -3,7 +3,7 @@ export interface HttpRequest {
 }
 
 export interface HttpResponse<T = {}> {
-  body?: T,
+  body?: T | { error: string },
   statusCode: number
 }
 

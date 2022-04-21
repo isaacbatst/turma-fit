@@ -27,7 +27,10 @@ export class CreateUserController implements Controller<CreateUserResponse> {
     } catch (error) {
       if(error instanceof ValidationError) {
         return {
-          statusCode: 400
+          statusCode: 400,
+          body: {
+            error: error.message
+          }
         }
       }
 
