@@ -1,6 +1,6 @@
 import { ValidationError } from "@application/api/controllers/CreateUserController/CreateUserBodyValidator";
 import { Encrypter } from "@domain/common/Encrypter";
-import { PersonalProfile, ProfileType, PROFILE_TYPES, StudentProfile } from "@domain/entities/User/Profile";
+import { PersonalProfile, Profile, ProfileType, PROFILE_TYPES, StudentProfile } from "@domain/entities/User/Profile";
 import { User } from "@domain/entities/User/User";
 import { ProfileRepository } from "@domain/repositories/ProfileRepository";
 import { UserRepository } from "@domain/repositories/UserRepository";
@@ -24,6 +24,38 @@ export interface CreateUserUseCaseDTO {
     type: ProfileType
   }
 }
+
+interface CreateUserUseCasePortValidated {
+  name: string,
+  email: string,
+  image: string,
+  age: number,
+  profile: PROFILE_TYPES.PERSONAL | PROFILE_TYPES.STUDENT,
+  password: string,
+}
+class CreateUserPortValidator {
+  static readonly EMAIL_REGEX = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/gi
+
+  static validate(port: CreateUserUseCasePort): CreateUserUseCasePortValidated {
+    if(port.profile !== PROFILE_TYPES.PERSONAL && port.profile !== PROFILE_TYPES.STUDENT) {
+      throw new ValidationError('UNKNOWN_PROFILE')
+    }
+
+    if(!CreateUserPortValidator.EMAIL_REGEX.test(port.email)){
+      throw new ValidationError('INVALID_EMAIL')
+    }
+
+    if(port.password.length < 8){
+      throw new ValidationError('INVALID_PASSWORD')
+    }
+
+    return {
+      ...port,
+      profile: port.profile
+    };
+  }
+}
+
 export interface CreateUserUseCase {
   execute(port: CreateUserUseCasePort): Promise<CreateUserUseCaseDTO>
 }
@@ -36,7 +68,8 @@ export class CreateUserService implements CreateUserUseCase {
   ) 
   {}
 
-  async execute(port: CreateUserUseCasePort): Promise<CreateUserUseCaseDTO> {
+  async execute(receivedPort: CreateUserUseCasePort): Promise<CreateUserUseCaseDTO> {
+    const port = CreateUserPortValidator.validate(receivedPort);
     const hashedPassword = await this.encrypter.hash(port.password);
 
     const user = new User({
@@ -47,18 +80,10 @@ export class CreateUserService implements CreateUserUseCase {
       password: hashedPassword
     })
 
-    const profile = port.profile === PROFILE_TYPES.PERSONAL
-      ? new PersonalProfile()
-      : port.profile === PROFILE_TYPES.STUDENT
-        ? new StudentProfile()
-        : null;
-  
-    if(!profile) {
-      throw new ValidationError('UNKNOWN_PROFILE')
-    }
+    const profile = this.getProfile(port.profile);
 
-    const createdUser = await this.userRepository.create(user);
-    await this.profileRepository.create(profile, createdUser.getId())
+    await this.userRepository.create(user);
+    await this.profileRepository.create(profile, user.getId())
 
     return { 
       user: {
@@ -71,5 +96,17 @@ export class CreateUserService implements CreateUserUseCase {
         type: profile.getType()
       }
     };
+  }
+
+  private getProfile(profile: ProfileType): Profile {
+    if(profile === 'PERSONAL'){
+      return new PersonalProfile();
+    }
+
+    if(profile === 'STUDENT'){
+      return new StudentProfile();
+    }
+
+    throw new ValidationError('UNKNOWN_PROFILE')
   }
 }
