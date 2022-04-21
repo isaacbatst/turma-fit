@@ -85,15 +85,14 @@ model AdviceRequest {
 
 model Picture {
   url              String
-  id               String         @id @default(uuid())
-  profileId        String
+  id               String         @id
   studentProfile   StudentProfile @relation(fields: [studentProfileId], references: [id])
   studentProfileId String
 }
 
 model Measurement {
   createdAt        DateTime       @default(now())
-  id               String         @id @default(uuid())
+  id               String         @id 
   weight           Float
   shoulders        Float
   chest            Float
@@ -107,7 +106,6 @@ model Measurement {
   thigh_right      Float
   calf_left        Float
   calf_right       Float
-  profileId        String
   studentProfile   StudentProfile @relation(fields: [studentProfileId], references: [id])
   studentProfileId String
 }
