@@ -46,7 +46,7 @@ export class CreateUserService implements CreateUserUseCase {
       password: hashedPassword
     })
 
-    await this.userRepository.create(user);
+    const createdUser = await this.userRepository.create(user);
 
     const profile = port.profile === PROFILE_TYPES.PERSONAL
       ? new PersonalProfile()
@@ -58,7 +58,7 @@ export class CreateUserService implements CreateUserUseCase {
       throw new Error('UNKNOWN_PROFILE')
     }
 
-    await this.profileRepository.create(profile)
+    await this.profileRepository.create(profile, createdUser.getId())
 
     return { 
       user: {
