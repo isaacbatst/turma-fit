@@ -1,5 +1,5 @@
 import { BodyValidator } from "@application/api/interfaces";
-import { CreateUserUseCasePort } from "@domain/usecases/CreateUserUseCase/CreateUserUseCase";
+import { CreateUserUseCasePort } from "@domain/usecases/CreateUserUseCase/CreateUserPortValidator";
 
 export class ValidationError extends Error {
   constructor(
