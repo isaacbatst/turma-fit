@@ -1,6 +1,6 @@
 import { PROFILE_TYPES } from "@domain/entities/User/Profile";
 import { User } from "@domain/entities/User/User";
-import { EncrypterMock, ProfileRepositoryMock, UserRepositoryMock } from "../_mocks";
+import { EncrypterMock, ProfileRepositoryMock, TokenGeneratorMock, UserRepositoryMock } from "../_mocks";
 import { CreateUserUseCasePort } from "./CreateUserPortValidator";
 import { CreateUserService } from "./CreateUserUseCase";
 
@@ -38,7 +38,13 @@ const makeSut = () => {
   const userRepository = new UserRepositoryMock();
   const profileRepository = new ProfileRepositoryMock();
   const encrypter = new EncrypterMock();
-  const createUserUseCase = new CreateUserService(userRepository, profileRepository, encrypter);
+  const tokenGenerator = new TokenGeneratorMock();
+  const createUserUseCase = new CreateUserService(
+    userRepository, 
+    profileRepository, 
+    encrypter, 
+    tokenGenerator
+  );
 
   return {
     userRepository, 
@@ -80,5 +86,12 @@ describe('CreateUserUseCase', () => {
     const { user } = await createUserUseCase.execute(PERSONAL_USER_CREATE_DATA_MOCK);
 
     expect(user.id).toBe(UUID_MOCK)
+  })
+
+  it('should generate a token to created user', async () => {
+    const { createUserUseCase } = makeSut();
+    const { token } = await createUserUseCase.execute(PERSONAL_USER_CREATE_DATA_MOCK);
+
+    expect(token).toBe(TokenGeneratorMock.GENERATED_TOKEN);
   })
 })
