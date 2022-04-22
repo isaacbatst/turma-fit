@@ -1,5 +1,6 @@
 import { ValidationError } from "@application/api/controllers/CreateUserController/CreateUserBodyValidator";
 import { Encrypter } from "@domain/common/Encrypter";
+import { TokenGenerator } from "@domain/common/TokenGenerator";
 import { PersonalProfile, Profile, ProfileType, StudentProfile } from "@domain/entities/User/Profile";
 import { User } from "@domain/entities/User/User";
 import { ProfileRepository } from "@domain/repositories/ProfileRepository";
@@ -16,6 +17,7 @@ export interface CreateUserUseCaseDTO {
     id: string,
     type: ProfileType
   },
+  token: string
 }
 
 export interface CreateUserUseCase {
@@ -26,7 +28,8 @@ export class CreateUserService implements CreateUserUseCase {
   constructor(
     private userRepository: UserRepository, 
     private profileRepository: ProfileRepository,
-    private encrypter: Encrypter
+    private encrypter: Encrypter,
+    private tokenGenerator: TokenGenerator
   ) 
   {}
 
@@ -47,6 +50,8 @@ export class CreateUserService implements CreateUserUseCase {
     await this.userRepository.create(user);
     await this.profileRepository.create(profile, user.getId());
 
+    const token = this.tokenGenerator.generate(user.getId(), process.env.JWT_TOKEN)
+
     return { 
       user: {
         email: user.getEmail(),
@@ -56,7 +61,8 @@ export class CreateUserService implements CreateUserUseCase {
       profile: { 
         id: profile.getId(),
         type: profile.getType()
-      }
+      },
+      token
     };
   }
 
