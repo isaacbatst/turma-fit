@@ -24,18 +24,21 @@ export class BodyValidatorMock implements BodyValidator<CreateUserUseCasePort> {
 }
 
 export class CreateUserServiceMock implements CreateUserUseCase {
+  static readonly TOKEN = 'any_token';
+  static readonly ID = 'any_id';
+
   async execute(port: CreateUserUseCasePort): Promise<CreateUserUseCaseDTO> {
     return {
       profile: {
-        id: 'any_id',
+        id: CreateUserServiceMock.ID,
         type: port.profile as ProfileType
       },
       user: {
-        id: 'any_id',
+        id: CreateUserServiceMock.ID,
         email: port.email,
         name: port.name
       },
-      token: 'any_token'
+      token: CreateUserServiceMock.TOKEN
     }
   }
 }
