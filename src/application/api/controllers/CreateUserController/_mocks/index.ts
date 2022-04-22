@@ -34,7 +34,8 @@ export class CreateUserServiceMock implements CreateUserUseCase {
         id: 'any_id',
         email: port.email,
         name: port.name
-      }
+      },
+      token: 'any_token'
     }
   }
 }
