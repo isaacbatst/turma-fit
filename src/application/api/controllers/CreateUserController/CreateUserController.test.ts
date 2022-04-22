@@ -46,14 +46,38 @@ describe('CreateUserController', () => {
     })
 
     it('should return created user id', async () => {
-      const CREATED_USER_ID = 'any_id';
       const { createUserController } = makeSut();
 
       const response = await createUserController.handle({ 
         body: {}
       });
 
-      expect(response.body).toEqual({ id: CREATED_USER_ID });
+      expect(response.body).toBeDefined();
+      expect(response.body).toHaveProperty('id');
+    })
+
+    it('should return created user token', async () => {
+      const { createUserController } = makeSut();
+
+      const response = await createUserController.handle({ 
+        body: {}
+      });
+
+      expect(response.body).toBeDefined();
+      expect(response.body).toHaveProperty('token');    
+    })
+
+    it('should return token and id returned by service', async () => {
+      const { createUserController } = makeSut();
+
+      const response = await createUserController.handle({ 
+        body: {}
+      });
+
+      expect(response.body).toEqual({ 
+        id: CreateUserServiceMock.ID,
+        token: CreateUserServiceMock.TOKEN
+      })
     })
   })
   

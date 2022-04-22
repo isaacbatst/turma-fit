@@ -4,7 +4,8 @@ import { CreateUserUseCase } from "@domain/usecases/CreateUserUseCase/CreateUser
 import { ValidationError } from "./CreateUserBodyValidator";
 
 export interface CreateUserResponse {
-  id: string
+  id: string,
+  token: string
 }
 
 export class CreateUserController implements Controller<CreateUserResponse> {
@@ -22,7 +23,8 @@ export class CreateUserController implements Controller<CreateUserResponse> {
       return {
         statusCode: 201,
         body: {
-          id: created.user.id
+          id: created.user.id,
+          token: created.token
         }
       }
     } catch (error) {
