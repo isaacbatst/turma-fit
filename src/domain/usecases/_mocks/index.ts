@@ -32,6 +32,7 @@ export class ProfileRepositoryMock implements ProfileRepository {
 }
 
 export class EncrypterMock implements Encrypter {
+  static readonly HASHED_VALUE = 'hashed_value';
   public compareReturn = true;
 
   compare: (value: string, hashedValue: string) => Promise<boolean> = 
@@ -40,7 +41,7 @@ export class EncrypterMock implements Encrypter {
     })
 
   hash: (value: string) => Promise<string> = 
-    async () => 'hashed_value';
+    async () => EncrypterMock.HASHED_VALUE;
 }
 
 export class TokenGeneratorMock implements TokenGenerator {
