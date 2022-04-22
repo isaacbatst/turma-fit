@@ -35,6 +35,13 @@ export class CreateUserService implements CreateUserUseCase {
 
   async execute(receivedPort: CreateUserUseCasePort): Promise<CreateUserUseCaseDTO> {
     const port = CreateUserPortValidator.validate(receivedPort);
+
+    const isEmailRepeated = await this.userRepository.getByEmail(port.email);
+
+    if(isEmailRepeated){
+      throw new ValidationError('REPEATED_EMAIL')
+    }
+
     const hashedPassword = await this.encrypter.hash(port.password);
 
     const user = new User({

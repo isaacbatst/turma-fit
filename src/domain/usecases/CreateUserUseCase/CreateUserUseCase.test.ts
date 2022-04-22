@@ -36,6 +36,8 @@ const STUDENT_USER_CREATE_DATA_MOCK: CreateUserUseCasePort = {
 
 const makeSut = () => {
   const userRepository = new UserRepositoryMock();
+  userRepository.foundUser = null;
+
   const profileRepository = new ProfileRepositoryMock();
   const encrypter = new EncrypterMock();
   const tokenGenerator = new TokenGeneratorMock();
@@ -55,6 +57,17 @@ const makeSut = () => {
 }
 
 describe('CreateUserUseCase', () => {
+  describe('Given repeated email', () => {
+    it('should throw "REPEATED_EMAIL" error', () => {
+      const { createUserUseCase, userRepository } = makeSut();
+      userRepository.foundUser = new User(UserRepositoryMock.USER_DATA);
+
+      expect(async () => {
+        await createUserUseCase.execute(PERSONAL_USER_CREATE_DATA_MOCK);
+      }).rejects.toThrowError('REPEATED_EMAIL')
+    }) 
+  })
+
   it('should call userRepository.create with proper params', async() => {
     const { createUserUseCase, userRepository } = makeSut();
     await createUserUseCase.execute(PERSONAL_USER_CREATE_DATA_MOCK)

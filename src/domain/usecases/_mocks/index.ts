@@ -8,14 +8,16 @@ import { UserRepository } from "@domain/repositories/UserRepository";
 
 
 export class UserRepositoryMock implements UserRepository {
-  public foundUser: User | null = new User({
+  static readonly USER_DATA = {
     id: 'any_id',
     email: 'any_email@email',
     name: 'any_name',
     age: 23,
     image: 'any_image',
     password: 'any_hashed_password',
-  })
+  };
+
+  public foundUser: User | null = new User(UserRepositoryMock.USER_DATA)
 
   create: (user: User) => Promise<User> = 
     jest.fn(async (user: User) => user)
