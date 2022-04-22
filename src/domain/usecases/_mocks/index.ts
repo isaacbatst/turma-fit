@@ -45,6 +45,10 @@ export class EncrypterMock implements Encrypter {
 }
 
 export class TokenGeneratorMock implements TokenGenerator {
-  generate: (id: string, secret: string) => string = jest.fn((id, secret) => 'any_token');
-  decode: (token: string, secret: string) => string = (token, secret) => 'any_decoded'
+  static readonly GENERATED_TOKEN = 'any_token'
+  static readonly DECODED_DATA = 'any_decoded'
+  generate: (id: string, secret: string) => string = 
+    jest.fn((id, secret) => TokenGeneratorMock.GENERATED_TOKEN);
+  decode: (token: string, secret: string) => string = 
+    (token, secret) => TokenGeneratorMock.DECODED_DATA
 }
