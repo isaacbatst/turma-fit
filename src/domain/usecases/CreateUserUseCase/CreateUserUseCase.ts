@@ -57,7 +57,7 @@ export class CreateUserService implements CreateUserUseCase {
     await this.userRepository.create(user);
     await this.profileRepository.create(profile, user.getId());
 
-    const token = this.tokenGenerator.generate(user.getId(), process.env.JWT_TOKEN)
+    const token = this.tokenGenerator.generate(user.getId(), process.env.JWT_SECRET)
 
     return { 
       user: {
