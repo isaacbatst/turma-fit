@@ -1,20 +1,5 @@
-import { GetServerSideProps, NextPage } from "next";
-import CreateUserForm from "./CreateUserForm";
+import { NextPage } from "next";
 
-const HomePage: NextPage = () => {
-  return (
-    <div>
-      <h1>Home</h1>
-      <h2>Criar usuário</h2>
-      <CreateUserForm />
-    </div>
-  )
-}
+const HomePage: NextPage = () => <div>Home</div>
 
-export const getHomePageServerSideProps: GetServerSideProps = async () => {
-  return {
-    props: {}
-  }
-}
-
-export default HomePage
+export default HomePage;
