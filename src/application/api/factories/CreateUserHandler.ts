@@ -6,20 +6,21 @@ import { BcryptEncrypterAdapter } from "@application/api/adapters/BcryptEncrypte
 import { NextApiHandlerAdapter } from "../adapters/NextApiHandlerAdapter";
 import { CreateUserBodyValidator } from "../controllers/CreateUserController/CreateUserBodyValidator";
 import { CreateUserController } from "../controllers/CreateUserController/CreateUserController";
-import { JwtTokenGeneratorAdapter } from "../adapters/JwtTokenGeneratorAdapter";
+import { PrismaSessionRepository } from "@infra/persistence/prisma/adapters/PrismaSessionRepository";
 
 export function makeCreateUserHandler() {
   const userRepository = new PrismaUserRepository(prisma);
   const profileRepository = new PrismaProfileRepository(prisma);
+  const sessionRepository = new PrismaSessionRepository(prisma);
   const bcryptEncrypter = new BcryptEncrypterAdapter();
-  const jwtGenerator = new JwtTokenGeneratorAdapter();
 
   const createUserService = new CreateUserService(
     userRepository,
     profileRepository,
     bcryptEncrypter,
-    jwtGenerator
+    sessionRepository
   );
+
   const createUserBodyValidator = new CreateUserBodyValidator();
 
   const createUserController = new CreateUserController(

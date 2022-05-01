@@ -31,10 +31,10 @@ export class PrismaProfileRepository implements ProfileRepository {
     private prisma: PrismaClient
   ){}
 
-  async create(profile: Profile, userId: string): Promise<Profile> {
+  async create(profile: Profile, userId: string): Promise<void> {
     const prismaProfile = PrismaProfileMapper.domainToOrm(profile, userId);
 
-    const created = await this.prisma.profile.create({
+    await this.prisma.profile.create({
       data: {
         id: prismaProfile.id,
         type: prismaProfile.type,
@@ -61,8 +61,6 @@ export class PrismaProfileRepository implements ProfileRepository {
         }
       })    
     }
-
-    return PrismaProfileMapper.ormToDomain(created);
   }
 
   async get(id: string): Promise<Profile | null> {

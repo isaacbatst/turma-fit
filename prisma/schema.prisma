@@ -20,6 +20,11 @@ model User {
   profile           Profile[]
 }
 
+model Session {
+  id    String @id
+  token String
+}
+
 enum ProfileType {
   STUDENT
   PERSONAL
@@ -92,7 +97,7 @@ model Picture {
 
 model Measurement {
   createdAt        DateTime       @default(now())
-  id               String         @id 
+  id               String         @id
   weight           Float
   shoulders        Float
   chest            Float

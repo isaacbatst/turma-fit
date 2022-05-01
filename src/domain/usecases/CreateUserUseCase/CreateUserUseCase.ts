@@ -1,9 +1,10 @@
 import { ValidationError } from "@application/api/controllers/CreateUserController/CreateUserBodyValidator";
 import { Encrypter } from "@domain/common/Encrypter";
-import { TokenGenerator } from "@domain/common/TokenGenerator";
 import { PersonalProfile, Profile, ProfileType, StudentProfile } from "@domain/entities/User/Profile";
+import { Session } from "@domain/entities/User/Session";
 import { User } from "@domain/entities/User/User";
 import { ProfileRepository } from "@domain/repositories/ProfileRepository";
+import { SessionRepository } from "@domain/repositories/SessionRepository";
 import { UserRepository } from "@domain/repositories/UserRepository";
 import { CreateUserPortValidator, CreateUserUseCasePort } from "./CreateUserPortValidator";
 
@@ -29,7 +30,7 @@ export class CreateUserService implements CreateUserUseCase {
     private userRepository: UserRepository, 
     private profileRepository: ProfileRepository,
     private encrypter: Encrypter,
-    private tokenGenerator: TokenGenerator
+    private sessionRepository: SessionRepository
   ) 
   {}
 
@@ -52,13 +53,14 @@ export class CreateUserService implements CreateUserUseCase {
       password: hashedPassword
     })
 
-    const profile = this.getProfile(port.profile);
-
     await this.userRepository.create(user);
+
+    const profile = this.getProfileInstance(port.profile);
     await this.profileRepository.create(profile, user.getId());
 
-    const token = this.tokenGenerator.generate(user.getId(), process.env.JWT_SECRET)
-
+    const session = new Session();
+    await this.sessionRepository.create(session);
+    
     return { 
       user: {
         email: user.getEmail(),
@@ -69,11 +71,11 @@ export class CreateUserService implements CreateUserUseCase {
         id: profile.getId(),
         type: profile.getType()
       },
-      token
+      token: session.getId(),
     };
   }
 
-  private getProfile(profile: ProfileType): Profile {
+  private getProfileInstance(profile: ProfileType): Profile {
     if(profile === 'PERSONAL'){
       return new PersonalProfile();
     }

@@ -7,14 +7,12 @@ import { PrismaUserMapper } from "../mappers/PrismaUserMapper";
 export class PrismaUserRepository implements UserRepository {
   constructor(private prisma: PrismaClient){} 
 
-  async create(user: User): Promise<User> {
+  async create(user: User): Promise<void> {
     const prismaUser = PrismaUserMapper.domainToOrm(user);
 
-    const created = await this.prisma.user.create({
+    await this.prisma.user.create({
       data: prismaUser
     })
-
-    return PrismaUserMapper.ormToDomain(created);
   }
 
   async get(id: string): Promise<User | null> {
