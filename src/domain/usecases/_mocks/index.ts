@@ -19,19 +19,20 @@ export class UserRepositoryMock implements UserRepository {
 
   public foundUser: User | null = new User(UserRepositoryMock.USER_DATA)
 
-  create: (user: User) => Promise<User> = 
-    jest.fn(async (user: User) => user)
+  create: (user: User) => Promise<void> = 
+    jest.fn()
   get: (id: string) => Promise<User | null> = 
     jest.fn(async (id: string) => this.foundUser)
   getByEmail: (email: string) => Promise<User | null> = 
     jest.fn(async (email: string) => this.foundUser)
 }
 
-
 export class ProfileRepositoryMock implements ProfileRepository {
-  create: (profile: Profile) => Promise<Profile> = async (profile: Profile) => profile;
+  create: (profile: Profile) => Promise<void> = jest.fn()
   get: (id: string) => Promise<Profile | null> = async () => null;
 }
+
+
 
 export class EncrypterMock implements Encrypter {
   static readonly HASHED_VALUE = 'hashed_value';
