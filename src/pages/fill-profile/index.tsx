@@ -6,9 +6,9 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React, { FormEventHandler, useEffect, useState } from 'react'
 import { MdSend } from 'react-icons/md'
-import Loading from '../../components/common/Loading'
-import Header from '../../components/Header'
-import Layout from '../../components/Layout'
+import Loading from '../../application/components/common/Loading'
+import Header from '../../application/components/Header'
+import Layout from '../../application/components/Layout'
 import styles from '../../styles/pages/fill-data.module.scss'
 
 const FillProfile: NextPage = () => {

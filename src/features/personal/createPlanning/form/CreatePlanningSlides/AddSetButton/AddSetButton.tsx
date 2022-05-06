@@ -1,7 +1,7 @@
 import React from 'react'
 import { MdOutlineAdd } from 'react-icons/md';
 import { useSwiper } from 'swiper/react';
-import IconButtonWithText from '../../../../../../components/common/IconButtonWithText';
+import IconButtonWithText from '../../../../../../application/components/common/IconButtonWithText';
 import { useAppDispatch, useAppSelector } from '../../../../../../store/hooks';
 import { addSetAction, saveSetAction } from '../../slice';
 import { useSetSlideContext } from '../SetSlide/SetSlideContext';

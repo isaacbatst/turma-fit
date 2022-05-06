@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { MdCheck } from 'react-icons/md';
 import { useSwiper } from 'swiper/react';
-import IconButtonWithText from '../../../../../../components/common/IconButtonWithText';
+import IconButtonWithText from '../../../../../../application/components/common/IconButtonWithText';
 import { useAppSelector } from '../../../../../../store/hooks';
 import { useSetSlideContext } from '../SetSlide/SetSlideContext';
 import { validateSet } from './goToTrainingCheckoutValidation';

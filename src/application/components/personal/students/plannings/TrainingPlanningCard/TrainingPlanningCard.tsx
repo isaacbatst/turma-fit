@@ -1,7 +1,7 @@
-import { TrainingPlanningWithDetails } from "../../../../../../types/schema"
+import { TrainingPlanningWithDetails } from "../../../../../../../types/schema"
 import styles from './TrainingPlanningCard.module.scss';
 import badgeStyles from '../../../../../styles/components/badge.module.scss';
-import { getTrainingPlanningMuscleGroupsPerTraining } from "../../../../../lib/training";
+import { getTrainingPlanningMuscleGroupsPerTraining } from "../../../../../../lib/training";
 
 type Props = {
   trainingPlanning: TrainingPlanningWithDetails,
