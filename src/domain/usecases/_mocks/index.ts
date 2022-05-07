@@ -1,11 +1,12 @@
 import { Encrypter } from "@domain/common/Encrypter";
 import { TokenGenerator } from "@domain/common/TokenGenerator";
+import { UuidGenerator } from "@domain/common/UuidGenerator";
 import { Profile } from "@domain/entities/User/Profile";
+import { Session } from "@domain/entities/User/Session";
 import { User } from "@domain/entities/User/User";
 import { ProfileRepository } from "@domain/repositories/ProfileRepository";
+import { SessionRepository } from "@domain/repositories/SessionRepository";
 import { UserRepository } from "@domain/repositories/UserRepository";
-
-
 
 export class UserRepositoryMock implements UserRepository {
   static readonly USER_DATA = {
@@ -32,7 +33,9 @@ export class ProfileRepositoryMock implements ProfileRepository {
   get: (id: string) => Promise<Profile | null> = async () => null;
 }
 
-
+export class SessionRepositoryMock implements SessionRepository {
+  async create(session: Session): Promise<void> {}
+}
 
 export class EncrypterMock implements Encrypter {
   static readonly HASHED_VALUE = 'hashed_value';
@@ -49,9 +52,9 @@ export class EncrypterMock implements Encrypter {
 
 export class TokenGeneratorMock implements TokenGenerator {
   static readonly GENERATED_TOKEN = 'any_token'
-  static readonly DECODED_DATA = 'any_decoded'
-  generate: (id: string, secret: string) => string = 
-    jest.fn((id, secret) => TokenGeneratorMock.GENERATED_TOKEN);
-  decode: (token: string, secret: string) => string = 
-    (token, secret) => TokenGeneratorMock.DECODED_DATA
+  generate: () => string = jest.fn(() => TokenGeneratorMock.GENERATED_TOKEN);
+}
+
+export class UuidGeneratorMock implements UuidGenerator {
+  generate: () => string = () => 'any_uuid';
 }
