@@ -1,6 +1,9 @@
 import { PROFILE_TYPES } from "@domain/entities/User/Profile";
 import { User } from "@domain/entities/User/User";
-import { EncrypterMock, ProfileRepositoryMock, SessionRepositoryMock, TokenGeneratorMock, UserRepositoryMock, UuidGeneratorMock } from "../_mocks";
+import { EncrypterMock, TokenGeneratorMock, UuidGeneratorMock } from "../_mocks";
+import { ProfileRepositoryMock } from "../_mocks/repositories/ProfileRepositoryMock";
+import { SessionRepositoryMock } from "../_mocks/repositories/SessionRepositoryMock";
+import { UserRepositoryMock } from "../_mocks/repositories/UserRepositoryMock";
 import { CreateUserUseCasePort } from "./CreateUserPortValidator";
 import { CreateUserService } from "./CreateUserUseCase";
 
