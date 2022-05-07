@@ -69,6 +69,7 @@ export class CreateUserService implements CreateUserUseCase {
     const hashedPassword = await this.encrypter.hash(port.password);
 
     const user = new User({
+      id: this.uuidGenerator.generate(),
       age: port.age,
       email: port.email,
       image: port.image,

@@ -1,7 +1,7 @@
 import { v4 } from "uuid";
 
 export interface CreateUserEntityParams {
-  id?: string;
+  id: string;
   emailVerifiedAt?: Date | null;
   name: string;
   email: string;
@@ -19,8 +19,8 @@ export class User {
   private password: string
 
   constructor(params: CreateUserEntityParams) {
-    this.id = params.id || v4();
     this.emailVerifiedAt = params.emailVerifiedAt || null;
+    this.id = params.id;
     this.name = params.name;
     this.email = params.email;
     this.image = params.image;

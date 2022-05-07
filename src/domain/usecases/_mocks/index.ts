@@ -21,5 +21,6 @@ export class TokenGeneratorMock implements TokenGenerator {
 }
 
 export class UuidGeneratorMock implements UuidGenerator {
-  generate: () => string = () => 'any_uuid';
+  static readonly GENERATED_ID = 'any_uuid'
+  generate: () => string = () => UuidGeneratorMock.GENERATED_ID;
 }

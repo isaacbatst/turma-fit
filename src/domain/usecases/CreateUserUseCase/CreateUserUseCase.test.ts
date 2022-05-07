@@ -7,18 +7,6 @@ import { UserRepositoryMock } from "../_mocks/repositories/UserRepositoryMock";
 import { CreateUserUseCasePort } from "./CreateUserPortValidator";
 import { CreateUserService } from "./CreateUserUseCase";
 
-const UUID_MOCK = 'any-uuid'
-
-jest.mock('uuid',  () => {
-  const originalModule = jest.requireActual('uuid');
-
-  return {
-    __esModule: true,
-    ...originalModule,
-    v4: jest.fn(() => UUID_MOCK),
-  };
-})
-
 const PERSONAL_USER_CREATE_DATA_MOCK: CreateUserUseCasePort = {
   age: 23,
   email: 'test-personal@email.com',
@@ -83,6 +71,7 @@ describe('CreateUserUseCase', () => {
     const expectedUserParameter = new User({
       ...PERSONAL_USER_CREATE_DATA_MOCK,
       password: EncrypterMock.HASHED_VALUE,
+      id: UuidGeneratorMock.GENERATED_ID
     })
 
     expect(userRepository.create).toHaveBeenCalledWith(expectedUserParameter)
@@ -106,7 +95,7 @@ describe('CreateUserUseCase', () => {
     const { createUserUseCase } = makeSut();
     const { user } = await createUserUseCase.execute(PERSONAL_USER_CREATE_DATA_MOCK);
 
-    expect(user.id).toBe(UUID_MOCK)
+    expect(user.id).toBe(UuidGeneratorMock.GENERATED_ID)
   })
 
   it('should generate a token to created user', async () => {
