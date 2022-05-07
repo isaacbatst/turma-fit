@@ -109,6 +109,10 @@ export class CreateUserService implements CreateUserUseCase {
       return new PersonalProfile();
     }
 
-    return new StudentProfile();
+    if(profile === 'STUDENT'){
+      return new StudentProfile();
+    }
+
+    throw new ValidationError('UNKNOW_PROFILE')
   }
 }
