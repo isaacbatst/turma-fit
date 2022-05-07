@@ -1,6 +1,6 @@
 import { PROFILE_TYPES } from "@domain/entities/User/Profile";
 import { User } from "@domain/entities/User/User";
-import { EncrypterMock, ProfileRepositoryMock, TokenGeneratorMock, UserRepositoryMock } from "../_mocks";
+import { EncrypterMock, ProfileRepositoryMock, SessionRepositoryMock, TokenGeneratorMock, UserRepositoryMock, UuidGeneratorMock } from "../_mocks";
 import { CreateUserUseCasePort } from "./CreateUserPortValidator";
 import { CreateUserService } from "./CreateUserUseCase";
 
@@ -39,14 +39,19 @@ const makeSut = () => {
   userRepository.foundUser = null;
 
   const profileRepository = new ProfileRepositoryMock();
+  const sessionRepository = new SessionRepositoryMock();
   const encrypter = new EncrypterMock();
+  const uuidGenerator = new UuidGeneratorMock();
   const tokenGenerator = new TokenGeneratorMock();
-  const createUserUseCase = new CreateUserService(
+  
+  const createUserUseCase = new CreateUserService({
     userRepository, 
     profileRepository, 
     encrypter, 
-    tokenGenerator
-  );
+    sessionRepository,
+    tokenGenerator,
+    uuidGenerator
+  });
 
   return {
     userRepository, 
