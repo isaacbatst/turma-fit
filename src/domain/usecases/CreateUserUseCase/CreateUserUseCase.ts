@@ -5,9 +5,9 @@ import { UuidGenerator } from "@domain/common/UuidGenerator";
 import { PersonalProfile, Profile, ProfileType, StudentProfile } from "@domain/entities/User/Profile";
 import { Session } from "@domain/entities/User/Session";
 import { User } from "@domain/entities/User/User";
-import { ProfileRepository } from "@domain/repositories/ProfileRepository";
+import { CreateProfileRepository } from "@domain/repositories/ProfileRepository";
 import { SessionRepository } from "@domain/repositories/SessionRepository";
-import { UserRepository } from "@domain/repositories/UserRepository";
+import { CreateUserRepository } from "@domain/repositories/UserRepository";
 import { CreateUserPortValidator, CreateUserUseCasePort } from "./CreateUserPortValidator";
 
 export interface CreateUserUseCaseDTO {
@@ -28,8 +28,8 @@ export interface CreateUserUseCase {
 }
 
 interface CreateUserServiceParams {
-  userRepository: UserRepository, 
-  profileRepository: ProfileRepository,
+  userRepository: CreateUserRepository, 
+  profileRepository: CreateProfileRepository,
   encrypter: Encrypter,
   sessionRepository: SessionRepository,
   uuidGenerator: UuidGenerator
@@ -38,8 +38,8 @@ interface CreateUserServiceParams {
 
 
 export class CreateUserService implements CreateUserUseCase {
-  private userRepository: UserRepository
-  private profileRepository: ProfileRepository
+  private userRepository: CreateUserRepository
+  private profileRepository: CreateProfileRepository
   private encrypter: Encrypter
   private sessionRepository: SessionRepository
   private uuidGenerator: UuidGenerator
@@ -80,6 +80,7 @@ export class CreateUserService implements CreateUserUseCase {
     await this.userRepository.create(user);
 
     const profile = this.getProfileInstance(port.profile);
+    
     await this.profileRepository.create(profile, user.getId());
 
     const session = new Session(
@@ -108,10 +109,6 @@ export class CreateUserService implements CreateUserUseCase {
       return new PersonalProfile();
     }
 
-    if(profile === 'STUDENT'){
-      return new StudentProfile();
-    }
-
-    throw new ValidationError('UNKNOWN_PROFILE')
+    return new StudentProfile();
   }
 }

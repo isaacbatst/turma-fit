@@ -1,5 +1,5 @@
 import { TokenGenerator } from "@domain/common/TokenGenerator";
-import { UserRepository } from "@domain/repositories/UserRepository"
+import { AuthenticateUserRepository } from "@domain/repositories/UserRepository"
 import { Encrypter } from "../../common/Encrypter";
 
 interface AuthenticateUserUseCaseDTO {
@@ -13,7 +13,7 @@ interface AuthenticateUserUseCasePort {
 
 export default class AuthenticateUserUseCase {
   constructor(
-    private userRepository: UserRepository,
+    private userRepository: AuthenticateUserRepository,
     private encrypter: Encrypter,
     private tokenGenerator: TokenGenerator
   ){}

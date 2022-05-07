@@ -1,5 +1,5 @@
 import { PersonalProfile, Profile, StudentProfile } from "@domain/entities/User/Profile";
-import { ProfileRepository } from "@domain/repositories/ProfileRepository";
+import { CreateProfileRepository } from "@domain/repositories/ProfileRepository";
 import { PrismaClient, Profile as PrismaProfile } from "@prisma/client";
 
 class PrismaProfileMapper {
@@ -26,7 +26,7 @@ class PrismaProfileMapper {
   }
 }
 
-export class PrismaProfileRepository implements ProfileRepository {
+export class PrismaProfileRepository implements CreateProfileRepository {
   constructor(
     private prisma: PrismaClient
   ){}

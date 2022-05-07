@@ -1,7 +1,7 @@
 import { User } from "@domain/entities/User/User";
-import { UserRepository } from "@domain/repositories/UserRepository";
+import { CreateUserRepository } from "@domain/repositories/UserRepository";
 
-export class UserRepositoryMock implements UserRepository {
+export class UserRepositoryMock implements CreateUserRepository {
   static readonly USER_DATA = {
     id: 'any_id',
     email: 'any_email@email',
@@ -15,8 +15,6 @@ export class UserRepositoryMock implements UserRepository {
 
   create: (user: User) => Promise<void> = 
     jest.fn()
-  get: (id: string) => Promise<User | null> = 
-    jest.fn(async (id: string) => this.foundUser)
   getByEmail: (email: string) => Promise<User | null> = 
     jest.fn(async (email: string) => this.foundUser)
 }

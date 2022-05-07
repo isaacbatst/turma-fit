@@ -1,6 +1,5 @@
 import { Profile } from "@domain/entities/User/Profile";
 
-export interface ProfileRepository {
+export interface CreateProfileRepository {
   create(profile: Profile, userId: string): Promise<void>
-  get(id: string): Promise<Profile | null>
 }

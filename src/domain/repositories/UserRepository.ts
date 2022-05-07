@@ -1,7 +1,10 @@
 import { User } from "@domain/entities/User/User";
 
-export interface UserRepository {
+export interface CreateUserRepository {
   create: (user: User) => Promise<void>,
-  get: (id: string) => Promise<User | null>,
+  getByEmail: (email: string) => Promise<User | null>,
+}
+
+export interface AuthenticateUserRepository {
   getByEmail: (email: string) => Promise<User | null>,
 }
