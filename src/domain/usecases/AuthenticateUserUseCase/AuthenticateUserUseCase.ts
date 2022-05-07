@@ -27,7 +27,7 @@ export default class AuthenticateUserUseCase {
 
     if(!isAuthenticated) throw new Error('WRONG_PASSWORD');
 
-    const token = this.tokenGenerator.generate(user.getId(), 'PUT-SECRET-ON-DOT-ENV')
+    const token = this.tokenGenerator.generate()
 
     return { accessToken: token }
   }
