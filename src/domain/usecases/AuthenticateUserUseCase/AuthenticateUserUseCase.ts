@@ -1,4 +1,7 @@
 import { TokenGenerator } from "@domain/common/TokenGenerator";
+import { UuidGenerator } from "@domain/common/UuidGenerator";
+import { Session } from "@domain/entities/User/Session";
+import { SessionRepository } from "@domain/repositories/SessionRepository";
 import { AuthenticateUserRepository } from "@domain/repositories/UserRepository"
 import { Encrypter } from "../../common/Encrypter";
 
@@ -11,12 +14,31 @@ interface AuthenticateUserUseCasePort {
   password: string,
 }
 
+interface AuthenticateUserUseCaseParams {
+  userRepository: AuthenticateUserRepository,
+  encrypter: Encrypter,
+  tokenGenerator: TokenGenerator,
+  sessionRepository: SessionRepository
+  uuidGenerator: UuidGenerator
+}
+
 export default class AuthenticateUserUseCase {
+  private userRepository: AuthenticateUserRepository
+  private encrypter: Encrypter
+  private sessionRepository: SessionRepository
+  private tokenGenerator: TokenGenerator
+  private uuidGenerator: UuidGenerator
+
   constructor(
-    private userRepository: AuthenticateUserRepository,
-    private encrypter: Encrypter,
-    private tokenGenerator: TokenGenerator
-  ){}
+    params: AuthenticateUserUseCaseParams
+  ){
+    this.userRepository = params.userRepository
+    this.encrypter = params.encrypter
+    this.tokenGenerator = params.tokenGenerator
+    this.sessionRepository = params.sessionRepository
+    this.userRepository = params.userRepository
+    this.uuidGenerator = params.uuidGenerator
+  }
 
   async execute(port: AuthenticateUserUseCasePort): Promise<AuthenticateUserUseCaseDTO> {
     const user = await this.userRepository.getByEmail(port.email)
@@ -27,8 +49,13 @@ export default class AuthenticateUserUseCase {
 
     if(!isAuthenticated) throw new Error('WRONG_PASSWORD');
 
-    const token = this.tokenGenerator.generate()
+    const session = new Session(
+      this.uuidGenerator.generate(),
+      this.tokenGenerator.generate(),
+    );
 
-    return { accessToken: token }
+    await this.sessionRepository.create(session);
+
+    return { accessToken: session.getToken() }
   }
 }
