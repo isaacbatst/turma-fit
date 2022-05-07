@@ -113,6 +113,6 @@ export class CreateUserService implements CreateUserUseCase {
       return new StudentProfile();
     }
 
-    throw new ValidationError('UNKNOW_PROFILE')
+    throw new ValidationError('UNKNOWN_PROFILE')
   }
 }
