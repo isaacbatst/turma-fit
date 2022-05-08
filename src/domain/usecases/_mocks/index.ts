@@ -24,8 +24,8 @@ export class TokenGeneratorMock implements TokenGenerator {
 }
 
 export class UuidGeneratorMock implements UuidGenerator {
-  static readonly GENERATED_ID = 'any_uuid'
-  generate: () => string = () => UuidGeneratorMock.GENERATED_ID;
+  GENERATED_ID = 'any_uuid'
+  generate: () => string = jest.fn(() => this.GENERATED_ID);
 }
 
 export class CreateUserPortValidatorMock implements PortValidator<CreateUserUseCasePort, CreateUserUseCasePortValidated> {

@@ -1,6 +1,4 @@
-import { v4 } from "uuid"
-
-enum Day {
+export enum Day {
   SUNDAY = 'SUNDAY',
   MONDAY = 'MONDAY',
   TUESDAY = 'TUESDAY',
@@ -37,59 +35,63 @@ interface SetType {
   name: string
 }
 
-interface Movement {
+export interface Movement {
   name:               string
   id:                 string        
   muscleGroup:        MuscleGroup 
 }
 
-interface Exercise {
+export interface Exercise {
   id           : string      
   movement     : Movement  
   equipment?   : Equipment 
   grip?        : Grip
 }
 
-interface Set {
+export interface Set {
   id:                   string               
   exercises:            Exercise[]
   times:                number
-  repetitions:          string
+  repetitions:          string | number
   type?:                SetType
   minRestTime?:         number
   maxRestTime?:         number
 }
 
-interface Workout {
+export interface Workout {
   id                 : string              
   sets               : Set[]
   aerobicMinutes     : number
+  day                : Day
 }
-
-interface WorkoutPlanType {
-  name               : string
-  id                 : string               
-  explanation        : string
-  defaultMinRestTime : number
-  defaultMaxRestTime : number
-}
-
 
 interface CreateWorkoutPlanEntityParams {
-  id?: string,
-  workouts: Map<Day, Workout>,
-  planType: WorkoutPlanType
+  id: string,
+  workouts: Workout[]
+  planTypeId: string
 }
 
 export default class WorkoutPlan {
   private id        : string                     
-  private workouts  : Map<Day, Workout>
-  private planType  : WorkoutPlanType
+  private workouts  : Workout[]
+  private planTypeId  : string
 
   constructor(params: CreateWorkoutPlanEntityParams){
-    this.id = params.id || v4();
+    this.id = params.id;
     this.workouts = params.workouts;
-    this.planType = params.planType;
+    this.planTypeId = params.planTypeId;
+  }
+
+  getId() {
+    return this.id;
+  }
+
+  getWorkouts() {
+    return this.workouts;
+  }
+
+  getPlanTypeId() {
+    return this.planTypeId;
   }
 }
 
