@@ -1,8 +1,9 @@
-import { PortValidator } from "@domain/common/PortValidator"
-import { UuidGenerator } from "@domain/common/UuidGenerator"
-import WorkoutPlan, { Day, Workout } from "@domain/entities/WorkoutPlan/WorkoutPlan";
-import { CreateWorkoutPlanRepository } from "@domain/repositories/WorkoutPlanRepository"
-import { CreateWorkoutPlanUseCaseDTO, CreateWorkoutPlanUseCasePort, CreateWorkoutPlanUseCasePortValidated, UseCase } from "./interfaces"
+import { PortValidator } from "@domain/common/PortValidator";
+import { UseCase } from "@domain/common/UseCase";
+import { UuidGenerator } from "@domain/common/UuidGenerator";
+import WorkoutPlan from "@domain/entities/WorkoutPlan/WorkoutPlan";
+import { CreateWorkoutPlanRepository } from "@domain/repositories/WorkoutPlanRepository";
+import { CreateWorkoutPlanUseCaseDTO, CreateWorkoutPlanUseCasePort, CreateWorkoutPlanUseCasePortValidated } from "./interfaces";
 
 export class CreateWorkoutPlanService implements UseCase<CreateWorkoutPlanUseCasePort, CreateWorkoutPlanUseCaseDTO> {
   constructor(

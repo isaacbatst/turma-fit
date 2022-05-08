@@ -1,9 +1,5 @@
 import { Day, Exercise, Movement, Set, Workout } from "@domain/entities/WorkoutPlan/WorkoutPlan"
 
-export interface UseCase<Port, DTO> {
-  execute(port: Port): Promise<DTO> 
-}
-
 export type MovementNotValidated = Movement & {
   muscleGroup: string
 }
