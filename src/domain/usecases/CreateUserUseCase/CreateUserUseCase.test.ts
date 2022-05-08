@@ -7,7 +7,7 @@ import { UserRepositoryMock } from "../_mocks/repositories/UserRepositoryMock";
 import { CreateUserUseCasePort } from "./CreateUserPortValidator";
 import { CreateUserService } from "./CreateUserUseCase";
 
-const PERSONAL_USER_CREATE_DATA_MOCK: CreateUserUseCasePort = {
+const CREATE_PERSONAL_USER_PORT_MOCK: CreateUserUseCasePort = {
   age: 23,
   email: 'test-personal@email.com',
   image: 'image-url',
@@ -16,7 +16,7 @@ const PERSONAL_USER_CREATE_DATA_MOCK: CreateUserUseCasePort = {
   password: 'any-password'
 }
 
-const STUDENT_USER_CREATE_DATA_MOCK: CreateUserUseCasePort = {
+const CREATE_STUDENT_USER_PORT_MOCK: CreateUserUseCasePort = {
   age: 23,
   email: 'test-student@email2.com',
   image: 'image-url2',
@@ -61,17 +61,17 @@ describe('CreateUserUseCase', () => {
       userRepository.foundUser = new User(UserRepositoryMock.USER_DATA);
 
       expect(async () => {
-        await createUserUseCase.execute(PERSONAL_USER_CREATE_DATA_MOCK);
+        await createUserUseCase.execute(CREATE_PERSONAL_USER_PORT_MOCK);
       }).rejects.toThrowError('REPEATED_EMAIL')
     }) 
   })
 
   it('should call userRepository.create with proper params', async() => {
     const { createUserUseCase, userRepository } = makeSut();
-    await createUserUseCase.execute(PERSONAL_USER_CREATE_DATA_MOCK)
+    await createUserUseCase.execute(CREATE_PERSONAL_USER_PORT_MOCK)
 
     const expectedUserParameter = new User({
-      ...PERSONAL_USER_CREATE_DATA_MOCK,
+      ...CREATE_PERSONAL_USER_PORT_MOCK,
       password: EncrypterMock.HASHED_VALUE,
       id: UuidGeneratorMock.GENERATED_ID
     })
@@ -81,28 +81,28 @@ describe('CreateUserUseCase', () => {
 
   it('should create a user with personal profile', async () => {
     const { createUserUseCase } = makeSut();
-    const { profile } = await createUserUseCase.execute(PERSONAL_USER_CREATE_DATA_MOCK);
+    const { profile } = await createUserUseCase.execute(CREATE_PERSONAL_USER_PORT_MOCK);
     
     expect(profile.type).toBe(PROFILE_TYPES.PERSONAL)
   })
 
   it('should create a user with student profile', async () => {
     const { createUserUseCase } = makeSut();
-    const { profile } = await createUserUseCase.execute(STUDENT_USER_CREATE_DATA_MOCK);
+    const { profile } = await createUserUseCase.execute(CREATE_STUDENT_USER_PORT_MOCK);
     
     expect(profile.type).toBe(PROFILE_TYPES.STUDENT)
   })
 
   it('should create a user with generated uuid', async () => {
     const { createUserUseCase } = makeSut();
-    const { user } = await createUserUseCase.execute(PERSONAL_USER_CREATE_DATA_MOCK);
+    const { user } = await createUserUseCase.execute(CREATE_PERSONAL_USER_PORT_MOCK);
 
     expect(user.id).toBe(UuidGeneratorMock.GENERATED_ID)
   })
 
   it('should generate a token to created user', async () => {
     const { createUserUseCase } = makeSut();
-    const { token } = await createUserUseCase.execute(PERSONAL_USER_CREATE_DATA_MOCK);
+    const { token } = await createUserUseCase.execute(CREATE_PERSONAL_USER_PORT_MOCK);
 
     expect(token).toBe(TokenGeneratorMock.GENERATED_TOKEN);
   })
