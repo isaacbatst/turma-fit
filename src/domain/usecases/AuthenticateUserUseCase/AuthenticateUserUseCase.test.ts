@@ -24,7 +24,8 @@ const makeSut = () => {
     userRepository,
     encrypter,
     tokenGenerator,
-    sessionRepository
+    sessionRepository,
+    uuidGenerator
   }
 }
 
@@ -75,12 +76,12 @@ describe('AuthenticateUserUseCase', () => {
     })
 
     it('should call create session with proper params', async () => {
-      const { authenticateUserUseCase, sessionRepository } = makeSut();
+      const { authenticateUserUseCase, sessionRepository, uuidGenerator } = makeSut();
       
       await authenticateUserUseCase.execute({ email: 'any@email', password: 'any_password' });
 
       const expectedSession = new Session(
-        UuidGeneratorMock.GENERATED_ID,
+        uuidGenerator.GENERATED_ID,
         TokenGeneratorMock.GENERATED_TOKEN,
       )
       

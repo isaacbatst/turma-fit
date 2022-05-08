@@ -50,7 +50,8 @@ const makeSut = () => {
     userRepository, 
     profileRepository,
     encrypter,
-    createUserUseCase
+    createUserUseCase,
+    uuidGenerator
   }
 }
 
@@ -67,13 +68,13 @@ describe('CreateUserUseCase', () => {
   })
 
   it('should call userRepository.create with proper params', async() => {
-    const { createUserUseCase, userRepository } = makeSut();
+    const { createUserUseCase, userRepository, uuidGenerator } = makeSut();
     await createUserUseCase.execute(CREATE_PERSONAL_USER_PORT_MOCK)
 
     const expectedUserParameter = new User({
       ...CREATE_PERSONAL_USER_PORT_MOCK,
       password: EncrypterMock.HASHED_VALUE,
-      id: UuidGeneratorMock.GENERATED_ID
+      id: uuidGenerator.GENERATED_ID
     })
 
     expect(userRepository.create).toHaveBeenCalledWith(expectedUserParameter)
@@ -94,10 +95,10 @@ describe('CreateUserUseCase', () => {
   })
 
   it('should create a user with generated uuid', async () => {
-    const { createUserUseCase } = makeSut();
+    const { createUserUseCase, uuidGenerator } = makeSut();
     const { user } = await createUserUseCase.execute(CREATE_PERSONAL_USER_PORT_MOCK);
 
-    expect(user.id).toBe(UuidGeneratorMock.GENERATED_ID)
+    expect(user.id).toBe(uuidGenerator.GENERATED_ID)
   })
 
   it('should generate a token to created user', async () => {
