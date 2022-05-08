@@ -1,12 +1,11 @@
-import { Day, Exercise, Movement, Set, Workout } from "@domain/entities/WorkoutPlan/WorkoutPlan"
+import { Day, Set, Workout } from "@domain/entities/WorkoutPlan/WorkoutPlan"
+import { Grip } from "@prisma/client"
 
-export type MovementNotValidated = Movement & {
-  muscleGroup: string
-}
-
-export type ExerciseNotValidated = Exercise & {
-  movement: MovementNotValidated,
-  grip: string
+export type ExerciseNotValidated = {
+  id           : string      
+  movementId   : string  
+  equipmentId  : string 
+  grip?        : Grip
 }
 
 export type SetNotValidated = Set & {
