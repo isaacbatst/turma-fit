@@ -32,7 +32,6 @@ export default class AuthenticateUserUseCase {
   constructor(
     params: AuthenticateUserUseCaseParams
   ){
-    this.userRepository = params.userRepository
     this.encrypter = params.encrypter
     this.tokenGenerator = params.tokenGenerator
     this.sessionRepository = params.sessionRepository
