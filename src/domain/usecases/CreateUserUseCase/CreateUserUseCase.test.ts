@@ -1,6 +1,6 @@
 import { PROFILE_TYPES } from "@domain/entities/User/Profile";
 import { User } from "@domain/entities/User/User";
-import { EncrypterMock, TokenGeneratorMock, UuidGeneratorMock } from "../_mocks";
+import { CreateUserPortValidatorMock, EncrypterMock, TokenGeneratorMock, UuidGeneratorMock } from "../_mocks";
 import { CreateProfileRepositoryMock } from "../_mocks/repositories/ProfileRepositoryMock";
 import { SessionRepositoryMock } from "../_mocks/repositories/SessionRepositoryMock";
 import { UserRepositoryMock } from "../_mocks/repositories/UserRepositoryMock";
@@ -34,6 +34,7 @@ const makeSut = () => {
   const encrypter = new EncrypterMock();
   const uuidGenerator = new UuidGeneratorMock();
   const tokenGenerator = new TokenGeneratorMock();
+  const portValidator = new CreateUserPortValidatorMock()
   
   const createUserUseCase = new CreateUserService({
     userRepository, 
@@ -41,7 +42,8 @@ const makeSut = () => {
     encrypter, 
     sessionRepository,
     tokenGenerator,
-    uuidGenerator
+    uuidGenerator,
+    portValidator
   });
 
   return {

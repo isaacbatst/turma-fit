@@ -1,5 +1,6 @@
 import { ValidationError } from "@application/api/controllers/CreateUserController/CreateUserBodyValidator";
 import { Encrypter } from "@domain/common/Encrypter";
+import { PortValidator } from "@domain/common/PortValidator";
 import { TokenGenerator } from "@domain/common/TokenGenerator";
 import { UuidGenerator } from "@domain/common/UuidGenerator";
 import { PersonalProfile, Profile, ProfileType, StudentProfile } from "@domain/entities/User/Profile";
@@ -8,7 +9,7 @@ import { User } from "@domain/entities/User/User";
 import { CreateProfileRepository } from "@domain/repositories/ProfileRepository";
 import { SessionRepository } from "@domain/repositories/SessionRepository";
 import { CreateUserRepository } from "@domain/repositories/UserRepository";
-import { CreateUserPortValidator, CreateUserUseCasePort } from "./CreateUserPortValidator";
+import { CreateUserPortValidator, CreateUserUseCasePort, CreateUserUseCasePortValidated } from "./CreateUserPortValidator";
 
 export interface CreateUserUseCaseDTO {
   user: {
@@ -33,9 +34,9 @@ interface CreateUserServiceParams {
   encrypter: Encrypter,
   sessionRepository: SessionRepository,
   uuidGenerator: UuidGenerator
-  tokenGenerator: TokenGenerator
+  tokenGenerator: TokenGenerator,
+  portValidator: PortValidator<CreateUserUseCasePort,CreateUserUseCasePortValidated>
 }
-
 
 export class CreateUserService implements CreateUserUseCase {
   private userRepository: CreateUserRepository
@@ -44,6 +45,7 @@ export class CreateUserService implements CreateUserUseCase {
   private sessionRepository: SessionRepository
   private uuidGenerator: UuidGenerator
   private tokenGenerator: TokenGenerator
+  private portValidator: PortValidator<CreateUserUseCasePort, CreateUserUseCasePortValidated>
 
   constructor(
     params: CreateUserServiceParams
@@ -55,10 +57,11 @@ export class CreateUserService implements CreateUserUseCase {
     this.sessionRepository = params.sessionRepository,
     this.uuidGenerator = params.uuidGenerator
     this.tokenGenerator = params.tokenGenerator
+    this.portValidator = params.portValidator
   }
 
   async execute(receivedPort: CreateUserUseCasePort): Promise<CreateUserUseCaseDTO> {
-    const port = CreateUserPortValidator.validate(receivedPort);
+    const port = this.portValidator.validate(receivedPort)
 
     const isEmailRepeated = await this.userRepository.getByEmail(port.email);
 
