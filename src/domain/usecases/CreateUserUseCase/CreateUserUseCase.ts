@@ -9,7 +9,7 @@ import { User } from "@domain/entities/User/User";
 import { CreateProfileRepository } from "@domain/repositories/ProfileRepository";
 import { SessionRepository } from "@domain/repositories/SessionRepository";
 import { CreateUserRepository } from "@domain/repositories/UserRepository";
-import { CreateUserPortValidator, CreateUserUseCasePort, CreateUserUseCasePortValidated } from "./CreateUserPortValidator";
+import { CreateUserUseCasePort, CreateUserUseCasePortValidated } from "./CreateUserPortValidator";
 
 export interface CreateUserUseCaseDTO {
   user: {
