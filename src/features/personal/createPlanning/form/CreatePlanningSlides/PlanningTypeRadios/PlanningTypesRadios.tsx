@@ -1,5 +1,5 @@
 import React from 'react';
-import Loading from '../../../../../../application/components/common/Loading';
+import Loading from '../../../../../../application/frontend/components/common/Loading';
 import { useGetPlanningTypesQuery } from '../../../api';
 import styles from '../../styles.module.scss';
 import radio from '../../../../../../styles/components/radio.module.scss';

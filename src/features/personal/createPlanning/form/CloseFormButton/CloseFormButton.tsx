@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction } from 'react'
 import { MdClose } from 'react-icons/md';
-import IconButton from '../../../../../application/components/common/IconButton';
+import IconButton from '../../../../../application/frontend/components/common/IconButton';
 import { useAppDispatch } from '../../../../../store/hooks';
 import { resetPlanningAction } from '../slice';
 import styles from '../styles.module.scss'

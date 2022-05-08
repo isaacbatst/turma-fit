@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import Layout from "../../../../../application/components/Layout";
+import Layout from "../../../../../application/frontend/components/Layout";
 
 const Plannings: React.FC = () => {
   const router = useRouter();

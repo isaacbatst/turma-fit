@@ -1,8 +1,8 @@
 import { Exercise, Set, PrismaClient, Training, TrainingPlanning } from "@prisma/client";
 import { GetServerSideProps, NextPage } from "next";
 import { getSession } from "next-auth/react";
-import Header from "../application/components/Header";
-import Layout from "../application/components/Layout";
+import Header from "../application/frontend/components/Header";
+import Layout from "../application/frontend/components/Layout";
 import { prisma } from "../lib/prisma";
 import containers from '../styles/common/containers.module.scss';
 import { NextPageWithAuth } from "../../types/page";
