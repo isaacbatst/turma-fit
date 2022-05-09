@@ -1,5 +1,5 @@
 import React from 'react'
-import { useAppSelector, useAppDispatch } from '../../../../../../../../../store/hooks';
+import { useAppSelector, useAppDispatch } from '../../../../../../../store/hooks';
 import { setTimesAction } from '../../../slice';
 import { useSetSlideContext } from '../SetSlideContext'
 

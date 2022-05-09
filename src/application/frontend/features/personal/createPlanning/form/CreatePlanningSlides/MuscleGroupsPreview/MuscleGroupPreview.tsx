@@ -1,4 +1,4 @@
-import { useAppSelector } from '../../../../../../../../store/hooks';
+import { useAppSelector } from '../../../../../../store/hooks';
 import { useSetSlideContext } from '../SetSlide/SetSlideContext';
 import badge from './styles.module.scss';
 

@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useAppSelector } from '../../../../../../../../../store/hooks';
+import { useAppSelector } from '../../../../../../../store/hooks';
 import { useSetSlideContext } from '../SetSlideContext';
 import RepetitionsInput from './RepetitionsInput';
 import styles from './styles.module.scss';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAppDispatch } from '../../../../../../../../../store/hooks';
+import { useAppDispatch } from '../../../../../../../store/hooks';
 import { setRepetitionsAction } from '../../../slice';
 
 type Props = {

@@ -7,7 +7,7 @@ import GoToTrainingCheckoutButton from '../GoToTrainingCheckoutButton/GoToTraini
 import TimesAndRepetitions from './TimesAndRepetitions/TimesAndRepetitions'
 import styles from '../styles.module.scss'
 import ExercisesSelects from './ExercisesSelects/ExercisesSelects'
-import { useAppSelector } from '../../../../../../../../store/hooks'
+import { useAppSelector } from '../../../../../../store/hooks'
 import MuscleGroupsPreview from '../MuscleGroupsPreview/MuscleGroupPreview'
 
 const SetSlide = () => {

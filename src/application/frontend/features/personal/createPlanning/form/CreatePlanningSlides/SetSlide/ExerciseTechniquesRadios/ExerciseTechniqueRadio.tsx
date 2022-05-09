@@ -1,6 +1,6 @@
 import { ExerciseTechnique } from "@prisma/client";
 import { ChangeEventHandler } from "react";
-import { useAppDispatch } from "../../../../../../../../../store/hooks";
+import { useAppDispatch } from "../../../../../../../store/hooks";
 import { setTechniqueAction } from "../../../slice";
 import { useSetSlideContext } from "../SetSlideContext";
 

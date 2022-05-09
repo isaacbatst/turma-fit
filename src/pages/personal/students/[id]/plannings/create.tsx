@@ -8,7 +8,7 @@ import TrainingPlanningCard from "../../../../../application/frontend/components
 import CreateTrainingPlanningForm from "../../../../../application/frontend/features/personal/createPlanning/form";
 import { initPlanningAction } from "../../../../../application/frontend/features/personal/createPlanning/form/slice";
 import usePersonalStudent from "../../../../../lib/swr/usePersonalStudent";
-import { useAppDispatch } from "../../../../../store/hooks";
+import { useAppDispatch } from "../../../../../application/frontend/store/hooks";
 import containers from '../../../../../styles/common/containers.module.scss';
 import styles from '../../../../../styles/pages/personal/students/plannings.module.scss';
 import { NextPageWithAuth } from "../../../../../../types/page";

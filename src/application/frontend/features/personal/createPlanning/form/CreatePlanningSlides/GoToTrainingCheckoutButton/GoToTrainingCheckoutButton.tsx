@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { MdCheck } from 'react-icons/md';
 import { useSwiper } from 'swiper/react';
 import IconButtonWithText from '../../../../../../components/common/IconButtonWithText';
-import { useAppSelector } from '../../../../../../../../store/hooks';
+import { useAppSelector } from '../../../../../../store/hooks';
 import { useSetSlideContext } from '../SetSlide/SetSlideContext';
 import { validateSet } from './goToTrainingCheckoutValidation';
 import alertStyles from './alertStyles.module.scss';
