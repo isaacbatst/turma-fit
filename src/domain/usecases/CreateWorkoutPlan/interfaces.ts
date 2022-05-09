@@ -1,5 +1,4 @@
-import { Day, Set, Workout } from "@domain/entities/WorkoutPlan/WorkoutPlan"
-import { Grip } from "@prisma/client"
+import { Day, Grip, Set, Workout } from "@domain/entities/WorkoutPlan/WorkoutPlan"
 
 export type ExerciseNotValidated = {
   id           : string      

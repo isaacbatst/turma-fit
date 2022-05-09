@@ -8,7 +8,7 @@ export enum Day {
   SATURDAY = 'SATURDAY',
 }
 
-enum Grip {
+export enum Grip {
   PRONATE = 'PRONATE',
   SUPINE = 'SUPINE',
   NEUTRAL = 'NEUTRAL'
