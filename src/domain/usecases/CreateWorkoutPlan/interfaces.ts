@@ -1,24 +1,24 @@
 import { Day, Grip, Set, Workout } from "@domain/entities/WorkoutPlan/WorkoutPlan"
 
-export type ExerciseNotValidated = {
+export type CreateWorkoutPlanPortExercise = {
   id           : string      
   movementId   : string  
   equipmentId  : string 
   grip?        : Grip
 }
 
-export type SetNotValidated = Set & {
-  exercises: ExerciseNotValidated[]
+export type CreateWorkoutPlanPortSet = Set & {
+  exercises: CreateWorkoutPlanPortExercise[]
 }
 
-export type WorkoutNotValidated = Workout & {
-  sets: SetNotValidated[]
+export type CreateWorkoutPlanPortWorkout = Workout & {
+  sets: CreateWorkoutPlanPortSet[]
 }
 
 export interface CreateWorkoutPlanUseCasePort {
   planTypeId: string
   userId: string
-  workouts: (WorkoutNotValidated & { day: string })[]
+  workouts: (CreateWorkoutPlanPortWorkout & { day: string })[]
 }
 
 export interface CreateWorkoutPlanUseCasePortValidated {

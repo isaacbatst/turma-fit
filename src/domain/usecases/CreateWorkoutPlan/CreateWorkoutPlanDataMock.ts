@@ -1,15 +1,15 @@
 import WorkoutPlan, { Day } from "@domain/entities/WorkoutPlan/WorkoutPlan"
-import { CreateWorkoutPlanUseCasePort, SetNotValidated, WorkoutNotValidated } from "./interfaces"
+import { CreateWorkoutPlanUseCasePort, CreateWorkoutPlanPortSet, CreateWorkoutPlanPortWorkout } from "./interfaces"
 
 export class CreateWorkoutPlanDataMock {
-  private static PORT_SET: SetNotValidated = {
+  private static PORT_SET: CreateWorkoutPlanPortSet = {
     id: 'any_set_id',
     exercises: [],
     repetitions: 10,
     times: 3,
   } 
 
-  private static PORT_WORKOUT: WorkoutNotValidated = {
+  private static PORT_WORKOUT: CreateWorkoutPlanPortWorkout = {
     id: 'any_workout_id',
     aerobicMinutes: 60,
     sets: [CreateWorkoutPlanDataMock.PORT_SET],
