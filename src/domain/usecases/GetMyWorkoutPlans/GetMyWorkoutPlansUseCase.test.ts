@@ -1,22 +1,6 @@
-import WorkoutPlan from "@domain/entities/WorkoutPlan/WorkoutPlan";
+import { GetMyWorkoutPlansDataMock } from "./GetMyWorkoutPlansDataMock";
+import { GetMyWorkoutPlansRepositoryMock } from "./GetMyWorkoutPlansRepositoryMock";
 import { GetMyWorkoutPlansUseCase } from "./GetMyWorkoutPlansUseCase";
-
-class GetMyWorkoutPlansDataMock {
-  static DEFAULT_PORT = {
-    userId: 'any_user_id'
-  }
-}
-
-
-export interface GetMyWorkoutPlansRepository {
-  getByUserId(userId: string): Promise<WorkoutPlan[]>
-}
-
-class GetMyWorkoutPlansRepositoryMock implements GetMyWorkoutPlansRepository {
-  getByUserId: (userId: string) => Promise<WorkoutPlan[]> = jest.fn(async () => {
-    return []
-  });
-}
 
 const makeSut = () => {
   const workoutPlanRepository = new GetMyWorkoutPlansRepositoryMock()

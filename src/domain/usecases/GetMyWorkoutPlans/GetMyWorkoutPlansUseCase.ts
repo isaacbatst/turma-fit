@@ -1,6 +1,6 @@
 import { UseCase } from '@domain/common/UseCase';
 import WorkoutPlan, { Workout } from '@domain/entities/WorkoutPlan/WorkoutPlan';
-import { GetMyWorkoutPlansRepository } from './GetMyWorkoutPlansUseCase.test';
+import { GetMyWorkoutPlansRepository } from '@domain/repositories/WorkoutPlanRepository';
 
 export interface GetMyWorkoutPlansUseCasePort {
   userId: string
