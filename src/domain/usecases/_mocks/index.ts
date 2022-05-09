@@ -27,15 +27,3 @@ export class UuidGeneratorMock implements UuidGenerator {
   GENERATED_ID = 'any_uuid'
   generate: () => string = jest.fn(() => this.GENERATED_ID);
 }
-
-export class CreateUserPortValidatorMock implements PortValidator<CreateUserUseCasePort, CreateUserUseCasePortValidated> {
-  isValid = true;
- 
-  validate(port: CreateUserUseCasePort): CreateUserUseCasePortValidated {
-    if(!this.isValid){
-      throw new ValidationError('ANY_ERROR')
-    }
-    
-    return port as CreateUserUseCasePortValidated;
-  }
-}
