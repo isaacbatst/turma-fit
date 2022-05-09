@@ -1,4 +1,5 @@
 import { ValidationError } from "@application/api/controllers/CreateUserController/CreateUserBodyValidator";
+import { PortValidator } from "@domain/common/PortValidator";
 import { ProfileType, PROFILE_TYPES } from "@domain/entities/User/Profile";
 
 export interface CreateUserUseCasePortValidated {
@@ -19,10 +20,10 @@ export interface CreateUserUseCasePort {
   password: string,
 }
 
-export class CreateUserPortValidator {
+export class CreateUserPortValidator implements PortValidator<CreateUserUseCasePort, CreateUserUseCasePortValidated> {
   static readonly EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
-  static validate(port: CreateUserUseCasePort): CreateUserUseCasePortValidated {
+  validate(port: CreateUserUseCasePort): CreateUserUseCasePortValidated {
     if(port.profile !== PROFILE_TYPES.PERSONAL && port.profile !== PROFILE_TYPES.STUDENT) {
       throw new ValidationError('UNKNOWN_PROFILE')
     }
