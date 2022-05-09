@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { Controller, HttpRequest } from "../interfaces";
+import { Controller, HttpRequest } from "../../interfaces";
 
 export class NextApiHandlerAdapter {
   constructor(private controller: Controller) {
