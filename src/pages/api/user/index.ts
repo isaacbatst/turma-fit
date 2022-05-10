@@ -1,10 +1,9 @@
-import { makeCreateUserHandler } from '@application/api/factories/CreateUserHandler';
+import { CreateUserHandlerFactory } from '@application/api/usecases/CreateUser/CreateUserHandlerFactory';
 import { NextApiHandler } from 'next';
 
 const handler: NextApiHandler = async (req, res) => {
   if(req.method === 'POST') {
-    const createUserHandler = makeCreateUserHandler();
-
+    const createUserHandler = CreateUserHandlerFactory.make();
     return createUserHandler.handle(req, res);
   }
 
