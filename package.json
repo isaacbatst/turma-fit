@@ -42,6 +42,7 @@
     "@typescript-eslint/eslint-plugin": "^5.6.0",
     "cross-fetch": "^3.1.5",
     "dotenv": "^16.0.0",
+    "dotenv-cli": "^5.1.0",
     "eslint": "7.32.0",
     "eslint-config-next": "11.1.2",
     "faker": "5.5.3",
@@ -59,10 +60,13 @@
     "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest --watch",
+    "pretest:integration": "dotenv -e .env.test yarn prisma migrate deploy",
+    "test:integration": "dotenv -e .env.test jest integration ",
+    "test": "dotenv -e .env.test jest",
     "coverage": "jest --coverage",
     "vercel-build": "npm run prisma:generate && npm run prisma:migrate && next build",
     "prisma:generate": "PRISMA_CLIENT_ENGINE_TYPE='dataproxy' prisma generate",
-    "prisma:migrate": "DATABASE_URL=\"$MIGRATE_DATABASE_URL\" prisma migrate deploy"
+    "prisma:migrate": "DATABASE_URL=\"$MIGRATE_DATABASE_URL\" prisma migrate deploy",
+    "prisma:studio": "dotenv -e .env.development prisma studio"
   }
 }
