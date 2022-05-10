@@ -10,7 +10,7 @@
     "paths": {
       "@pages/*": ["src/pages/*"],
       "@api/*": ["src/api/*"],
-      "@styles/*": ["src/styles/*"],
+      "@styles/*": ["src/application/frontend/styles/*"],
       "@domain/*": ["src/domain/*"],
       "@tests/*": ["tests/*"],
       "@types/*": ["types/*"],
