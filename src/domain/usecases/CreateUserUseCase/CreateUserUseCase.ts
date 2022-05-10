@@ -1,4 +1,4 @@
-import { ValidationError } from "@application/api/controllers/CreateUserController/CreateUserBodyValidator";
+import { ValidationError } from "@application/api/usecases/CreateUser/CreateUserBodyValidator";
 import { Encrypter } from "@domain/common/Encrypter";
 import { PortValidator } from "@domain/common/PortValidator";
 import { TokenGenerator } from "@domain/common/TokenGenerator";

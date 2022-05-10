@@ -1,4 +1,4 @@
-import { ValidationError } from "@application/api/controllers/CreateUserController/CreateUserBodyValidator";
+import { ValidationError } from "@application/api/usecases/CreateUser/CreateUserBodyValidator";
 import { PortValidator } from "@domain/common/PortValidator";
 import { CreateWorkoutPlanUseCasePort, CreateWorkoutPlanUseCasePortValidated } from "./interfaces";
 

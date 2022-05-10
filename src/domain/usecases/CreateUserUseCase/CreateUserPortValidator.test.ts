@@ -13,7 +13,9 @@ describe('CreateUserPortValidator', () => {
       }
 
       expect(() => {
-        CreateUserPortValidator.validate(PORT_WITH_UNKNOWN_PROFILE)
+        const validator = new CreateUserPortValidator();
+
+        validator.validate(PORT_WITH_UNKNOWN_PROFILE)
       }).toThrowError('UNKNOWN_PROFILE')
     })
   })
@@ -30,7 +32,9 @@ describe('CreateUserPortValidator', () => {
       }
 
       expect(() => {
-        CreateUserPortValidator.validate(PORT_WITH_INVALID_EMAIL)
+        const validator = new CreateUserPortValidator();
+
+        validator.validate(PORT_WITH_INVALID_EMAIL)
       }).toThrowError('INVALID_EMAIL')
     })
   })
@@ -47,7 +51,9 @@ describe('CreateUserPortValidator', () => {
       }
 
       expect(() => {
-        CreateUserPortValidator.validate(PORT_WITH_INVALID_PASSWORD)
+        const validator = new CreateUserPortValidator();
+
+        validator.validate(PORT_WITH_INVALID_PASSWORD)
       }).toThrowError('INVALID_PASSWORD')
     })
   })
@@ -64,7 +70,9 @@ describe('CreateUserPortValidator', () => {
       }
 
       expect(() => {
-        CreateUserPortValidator.validate(VALID_PORT)
+        const validator = new CreateUserPortValidator();
+
+        validator.validate(VALID_PORT)
       }).not.toThrow();
     })
   })
