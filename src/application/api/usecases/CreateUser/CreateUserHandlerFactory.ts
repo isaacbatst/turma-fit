@@ -38,8 +38,8 @@ export class CreateUserHandlerFactory {
       createUserService
     )
   
-    const createUserHandleAdapter = new NextApiHandlerAdapter(createUserController);
+    const createUserHandlerAdapter = new NextApiHandlerAdapter(createUserController);
   
-    return createUserHandleAdapter;
+    return createUserHandlerAdapter;
   }
 }
