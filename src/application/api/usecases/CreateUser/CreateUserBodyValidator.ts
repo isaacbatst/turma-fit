@@ -1,5 +1,13 @@
 import { BodyValidator } from "@application/api/interfaces";
-import { CreateUserUseCasePort } from "@domain/usecases/CreateUserUseCase/CreateUserPortValidator";
+
+export interface CreateUserValidBody {
+  name: string,
+  email: string,
+  image: string,
+  age: number,
+  profile: string,
+  password: string,
+}
 
 export class ValidationError extends Error {
   constructor(
@@ -13,8 +21,8 @@ export class ValidationError extends Error {
   }
 }
 
-export class CreateUserBodyValidator implements BodyValidator<CreateUserUseCasePort> {
-  validate(body: Record<string, any>): CreateUserUseCasePort {
+export class CreateUserBodyValidator implements BodyValidator<CreateUserValidBody> {
+  validate(body: Record<string, any>): CreateUserValidBody {
     const { password, age, email, image, name, profile } = body
 
     if(!password || typeof password !== 'string') {
