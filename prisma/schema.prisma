@@ -9,15 +9,15 @@ datasource db {
 }
 
 model User {
-  name              String
-  id                String             @id
-  email             String             @unique
-  emailVerifiedAt   DateTime?
-  image             String
-  age               Int
-  password          String
-  trainingPlannings TrainingPlanning[]
-  profile           Profile[]
+  name            String
+  id              String        @id
+  email           String        @unique
+  emailVerifiedAt DateTime?
+  image           String
+  age             Int
+  password        String
+  workoutPlans    WorkoutPlan[]
+  profile         Profile[]
 }
 
 model Session {
@@ -35,58 +35,58 @@ model Profile {
   type                   ProfileType
   user                   User            @relation(fields: [userId], references: [id])
   userId                 String
-  sentAdviceRequests     AdviceRequest[] @relation("SentAdviceRequests")
-  receivedAdviceRequests AdviceRequest[] @relation("ReceivedAdviceRequests")
+  // sentAdviceRequests     AdviceRequest[] @relation("SentAdviceRequests")
+  // receivedAdviceRequests AdviceRequest[] @relation("ReceivedAdviceRequests")
 }
 
 model StudentProfile {
   id              String        @id
   studentMeasures Measurement[]
   studentPictures Picture[]
-  advices         Advice[]
+  // advices         Advice[]
 }
 
 model PersonalProfile {
   id      String   @id
-  advices Advice[]
+  // advices Advice[]
 }
 
-model Advice {
-  active            Boolean
-  student           StudentProfile     @relation(fields: [studentId], references: [id])
-  personal          PersonalProfile    @relation(fields: [personalId], references: [id])
-  studentId         String
-  personalId        String
-  adviceChange      AdviceChange[]
-  trainingPlannings TrainingPlanning[]
+// model Advice {
+//   active       Boolean
+//   student      StudentProfile  @relation(fields: [studentId], references: [id])
+//   personal     PersonalProfile @relation(fields: [personalId], references: [id])
+//   studentId    String
+//   personalId   String
+//   adviceChange AdviceChange[]
+//   workoutPlans WorkoutPlan[]
 
-  @@id([studentId, personalId])
-}
+//   @@id([studentId, personalId])
+// }
 
-model AdviceChange {
-  id               String   @id @default(uuid())
-  activeChangedTo  Boolean
-  advice           Advice   @relation(fields: [adviceStudentId, advicePersonalId], references: [studentId, personalId])
-  date             DateTime @default(now())
-  adviceStudentId  String
-  advicePersonalId String
-}
+// model AdviceChange {
+//   id               String   @id @default(uuid())
+//   activeChangedTo  Boolean
+//   advice           Advice   @relation(fields: [adviceStudentId, advicePersonalId], references: [studentId, personalId])
+//   date             DateTime @default(now())
+//   adviceStudentId  String
+//   advicePersonalId String
+// }
 
-enum AdviceRequestStatus {
-  ACCEPTED
-  REJECTED
-  PENDING
-}
+// enum AdviceRequestStatus {
+//   ACCEPTED
+//   REJECTED
+//   PENDING
+// }
 
-model AdviceRequest {
-  id        String              @id @default(uuid())
-  createdAt DateTime            @default(now())
-  status    AdviceRequestStatus
-  to        Profile             @relation(name: "ReceivedAdviceRequests", fields: [toId], references: [id])
-  toId      String
-  from      Profile             @relation(name: "SentAdviceRequests", fields: [fromId], references: [id])
-  fromId    String
-}
+// model AdviceRequest {
+//   id        String              @id @default(uuid())
+//   createdAt DateTime            @default(now())
+//   status    AdviceRequestStatus
+//   to        Profile             @relation(name: "ReceivedAdviceRequests", fields: [toId], references: [id])
+//   toId      String
+//   from      Profile             @relation(name: "SentAdviceRequests", fields: [fromId], references: [id])
+//   fromId    String
+// }
 
 model Picture {
   url              String
@@ -160,7 +160,7 @@ model Set {
   exerciseTechniqueId String?
   minRestTime         Int?
   maxRestTime         Int?
-  trainings           Training[]
+  workouts            Workout[]
 }
 
 model ExerciseTechnique {
@@ -170,22 +170,16 @@ model ExerciseTechnique {
   sets        Set[]
 }
 
-enum TrainingPlanningType {
-  ADVICE
-  USER
-}
-
-model TrainingPlanning {
-  id                     String                @id @default(uuid())
-  trainings              Training[]
-  type                   TrainingPlanningType
-  focus                  TrainingPlanningFocus @relation(fields: [trainingPlanningTypeId], references: [id])
-  trainingPlanningTypeId String
-  user                   User?                 @relation(fields: [userId], references: [id])
-  userId                 String?
-  advice                 Advice                @relation(fields: [adviceStudentId, advicePersonalId], references: [studentId, personalId])
-  adviceStudentId        String
-  advicePersonalId       String
+model WorkoutPlan {
+  id                String          @id @default(uuid())
+  workouts          Workout[]
+  type              WorkoutPlanType @relation(fields: [workoutPlanTypeId], references: [id])
+  workoutPlanTypeId String
+  user              User?           @relation(fields: [userId], references: [id])
+  userId            String?
+  // advice            Advice          @relation(fields: [adviceStudentId, advicePersonalId], references: [studentId, personalId])
+  // adviceStudentId   String
+  // advicePersonalId  String
 }
 
 enum Day {
@@ -198,21 +192,21 @@ enum Day {
   SATURDAY
 }
 
-model Training {
-  id                 String            @id @default(uuid())
-  letter             String
-  sets               Set[]
-  aerobicMinutes     Int
-  trainingPlanning   TrainingPlanning? @relation(fields: [trainingPlanningId], references: [id])
-  trainingPlanningId String?
-  day                Day
+model Workout {
+  id             String       @id @default(uuid())
+  letter         String
+  sets           Set[]
+  aerobicMinutes Int
+  workoutPlan    WorkoutPlan? @relation(fields: [workoutPlanId], references: [id])
+  workoutPlanId  String?
+  day            Day
 }
 
-model TrainingPlanningFocus {
+model WorkoutPlanType {
   name               String
-  id                 String             @id @default(uuid())
+  id                 String        @id @default(uuid())
   explanation        String
   defaultMinRestTime Int
   defaultMaxRestTime Int
-  TrainingPlanning   TrainingPlanning[]
+  workoutPlan        WorkoutPlan[]
 }
