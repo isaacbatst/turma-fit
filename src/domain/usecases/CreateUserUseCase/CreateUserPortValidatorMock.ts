@@ -1,4 +1,4 @@
-import { ValidationError } from "@application/api/usecases/CreateUser/CreateUserBodyValidator";
+import { ValidationError } from "@application/api/errors/ValidationError";
 import { PortValidator } from "@domain/common/PortValidator";
 import { CreateUserUseCasePort, CreateUserUseCasePortValidated } from "./CreateUserPortValidator";
 

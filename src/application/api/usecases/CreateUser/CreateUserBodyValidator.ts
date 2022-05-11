@@ -1,3 +1,4 @@
+import { ValidationError } from "@application/api/errors/ValidationError";
 import { BodyValidator } from "@application/api/interfaces";
 
 export interface CreateUserValidBody {
@@ -8,19 +9,6 @@ export interface CreateUserValidBody {
   profile: string,
   password: string,
 }
-
-export class ValidationError extends Error {
-  constructor(
-    public message: string
-  ){
-    super(message);
-  }
-
-  getMessage(){
-    return this.message;
-  }
-}
-
 export class CreateUserBodyValidator implements BodyValidator<CreateUserValidBody> {
   validate(body: Record<string, any>): CreateUserValidBody {
     const { password, age, email, image, name, profile } = body

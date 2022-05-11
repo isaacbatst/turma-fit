@@ -1,6 +1,6 @@
 import { BodyValidator } from "@application/api/interfaces"
 import { CreateUserUseCasePort } from "@domain/usecases/CreateUserUseCase/CreateUserPortValidator"
-import { ValidationError } from "../usecases/CreateUser/CreateUserBodyValidator"
+import { ValidationError } from "../errors/ValidationError"
 
 export class BodyValidatorMock implements BodyValidator<CreateUserUseCasePort> {
   public error: string | null = null

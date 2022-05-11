@@ -1,9 +1,6 @@
-import { ValidationError } from "@application/api/controllers/CreateUserController/CreateUserBodyValidator";
 import { Encrypter } from "@domain/common/Encrypter";
-import { PortValidator } from "@domain/common/PortValidator";
 import { TokenGenerator } from "@domain/common/TokenGenerator";
 import { UuidGenerator } from "@domain/common/UuidGenerator";
-import { CreateUserUseCasePort, CreateUserUseCasePortValidated } from "../CreateUserUseCase/CreateUserPortValidator";
 
 export class EncrypterMock implements Encrypter {
   static readonly HASHED_VALUE = 'hashed_value';
