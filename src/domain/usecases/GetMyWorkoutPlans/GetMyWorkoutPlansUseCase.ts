@@ -6,17 +6,19 @@ export interface GetMyWorkoutPlansUseCasePort {
   userId: string
 }
 
-interface WorkoutPlanDTO {
+export interface WorkoutPlanDTO {
   id: string,
   planTypeId: string,
   workouts: Workout[],
 }
 
-interface GetMyWorkoutPlansUseCaseDTO {
+export interface GetMyWorkoutPlansUseCaseDTO {
   workoutPlans: WorkoutPlanDTO[]
 }
 
-export class GetMyWorkoutPlansUseCase implements UseCase<GetMyWorkoutPlansUseCasePort, GetMyWorkoutPlansUseCaseDTO> {
+export interface IGetMyWorkoutPlansUseCase extends UseCase<GetMyWorkoutPlansUseCasePort, GetMyWorkoutPlansUseCaseDTO> {}
+
+export class GetMyWorkoutPlansUseCase implements IGetMyWorkoutPlansUseCase {
   constructor(
     private workoutPlansRepository: GetMyWorkoutPlansRepository
   ){}
