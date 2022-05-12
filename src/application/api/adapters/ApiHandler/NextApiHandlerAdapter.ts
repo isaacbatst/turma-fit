@@ -8,7 +8,9 @@ export class NextApiHandlerAdapter {
   
   async handle(req: NextApiRequest, res: NextApiResponse) {
     const httpRequest: HttpRequest = {
-      body: req.body
+      body: req.body,
+      query: req.query,
+      headers: req.headers
     }
 
     const { statusCode, body } = await this.controller.handle(httpRequest);

@@ -7,7 +7,8 @@ export interface GetMyWorkoutPlansResponse {
 } 
 
 interface GetMyWorkoutPlansValidBody {
-  userId: string
+  userId: string,
+  sessionToken: string
 }
 
 
@@ -19,7 +20,7 @@ export class GetMyWorkoutPlansController implements Controller<GetMyWorkoutPlans
 
   async handle(request: HttpRequest): Promise<HttpResponse<GetMyWorkoutPlansResponse>> {
     try {
-      const validatedBody = this.bodyValidator.validate(request.body);
+      const validatedBody = this.bodyValidator.validate(request.query);
 
       const { workoutPlans } = await this.getMyWorkoutPlansUseCase.execute(validatedBody);
 

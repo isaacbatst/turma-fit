@@ -18,11 +18,14 @@ model User {
   password        String
   workoutPlans    WorkoutPlan[]
   profile         Profile[]
+  Session         Session[]
 }
 
 model Session {
-  id    String @id
-  token String
+  id     String @id
+  token  String
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
 }
 
 enum ProfileType {
@@ -31,10 +34,10 @@ enum ProfileType {
 }
 
 model Profile {
-  id                     String          @id
-  type                   ProfileType
-  user                   User            @relation(fields: [userId], references: [id])
-  userId                 String
+  id     String      @id
+  type   ProfileType
+  user   User        @relation(fields: [userId], references: [id])
+  userId String
   // sentAdviceRequests     AdviceRequest[] @relation("SentAdviceRequests")
   // receivedAdviceRequests AdviceRequest[] @relation("ReceivedAdviceRequests")
 }
@@ -47,7 +50,7 @@ model StudentProfile {
 }
 
 model PersonalProfile {
-  id      String   @id
+  id String @id
   // advices Advice[]
 }
 
@@ -115,17 +118,26 @@ model Measurement {
   studentProfileId String
 }
 
-model MuscleGroup {
-  name     String     @unique
-  id       String     @id @default(uuid())
-  Movement Movement[]
+enum MuscleGroup {
+  CHEST
+  SHOULDERS
+  TRICEPS
+  BICEPS
+  ABS
+  QUADRICEPS
+  HAMSTRINGS
+  CALVES
+  GLUTES
+  BACK
+  TRAPEZIUS
+  FOREARMS
+  LOWER_BACK
 }
 
 model Movement {
   name               String
   id                 String      @id @default(uuid())
-  focusedMuscleGroup MuscleGroup @relation(fields: [muscleGroupId], references: [id])
-  muscleGroupId      String
+  focusedMuscleGroup MuscleGroup
   exercise           Exercise[]
 }
 

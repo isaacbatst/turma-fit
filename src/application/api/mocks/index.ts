@@ -1,4 +1,4 @@
-import { BodyValidator } from "@application/api/interfaces"
+import { BodyValidator, HttpRequest } from "@application/api/interfaces"
 import { CreateUserUseCasePort } from "@domain/usecases/CreateUserUseCase/CreateUserPortValidator"
 import { ValidationError } from "../errors/ValidationError"
 
@@ -19,4 +19,14 @@ export class BodyValidatorMock implements BodyValidator<CreateUserUseCasePort> {
       profile: 'PERSONAL'
     }
   })
+}
+
+export class RequestMock {
+  static make = ({ body, query, headers }: Partial<HttpRequest> | undefined = {}): HttpRequest => {
+    return {
+      body: body || {},
+      query: query || {},
+      headers: headers || {}
+    }
+  }
 }

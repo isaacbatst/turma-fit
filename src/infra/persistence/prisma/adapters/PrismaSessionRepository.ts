@@ -1,18 +1,34 @@
 import { Session } from "@domain/entities/User/Session";
-import { SessionRepository } from "@domain/repositories/SessionRepository";
+import { GetMyWorkoutPlanSessionRepository, SessionRepository } from "@domain/repositories/SessionRepository";
 import { PrismaClient } from "@prisma/client";
 
-export class PrismaSessionRepository implements SessionRepository {
+export class PrismaSessionRepository implements SessionRepository, GetMyWorkoutPlanSessionRepository {
   constructor(
     private prisma: PrismaClient
   ) {}
 
-  async create(session: Session): Promise<void> {
+  async create(session: Session, userId: string): Promise<void> {
     await this.prisma.session.create({
       data: {
         id: session.getId(),
         token: session.getToken(),
+        user: {
+          connect: {
+            id: userId
+          }
+        }
       }
     })
+  }
+
+  async validateUserToken(userId: string, sessionToken: string): Promise<boolean> {
+    const session = await this.prisma.session.findFirst({
+      where: {
+        token: sessionToken,
+        userId
+      }
+    })
+
+    return !!session;
   }
 }

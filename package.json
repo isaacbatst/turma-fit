@@ -67,6 +67,8 @@
     "vercel-build": "npm run prisma:generate && npm run prisma:migrate && next build",
     "prisma:generate": "PRISMA_CLIENT_ENGINE_TYPE='dataproxy' prisma generate",
     "prisma:migrate": "DATABASE_URL=\"$MIGRATE_DATABASE_URL\" prisma migrate deploy",
-    "prisma:studio": "dotenv -e .env.development prisma studio"
+    "prisma:studio": "dotenv -e .env.development prisma studio",
+    "prisma:migrate:reset:dev": "dotenv -e .env.development prisma migrate reset",
+    "prisma:migrate:dev": "dotenv -e .env.development prisma migrate dev"
   }
 }

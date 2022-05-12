@@ -1,10 +1,10 @@
 import { User } from "@domain/entities/User/User";
-import { UserRepository } from "@domain/repositories/UserRepository";
+import { CreateUserRepository } from "@domain/repositories/UserRepository";
 import { PrismaClient } from "@prisma/client";
 import { PrismaUserMapper } from "../mappers/PrismaUserMapper";
 
 
-export class PrismaUserRepository implements UserRepository {
+export class PrismaUserRepository implements CreateUserRepository {
   constructor(private prisma: PrismaClient){} 
 
   async create(user: User): Promise<void> {

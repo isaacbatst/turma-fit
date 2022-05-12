@@ -14,7 +14,7 @@ export enum Grip {
   NEUTRAL = 'NEUTRAL'
 }
 
-enum MuscleGroup {
+export enum MuscleGroup {
   BICEPS = 'BICEPS',
   TRICEPS = 'TRICEPS',
   CHEST = 'CHEST',
@@ -24,14 +24,19 @@ enum MuscleGroup {
   CALVES = 'CALVES',
   FOREARMS = 'FOREARMS',
   TRAPEZIUS = 'TRAPEZIUS',
-  GLUTES = 'GLUTES'
+  GLUTES = 'GLUTES',
+  HAMSTRINGS = 'HAMSTRINGS',
+  LOWER_BACK = 'LOWER_BACK',
+  QUADRICEPS = 'QUADRICEPS'
+
 }
 
-interface Equipment {
+export interface Equipment {
+  id: string;
   name: string
 }
 
-interface SetType {
+interface SetTechnique {
   name: string
 }
 
@@ -53,7 +58,7 @@ export interface Set {
   exercises:            Exercise[]
   times:                number
   repetitions:          string | number
-  type?:                SetType
+  technique?:           SetTechnique
   minRestTime?:         number
   maxRestTime?:         number
 }

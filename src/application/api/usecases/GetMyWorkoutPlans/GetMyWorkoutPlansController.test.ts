@@ -1,3 +1,5 @@
+import { HttpRequest } from "@application/api/interfaces";
+import { RequestMock } from "@application/api/mocks";
 import { GetMyWorkoutBodyValidatorMock } from "./GetMyWorkoutBodyValidatorMock";
 import { GetMyWorkoutPlansController } from "./GetMyWorkoutPlansController";
 import { GetMyWorkoutPlansServiceMock } from "./GetMyWorkoutPlansServiceMock";
@@ -16,13 +18,22 @@ const makeSut = () => {
   }
 }
 
+const VALID_REQUEST = { 
+  query: { 
+    id: 'any_id' 
+  },
+  headers: {
+    'authorization': 'any_token'
+  }
+}
+
 describe('GetMyWorkoutPlansController', () => {
   describe('Given an invalid body', () => {
     it('should return status code 400', async () => {
       const { bodyValidator, controller } = makeSut();
       bodyValidator.error = 'INVALID_USER_ID';
 
-      const response = await controller.handle({ body: {} });
+      const response = await controller.handle(RequestMock.make());
 
       expect(response.statusCode).toBe(400);
     })
@@ -31,14 +42,14 @@ describe('GetMyWorkoutPlansController', () => {
     it('should return status code 200', async () => {
       const { controller } = makeSut();
 
-      const response = await controller.handle({ body: { userId: 1 } });
+      const response = await controller.handle(RequestMock.make(VALID_REQUEST));
 
       expect(response.statusCode).toBe(200);
     })
     it('should return workout plans', async () => {
       const { controller } = makeSut();
 
-      const response = await controller.handle({ body: { userId: 1 } });
+      const response = await controller.handle(RequestMock.make(VALID_REQUEST));
 
       expect(response.body).toEqual({ workoutPlans: GetMyWorkoutPlansServiceMock.WORKOUT_PLANS });
     })
