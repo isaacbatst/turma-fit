@@ -10,6 +10,7 @@ import { CreateProfileRepository } from "@domain/repositories/ProfileRepository"
 import { SessionRepository } from "@domain/repositories/SessionRepository";
 import { CreateUserRepository } from "@domain/repositories/UserRepository";
 import { CreateUserUseCasePort, CreateUserUseCasePortValidated } from "./CreateUserPortValidator";
+import { CreateUserUseCaseErrors } from "./CreateUserUseCaseErrors";
 
 export interface CreateUserUseCaseDTO {
   user: {
@@ -66,7 +67,7 @@ export class CreateUserService implements CreateUserUseCase {
     const isEmailRepeated = await this.userRepository.getByEmail(port.email);
 
     if(isEmailRepeated){
-      throw new ValidationError('REPEATED_EMAIL')
+      throw new ValidationError(CreateUserUseCaseErrors.REPEATED_EMAIL)
     }
 
     const hashedPassword = await this.encrypter.hash(port.password);
@@ -116,6 +117,6 @@ export class CreateUserService implements CreateUserUseCase {
       return new StudentProfile();
     }
 
-    throw new ValidationError('UNKNOWN_PROFILE')
+    throw new ValidationError(CreateUserUseCaseErrors.UNKNOW_PROFILE)
   }
 }

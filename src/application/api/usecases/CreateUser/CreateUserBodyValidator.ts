@@ -1,5 +1,6 @@
 import { ValidationError } from "@application/api/errors/ValidationError";
 import { BodyValidator } from "@application/api/interfaces";
+import { CreateUserBodyValidatorErrors } from "./CreateUserBodyValidatorErrors";
 
 export interface CreateUserValidBody {
   name: string,
@@ -14,27 +15,27 @@ export class CreateUserBodyValidator implements BodyValidator<CreateUserValidBod
     const { password, age, email, image, name, profile } = body
 
     if(!password || typeof password !== 'string') {
-      throw new ValidationError('INVALID_PASSWORD')
+      throw new ValidationError(CreateUserBodyValidatorErrors.INVALID_PASSWORD)
     }
 
     if(!age || typeof age !== 'number') {
-      throw new ValidationError('INVALID_AGE')
+      throw new ValidationError(CreateUserBodyValidatorErrors.INVALID_AGE)
     }
 
     if(!email || typeof email !== 'string') {
-      throw new ValidationError('INVALID_EMAIL')
+      throw new ValidationError(CreateUserBodyValidatorErrors.INVALID_EMAIL)
     }
 
     if(!image || typeof image !== 'string') {
-      throw new ValidationError('INVALID_IMAGE')
+      throw new ValidationError(CreateUserBodyValidatorErrors.INVALID_IMAGE)
     }
 
     if(!name || typeof name !== 'string') {
-      throw new ValidationError('INVALID_NAME')
+      throw new ValidationError(CreateUserBodyValidatorErrors.INVALID_NAME)
     }
 
     if(!profile || typeof profile !== 'string') {
-      throw new ValidationError('INVALID_PROFILE')
+      throw new ValidationError(CreateUserBodyValidatorErrors.INVALID_PROFILE)
     }
 
     return {
