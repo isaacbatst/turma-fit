@@ -3,18 +3,20 @@ import { NextPage } from "next";
 import CreateUserForm from "./CreateUserForm";
 
 const HomePage: NextPage = () => {
-  const { error, isLoading, user } = useUser();
+  const { isLoading, user } = useUser();
 
   return (
     <div>
       <h1>Home</h1>
       {
         isLoading ? (
-          <p>Loading...</p>
+          <p role="status">Loading...</p>
         ) : (
           user 
             ? (
-              <div>Logado: {user.name}</div>
+              <div>
+                <div>Logado: {user.name}</div>
+              </div>
             ) 
             : (
               <CreateUserForm />
