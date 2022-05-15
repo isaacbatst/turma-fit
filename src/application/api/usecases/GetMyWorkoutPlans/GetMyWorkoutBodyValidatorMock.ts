@@ -11,7 +11,8 @@ export class GetMyWorkoutBodyValidatorMock implements BodyValidator<GetMyWorkout
     }
 
     return {
-      userId: 'valid_user_id'
+      userId: 'valid_user_id',
+      sessionToken: 'valid_session_token',
     }
   })
 }
