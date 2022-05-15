@@ -1,6 +1,7 @@
 import { useUser } from "@application/frontend/swr/useUser";
 import { NextPage } from "next";
 import CreateUserForm from "./CreateUserForm";
+import UserHomeView from "./UserHomeView";
 
 const HomePage: NextPage = () => {
   const { isLoading, user } = useUser();
@@ -14,9 +15,7 @@ const HomePage: NextPage = () => {
         ) : (
           user 
             ? (
-              <div>
-                <div>Logado: {user.name}</div>
-              </div>
+              <UserHomeView user={user} />
             ) 
             : (
               <CreateUserForm />
