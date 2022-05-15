@@ -1,3 +1,4 @@
+import { CookiesNames } from "@application/api/common/CookiesNames";
 import { ValidationError } from "@application/api/errors/ValidationError";
 import { BodyValidator, Controller, HttpRequest, HttpResponse } from "@application/api/interfaces";
 import { CreateUserUseCase } from "@domain/usecases/CreateUserUseCase/CreateUserUseCase";
@@ -7,15 +8,17 @@ export interface CreateUserResponse {
   id: string,
 }
 
+interface CreateUserRequest {
+  body: Record<string, any>
+}
+
 export class CreateUserController implements Controller<CreateUserResponse> {
-  static AUTHORIZATION_COOKIE_NAME = 'turmafit-authorization';
-  
   constructor(
     private bodyValidator: BodyValidator<CreateUserValidBody>,
     private createUserUseCase: CreateUserUseCase
   ){}
 
-  async handle(req: HttpRequest): Promise<HttpResponse<CreateUserResponse>> {
+  async handle(req: CreateUserRequest): Promise<HttpResponse<CreateUserResponse>> {
     try {
       const data = this.bodyValidator.validate(req.body);
       
@@ -27,7 +30,7 @@ export class CreateUserController implements Controller<CreateUserResponse> {
           id: created.user.id,
         },
         cookies: {
-          [CreateUserController.AUTHORIZATION_COOKIE_NAME]: created.token
+          [CookiesNames.AUTHORIZATION]: created.token
         }
       }
     } catch (error) {
