@@ -1,5 +1,5 @@
 import { CookiesNames } from "@application/api/common/CookiesNames";
-import { BodyValidator, Controller, HttpRequest, HttpResponse } from "@application/api/interfaces";
+import { BodyValidator, Controller, HttpResponse } from "@application/api/interfaces";
 import { AuthenticationError } from "@domain/errors/AuthenticationError";
 import { IGetUserUseCase } from "@domain/usecases/GetUser/GetUserUseCase";
 
