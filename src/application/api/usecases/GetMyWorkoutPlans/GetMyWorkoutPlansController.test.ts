@@ -1,4 +1,3 @@
-import { HttpRequest } from "@application/api/interfaces";
 import { RequestMock } from "@application/api/mocks";
 import { GetMyWorkoutBodyValidatorMock } from "./GetMyWorkoutBodyValidatorMock";
 import { GetMyWorkoutPlansController } from "./GetMyWorkoutPlansController";

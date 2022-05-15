@@ -1,3 +1,4 @@
+import { CookiesNames } from "@application/api/common/CookiesNames";
 import { RequestMock } from "@application/api/mocks";
 import { GetMyWorkoutPlansBodyValidator } from "./GetMyWorkoutPlansBodyValidator";
 
@@ -14,7 +15,7 @@ describe('GetMyWorkoutPlansBodyValidator', () => {
   })
 
   it('should throw an error if the userId is not provided', () => {
-    const request = RequestMock.make({ headers: { authorization: 'any_token' } });
+    const request = RequestMock.make({ cookies: { [CookiesNames.AUTHORIZATION]: 'any_token' } });
 
     const bodyValidator = new GetMyWorkoutPlansBodyValidator();
 
@@ -22,18 +23,21 @@ describe('GetMyWorkoutPlansBodyValidator', () => {
   })
 
   it('should throw an error if the userId is not a string', () => {
-    const request = RequestMock.make({ body: { id: 10 }, headers: { authorization: 'any_token' }});
+    const request = RequestMock.make({ cookies: { [CookiesNames.AUTHORIZATION]: 'any_token' }, body: { userId: 123 } });
 
     const bodyValidator = new GetMyWorkoutPlansBodyValidator();
 
     expect(() => bodyValidator.validate(request)).toThrowError('INVALID_USER_ID');
   })
 
-  it('should return the userId if everything is ok', () => {
-    const request = RequestMock.make({ body: { id: 'any_user_id' }, headers: { authorization: 'any_token' }});
+  it('should return validated body and cookies if everything is ok', () => {
+    const request = RequestMock.make({ cookies: { [CookiesNames.AUTHORIZATION]: 'any_token' }, body: { userId: 'any_user_id' } });
 
     const bodyValidator = new GetMyWorkoutPlansBodyValidator();
 
-    expect(bodyValidator.validate(request)).toEqual({ userId: 'any_user_id', sessionToken: 'any_token' });
+    const { body, cookies } = bodyValidator.validate(request)
+    
+    expect(body).toEqual(request.body);
+    expect(cookies).toEqual(request.cookies);
   })
 })

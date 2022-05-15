@@ -22,11 +22,12 @@ export class BodyValidatorMock implements BodyValidator<CreateUserUseCasePort> {
 }
 
 export class RequestMock {
-  static make = ({ body, query, headers }: Partial<HttpRequest> | undefined = {}): HttpRequest => {
+  static make = ({ body, query, headers, cookies }: Partial<HttpRequest> | undefined = {}): HttpRequest => {
     return {
       body: body || {},
       query: query || {},
-      headers: headers || {}
+      headers: headers || {},
+      cookies: cookies || {}
     }
   }
 }

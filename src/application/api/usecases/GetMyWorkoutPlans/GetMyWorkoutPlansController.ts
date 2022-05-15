@@ -1,28 +1,27 @@
+import { CookiesNames } from '@application/api/common/CookiesNames';
 import { ValidationError } from '@application/api/errors/ValidationError';
-import { BodyValidator, Controller, HttpRequest, HttpResponse } from '@application/api/interfaces';
+import { BodyValidator, Controller, HttpResponse } from '@application/api/interfaces';
 import { IGetMyWorkoutPlansUseCase, WorkoutPlanDTO } from '@domain/usecases/GetMyWorkoutPlans/GetMyWorkoutPlansUseCase';
+import { GetMyWorkoutPlansRequest, GetMyWorkoutPlansValidRequest } from './GetMyWorkoutPlansRequest';
 
 export interface GetMyWorkoutPlansResponse {
   workoutPlans: WorkoutPlanDTO[]
 } 
 
-interface GetMyWorkoutPlansValidBody {
-  userId: string,
-  sessionToken: string
-}
-
-
 export class GetMyWorkoutPlansController implements Controller<GetMyWorkoutPlansResponse> {
   constructor(
     private getMyWorkoutPlansUseCase: IGetMyWorkoutPlansUseCase,
-    private bodyValidator: BodyValidator<GetMyWorkoutPlansValidBody>
+    private requestValidator: BodyValidator<GetMyWorkoutPlansValidRequest>
   ){}
 
-  async handle(request: HttpRequest): Promise<HttpResponse<GetMyWorkoutPlansResponse>> {
+  async handle(request: GetMyWorkoutPlansRequest): Promise<HttpResponse<GetMyWorkoutPlansResponse>> {
     try {
-      const validatedBody = this.bodyValidator.validate(request.query);
+      const validatedBody = this.requestValidator.validate(request);
 
-      const { workoutPlans } = await this.getMyWorkoutPlansUseCase.execute(validatedBody);
+      const { workoutPlans } = await this.getMyWorkoutPlansUseCase.execute({
+        sessionToken: validatedBody.cookies[CookiesNames.AUTHORIZATION],
+        userId: validatedBody.body.userId
+      });
 
       return {
         statusCode: 200,
