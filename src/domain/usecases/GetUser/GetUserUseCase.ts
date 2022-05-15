@@ -1,5 +1,4 @@
 import { UseCase } from "@domain/common/UseCase";
-import { User } from "@domain/entities/User/User";
 import { GetUserRepository } from "@domain/repositories/UserRepository";
 
 export interface GetUserUseCasePort {
