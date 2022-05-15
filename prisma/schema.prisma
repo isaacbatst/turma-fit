@@ -18,7 +18,7 @@ model User {
   password        String
   workoutPlans    WorkoutPlan[]
   profile         Profile[]
-  Session         Session[]
+  session         Session[]
 }
 
 model Session {
