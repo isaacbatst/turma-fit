@@ -1,35 +1,8 @@
-// controller recebe requisição
-// controller encaminha token no cookie para o usecase
-// controler retorna resposta
-
 import { CookiesNames } from "@application/api/common/CookiesNames";
-import { BodyValidator, HttpRequest } from "@application/api/interfaces";
 import { AuthenticationError } from "@domain/errors/AuthenticationError";
-import { IGetUserUseCase, GetUserUseCaseDTO, GetUserUseCasePort } from "@domain/usecases/GetUser/GetUserUseCase";
-import { GetUserController, GetUserValidRequest } from "./GetUserController"
-
-class GetUserUserCaseMock implements  IGetUserUseCase {
-  user = {
-    id: 'any_id',
-    name: 'any_name',
-  }
-
-  execute: (port: GetUserUseCasePort) => Promise<GetUserUseCaseDTO> = jest.fn(async () => {
-    return {
-      user: this.user
-    } 
-  });
-}
-
-class GetUserRequestValidatorMock implements BodyValidator<GetUserValidRequest> {
-  validate: (request: { cookies: { [key:string]: any } }) => GetUserValidRequest = jest.fn(() => {
-    return {
-      cookies: {
-        [CookiesNames.AUTHORIZATION]: 'any_token'
-      }
-    }
-  });
-}
+import { GetUserController } from "./GetUserController";
+import { GetUserRequestValidatorMock } from "./GetUserRequestValidatorMock";
+import { GetUserUserCaseMock } from "./GetUserUseCaseMock";
 
 const makeSut = () => {
   const getUserUseCase = new GetUserUserCaseMock()
