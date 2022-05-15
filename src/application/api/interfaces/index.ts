@@ -1,7 +1,8 @@
 export interface HttpRequest {
   body: Record<string, any>,
   headers: Record<string, any>,
-  query: Record<string, any>
+  query: Record<string, any>,
+  cookies: Record<string, any>
 }
 
 export interface HttpResponse<T = {}> {
