@@ -1,4 +1,5 @@
 import { GetUserUseCase } from "./GetUserUseCase";
+import { GetUserUseCaseErrors } from "./GetUserUseCaseErrors";
 import { GetUserRepositoryMock } from "./GetUserUseCaseRepositoryMock";
 
 const makeSut = () => {
@@ -38,7 +39,7 @@ describe('GetUserUseCase', () => {
 
       expect(async () => {
         await getUserUseCase.execute({ token })
-      }).rejects.toThrowError('USER_NOT_FOUND')
+      }).rejects.toThrowError(GetUserUseCaseErrors.USER_NOT_FOUND)
     })
   })
 

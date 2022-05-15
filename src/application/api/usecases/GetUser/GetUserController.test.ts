@@ -1,5 +1,6 @@
 import { CookiesNames } from "@application/api/common/CookiesNames";
 import { AuthenticationError } from "@domain/errors/AuthenticationError";
+import { GetUserUseCaseErrors } from "@domain/usecases/GetUser/GetUserUseCaseErrors";
 import { GetUserController } from "./GetUserController";
 import { GetUserRequestValidatorMock } from "./GetUserRequestValidatorMock";
 import { GetUserUserCaseMock } from "./GetUserUseCaseMock";
@@ -78,6 +79,21 @@ describe('GetUserController', () => {
       const { getUserController, getUserRequestValidator } = makeSut();
       getUserRequestValidator.validate = jest.fn(() => {
         throw new AuthenticationError('TOKEN_NOT_FOUND');
+      });
+
+      const httpResponse = await getUserController.handle({
+        cookies: {}
+      });
+
+      expect(httpResponse.statusCode).toBe(401);
+    })
+  })
+
+  describe('Given use case throws user not found error', () => {
+    it('should return 401 status code', async () => {
+      const { getUserController, getUserUseCase } = makeSut();
+      getUserUseCase.execute = jest.fn(() => {
+        throw new Error(GetUserUseCaseErrors.USER_NOT_FOUND);
       });
 
       const httpResponse = await getUserController.handle({

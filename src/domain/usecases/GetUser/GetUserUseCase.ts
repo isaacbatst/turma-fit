@@ -1,5 +1,6 @@
 import { UseCase } from "@domain/common/UseCase";
 import { GetUserRepository } from "@domain/repositories/UserRepository";
+import { GetUserUseCaseErrors } from "./GetUserUseCaseErrors";
 
 export interface GetUserUseCasePort {
   token: string
@@ -23,7 +24,7 @@ export class GetUserUseCase implements IGetUserUseCase {
     const user = await this.userRepository.getByToken(port.token)
 
     if(!user) {
-      throw new Error('USER_NOT_FOUND')
+      throw new Error(GetUserUseCaseErrors.USER_NOT_FOUND)
     }
 
     return {
