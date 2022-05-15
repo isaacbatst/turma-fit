@@ -24,7 +24,7 @@ model User {
 model Session {
   id     String @id
   token  String
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
 }
 
@@ -36,7 +36,7 @@ enum ProfileType {
 model Profile {
   id     String      @id
   type   ProfileType
-  user   User        @relation(fields: [userId], references: [id])
+  user   User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
   // sentAdviceRequests     AdviceRequest[] @relation("SentAdviceRequests")
   // receivedAdviceRequests AdviceRequest[] @relation("ReceivedAdviceRequests")
