@@ -16,7 +16,7 @@ const CreateUserForm: React.FC = () => {
   return (
     <div>
       <h2>Criar usuário</h2>
-      <form action="" onSubmit={(e) => handleFormSubmit(e)}>
+      <form aria-label="Criar conta" onSubmit={(e) => handleFormSubmit(e)}>
         <label htmlFor="create-user-name">
         Nome
           <input type="text" name="name" id="create-user-name" 
