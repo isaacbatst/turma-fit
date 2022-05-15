@@ -1,5 +1,6 @@
 import { UseCase } from "@domain/common/UseCase";
 import { User } from "@domain/entities/User/User";
+import { GetUserRepository } from "@domain/repositories/UserRepository";
 
 interface GetUserUseCasePort {
   token: string
@@ -13,10 +14,6 @@ interface GetUserUseCaseDTO {
 }
 
 export interface IGetUserUseCase extends UseCase<GetUserUseCasePort, GetUserUseCaseDTO> {}
-
-interface GetUserRepository {
-  getByToken(token: string): Promise<User | null>
-}
 
 export class GetUserUseCase implements IGetUserUseCase {
   constructor(
