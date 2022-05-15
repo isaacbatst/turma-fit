@@ -2,7 +2,7 @@ import { GetMyWorkoutPlansHandlerFactory } from '@application/api/usecases/GetMy
 import { NextApiHandler } from 'next';
 
 const handler: NextApiHandler = async (req, res) => {
-  if(req.method === 'get') {
+  if(req.method === 'GET') {
     const handler = GetMyWorkoutPlansHandlerFactory.make();
     return handler.handle(req, res);
   }
