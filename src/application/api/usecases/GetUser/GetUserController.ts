@@ -2,6 +2,7 @@ import { CookiesNames } from "@application/api/common/CookiesNames";
 import { BodyValidator, Controller, HttpResponse } from "@application/api/interfaces";
 import { AuthenticationError } from "@domain/errors/AuthenticationError";
 import { IGetUserUseCase } from "@domain/usecases/GetUser/GetUserUseCase";
+import { GetUserUseCaseErrors } from "@domain/usecases/GetUser/GetUserUseCaseErrors";
 
 interface GetUserControllerResponse {
   user: {
@@ -43,6 +44,12 @@ export class GetUserController implements Controller<GetUserControllerResponse> 
       }
     } catch(error) {
       if(error instanceof AuthenticationError) {
+        return {
+          statusCode: 401
+        }
+      }
+      
+      if(error instanceof Error && error.message === GetUserUseCaseErrors.USER_NOT_FOUND) {
         return {
           statusCode: 401
         }
