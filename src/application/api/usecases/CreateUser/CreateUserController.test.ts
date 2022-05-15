@@ -1,3 +1,4 @@
+import { CookiesNames } from "@application/api/common/CookiesNames";
 import { BodyValidatorMock } from "@application/api/mocks";
 import { CreateUserController } from "./CreateUserController";
 import { CreateUserServiceMock } from "./CreateUserServiceMock";
@@ -46,29 +47,7 @@ describe('CreateUserController', () => {
       expect(response.statusCode).toBe(201);
     })
 
-    it('should return created user id', async () => {
-      const { createUserController } = makeSut();
-
-      const response = await createUserController.handle({ 
-        body: {}
-      });
-
-      expect(response.body).toBeDefined();
-      expect(response.body).toHaveProperty('id');
-    })
-
-    it('should return created user token', async () => {
-      const { createUserController } = makeSut();
-
-      const response = await createUserController.handle({ 
-        body: {}
-      });
-
-      expect(response.body).toBeDefined();
-      expect(response.body).toHaveProperty('token');    
-    })
-
-    it('should return token and id returned by service', async () => {
+    it('should return body with id returned by service', async () => {
       const { createUserController } = makeSut();
 
       const response = await createUserController.handle({ 
@@ -77,9 +56,28 @@ describe('CreateUserController', () => {
 
       expect(response.body).toEqual({ 
         id: CreateUserServiceMock.ID,
-        token: CreateUserServiceMock.TOKEN
       })
     })
+
+    it('should return defined cookies object', async () => {
+      const { createUserController } = makeSut();
+
+      const response = await createUserController.handle({
+        body: {}
+      })
+
+      expect(response.cookies).toBeDefined(); 
+    });
+
+    it('should return authorization cookie with token returned by service', async () => {
+      const { createUserController } = makeSut();
+
+      const response = await createUserController.handle({
+        body: {}
+      })
+
+      expect(response.cookies).toEqual({ [CookiesNames.AUTHORIZATION]: CreateUserServiceMock.TOKEN }) 
+    });
   })
   
 })
