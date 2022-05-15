@@ -4,7 +4,7 @@ import { AuthenticationError } from "@domain/errors/AuthenticationError";
 import { IGetUserUseCase } from "@domain/usecases/GetUser/GetUserUseCase";
 import { GetUserUseCaseErrors } from "@domain/usecases/GetUser/GetUserUseCaseErrors";
 
-interface GetUserControllerResponse {
+export interface GetUserControllerResponse {
   user: {
     id: string,
     name: string
