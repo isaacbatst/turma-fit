@@ -8,3 +8,7 @@ export interface CreateUserRepository {
 export interface AuthenticateUserRepository {
   getByEmail: (email: string) => Promise<User | null>,
 }
+
+export interface GetUserRepository {
+  getByToken(token: string): Promise<User | null>
+}
