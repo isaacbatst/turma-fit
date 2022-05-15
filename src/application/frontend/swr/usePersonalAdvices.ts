@@ -1,6 +1,6 @@
 import axios from "axios";
 import useSWR from "swr";
-import { AdviceWithPlanningsAndStudentUser } from "../../../types/schema";
+import { AdviceWithPlanningsAndStudentUser } from "../../../../types/schema";
 
 const fetchPersonalStudents = async (url: string) => {
   const { data } = await axios.get<AdviceWithPlanningsAndStudentUser[]>(url);

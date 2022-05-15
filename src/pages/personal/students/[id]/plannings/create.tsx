@@ -7,7 +7,7 @@ import Layout from "../../../../../application/frontend/components/Layout";
 import TrainingPlanningCard from "../../../../../application/frontend/components/personal/students/plannings/TrainingPlanningCard/TrainingPlanningCard";
 import CreateTrainingPlanningForm from "../../../../../application/frontend/features/personal/createPlanning/form";
 import { initPlanningAction } from "../../../../../application/frontend/features/personal/createPlanning/form/slice";
-import usePersonalStudent from "../../../../../lib/swr/usePersonalStudent";
+import usePersonalStudent from "../../../../../application/frontend/swr/usePersonalStudent";
 import { useAppDispatch } from "../../../../../application/frontend/store/hooks";
 import containers from '../../../../../styles/common/containers.module.scss';
 import styles from '../../../../../styles/pages/personal/students/plannings.module.scss';

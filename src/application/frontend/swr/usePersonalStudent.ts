@@ -1,6 +1,6 @@
 import axios from "axios";
 import useSWR from "swr";
-import { PersonalStudentWithPlannings } from "../../../types/schema";
+import { PersonalStudentWithPlannings } from "../../../../types/schema";
 
 const fetchPersonalStudent = (email: string) => (url: string) => axios.get<PersonalStudentWithPlannings>(url, {
   params: {

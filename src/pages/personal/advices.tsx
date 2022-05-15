@@ -5,7 +5,7 @@ import { useSWRConfig } from "swr";
 import Header from "../../application/frontend/components/Header";
 import Layout from "../../application/frontend/components/Layout";
 import StudentCard from "../../application/frontend/components/personal/students/StudentCard";
-import usePersonalAdvices from "../../lib/swr/usePersonalAdvices";
+import usePersonalAdvices from "../../application/frontend/swr/usePersonalAdvices";
 import containers from '../../styles/common/containers.module.scss';
 import styles from '../../styles/pages/personal/students.module.scss';
 
