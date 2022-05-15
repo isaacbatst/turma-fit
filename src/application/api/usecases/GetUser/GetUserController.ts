@@ -6,6 +6,7 @@ import { GetUserUseCaseErrors } from "@domain/usecases/GetUser/GetUserUseCaseErr
 
 interface GetUserControllerResponse {
   user: {
+    id: string,
     name: string
   }
 }
