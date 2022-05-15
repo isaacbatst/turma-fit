@@ -2,11 +2,11 @@ import { UseCase } from "@domain/common/UseCase";
 import { User } from "@domain/entities/User/User";
 import { GetUserRepository } from "@domain/repositories/UserRepository";
 
-interface GetUserUseCasePort {
+export interface GetUserUseCasePort {
   token: string
 }
 
-interface GetUserUseCaseDTO {
+export interface GetUserUseCaseDTO {
   user: {
     id: string,
     name: string,
