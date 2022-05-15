@@ -1,10 +1,10 @@
 import { User } from "@domain/entities/User/User";
-import { CreateUserRepository } from "@domain/repositories/UserRepository";
+import { CreateUserRepository, GetUserRepository } from "@domain/repositories/UserRepository";
 import { PrismaClient } from "@prisma/client";
 import { PrismaUserMapper } from "../mappers/PrismaUserMapper";
 
 
-export class PrismaUserRepository implements CreateUserRepository {
+export class PrismaUserRepository implements CreateUserRepository, GetUserRepository {
   constructor(private prisma: PrismaClient){} 
 
   async create(user: User): Promise<void> {
@@ -35,6 +35,26 @@ export class PrismaUserRepository implements CreateUserRepository {
     const prismaUser = await this.prisma.user.findUnique({
       where: {
         email
+      }
+    })
+
+    if(!prismaUser){
+      return null;
+    }
+
+    const user = PrismaUserMapper.ormToDomain(prismaUser);
+
+    return user;
+  }
+
+  async getByToken(token: string): Promise<User | null> {
+    const prismaUser = await this.prisma.user.findFirst({
+      where: {
+        session: {
+          some: {
+            token
+          }
+        }
       }
     })
 
