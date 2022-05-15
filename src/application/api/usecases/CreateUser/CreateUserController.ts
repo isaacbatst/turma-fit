@@ -5,10 +5,11 @@ import { CreateUserValidBody } from "./CreateUserBodyValidator";
 
 export interface CreateUserResponse {
   id: string,
-  token: string
 }
 
 export class CreateUserController implements Controller<CreateUserResponse> {
+  static AUTHORIZATION_COOKIE_NAME = 'turmafit-authorization';
+  
   constructor(
     private bodyValidator: BodyValidator<CreateUserValidBody>,
     private createUserUseCase: CreateUserUseCase
@@ -24,7 +25,9 @@ export class CreateUserController implements Controller<CreateUserResponse> {
         statusCode: 201,
         body: {
           id: created.user.id,
-          token: created.token
+        },
+        cookies: {
+          [CreateUserController.AUTHORIZATION_COOKIE_NAME]: created.token
         }
       }
     } catch (error) {
