@@ -3,6 +3,7 @@ import { CreateUserUseCaseErrors } from "@domain/usecases/CreateUserUseCase/Crea
 import axios from "axios";
 import { FormEvent, useState } from "react";
 import { useSWRConfig } from "swr";
+
 type CreateUserApiErrors = CreateUserBodyValidatorErrors | CreateUserUseCaseErrors | 'DEFAULT'
 
 const API_ERROR_TO_MESSAGE: Record<CreateUserApiErrors, string> = {
