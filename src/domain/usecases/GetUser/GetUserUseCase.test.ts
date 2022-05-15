@@ -1,21 +1,5 @@
-import { User } from "@domain/entities/User/User";
-import { GetUserRepository } from "@domain/repositories/UserRepository";
-import { GetUserUseCase } from "./GetUserUseCase"
-
-class GetUserRepositoryMock implements GetUserRepository {
-  user: User | null = new User({
-    id: 'any_id',
-    age: 20,
-    email: 'any_email',
-    image: 'any_image',
-    name: 'any_name',
-    password: 'any_password',
-  });
-
-  getByToken: (token: string) => Promise<User | null> = jest.fn(async () => {
-    return this.user;
-  })
-}
+import { GetUserUseCase } from "./GetUserUseCase";
+import { GetUserRepositoryMock } from "./GetUserUseCaseRepositoryMock";
 
 const makeSut = () => {
   const userRepository = new GetUserRepositoryMock()
