@@ -20,7 +20,7 @@ export class GetMyWorkoutPlansController implements Controller<GetMyWorkoutPlans
 
       const { workoutPlans } = await this.getMyWorkoutPlansUseCase.execute({
         sessionToken: validatedBody.cookies[CookiesNames.AUTHORIZATION],
-        userId: validatedBody.body.userId
+        userId: validatedBody.query.userId
       });
 
       return {

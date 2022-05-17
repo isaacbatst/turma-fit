@@ -6,7 +6,7 @@ import { GetMyWorkoutPlansRequest, GetMyWorkoutPlansValidRequest } from "./GetMy
 
 export class GetMyWorkoutPlansBodyValidator implements BodyValidator<GetMyWorkoutPlansValidRequest> {
   validate(request: GetMyWorkoutPlansRequest): GetMyWorkoutPlansValidRequest {
-    const { body: { userId }, cookies } = request;
+    const { query: { userId }, cookies } = request;
 
     if(!cookies[CookiesNames.AUTHORIZATION]) {
       throw new AuthenticationError("EMPTY_AUTHORIZATION");
@@ -25,7 +25,7 @@ export class GetMyWorkoutPlansBodyValidator implements BodyValidator<GetMyWorkou
     }
 
     return {
-      body: {
+      query: {
         userId
       },
       cookies: {

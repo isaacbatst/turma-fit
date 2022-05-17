@@ -12,7 +12,7 @@ export class GetMyWorkoutBodyValidatorMock implements BodyValidator<GetMyWorkout
     }
 
     return {
-      body: {
+      query: {
         userId: 'valid_user_id',
       },
       cookies: {

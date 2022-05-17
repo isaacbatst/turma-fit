@@ -23,21 +23,21 @@ describe('GetMyWorkoutPlansBodyValidator', () => {
   })
 
   it('should throw an error if the userId is not a string', () => {
-    const request = RequestMock.make({ cookies: { [CookiesNames.AUTHORIZATION]: 'any_token' }, body: { userId: 123 } });
+    const request = RequestMock.make({ cookies: { [CookiesNames.AUTHORIZATION]: 'any_token' }, query: { userId: 123 } });
 
     const bodyValidator = new GetMyWorkoutPlansBodyValidator();
 
     expect(() => bodyValidator.validate(request)).toThrowError('INVALID_USER_ID');
   })
 
-  it('should return validated body and cookies if everything is ok', () => {
-    const request = RequestMock.make({ cookies: { [CookiesNames.AUTHORIZATION]: 'any_token' }, body: { userId: 'any_user_id' } });
+  it('should return validated query and cookies if everything is ok', () => {
+    const request = RequestMock.make({ cookies: { [CookiesNames.AUTHORIZATION]: 'any_token' }, query: { userId: 'any_user_id' } });
 
     const bodyValidator = new GetMyWorkoutPlansBodyValidator();
 
-    const { body, cookies } = bodyValidator.validate(request)
+    const { query, cookies } = bodyValidator.validate(request)
     
-    expect(body).toEqual(request.body);
+    expect(query).toEqual(request.query);
     expect(cookies).toEqual(request.cookies);
   })
 })

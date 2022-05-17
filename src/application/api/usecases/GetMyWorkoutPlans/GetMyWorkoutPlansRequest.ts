@@ -1,7 +1,7 @@
 import { CookiesNames } from "@application/api/common/CookiesNames"
 
 export interface GetMyWorkoutPlansValidRequest {
-  body: {
+  query: {
     userId: string,
   }
   cookies: {
@@ -10,6 +10,6 @@ export interface GetMyWorkoutPlansValidRequest {
 }
 
 export interface GetMyWorkoutPlansRequest {
-  body: Record<string, any>,
+  query: Record<string, any>,
   cookies: Record<string, any>
 }
