@@ -1,0 +1,6 @@
+@use '~/src/application/frontend/styles/components/badge.module';
+
+.badge {
+  @extend .badge;
+  margin: 0 10px 20px
+}

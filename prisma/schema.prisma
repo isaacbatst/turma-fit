@@ -8,119 +8,142 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Account {
-  id                 Int     @id @default(autoincrement())
-  userId             Int
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String? @db.Text
-  access_token       String? @db.Text
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String? @db.Text
-  session_state      String?
-  oauth_token_secret String?
-  oauth_token        String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([provider, providerAccountId])
+model User {
+  name            String
+  id              String        @id
+  email           String        @unique
+  emailVerifiedAt DateTime?
+  image           String
+  age             Int
+  password        String
+  workoutPlans    WorkoutPlan[]
+  profile         Profile[]
+  session         Session[]
 }
 
 model Session {
-  id           Int      @id @default(autoincrement())
-  sessionToken String   @unique
-  userId       Int
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id     String @id
+  token  String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
 }
 
-model User {
-  name          String?
-  id            Int       @id @default(autoincrement())
-  email         String   @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-  personal      Personal?
-  student       Student?
+enum ProfileType {
+  STUDENT
+  PERSONAL
 }
 
-model VerificationToken {
-  identifier String
-  token      String   @unique
-  expires    DateTime
-
-  @@unique([identifier, token])
+model Profile {
+  id     String      @id
+  type   ProfileType
+  user   User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  // sentAdviceRequests     AdviceRequest[] @relation("SentAdviceRequests")
+  // receivedAdviceRequests AdviceRequest[] @relation("ReceivedAdviceRequests")
 }
 
-model Personal {
-  id                Int                @id @default(autoincrement())
-  students          Student[]
-  trainingPlannings TrainingPlanning[]
-  user              User               @relation(fields: [userId], references: [id])
-  userId            Int                @unique
+model StudentProfile {
+  id              String        @id
+  studentMeasures Measurement[]
+  studentPictures Picture[]
+  // advices         Advice[]
 }
 
-model Student {
-  id                Int                @id @default(autoincrement())
-  age               Int?
-  measures          Measurement[]
-  pictures          Picture[]
-  trainingPlannings TrainingPlanning[]
-  personal          Personal?          @relation(fields: [personalId], references: [id])
-  personalId        Int?
-  user              User               @relation(fields: [userId], references: [id])
-  userId            Int                @unique
+model PersonalProfile {
+  id String @id
+  // advices Advice[]
 }
+
+// model Advice {
+//   active       Boolean
+//   student      StudentProfile  @relation(fields: [studentId], references: [id])
+//   personal     PersonalProfile @relation(fields: [personalId], references: [id])
+//   studentId    String
+//   personalId   String
+//   adviceChange AdviceChange[]
+//   workoutPlans WorkoutPlan[]
+
+//   @@id([studentId, personalId])
+// }
+
+// model AdviceChange {
+//   id               String   @id @default(uuid())
+//   activeChangedTo  Boolean
+//   advice           Advice   @relation(fields: [adviceStudentId, advicePersonalId], references: [studentId, personalId])
+//   date             DateTime @default(now())
+//   adviceStudentId  String
+//   advicePersonalId String
+// }
+
+// enum AdviceRequestStatus {
+//   ACCEPTED
+//   REJECTED
+//   PENDING
+// }
+
+// model AdviceRequest {
+//   id        String              @id @default(uuid())
+//   createdAt DateTime            @default(now())
+//   status    AdviceRequestStatus
+//   to        Profile             @relation(name: "ReceivedAdviceRequests", fields: [toId], references: [id])
+//   toId      String
+//   from      Profile             @relation(name: "SentAdviceRequests", fields: [fromId], references: [id])
+//   fromId    String
+// }
 
 model Picture {
-  url        String
-  id         Int     @id @default(autoincrement())
-  student_id Int
-  student    Student @relation(fields: [student_id], references: [id])
+  url              String
+  id               String         @id
+  studentProfile   StudentProfile @relation(fields: [studentProfileId], references: [id])
+  studentProfileId String
 }
 
 model Measurement {
-  createdAt     DateTime @default(now())
-  id            Int      @id @default(autoincrement())
-  weight        Float
-  shoulders     Float
-  chest         Float
-  waist         Float
-  hips          Float
-  arm_left      Float
-  arm_right     Float
-  forearm_left  Float
-  forearm_right Float
-  thigh_left    Float
-  thigh_right   Float
-  calf_left     Float
-  calf_right    Float
-  student_id    Int
-  student       Student  @relation(fields: [student_id], references: [id])
+  createdAt        DateTime       @default(now())
+  id               String         @id
+  weight           Float
+  shoulders        Float
+  chest            Float
+  waist            Float
+  hips             Float
+  arm_left         Float
+  arm_right        Float
+  forearm_left     Float
+  forearm_right    Float
+  thigh_left       Float
+  thigh_right      Float
+  calf_left        Float
+  calf_right       Float
+  studentProfile   StudentProfile @relation(fields: [studentProfileId], references: [id])
+  studentProfileId String
 }
 
-model MuscleGroup {
-  name     String     @unique
-  id       Int        @id @default(autoincrement())
-  Movement Movement[]
+enum MuscleGroup {
+  CHEST
+  SHOULDERS
+  TRICEPS
+  BICEPS
+  ABS
+  QUADRICEPS
+  HAMSTRINGS
+  CALVES
+  GLUTES
+  BACK
+  TRAPEZIUS
+  FOREARMS
+  LOWER_BACK
 }
 
 model Movement {
   name               String
-  id                 Int         @id @default(autoincrement())
-  focusedMuscleGroup MuscleGroup @relation(fields: [muscleGroupId], references: [id])
-  muscleGroupId      Int
-  Exercise           Exercise[]
+  id                 String      @id @default(uuid())
+  focusedMuscleGroup MuscleGroup
+  exercise           Exercise[]
 }
 
 model Equipment {
   name     String
-  id       Int        @id @default(autoincrement())
+  id       String     @id @default(uuid())
   Exercise Exercise[]
 }
 
@@ -131,43 +154,44 @@ enum Grip {
 }
 
 model Exercise {
-  id          Int       @id @default(autoincrement())
-  movement    Movement  @relation(fields: [movementId], references: [id])
+  id          String     @id @default(uuid())
+  movement    Movement   @relation(fields: [movementId], references: [id])
   equipment   Equipment? @relation(fields: [equipmentId], references: [id])
   grip        Grip?
   sets        Set[]
-  movementId  Int
-  equipmentId Int
+  movementId  String
+  equipmentId String?
 }
 
 model Set {
   exercises           Exercise[]
-  id                  Int                @id @default(autoincrement())
+  id                  String             @id @default(uuid())
   times               Int
   repetitions         String
   technique           ExerciseTechnique? @relation(fields: [exerciseTechniqueId], references: [id])
-  exerciseTechniqueId Int?
+  exerciseTechniqueId String?
   minRestTime         Int?
   maxRestTime         Int?
-  trainings           Training[]
+  workouts            Workout[]
 }
 
 model ExerciseTechnique {
   name        String
-  id          Int    @id @default(autoincrement())
+  id          String @id @default(uuid())
   explanation String
   sets        Set[]
 }
 
-model TrainingPlanning {
-  trainings              Training[]
-  id                     Int                  @id @default(autoincrement())
-  type                   TrainingPlanningType @relation(fields: [trainingPlanningTypeId], references: [id])
-  trainingPlanningTypeId Int
-  student                Student?             @relation(fields: [studentId], references: [id])
-  studentId              Int?
-  personal               Personal?            @relation(fields: [personalId], references: [id])
-  personalId             Int?
+model WorkoutPlan {
+  id                String          @id @default(uuid())
+  workouts          Workout[]
+  type              WorkoutPlanType @relation(fields: [workoutPlanTypeId], references: [id])
+  workoutPlanTypeId String
+  user              User?           @relation(fields: [userId], references: [id])
+  userId            String?
+  // advice            Advice          @relation(fields: [adviceStudentId, advicePersonalId], references: [studentId, personalId])
+  // adviceStudentId   String
+  // advicePersonalId  String
 }
 
 enum Day {
@@ -180,21 +204,21 @@ enum Day {
   SATURDAY
 }
 
-model Training {
-  id                 Int               @id @default(autoincrement())
-  letter             String
-  sets               Set[]
-  aerobicMinutes     Int
-  trainingPlanning   TrainingPlanning? @relation(fields: [trainingPlanningId], references: [id])
-  trainingPlanningId Int?
-  day                Day
+model Workout {
+  id             String       @id @default(uuid())
+  letter         String
+  sets           Set[]
+  aerobicMinutes Int
+  workoutPlan    WorkoutPlan? @relation(fields: [workoutPlanId], references: [id])
+  workoutPlanId  String?
+  day            Day
 }
 
-model TrainingPlanningType {
+model WorkoutPlanType {
   name               String
-  id                 Int                @id @default(autoincrement())
+  id                 String        @id @default(uuid())
   explanation        String
-  defaultMinRestTime Int                
-  defaultMaxRestTime Int                
-  TrainingPlanning   TrainingPlanning[]
+  defaultMinRestTime Int
+  defaultMaxRestTime Int
+  workoutPlan        WorkoutPlan[]
 }

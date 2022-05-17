@@ -1,17 +1,19 @@
-import { Exercise, Set, Personal, Prisma, Student, Training, TrainingPlanning, TrainingPlanningType, User } from "@prisma/client"
+import { Exercise, Set, Personal, Prisma, Student, Training, TrainingPlanning, WorkoutPlanType, User } from "@prisma/client"
 
 const personalUserWithStudentsPlannings = Prisma.validator<Prisma.UserArgs>()({
   include: {
     personal: {
       include: {
-        students: {
-          include: {
-            trainingPlannings: {
-              include: {
-                type: true,
-              }
-            },
-            user: true
+        advices: {
+          students: {
+            include: {
+              trainingPlannings: {
+                include: {
+                  type: true,
+                }
+              },
+              user: true
+            }
           }
         }
       }
@@ -21,22 +23,25 @@ const personalUserWithStudentsPlannings = Prisma.validator<Prisma.UserArgs>()({
 
 export type PersonalUserWithStudentsPlannings = Prisma.UserGetPayload<typeof personalUserWithStudentsPlannings>;
 
-export type PersonalStudentWithPlannings = NonNullable<PersonalUserWithStudentsPlannings["personal"]>["students"][number]
-export type TrainingPlanningWithType = PersonalStudentWithPlannings["trainingPlannings"][number];
+export type PersonalStudentWithPlannings = NonNullable<PersonalUserWithStudentsPlannings["personal"]>["advices"]["students"][number]
 
 const personalUserWithStudentsTrainings = Prisma.validator<Prisma.UserArgs>()({
   include: {
     personal: {
       include: {
-        students: {
+        advices: {
           include: {
-            user: true,
+            student: {
+              include: {
+                user: true,
+              }
+            },
             trainingPlannings: {
               include: {
                 type: true,
                 trainings: {
                   include: {
-                    sets:{
+                    sets: {
                       include: {
                         exercises: {
                           include: {
@@ -63,9 +68,32 @@ const personalUserWithStudentsTrainings = Prisma.validator<Prisma.UserArgs>()({
 
 export type PersonalUserWithStudentsTrainings = Prisma.UserGetPayload<typeof personalUserWithStudentsTrainings>
 
-export type PersonalStudentWithTrainings = NonNullable<PersonalUserWithStudentsTrainings["personal"]>["students"][number]
-export type TrainingPlanningWithDetails = PersonalStudentWithTrainings["trainingPlannings"][number]
-export type TrainingWithSets = TrainingPlanningWithDetails["trainings"][number] 
+export type AdviceWithStudentAndPlanningsWithDetails = NonNullable<PersonalUserWithStudentsTrainings["personal"]>["advices"][number]
+export type TrainingPlanningWithDetails = AdviceWithStudentAndPlanningsWithDetails["trainingPlannings"][number]
+export type TrainingWithSets = TrainingPlanningWithDetails["trainings"][number]
 export type SetsWithExercises = TrainingWithSets["sets"][number];
-export type ExerciseWithDetails = SetsWithExercises["exercises"][number] 
+export type ExerciseWithDetails = SetsWithExercises["exercises"][number]
 export type MovementWithMuscleGroup = ExerciseWithDetails["movement"]
+
+const adviceWithPlanningAndStudentUser = Prisma.validator<Prisma.AdviceArgs>()({
+  include: {
+    student: {
+      include: {
+        user: true
+      }
+    },
+    adviceTrainingPlannings: {
+      include: {
+        trainingPlanning: {
+          include: {
+            type: true
+          }
+        }
+      }
+    }
+  }
+});
+
+export type AdviceWithPlanningsAndStudentUser = Prisma.AdviceGetPayload<typeof adviceWithPlanningAndStudentUser>
+export type StudentUser = AdviceWithPlanningsAndStudentUser["student"]
+export type TrainingPlanningWithType = AdviceWithPlanningsAndStudentUser["adviceTrainingPlannings"][number]["trainingPlanning"]

@@ -1,0 +1,28 @@
+@use '~/src/application/frontend/styles/common/box-shadow';
+@use '~/src/application/frontend/styles/common/colors.module';
+
+.card {
+  @include box-shadow.default();  
+  padding: 15px;
+  text-align: center;
+
+  .training {
+    display: flex;
+    align-items: center;
+    margin: 15px 0;
+
+    .label {
+      margin-right: 10px;
+    }
+    
+    .muscleGroups {
+      display: flex;
+      flex: 1;
+
+      span {
+        margin-right: 7px;
+        font-size: 13px;
+      }
+    }
+  }
+}
