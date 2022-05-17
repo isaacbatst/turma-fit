@@ -76,7 +76,7 @@ describe('AuthenticateUserUseCase', () => {
     })
 
     it('should call create session with proper params', async () => {
-      const { authenticateUserUseCase, sessionRepository, uuidGenerator } = makeSut();
+      const { authenticateUserUseCase, sessionRepository, uuidGenerator, userRepository } = makeSut();
       
       await authenticateUserUseCase.execute({ email: 'any@email', password: 'any_password' });
 
@@ -85,7 +85,7 @@ describe('AuthenticateUserUseCase', () => {
         TokenGeneratorMock.GENERATED_TOKEN,
       )
       
-      expect(sessionRepository.create).toBeCalledWith(expectedSession);
+      expect(sessionRepository.create).toBeCalledWith(expectedSession, UserRepositoryMock.USER_DATA.id);
     })
 
     it('should return access token', async () => {
