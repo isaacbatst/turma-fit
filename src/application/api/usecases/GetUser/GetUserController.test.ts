@@ -108,7 +108,7 @@ describe('GetUserController', () => {
     it('should return 500 status code', async () => {
       const { getUserController, getUserUseCase } = makeSut();
       getUserUseCase.execute = jest.fn(() => {
-        throw new Error();
+        throw new Error('TESTING_ERROR');
       });
 
       const httpResponse = await getUserController.handle({
