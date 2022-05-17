@@ -1,11 +1,11 @@
-import { TrainingPlanningType } from "@prisma/client";
+import { WorkoutPlanType } from "@prisma/client";
 import { ChangeEventHandler } from "react";
 import { useSwiper } from "swiper/react";
 import { useAppDispatch } from "../../../../../../store/hooks";
 import { setPlanningTypeAction } from "../../slice";
 
 type Props = {
-  planningType: TrainingPlanningType
+  planningType: WorkoutPlanType
 }
 
 export const PlanningTypeRadio: React.FC<Props> = ({ planningType }) => {

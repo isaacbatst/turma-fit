@@ -6,7 +6,7 @@ import { useAppSelector } from '../../../../../../store/hooks';
 import { useSetSlideContext } from '../SetSlide/SetSlideContext';
 import { validateSet } from './goToTrainingCheckoutValidation';
 import alertStyles from './alertStyles.module.scss';
-import iconButtonStyles from '../../../../../../styles/components/iconButtonWithText.module.scss';
+import iconButtonStyles from '@styles/components/iconButtonWithText.module.scss';
 
 const GoToTrainingCheckoutButton: React.FC = () => {
   const { trainingIndex, setIndex } = useSetSlideContext()

@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import styles from '../../styles/pages/home.module.scss';
-import containers from '../../styles/common/containers.module.scss';
+import styles from '@styles/pages/home.module.scss';
+import containers from '@styles/common/containers.module.scss';
 
 const NavMenu: React.FC = () => {
   return (

@@ -17,11 +17,11 @@ const getMuscleGroupsFromSets = (sets: SetsWithExercises[]) => {
   return muscleGroups;
 }
 
-export const getTrainingPlanningMuscleGroupsPerTraining = (trainingPlanning: TrainingPlanningWithDetails) => (
-  trainingPlanning.trainings.map(training => (
-    {
-      ...training,
-      muscleGroups: getMuscleGroupsFromSets(training.sets)
-    }
-  ))
-)
+// export const getTrainingPlanningMuscleGroupsPerTraining = (trainingPlanning: TrainingPlanningWithDetails) => (
+//   trainingPlanning.trainings.map(training => (
+//     {
+//       ...training,
+//       muscleGroups: getMuscleGroupsFromSets(training.sets)
+//     }
+//   ))
+// )

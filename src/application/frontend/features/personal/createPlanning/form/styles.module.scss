@@ -1,7 +1,7 @@
-@use '~/src/styles/common/box-shadow';
-@use '~/src/styles/components/iconButtonWithText.module';
-@use '~/src/styles/components/iconButton.module';
-@use '~/src/styles/components/radio.module';
+@use '~/src/application/frontend/styles/common/box-shadow';
+@use '~/src/application/frontend/styles/components/iconButtonWithText.module';
+@use '~/src/application/frontend/styles/components/iconButton.module';
+@use '~/src/application/frontend/styles/components/radio.module';
 
 .formWrapper {
   @include box-shadow.default();  

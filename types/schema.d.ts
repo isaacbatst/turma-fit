@@ -1,4 +1,4 @@
-import { Exercise, Set, Personal, Prisma, Student, Training, TrainingPlanning, TrainingPlanningType, User } from "@prisma/client"
+import { Exercise, Set, Personal, Prisma, Student, Training, TrainingPlanning, WorkoutPlanType, User } from "@prisma/client"
 
 const personalUserWithStudentsPlannings = Prisma.validator<Prisma.UserArgs>()({
   include: {

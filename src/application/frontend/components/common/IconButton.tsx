@@ -1,6 +1,6 @@
 import React, { MouseEventHandler } from 'react'
 import { IconType } from 'react-icons';
-import defaultStyles from '../../styles/components/iconButton.module.scss';
+import defaultStyles from '@styles/components/iconButton.module.scss';
 
 type Props = {
   onClick: MouseEventHandler;

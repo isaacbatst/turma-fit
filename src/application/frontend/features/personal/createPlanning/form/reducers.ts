@@ -1,7 +1,7 @@
 import { v4 as uuid } from 'uuid';
 import { CreateTrainingPlanningState, ExerciseBeingCreated, SetBeingCreated, TrainingBeingCreated } from "./types";
 import update from 'immutability-helper';
-import { Equipment, ExerciseTechnique, Grip, TrainingPlanningType } from "@prisma/client";
+import { Equipment, ExerciseTechnique, Grip, WorkoutPlanType } from "@prisma/client";
 import { letterMap } from '../../../../../../lib/letters';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { MovementWithMuscleGroup } from '../../../../../../../types/schema';
@@ -79,7 +79,7 @@ export const addSet = (state: CreateTrainingPlanningState, action: PayloadAction
   })
 }
 
-export const setPlanningType = (state: CreateTrainingPlanningState, action: PayloadAction<TrainingPlanningType>): CreateTrainingPlanningState => {
+export const setPlanningType = (state: CreateTrainingPlanningState, action: PayloadAction<WorkoutPlanType>): CreateTrainingPlanningState => {
   return update(state, {
     type: {
       $set: action.payload

@@ -53,7 +53,7 @@ export default class AuthenticateUserUseCase {
       this.tokenGenerator.generate(),
     );
 
-    await this.sessionRepository.create(session);
+    await this.sessionRepository.create(session, user.getId());
 
     return { accessToken: session.getToken() }
   }

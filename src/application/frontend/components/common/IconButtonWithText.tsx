@@ -1,6 +1,6 @@
 import React, { MouseEventHandler } from 'react'
 import { IconType } from 'react-icons';
-import defaultStyles from '../../styles/components/iconButtonWithText.module.scss';
+import defaultStyles from '@styles/components/iconButtonWithText.module.scss';
 
 type Props = {
   text: string,

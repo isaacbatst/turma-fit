@@ -1,8 +1,7 @@
+import styles from '../styles.module.scss';
 import React from 'react';
 import Loading from '../../../../../../components/common/Loading';
 import { useGetPlanningTypesQuery } from '../../../api';
-import styles from '../../styles.module.scss';
-import radio from '../../../../../../styles/components/radio.module.scss';
 import { PlanningTypeRadio } from './PlanningTypeRadio';
 
 type Props = {

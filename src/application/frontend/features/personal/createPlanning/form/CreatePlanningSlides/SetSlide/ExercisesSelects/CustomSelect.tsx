@@ -1,9 +1,9 @@
 import Select, { SingleValue } from 'react-select';
-import colors from '../../../../../../../styles/common/_colors.module.scss';
+import colors from '@styles/common/_colors.module.scss';
 
 type BaseOptionType = {
   name: string,
-  id: number
+  id: string
 }
 
 type Props<OptionType extends BaseOptionType> = {

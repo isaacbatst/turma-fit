@@ -1,4 +1,4 @@
-import styles from '../../styles/components/loadingPage.module.scss';
+import styles from '@styles/components/loadingPage.module.scss';
 
 const LoadingPage: React.FC = () => (
   <div className={styles.wrapper}>

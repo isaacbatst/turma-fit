@@ -11,7 +11,7 @@ type Props = {
 }
 
 type GripObject = {
-  id: number,
+  id: string,
   name: string
 }
 
@@ -20,7 +20,7 @@ const ExercisesSelects: React.FC<Props> = ({ grips }) => {
   const { trainingIndex, setIndex } = useSetSlideContext();
 
   const gripsObjects = grips.map((grip, index) => ({
-    id:  index,
+    id:  grip,
     name: gripMapToLabel[grip]
   }))
 
