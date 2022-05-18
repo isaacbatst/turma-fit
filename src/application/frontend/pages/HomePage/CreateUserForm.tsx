@@ -46,7 +46,7 @@ const CreateUserForm: React.FC = () => {
           <select name="profile" id="create-user-profile"
             value={profile} onChange={(e) => setProfile(e.target.value)}
           >
-            <option selected>Selecione um tipo de perfil...</option>
+            <option disabled value="null">Selecione um tipo de perfil...</option>
             <option value="STUDENT">Aluno</option>
             <option value="PERSONAL">Personal</option>
           </select>
