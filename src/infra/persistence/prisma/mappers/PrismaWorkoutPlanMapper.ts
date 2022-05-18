@@ -4,6 +4,7 @@ import { Equipment as PrismaEquipment, Grip as PrismaGrip, MuscleGroup as Prisma
 
 export class PrismaWorkoutPlanInclude {
   static WORKOUT_PLAN_DETAILS = {
+    type: true,
     workouts: {
       include: {
         sets: {
@@ -26,17 +27,17 @@ const WORKOUT_PLAN_WITH_RELATIONS = Prisma.validator<Prisma.WorkoutPlanArgs>()({
   include: PrismaWorkoutPlanInclude.WORKOUT_PLAN_DETAILS
 })
 
-type PrismaWorkoutPlanWithWorkouts = Prisma.WorkoutPlanGetPayload<typeof WORKOUT_PLAN_WITH_RELATIONS>
-type PrismaWorkoutWithSets = PrismaWorkoutPlanWithWorkouts['workouts'][number]
+type PrismaWorkoutPlanWithWorkoutsAndType = Prisma.WorkoutPlanGetPayload<typeof WORKOUT_PLAN_WITH_RELATIONS>
+type PrismaWorkoutWithSets = PrismaWorkoutPlanWithWorkoutsAndType['workouts'][number]
 type PrismaSetWithExercisesAndTechnique = PrismaWorkoutWithSets['sets'][number]
 type PrismaExerciseWithMovement = PrismaSetWithExercisesAndTechnique['exercises'][number]
 type PrismaMovementWithFocusedMuscleGroup = PrismaExerciseWithMovement['movement'];
 
 export class PrismaWorkoutPlanMapper {
-  static ormToDomain(prismaWorkoutPlan: PrismaWorkoutPlanWithWorkouts): WorkoutPlan {
+  static ormToDomain(prismaWorkoutPlan: PrismaWorkoutPlanWithWorkoutsAndType): WorkoutPlan {
     const workoutPlan = new WorkoutPlan({
       id: prismaWorkoutPlan.id,
-      planTypeId: prismaWorkoutPlan.workoutPlanTypeId,
+      planType: prismaWorkoutPlan.type,
       workouts: prismaWorkoutPlan.workouts.map(prismaWorkout => PrismaWorkoutMapper.ormToDomain(prismaWorkout)),
     });
 

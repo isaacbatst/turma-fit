@@ -70,21 +70,28 @@ export interface Workout {
   day                : Day
 }
 
+export interface WorkoutPlanType {
+  id: string,
+  name: string,
+  defaultMinRestTime: number,
+  defaultMaxRestTime: number
+}
+
 interface CreateWorkoutPlanEntityParams {
   id: string,
   workouts: Workout[]
-  planTypeId: string
+  planType: WorkoutPlanType
 }
 
 export default class WorkoutPlan {
   private id        : string                     
   private workouts  : Workout[]
-  private planTypeId  : string
+  private planType  : WorkoutPlanType
 
   constructor(params: CreateWorkoutPlanEntityParams){
     this.id = params.id;
     this.workouts = params.workouts;
-    this.planTypeId = params.planTypeId;
+    this.planType = params.planType;
   }
 
   getId() {
@@ -95,8 +102,8 @@ export default class WorkoutPlan {
     return this.workouts;
   }
 
-  getPlanTypeId() {
-    return this.planTypeId;
+  getPlanType() {
+    return this.planType;
   }
 }
 
