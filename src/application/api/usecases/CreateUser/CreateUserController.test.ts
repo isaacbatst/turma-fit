@@ -76,7 +76,7 @@ describe('CreateUserController', () => {
         body: {}
       })
 
-      expect(response.cookies).toEqual({ [CookiesNames.AUTHORIZATION]: CreateUserServiceMock.TOKEN }) 
+      expect(response.cookies).toHaveProperty(CookiesNames.AUTHORIZATION) 
     });
   })
   

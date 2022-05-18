@@ -20,8 +20,8 @@ export class NextApiHandlerAdapter {
     if(!body) return res.status(statusCode).end();
     if(!cookies) return res.status(statusCode).json(body);
 
-    Object.entries(cookies).forEach(([key, value]) => {
-      CookiesHandler.setCookie(res, key, value);
+    Object.entries(cookies).forEach(([key, { value, daysToExpire }]) => {
+      CookiesHandler.setCookie(res, key, value, daysToExpire);
     })
 
     return res.status(statusCode).json(body);
