@@ -1,15 +1,13 @@
 import { render, screen } from "@testing-library/react";
-import HomePage from "./HomePage";
-import { setupServer } from 'msw/node'
 import { rest } from "msw";
+import { setupServer } from 'msw/node';
 import { SWRConfig } from "swr";
-
-const USER = { id: 'any_user_id', name: 'Testinho RTL' };
-const WORKOUT_PLAN = { id: 'any_workout_plan_id' }
+import HomePage from "./HomePage";
+import { USER, WORKOUT_PLAN } from "./HomePageDataMocks";
 
 const server = setupServer(
   rest.get('/api/user', (req, res, ctx) => {
-    return res(ctx.json({ user: USER }))
+    return res(ctx.json(USER))
   }),
   rest.get('/api/user/:id/workout-plans', (req, res, ctx) => {
     return res(ctx.json({ workoutPlans: [ WORKOUT_PLAN ] }))
