@@ -7,7 +7,7 @@ export interface HttpRequest {
 
 export interface HttpResponse<T = {}> {
   body?: T | { error: string },
-  cookies?: Record<string, string>,
+  cookies?: Record<string, { value: string, daysToExpire?: number }>,
   statusCode: number
 }
 

@@ -13,6 +13,8 @@ interface CreateUserRequest {
 }
 
 export class CreateUserController implements Controller<CreateUserResponse> {
+  static DAYS_TO_EXPIRE_COOKIE = 15
+
   constructor(
     private bodyValidator: BodyValidator<CreateUserValidBody>,
     private createUserUseCase: CreateUserUseCase
@@ -30,7 +32,10 @@ export class CreateUserController implements Controller<CreateUserResponse> {
           id: created.user.id,
         },
         cookies: {
-          [CookiesNames.AUTHORIZATION]: created.token
+          [CookiesNames.AUTHORIZATION]: {
+            value: created.token,
+            daysToExpire: CreateUserController.DAYS_TO_EXPIRE_COOKIE
+          }
         }
       }
     } catch (error) {

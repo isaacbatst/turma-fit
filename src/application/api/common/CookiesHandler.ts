@@ -1,25 +1,40 @@
-import { serialize, CookieSerializeOptions } from 'cookie'
-import { NextApiResponse } from 'next'
+import { CookieSerializeOptions, serialize } from 'cookie'
 
 interface ResponseWithSetHeader {
   setHeader(name: string, value: string | number | readonly string[]): any
 }
 
 export class CookiesHandler {
+  static SECONDS_IN_A_DAY =  24 * 60 * 60;
+
   static setCookie (
     res: ResponseWithSetHeader,
     name: string,
     value: unknown,
-    options: CookieSerializeOptions = {}
+    daysToExpire?: number,
+    options: Omit<CookieSerializeOptions, 'expires' | 'maxAge'> = {}
   ) {
+    const cookieOptions: CookieSerializeOptions = options;
+
     const stringValue =
       typeof value === 'object' ? 'j:' + JSON.stringify(value) : String(value)
-  
-    if (options.maxAge) {
-      options.expires = new Date(Date.now() + options.maxAge)
-      options.maxAge /= 1000
-    }
-  
-    res.setHeader('Set-Cookie', serialize(name, stringValue, options))
+ 
+
+    if(daysToExpire) {
+      const expiresDate = new Date(Date.now() + CookiesHandler.daysToMiliseconds(daysToExpire));
+      cookieOptions.expires = expiresDate
+
+      cookieOptions.maxAge = CookiesHandler.daysToSeconds(daysToExpire)
+    }  
+
+    res.setHeader('Set-Cookie', serialize(name, stringValue, cookieOptions))
+  }
+
+  static daysToSeconds(days: number) {
+    return days * this.SECONDS_IN_A_DAY
+  }
+
+  static daysToMiliseconds(days: number) {
+    return CookiesHandler.daysToSeconds(days) * 1000
   }
 }
