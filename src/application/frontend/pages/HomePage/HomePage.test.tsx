@@ -38,7 +38,6 @@ describe('HomePage', () => {
   })
 
   describe('Giver user is logged', () => {
-    // TODO replace for user workout plans list 
     it('should render user workout plans section', async () => {
       render(makeSut());
       
