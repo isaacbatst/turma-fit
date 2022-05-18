@@ -1,5 +1,4 @@
-import { serialize, CookieSerializeOptions } from 'cookie'
-import { NextApiResponse } from 'next'
+import { CookieSerializeOptions, serialize } from 'cookie'
 
 interface ResponseWithSetHeader {
   setHeader(name: string, value: string | number | readonly string[]): any
