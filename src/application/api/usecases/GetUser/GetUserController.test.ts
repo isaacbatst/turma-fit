@@ -107,6 +107,8 @@ describe('GetUserController', () => {
   describe('Given an unknow error', () => {
     it('should return 500 status code', async () => {
       const { getUserController, getUserUseCase } = makeSut();
+      const consoleSpy = jest.spyOn(console, "error").mockImplementation();
+
       getUserUseCase.execute = jest.fn(() => {
         throw new Error('TESTING_ERROR');
       });
@@ -116,6 +118,8 @@ describe('GetUserController', () => {
       });
 
       expect(httpResponse.statusCode).toBe(500);
+
+      consoleSpy.mockRestore();
     })
   })
 })
