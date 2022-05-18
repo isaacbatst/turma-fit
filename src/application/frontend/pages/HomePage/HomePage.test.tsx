@@ -5,6 +5,18 @@ import { SWRConfig } from "swr";
 import HomePage from "./HomePage";
 import { USER, WORKOUT_PLAN } from "./HomePageDataMocks";
 
+jest.mock('./UserHomeView.tsx', () => {
+  const UserHomeViewMock = () => <div>UserHomeView</div>
+
+  return UserHomeViewMock
+})
+
+jest.mock('./CreateUserForm.tsx', () => {
+  const CreateUserFormMock = () => <div>CreateUserForm</div>
+
+  return CreateUserFormMock
+})
+
 const server = setupServer(
   rest.get('/api/user', (req, res, ctx) => {
     return res(ctx.json(USER))
@@ -36,13 +48,20 @@ describe('HomePage', () => {
   })
 
   describe('Giver user is logged', () => {
-    it('should render user workout plans section', async () => {
-      render(makeSut());
+    // it('should render user workout plans section', async () => {
+    //   render(makeSut());
       
-      const userName = await screen.findByRole('region', { name: 'Meus planos de treino' });
+    //   const userName = await screen.findByRole('region', { name: 'Meus planos de treino' });
   
-      expect(userName).toBeInTheDocument();
-    });
+    //   expect(userName).toBeInTheDocument();
+    // });
+    it('should render UserHomeView',async () => {
+      render(makeSut());
+
+      const userHomeView = await screen.findByText('UserHomeView');
+
+      expect(userHomeView).toBeInTheDocument();
+    })
   })
 
   describe('Giver user is not logged', () => {
@@ -55,7 +74,8 @@ describe('HomePage', () => {
 
       render(makeSut());
 
-      const createUserForm = await screen.findByRole('form', { name: 'Criar conta' });
+      // const createUserForm = await screen.findByRole('form', { name: 'Criar conta' });
+      const createUserForm = await screen.findByText('CreateUserForm');
 
       expect(createUserForm).toBeInTheDocument();
     });
