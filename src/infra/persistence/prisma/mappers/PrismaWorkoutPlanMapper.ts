@@ -1,9 +1,11 @@
 
-import WorkoutPlan, { Day, Equipment, Exercise, Grip, Movement, MuscleGroup, Set, Workout } from '@domain/entities/WorkoutPlan/WorkoutPlan';
+import WorkoutPlan from '@domain/entities/WorkoutPlan/WorkoutPlan';
+import { Day, Equipment, Exercise, Grip, Movement, MuscleGroup, Set, WorkoutWithoutLetter } from '@domain/entities/WorkoutPlan/WorkoutList';
 import { Equipment as PrismaEquipment, Grip as PrismaGrip, MuscleGroup as PrismaMuscleGroup, Prisma } from '@prisma/client';
 
 export class PrismaWorkoutPlanInclude {
   static WORKOUT_PLAN_DETAILS = {
+    type: true,
     workouts: {
       include: {
         sets: {
@@ -26,17 +28,17 @@ const WORKOUT_PLAN_WITH_RELATIONS = Prisma.validator<Prisma.WorkoutPlanArgs>()({
   include: PrismaWorkoutPlanInclude.WORKOUT_PLAN_DETAILS
 })
 
-type PrismaWorkoutPlanWithWorkouts = Prisma.WorkoutPlanGetPayload<typeof WORKOUT_PLAN_WITH_RELATIONS>
-type PrismaWorkoutWithSets = PrismaWorkoutPlanWithWorkouts['workouts'][number]
+type PrismaWorkoutPlanWithWorkoutsAndType = Prisma.WorkoutPlanGetPayload<typeof WORKOUT_PLAN_WITH_RELATIONS>
+type PrismaWorkoutWithSets = PrismaWorkoutPlanWithWorkoutsAndType['workouts'][number]
 type PrismaSetWithExercisesAndTechnique = PrismaWorkoutWithSets['sets'][number]
 type PrismaExerciseWithMovement = PrismaSetWithExercisesAndTechnique['exercises'][number]
 type PrismaMovementWithFocusedMuscleGroup = PrismaExerciseWithMovement['movement'];
 
 export class PrismaWorkoutPlanMapper {
-  static ormToDomain(prismaWorkoutPlan: PrismaWorkoutPlanWithWorkouts): WorkoutPlan {
+  static ormToDomain(prismaWorkoutPlan: PrismaWorkoutPlanWithWorkoutsAndType): WorkoutPlan {
     const workoutPlan = new WorkoutPlan({
       id: prismaWorkoutPlan.id,
-      planTypeId: prismaWorkoutPlan.workoutPlanTypeId,
+      planType: prismaWorkoutPlan.type,
       workouts: prismaWorkoutPlan.workouts.map(prismaWorkout => PrismaWorkoutMapper.ormToDomain(prismaWorkout)),
     });
 
@@ -45,8 +47,8 @@ export class PrismaWorkoutPlanMapper {
 }
 
 class PrismaWorkoutMapper {
-  static ormToDomain(prismaWorkout: PrismaWorkoutWithSets): Workout {
-    const workout: Workout = {
+  static ormToDomain(prismaWorkout: PrismaWorkoutWithSets): WorkoutWithoutLetter {
+    const workout: WorkoutWithoutLetter = {
       id: prismaWorkout.id,
       day: Day[prismaWorkout.day],
       aerobicMinutes: prismaWorkout.aerobicMinutes,

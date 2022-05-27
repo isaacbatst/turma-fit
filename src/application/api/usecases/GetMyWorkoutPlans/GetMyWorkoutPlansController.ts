@@ -1,6 +1,7 @@
 import { CookiesNames } from '@application/api/common/CookiesNames';
 import { ValidationError } from '@application/api/errors/ValidationError';
 import { BodyValidator, Controller, HttpResponse } from '@application/api/interfaces';
+import { AuthorizationError } from '@domain/errors/AuthorizationError';
 import { IGetMyWorkoutPlansUseCase, WorkoutPlanDTO } from '@domain/usecases/GetMyWorkoutPlans/GetMyWorkoutPlansUseCase';
 import { GetMyWorkoutPlansRequest, GetMyWorkoutPlansValidRequest } from './GetMyWorkoutPlansRequest';
 
@@ -36,6 +37,12 @@ export class GetMyWorkoutPlansController implements Controller<GetMyWorkoutPlans
           body: {
             error: error.message
           }
+        }
+      }
+
+      if(error instanceof AuthorizationError){
+        return {
+          statusCode: 401,
         }
       }
 

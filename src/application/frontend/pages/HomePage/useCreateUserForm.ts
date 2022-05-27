@@ -26,7 +26,7 @@ export const useCreateUserForm = () => {
   const [repeatPassword, setRepeatPassword] = useState("");
   const [age, setAge] = useState(0);
   const [image, setImage] = useState("");
-  const [profile, setProfile] = useState("");
+  const [profile, setProfile] = useState("null");
   const [error, setError] = useState("");
 
   const { mutate } = useSWRConfig();

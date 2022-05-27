@@ -1,4 +1,5 @@
 import { useMyWorkoutPlans } from "@application/frontend/swr/useMyWorkoutPlans";
+import MyWorkoutPlans from "./MyWorkoutPlans";
 
 type UserHomeViewProps = {
   user: {
@@ -20,15 +21,7 @@ const UserHomeView: React.FC<UserHomeViewProps> = ({ user }) => {
           <h2>Meus planos de treino</h2>
           {
             workoutPlans && workoutPlans.length > 0 ? (
-              <ul aria-label="Lista de planos">
-                {
-                  workoutPlans.map(workoutPlan => (
-                    <li key={workoutPlan.id}>
-                      {workoutPlan.id}
-                    </li>
-                  ))
-                }
-              </ul>
+              <MyWorkoutPlans workoutPlans={workoutPlans} />
             )
               : (
                 <div>Nenhum plano de treino cadastrado</div>

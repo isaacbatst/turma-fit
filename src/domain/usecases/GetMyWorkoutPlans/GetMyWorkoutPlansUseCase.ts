@@ -1,7 +1,8 @@
 import { UseCase } from '@domain/common/UseCase';
-import WorkoutPlan, { Workout } from '@domain/entities/WorkoutPlan/WorkoutPlan';
+import { Workout } from '@domain/entities/WorkoutPlan/WorkoutList';
+import WorkoutPlan, { WorkoutPlanType } from '@domain/entities/WorkoutPlan/WorkoutPlan';
 import { AuthorizationError } from '@domain/errors/AuthorizationError';
-import { SessionRepository, GetMyWorkoutPlanSessionRepository } from '@domain/repositories/SessionRepository';
+import { GetMyWorkoutPlanSessionRepository } from '@domain/repositories/SessionRepository';
 import { GetMyWorkoutPlansRepository } from '@domain/repositories/WorkoutPlanRepository';
 
 export interface GetMyWorkoutPlansUseCasePort {
@@ -11,7 +12,7 @@ export interface GetMyWorkoutPlansUseCasePort {
 
 export interface WorkoutPlanDTO {
   id: string,
-  planTypeId: string,
+  planType: WorkoutPlanType,
   workouts: Workout[],
 }
 
@@ -44,7 +45,7 @@ export class GetMyWorkoutPlansUseCase implements IGetMyWorkoutPlansUseCase {
   private mapWorkoutPlansToDTO(workoutPlans: WorkoutPlan[]): WorkoutPlanDTO[] {
     return workoutPlans.map(workoutPlan => ({
       id: workoutPlan.getId(),
-      planTypeId: workoutPlan.getPlanTypeId(),
+      planType: workoutPlan.getPlanType(),
       workouts: workoutPlan.getWorkouts()
     }))
   }

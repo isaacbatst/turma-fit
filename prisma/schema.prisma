@@ -206,7 +206,6 @@ enum Day {
 
 model Workout {
   id             String       @id @default(uuid())
-  letter         String
   sets           Set[]
   aerobicMinutes Int
   workoutPlan    WorkoutPlan? @relation(fields: [workoutPlanId], references: [id])

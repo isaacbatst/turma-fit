@@ -1,4 +1,5 @@
-import WorkoutPlan, { Day } from "@domain/entities/WorkoutPlan/WorkoutPlan"
+import { Day } from "@domain/entities/WorkoutPlan/WorkoutList"
+import WorkoutPlan from "@domain/entities/WorkoutPlan/WorkoutPlan"
 import { CreateWorkoutPlanUseCasePort, CreateWorkoutPlanPortSet, CreateWorkoutPlanPortWorkout } from "./interfaces"
 
 export class CreateWorkoutPlanDataMock {
@@ -26,7 +27,12 @@ export class CreateWorkoutPlanDataMock {
 
   static WORKOUT_PLAN: WorkoutPlan = new WorkoutPlan({
     id: 'any_workout_plan_id',
-    planTypeId: 'any_plan_type_id',
+    planType: {
+      defaultMaxRestTime: 40,
+      defaultMinRestTime: 30,
+      id: 'any_plan_type_id',
+      name: 'any_plan_type_name'
+    },
     workouts: [
       CreateWorkoutPlanDataMock.PORT_WORKOUT
     ]
