@@ -1,4 +1,4 @@
-import { Day, MuscleGroup } from "@domain/entities/WorkoutPlan/WorkoutPlan";
+import { Day, Letter, MuscleGroup } from "@domain/entities/WorkoutPlan/WorkoutList";
 import { WorkoutPlanDTO } from "@domain/usecases/GetMyWorkoutPlans/GetMyWorkoutPlansUseCase";
 import { GetUserUseCaseDTO } from "@domain/usecases/GetUser/GetUserUseCase";
 
@@ -22,6 +22,7 @@ export const WORKOUT_PLAN: WorkoutPlanDTO = {
       id: 'any_workout_id',
       aerobicMinutes: 40,
       day: Day.MONDAY,
+      letter: Letter.A,
       sets: [
         {
           id: 'any_set_id',
