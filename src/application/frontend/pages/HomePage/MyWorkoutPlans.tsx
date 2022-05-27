@@ -1,12 +1,11 @@
-import { Day } from "@domain/entities/WorkoutPlan/WorkoutPlan"
+import { Day } from "@domain/entities/WorkoutPlan/WorkoutList"
 import { WorkoutPlanDTO } from "@domain/usecases/GetMyWorkoutPlans/GetMyWorkoutPlansUseCase"
 
 type MyWorkoutPlansProps = {
   workoutPlans: WorkoutPlanDTO[]
 }
 
-const indexToLetter = ['A', 'B', 'C', 'D', 'E', 'F']
-const dayToPrintableDay: Record<Day, string> = {
+const readableDay: Record<Day, string> = {
   FRIDAY: 'Sexta',
   MONDAY: 'Segunda',
   SATURDAY: 'Sábado',
@@ -31,9 +30,9 @@ const MyWorkoutPlans: React.FC<MyWorkoutPlansProps> = ({ workoutPlans }) => {
             <div>
               <h4>Treinos</h4>
               <ul>
-                {workouts.map(({ id, aerobicMinutes, day, sets }, index) => (
+                {workouts.map(({ id, aerobicMinutes, day, sets, letter }, index) => (
                   <li key={id}>
-                    <h5>Treino {indexToLetter[index]} ({dayToPrintableDay[day]})</h5>
+                    <h5>Treino {letter} ({readableDay[day]})</h5>
                     <p>{aerobicMinutes} minutos de aeróbico</p>
                     <p>Séries</p>
                     <ul>
