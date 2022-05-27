@@ -146,7 +146,6 @@ CREATE TABLE "WorkoutPlan" (
 -- CreateTable
 CREATE TABLE "Workout" (
     "id" TEXT NOT NULL,
-    "letter" TEXT NOT NULL,
     "aerobicMinutes" INTEGER NOT NULL,
     "workoutPlanId" TEXT,
     "day" "Day" NOT NULL,
