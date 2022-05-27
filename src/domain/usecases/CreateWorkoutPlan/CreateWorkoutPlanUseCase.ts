@@ -7,9 +7,9 @@ import { CreateWorkoutPlanUseCaseDTO, CreateWorkoutPlanUseCasePort, CreateWorkou
 
 export class CreateWorkoutPlanService implements UseCase<CreateWorkoutPlanUseCasePort, CreateWorkoutPlanUseCaseDTO> {
   constructor(
-    private workoutRepository: CreateWorkoutPlanRepository,
+    private repository: CreateWorkoutPlanRepository,
     private uuidGenerator: UuidGenerator,
-    private portValidator: PortValidator<CreateWorkoutPlanUseCasePort, CreateWorkoutPlanUseCasePortValidated>
+    private portValidator: PortValidator<CreateWorkoutPlanUseCasePort, CreateWorkoutPlanUseCasePortValidated>,
   ) {}
   
   async execute(port: CreateWorkoutPlanUseCasePort): Promise<CreateWorkoutPlanUseCaseDTO> {
@@ -17,13 +17,19 @@ export class CreateWorkoutPlanService implements UseCase<CreateWorkoutPlanUseCas
     
     const id = this.uuidGenerator.generate();
 
+    const workoutPlanType = await this.repository.getWorkoutPlanTypeById(validatedPort.planTypeId);
+
+    if(!workoutPlanType){
+      throw new Error('WORKOUT_PLAN_TYPE_NOT_FOUND')
+    }
+
     const workoutPlan = new WorkoutPlan({
       id,
-      planTypeId: validatedPort.planTypeId,
+      planType: workoutPlanType,
       workouts: validatedPort.workouts
     })
 
-    await this.workoutRepository.create(workoutPlan, validatedPort.userId);
+    await this.repository.create(workoutPlan, validatedPort.userId);
   
     return { id }
   }

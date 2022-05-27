@@ -21,6 +21,9 @@ export class TokenGeneratorMock implements TokenGenerator {
 }
 
 export class UuidGeneratorMock implements UuidGenerator {
-  GENERATED_ID = 'any_uuid'
+  constructor(public GENERATED_ID = 'any_uuid') {
+
+  }
+
   generate: () => string = jest.fn(() => this.GENERATED_ID);
 }

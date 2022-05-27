@@ -1,4 +1,4 @@
-import { Day, Grip, Set, Workout } from "@domain/entities/WorkoutPlan/WorkoutPlan"
+import { Grip, Set, WorkoutWithoutLetter } from "@domain/entities/WorkoutPlan/WorkoutList"
 
 export type CreateWorkoutPlanPortExercise = {
   id           : string      
@@ -11,20 +11,21 @@ export type CreateWorkoutPlanPortSet = Set & {
   exercises: CreateWorkoutPlanPortExercise[]
 }
 
-export type CreateWorkoutPlanPortWorkout = Workout & {
-  sets: CreateWorkoutPlanPortSet[]
+export type CreateWorkoutPlanPortWorkout = WorkoutWithoutLetter & {
+  sets: CreateWorkoutPlanPortSet[],
+  day: string
 }
 
 export interface CreateWorkoutPlanUseCasePort {
   planTypeId: string
   userId: string
-  workouts: (CreateWorkoutPlanPortWorkout & { day: string })[]
+  workouts: CreateWorkoutPlanPortWorkout[]
 }
 
 export interface CreateWorkoutPlanUseCasePortValidated {
   planTypeId: string
   userId: string,
-  workouts: (Workout & { day: Day })[]
+  workouts: WorkoutWithoutLetter[]
 }
 
 export interface CreateWorkoutPlanUseCaseDTO {

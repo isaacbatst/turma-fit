@@ -1,5 +1,6 @@
 
-import WorkoutPlan, { Day, Equipment, Exercise, Grip, Movement, MuscleGroup, Set, Workout } from '@domain/entities/WorkoutPlan/WorkoutPlan';
+import WorkoutPlan from '@domain/entities/WorkoutPlan/WorkoutPlan';
+import { Day, Equipment, Exercise, Grip, Movement, MuscleGroup, Set, WorkoutWithoutLetter } from '@domain/entities/WorkoutPlan/WorkoutList';
 import { Equipment as PrismaEquipment, Grip as PrismaGrip, MuscleGroup as PrismaMuscleGroup, Prisma } from '@prisma/client';
 
 export class PrismaWorkoutPlanInclude {
@@ -46,8 +47,8 @@ export class PrismaWorkoutPlanMapper {
 }
 
 class PrismaWorkoutMapper {
-  static ormToDomain(prismaWorkout: PrismaWorkoutWithSets): Workout {
-    const workout: Workout = {
+  static ormToDomain(prismaWorkout: PrismaWorkoutWithSets): WorkoutWithoutLetter {
+    const workout: WorkoutWithoutLetter = {
       id: prismaWorkout.id,
       day: Day[prismaWorkout.day],
       aerobicMinutes: prismaWorkout.aerobicMinutes,
