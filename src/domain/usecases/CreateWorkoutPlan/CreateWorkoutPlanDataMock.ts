@@ -1,35 +1,40 @@
 import { Day } from "@domain/entities/WorkoutPlan/enums/Day"
+import { Grip } from "@domain/entities/WorkoutPlan/enums/Grip"
 import { WorkoutPlanBeingCreated } from "@domain/entities/WorkoutPlan/WorkoutPlanBeingCreated"
-import WorkoutPlanBeingGetted from "@domain/entities/WorkoutPlan/WorkoutPlanBeingGetted"
 import { UuidGeneratorMock } from "../_mocks"
-import { CreateWorkoutPlanUseCasePort, CreateWorkoutPlanPortSet, CreateWorkoutPlanPortWorkout } from "./interfaces"
+import { CreateWorkoutPlanPortExercise, CreateWorkoutPlanPortSet, CreateWorkoutPlanPortWorkout, CreateWorkoutPlanUseCasePort } from "./interfaces"
 
 export class CreateWorkoutPlanDataMock {
-  private static PORT_SET: CreateWorkoutPlanPortSet = {
-    exercises: [],
+  public PORT_EXERCISE: CreateWorkoutPlanPortExercise = {
+    equipmentId: 'any_equipment_id',
+    movementId: 'any_movement_id',
+  }
+
+  private PORT_SET: CreateWorkoutPlanPortSet = {
+    exercises: [this.PORT_EXERCISE],
     repetitions: '10',
     times: 3,
     techniqueId: 'any_technique_id'
   } 
 
-  private static PORT_WORKOUT = {
+  public PORT_WORKOUT: CreateWorkoutPlanPortWorkout = {
     aerobicMinutes: 60,
-    sets: [CreateWorkoutPlanDataMock.PORT_SET],
+    sets: [this.PORT_SET],
     day: Day.FRIDAY
   }
 
-  static VALID_PORT: CreateWorkoutPlanUseCasePort = {
+  public PORT: CreateWorkoutPlanUseCasePort = {
     planTypeId: 'any_plan_type_id',
     userId: 'any_user_id',
     workouts: [
-      CreateWorkoutPlanDataMock.PORT_WORKOUT
+      this.PORT_WORKOUT
     ]
   }
 
-  static WORKOUT_PLAN: WorkoutPlanBeingCreated = new WorkoutPlanBeingCreated({
+  public WORKOUT_PLAN: WorkoutPlanBeingCreated = new WorkoutPlanBeingCreated({
     planTypeId: 'any_plan_type_id',
     workouts: [
-      CreateWorkoutPlanDataMock.PORT_WORKOUT
+      this.PORT_WORKOUT
     ],
     uuidGenerator: new UuidGeneratorMock()
   })

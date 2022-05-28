@@ -1,15 +1,15 @@
+import { PortValidator } from "@domain/common/PortValidator"
 import { Day } from "@domain/entities/WorkoutPlan/enums/Day"
 import { Grip } from "@domain/entities/WorkoutPlan/enums/Grip"
 
 export type CreateWorkoutPlanPortExercise = {
-  id           : string      
   movementId   : string  
   equipmentId  : string 
   grip?        : string
 }
 
-type CreateWorkoutPlanPortExerciseValidated = CreateWorkoutPlanPortExercise & {
-  grip: Grip
+export type CreateWorkoutPlanPortExerciseValidated = CreateWorkoutPlanPortExercise & {
+  grip?: Grip
 }
 
 export type CreateWorkoutPlanPortSet = {
@@ -21,7 +21,7 @@ export type CreateWorkoutPlanPortSet = {
   exercises: CreateWorkoutPlanPortExercise[]
 }
 
-type CreateWorkoutPlanPortSetValidated = CreateWorkoutPlanPortSet & {
+export type CreateWorkoutPlanPortSetValidated = CreateWorkoutPlanPortSet & {
   exercises: CreateWorkoutPlanPortExerciseValidated[]
 }
 
@@ -50,3 +50,5 @@ export interface CreateWorkoutPlanUseCasePortValidated {
 export interface CreateWorkoutPlanUseCaseDTO {
   id: string
 }
+
+export interface ICreateWorkoutPlanPortValidator extends PortValidator<CreateWorkoutPlanUseCasePort, CreateWorkoutPlanUseCasePortValidated> {} 

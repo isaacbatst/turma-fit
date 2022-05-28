@@ -1,8 +1,7 @@
 import { ValidationError } from "@application/api/errors/ValidationError";
-import { PortValidator } from "@domain/common/PortValidator";
-import { CreateWorkoutPlanUseCasePort, CreateWorkoutPlanUseCasePortValidated } from "./interfaces";
+import { CreateWorkoutPlanUseCasePort, CreateWorkoutPlanUseCasePortValidated, ICreateWorkoutPlanPortValidator } from "./interfaces";
 
-export class CreateWorkoutPlanPortValidatorMock implements PortValidator<CreateWorkoutPlanUseCasePort, CreateWorkoutPlanUseCasePortValidated> {
+export class CreateWorkoutPlanPortValidatorMock implements ICreateWorkoutPlanPortValidator {
   isValid = true;
  
   validate = jest.fn((port: CreateWorkoutPlanUseCasePort) => {

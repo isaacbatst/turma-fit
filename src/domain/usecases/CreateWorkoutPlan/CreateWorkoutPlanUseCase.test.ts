@@ -6,7 +6,8 @@ import { CreateWorkoutPlanService } from "./CreateWorkoutPlanUseCase";
 
 const makeSut = () => {
   const workoutPlanRepository = new CreateWorkoutPlanRepositoryMock();
-  const uuidGenerator = new UuidGeneratorMock(CreateWorkoutPlanDataMock.WORKOUT_PLAN.getId());
+  const dataMock = new CreateWorkoutPlanDataMock();
+  const uuidGenerator = new UuidGeneratorMock(dataMock.WORKOUT_PLAN.getId());
   const portValidator = new CreateWorkoutPlanPortValidatorMock();
   const createWorkoutPlanUseCase = new CreateWorkoutPlanService(workoutPlanRepository, uuidGenerator, portValidator);
 
@@ -14,42 +15,43 @@ const makeSut = () => {
     createWorkoutPlanUseCase,
     uuidGenerator,
     portValidator,
-    workoutPlanRepository
+    workoutPlanRepository,
+    dataMock
   }
 }
 
 describe('CreateWorkoutPlanUseCase', () => {
   it('should call port validator with port', async () => {
-    const { createWorkoutPlanUseCase, portValidator } = makeSut();
+    const { createWorkoutPlanUseCase, portValidator, dataMock } = makeSut();
 
-    await createWorkoutPlanUseCase.execute(CreateWorkoutPlanDataMock.VALID_PORT);
+    await createWorkoutPlanUseCase.execute(dataMock.PORT);
 
-    expect(portValidator.validate).toBeCalledWith(CreateWorkoutPlanDataMock.VALID_PORT)
+    expect(portValidator.validate).toBeCalledWith(dataMock.PORT)
   })
 
   describe('Given validated data', () => {
     it('should call uuid generator', async () => {
-      const { createWorkoutPlanUseCase, uuidGenerator } = makeSut();
+      const { createWorkoutPlanUseCase, uuidGenerator, dataMock } = makeSut();
 
-      await createWorkoutPlanUseCase.execute(CreateWorkoutPlanDataMock.VALID_PORT)
+      await createWorkoutPlanUseCase.execute(dataMock.PORT)
 
       expect(uuidGenerator.generate).toBeCalled();
     })
     
     it('should call workout plan repository create', async () => {
-      const { createWorkoutPlanUseCase, workoutPlanRepository} = makeSut();
+      const { createWorkoutPlanUseCase, workoutPlanRepository, dataMock } = makeSut();
 
-      await createWorkoutPlanUseCase.execute(CreateWorkoutPlanDataMock.VALID_PORT);
+      await createWorkoutPlanUseCase.execute(dataMock.PORT);
 
       expect(workoutPlanRepository.create).toHaveBeenCalled()
     })
 
     it('should return created workout plan id', async () => {
-      const { createWorkoutPlanUseCase } = makeSut();
+      const { createWorkoutPlanUseCase, dataMock } = makeSut();
 
-      const { id } = await createWorkoutPlanUseCase.execute(CreateWorkoutPlanDataMock.VALID_PORT);
+      const { id } = await createWorkoutPlanUseCase.execute(dataMock.PORT);
 
-      expect(id).toBe(CreateWorkoutPlanDataMock.WORKOUT_PLAN.getId())
+      expect(id).toBe(dataMock.WORKOUT_PLAN.getId())
     })
   })
 })

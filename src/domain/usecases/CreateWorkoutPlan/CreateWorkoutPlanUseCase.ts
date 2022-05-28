@@ -1,15 +1,14 @@
-import { PortValidator } from "@domain/common/PortValidator";
 import { UseCase } from "@domain/common/UseCase";
 import { UuidGenerator } from "@domain/common/UuidGenerator";
 import { WorkoutPlanBeingCreated } from "@domain/entities/WorkoutPlan/WorkoutPlanBeingCreated";
 import { CreateWorkoutPlanRepository } from "@domain/repositories/WorkoutPlanRepository";
-import { CreateWorkoutPlanUseCaseDTO, CreateWorkoutPlanUseCasePort, CreateWorkoutPlanUseCasePortValidated } from "./interfaces";
+import { CreateWorkoutPlanUseCaseDTO, CreateWorkoutPlanUseCasePort, ICreateWorkoutPlanPortValidator } from "./interfaces";
 
 export class CreateWorkoutPlanService implements UseCase<CreateWorkoutPlanUseCasePort, CreateWorkoutPlanUseCaseDTO> {
   constructor(
     private repository: CreateWorkoutPlanRepository,
     private uuidGenerator: UuidGenerator,
-    private portValidator: PortValidator<CreateWorkoutPlanUseCasePort, CreateWorkoutPlanUseCasePortValidated>,
+    private portValidator: ICreateWorkoutPlanPortValidator,
   ) {}
   
   async execute(port: CreateWorkoutPlanUseCasePort): Promise<CreateWorkoutPlanUseCaseDTO> {
@@ -25,5 +24,4 @@ export class CreateWorkoutPlanService implements UseCase<CreateWorkoutPlanUseCas
   
     return { id: workoutPlan.getId() }
   }
-
 }
