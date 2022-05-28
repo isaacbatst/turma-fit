@@ -1,5 +1,5 @@
 
-import WorkoutPlan from '@domain/entities/WorkoutPlan/WorkoutPlan';
+import WorkoutPlanBeingGetted from '@domain/entities/WorkoutPlan/WorkoutPlanBeingGetted';
 import { Day, Equipment, Exercise, Grip, Movement, MuscleGroup, Set, WorkoutWithoutLetter } from '@domain/entities/WorkoutPlan/WorkoutList';
 import { Equipment as PrismaEquipment, Grip as PrismaGrip, MuscleGroup as PrismaMuscleGroup, Prisma } from '@prisma/client';
 
@@ -35,8 +35,8 @@ type PrismaExerciseWithMovement = PrismaSetWithExercisesAndTechnique['exercises'
 type PrismaMovementWithFocusedMuscleGroup = PrismaExerciseWithMovement['movement'];
 
 export class PrismaWorkoutPlanMapper {
-  static ormToDomain(prismaWorkoutPlan: PrismaWorkoutPlanWithWorkoutsAndType): WorkoutPlan {
-    const workoutPlan = new WorkoutPlan({
+  static ormToDomain(prismaWorkoutPlan: PrismaWorkoutPlanWithWorkoutsAndType): WorkoutPlanBeingGetted {
+    const workoutPlan = new WorkoutPlanBeingGetted({
       id: prismaWorkoutPlan.id,
       planType: prismaWorkoutPlan.type,
       workouts: prismaWorkoutPlan.workouts.map(prismaWorkout => PrismaWorkoutMapper.ormToDomain(prismaWorkout)),

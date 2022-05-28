@@ -1,6 +1,6 @@
 import { UseCase } from '@domain/common/UseCase';
 import { Workout } from '@domain/entities/WorkoutPlan/WorkoutList';
-import WorkoutPlan, { WorkoutPlanType } from '@domain/entities/WorkoutPlan/WorkoutPlan';
+import WorkoutPlanBeingGetted, { WorkoutPlanType } from '@domain/entities/WorkoutPlan/WorkoutPlanBeingGetted';
 import { AuthorizationError } from '@domain/errors/AuthorizationError';
 import { GetMyWorkoutPlanSessionRepository } from '@domain/repositories/SessionRepository';
 import { GetMyWorkoutPlansRepository } from '@domain/repositories/WorkoutPlanRepository';
@@ -42,7 +42,7 @@ export class GetMyWorkoutPlansUseCase implements IGetMyWorkoutPlansUseCase {
     }
   }
 
-  private mapWorkoutPlansToDTO(workoutPlans: WorkoutPlan[]): WorkoutPlanDTO[] {
+  private mapWorkoutPlansToDTO(workoutPlans: WorkoutPlanBeingGetted[]): WorkoutPlanDTO[] {
     return workoutPlans.map(workoutPlan => ({
       id: workoutPlan.getId(),
       planType: workoutPlan.getPlanType(),

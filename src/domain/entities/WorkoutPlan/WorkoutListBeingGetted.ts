@@ -82,7 +82,7 @@ export interface Workout {
 
 export type WorkoutWithoutLetter = Omit<Workout, 'letter'>
 
-export class WorkoutList {
+export class WorkoutListBeingGetted {
   private static readonly WORKOUT_LETTERS = Object.values(Letter)
   private static readonly WORKOUT_DAYS = Object.values(Day)
   private static readonly WORKOUTS_MAX_LENGTH = 7
@@ -92,9 +92,9 @@ export class WorkoutList {
   constructor(workouts: WorkoutWithoutLetter[]) {
     this.validateWorkouts(workouts);
 
-    const workoutsOrderedByWeekDay = this.orderWorkoutsByWeekDay(workouts);
+    const workoutsOrderedByWeekDay = this.orderByDay(workouts);
 
-    const workoutsWithLetter = this.addLetterToWorkoutsByWeekDay(workoutsOrderedByWeekDay);
+    const workoutsWithLetter = this.addLetterByDay(workoutsOrderedByWeekDay);
 
     this.workouts = workoutsWithLetter;
   }
@@ -104,7 +104,7 @@ export class WorkoutList {
   }
 
   private validateWorkouts(workouts: WorkoutWithoutLetter[]) {
-    if(workouts.length > WorkoutList.WORKOUTS_MAX_LENGTH){
+    if(workouts.length > WorkoutListBeingGetted.WORKOUTS_MAX_LENGTH){
       throw new Error('WORKOUTS_MAX_LENGTH')
     }
 
@@ -119,18 +119,18 @@ export class WorkoutList {
     }
   }
 
-  private orderWorkoutsByWeekDay(workouts: WorkoutWithoutLetter[]) {
+  private orderByDay(workouts: WorkoutWithoutLetter[]) {
     const ordered = workouts
       .sort((workoutA, workoutB) => 
-        WorkoutList.WORKOUT_DAYS.findIndex(day => day === workoutA.day) - WorkoutList.WORKOUT_DAYS.findIndex(day => day === workoutB.day))
+        WorkoutListBeingGetted.WORKOUT_DAYS.findIndex(day => day === workoutA.day) - WorkoutListBeingGetted.WORKOUT_DAYS.findIndex(day => day === workoutB.day))
   
     return ordered;
   }
 
-  private addLetterToWorkoutsByWeekDay(workouts: WorkoutWithoutLetter[]){
+  private addLetterByDay(workouts: WorkoutWithoutLetter[]){
     return workouts.map((workout, index) => ({
       ...workout,
-      letter: WorkoutList.WORKOUT_LETTERS[index]
+      letter: WorkoutListBeingGetted.WORKOUT_LETTERS[index]
     }))
   }
 }

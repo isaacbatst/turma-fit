@@ -1,4 +1,4 @@
-import WorkoutPlan from '@domain/entities/WorkoutPlan/WorkoutPlan';
+import WorkoutPlanBeingGetted from '@domain/entities/WorkoutPlan/WorkoutPlanBeingGetted';
 import { GetMyWorkoutPlansRepository } from '@domain/repositories/WorkoutPlanRepository';
 import { PrismaClient } from '@prisma/client';
 import { PrismaWorkoutPlanInclude, PrismaWorkoutPlanMapper } from '../mappers/PrismaWorkoutPlanMapper';
@@ -6,7 +6,7 @@ import { PrismaWorkoutPlanInclude, PrismaWorkoutPlanMapper } from '../mappers/Pr
 export class PrismaWorkoutPlanRepository implements GetMyWorkoutPlansRepository {
   constructor(private prisma: PrismaClient){}
 
-  async getByUserId(userId: string): Promise<WorkoutPlan[]> {
+  async getByUserId(userId: string): Promise<WorkoutPlanBeingGetted[]> {
     const workoutPlans = await this.prisma.workoutPlan.findMany({
       where: {
         userId
