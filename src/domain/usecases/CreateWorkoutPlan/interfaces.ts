@@ -1,21 +1,40 @@
-import { Grip, Set, WorkoutWithoutLetter } from "@domain/entities/WorkoutPlan/WorkoutList"
+import { Day } from "@domain/entities/WorkoutPlan/enums/Day"
+import { Grip } from "@domain/entities/WorkoutPlan/enums/Grip"
 
 export type CreateWorkoutPlanPortExercise = {
   id           : string      
   movementId   : string  
   equipmentId  : string 
-  grip?        : Grip
+  grip?        : string
 }
 
-export type CreateWorkoutPlanPortSet = Set & {
+type CreateWorkoutPlanPortExerciseValidated = CreateWorkoutPlanPortExercise & {
+  grip: Grip
+}
+
+export type CreateWorkoutPlanPortSet = {
+  repetitions: string
+  times: number
+  techniqueId: string
+  minRestTime?: number
+  maxRestTime?: number
   exercises: CreateWorkoutPlanPortExercise[]
 }
 
-export type CreateWorkoutPlanPortWorkout = WorkoutWithoutLetter & {
-  sets: CreateWorkoutPlanPortSet[],
-  day: string
+type CreateWorkoutPlanPortSetValidated = CreateWorkoutPlanPortSet & {
+  exercises: CreateWorkoutPlanPortExerciseValidated[]
 }
 
+export type CreateWorkoutPlanPortWorkout = {
+  sets: CreateWorkoutPlanPortSet[],
+  day: string
+  aerobicMinutes: number
+}
+
+export type CreateWorkoutPlanPortWorkoutValidated = CreateWorkoutPlanPortWorkout & {
+  day: Day,
+  sets: CreateWorkoutPlanPortSetValidated[]
+}
 export interface CreateWorkoutPlanUseCasePort {
   planTypeId: string
   userId: string
@@ -25,7 +44,7 @@ export interface CreateWorkoutPlanUseCasePort {
 export interface CreateWorkoutPlanUseCasePortValidated {
   planTypeId: string
   userId: string,
-  workouts: WorkoutWithoutLetter[]
+  workouts: CreateWorkoutPlanPortWorkoutValidated[]
 }
 
 export interface CreateWorkoutPlanUseCaseDTO {

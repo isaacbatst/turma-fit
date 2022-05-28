@@ -1,8 +1,8 @@
-import WorkoutPlanBeingGetted, { WorkoutPlanType } from "@domain/entities/WorkoutPlan/WorkoutPlanBeingGetted";
+import { WorkoutPlanBeingCreated } from "@domain/entities/WorkoutPlan/WorkoutPlanBeingCreated";
+import WorkoutPlanBeingGetted from "@domain/entities/WorkoutPlan/WorkoutPlanBeingGetted";
 
 export interface CreateWorkoutPlanRepository {
-  create(workoutPlan: WorkoutPlanBeingGetted, userId: string): Promise<void>,
-  getWorkoutPlanTypeById(id: string): Promise<WorkoutPlanType | null>
+  create(workoutPlan: WorkoutPlanBeingCreated, userId: string): Promise<void>,
 }
 
 export interface GetMyWorkoutPlansRepository {
