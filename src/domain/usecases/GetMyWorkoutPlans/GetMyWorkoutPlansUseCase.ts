@@ -1,5 +1,5 @@
 import { UseCase } from '@domain/common/UseCase';
-import { Workout } from '@domain/entities/WorkoutPlan/WorkoutList';
+import { Workout } from '@domain/entities/WorkoutPlan/WorkoutListBeingGetted';
 import WorkoutPlanBeingGetted, { WorkoutPlanType } from '@domain/entities/WorkoutPlan/WorkoutPlanBeingGetted';
 import { AuthorizationError } from '@domain/errors/AuthorizationError';
 import { GetMyWorkoutPlanSessionRepository } from '@domain/repositories/SessionRepository';

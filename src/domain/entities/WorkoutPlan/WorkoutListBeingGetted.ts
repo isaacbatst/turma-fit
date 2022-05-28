@@ -1,44 +1,7 @@
-export enum Day {
-  SUNDAY = 'SUNDAY',
-  MONDAY = 'MONDAY',
-  TUESDAY = 'TUESDAY',
-  WEDNESDAY = 'WEDNESDAY',
-  THURSDAY = 'THURSDAY',
-  FRIDAY = 'FRIDAY',
-  SATURDAY = 'SATURDAY',
-}
-
-export enum Grip {
-  PRONATE = 'PRONATE',
-  SUPINE = 'SUPINE',
-  NEUTRAL = 'NEUTRAL'
-}
-
-export enum MuscleGroup {
-  BICEPS = 'BICEPS',
-  TRICEPS = 'TRICEPS',
-  CHEST = 'CHEST',
-  BACK = 'BACK',
-  ABDOMINALS = 'ABDOMINALS',
-  SHOULDERS = 'SHOULDERS',
-  CALVES = 'CALVES',
-  FOREARMS = 'FOREARMS',
-  TRAPEZIUS = 'TRAPEZIUS',
-  GLUTES = 'GLUTES',
-  HAMSTRINGS = 'HAMSTRINGS',
-  LOWER_BACK = 'LOWER_BACK',
-  QUADRICEPS = 'QUADRICEPS'
-}
-
-export enum Letter {
-  A = 'A',
-  B = 'B',
-  C = 'C',
-  D = 'D',
-  E = 'E',
-  F = 'F',
-  G = 'G',
-}
+import { Day } from "@prisma/client";
+import { Grip } from "./enums/Grip";
+import { Letter } from "./enums/Letter";
+import { MuscleGroup } from "./enums/MuscleGroup";
 
 export interface Equipment {
   id: string;
@@ -52,7 +15,7 @@ interface SetTechnique {
 export interface Movement {
   name:               string
   id:                 string        
-  muscleGroup:        MuscleGroup 
+  muscleGroup:        MuscleGroup
 }
 
 export interface Exercise {
@@ -77,7 +40,7 @@ export interface Workout {
   sets               : Set[]
   aerobicMinutes     : number
   day                : Day
-  letter:             Letter
+  letter             : Letter
 }
 
 export type WorkoutWithoutLetter = Omit<Workout, 'letter'>

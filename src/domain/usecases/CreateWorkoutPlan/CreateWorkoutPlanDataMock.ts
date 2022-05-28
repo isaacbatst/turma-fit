@@ -1,4 +1,4 @@
-import { Day } from "@domain/entities/WorkoutPlan/WorkoutListBeingGetted"
+import { Day } from "@domain/entities/WorkoutPlan/enums/Day"
 import WorkoutPlanBeingGetted from "@domain/entities/WorkoutPlan/WorkoutPlanBeingGetted"
 import { CreateWorkoutPlanUseCasePort, CreateWorkoutPlanPortSet, CreateWorkoutPlanPortWorkout } from "./interfaces"
 
