@@ -1,10 +1,10 @@
 import { CookiesNames } from "@application/api/common/CookiesNames";
 import { ValidationError } from "@application/api/errors/ValidationError";
-import { BodyValidator } from "@application/api/interfaces";
+import { RequestValidator } from "@application/api/interfaces";
 import { AuthenticationError } from "@domain/errors/AuthenticationError";
 import { GetMyWorkoutPlansRequest, GetMyWorkoutPlansValidRequest } from "./GetMyWorkoutPlansRequest";
 
-export class GetMyWorkoutPlansBodyValidator implements BodyValidator<GetMyWorkoutPlansValidRequest> {
+export class GetMyWorkoutPlansRequestValidator implements RequestValidator<GetMyWorkoutPlansValidRequest> {
   validate(request: GetMyWorkoutPlansRequest): GetMyWorkoutPlansValidRequest {
     const { query: { userId }, cookies } = request;
 

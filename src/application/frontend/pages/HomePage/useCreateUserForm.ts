@@ -1,11 +1,11 @@
-import { CreateUserBodyValidatorErrors } from "@application/api/usecases/CreateUser/CreateUserBodyValidatorErrors";
+import { CreateUserRequestErrors } from "@application/api/usecases/CreateUser/CreateUserRequestErrors";
 import { CreateUserUseCaseErrors } from "@domain/usecases/CreateUserUseCase/CreateUserUseCaseErrors";
 import axios from "axios";
 import { FormEvent, useState } from "react";
 import { useSWRConfig } from "swr";
 
 
-type CreateUserApiErrors = CreateUserBodyValidatorErrors | CreateUserUseCaseErrors | 'DEFAULT'
+type CreateUserApiErrors = CreateUserRequestErrors | CreateUserUseCaseErrors | 'DEFAULT'
 
 const API_ERROR_TO_MESSAGE: Record<CreateUserApiErrors, string> = {
   INVALID_AGE: "Age must be a number",

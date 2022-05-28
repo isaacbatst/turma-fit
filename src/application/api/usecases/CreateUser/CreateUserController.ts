@@ -1,8 +1,8 @@
 import { CookiesNames } from "@application/api/common/CookiesNames";
 import { ValidationError } from "@application/api/errors/ValidationError";
-import { BodyValidator, Controller, HttpRequest, HttpResponse } from "@application/api/interfaces";
+import { RequestValidator, Controller, HttpRequest, HttpResponse } from "@application/api/interfaces";
 import { CreateUserUseCase } from "@domain/usecases/CreateUserUseCase/CreateUserUseCase";
-import { CreateUserValidBody } from "./CreateUserBodyValidator";
+import { CreateUserValidRequest } from "./CreateUserRequestValidator";
 
 export interface CreateUserResponse {
   id: string,
@@ -16,7 +16,7 @@ export class CreateUserController implements Controller<CreateUserResponse> {
   static DAYS_TO_EXPIRE_COOKIE = 15
 
   constructor(
-    private bodyValidator: BodyValidator<CreateUserValidBody>,
+    private bodyValidator: RequestValidator<CreateUserValidRequest>,
     private createUserUseCase: CreateUserUseCase
   ){}
 

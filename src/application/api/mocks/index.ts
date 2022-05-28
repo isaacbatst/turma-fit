@@ -1,8 +1,8 @@
-import { BodyValidator, HttpRequest } from "@application/api/interfaces"
+import { RequestValidator, HttpRequest } from "@application/api/interfaces"
 import { CreateUserUseCasePort } from "@domain/usecases/CreateUserUseCase/CreateUserPortValidator"
 import { ValidationError } from "../errors/ValidationError"
 
-export class BodyValidatorMock implements BodyValidator<CreateUserUseCasePort> {
+export class BodyValidatorMock implements RequestValidator<CreateUserUseCasePort> {
   public error: string | null = null
   
   validate = jest.fn((req: Record<string, any>): CreateUserUseCasePort => {
