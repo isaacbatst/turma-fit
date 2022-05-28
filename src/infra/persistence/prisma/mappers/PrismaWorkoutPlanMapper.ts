@@ -1,6 +1,9 @@
 
+import { Day } from '@domain/entities/WorkoutPlan/enums/Day';
+import { Grip } from '@domain/entities/WorkoutPlan/enums/Grip';
+import { MuscleGroup } from '@domain/entities/WorkoutPlan/enums/MuscleGroup';
+import { Equipment, Exercise, Movement, Set, WorkoutWithoutLetter } from '@domain/entities/WorkoutPlan/WorkoutListBeingGetted';
 import WorkoutPlanBeingGetted from '@domain/entities/WorkoutPlan/WorkoutPlanBeingGetted';
-import { Day, Equipment, Exercise, Grip, Movement, MuscleGroup, Set, WorkoutWithoutLetter } from '@domain/entities/WorkoutPlan/WorkoutList';
 import { Equipment as PrismaEquipment, Grip as PrismaGrip, MuscleGroup as PrismaMuscleGroup, Prisma } from '@prisma/client';
 
 export class PrismaWorkoutPlanInclude {

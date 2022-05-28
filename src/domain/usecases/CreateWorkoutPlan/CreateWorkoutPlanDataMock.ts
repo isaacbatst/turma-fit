@@ -2,7 +2,7 @@ import { Day } from "@domain/entities/WorkoutPlan/enums/Day"
 import { Grip } from "@domain/entities/WorkoutPlan/enums/Grip"
 import { WorkoutPlanBeingCreated } from "@domain/entities/WorkoutPlan/WorkoutPlanBeingCreated"
 import { UuidGeneratorMock } from "../_mocks"
-import { CreateWorkoutPlanPortExercise, CreateWorkoutPlanPortSet, CreateWorkoutPlanPortWorkout, CreateWorkoutPlanUseCasePort } from "./interfaces"
+import { CreateWorkoutPlanPortExercise, CreateWorkoutPlanPortSet, CreateWorkoutPlanPortWorkout, CreateWorkoutPlanPortWorkoutValidated, CreateWorkoutPlanUseCasePort } from "./interfaces"
 
 export class CreateWorkoutPlanDataMock {
   public PORT_EXERCISE: CreateWorkoutPlanPortExercise = {
@@ -34,7 +34,7 @@ export class CreateWorkoutPlanDataMock {
   public WORKOUT_PLAN: WorkoutPlanBeingCreated = new WorkoutPlanBeingCreated({
     planTypeId: 'any_plan_type_id',
     workouts: [
-      this.PORT_WORKOUT
+      this.PORT_WORKOUT as CreateWorkoutPlanPortWorkoutValidated
     ],
     uuidGenerator: new UuidGeneratorMock()
   })
