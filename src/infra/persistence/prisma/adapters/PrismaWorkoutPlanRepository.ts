@@ -1,7 +1,7 @@
 import WorkoutPlanBeingGetted from '@domain/entities/WorkoutPlan/WorkoutPlanBeingGetted';
 import { GetMyWorkoutPlansRepository } from '@domain/repositories/WorkoutPlanRepository';
 import { PrismaClient } from '@prisma/client';
-import { PrismaWorkoutPlanInclude, PrismaWorkoutPlanMapper } from '../mappers/PrismaWorkoutPlanMapper';
+import { PrismaWorkoutPlanInclude, PrismaGetMyWorkoutPlansMapper } from '../mappers/PrismaGetMyWorkoutPlansMapper';
 
 export class PrismaWorkoutPlanRepository implements GetMyWorkoutPlansRepository {
   constructor(private prisma: PrismaClient){}
@@ -14,6 +14,6 @@ export class PrismaWorkoutPlanRepository implements GetMyWorkoutPlansRepository 
       include: PrismaWorkoutPlanInclude.WORKOUT_PLAN_DETAILS
     });
 
-    return workoutPlans.map(prismaWorkoutPlan => PrismaWorkoutPlanMapper.ormToDomain(prismaWorkoutPlan));
+    return workoutPlans.map(prismaWorkoutPlan => PrismaGetMyWorkoutPlansMapper.ormToDomain(prismaWorkoutPlan));
   }
 }

@@ -37,7 +37,7 @@ type PrismaSetWithExercisesAndTechnique = PrismaWorkoutWithSets['sets'][number]
 type PrismaExerciseWithMovement = PrismaSetWithExercisesAndTechnique['exercises'][number]
 type PrismaMovementWithFocusedMuscleGroup = PrismaExerciseWithMovement['movement'];
 
-export class PrismaWorkoutPlanMapper {
+export class PrismaGetMyWorkoutPlansMapper {
   static ormToDomain(prismaWorkoutPlan: PrismaWorkoutPlanWithWorkoutsAndType): WorkoutPlanBeingGetted {
     const workoutPlan = new WorkoutPlanBeingGetted({
       id: prismaWorkoutPlan.id,
