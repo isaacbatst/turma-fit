@@ -23,18 +23,22 @@ interface CreateWorkoutPlanValidRequestWorkout {
   sets: CreateWorkoutPlanValidRequestSet[]
 }
 
-interface CreateWorkoutPlanValidRequest {
-  workoutPlan: {
-    planTypeId: string,
-    workouts: CreateWorkoutPlanValidRequestWorkout[]
+export interface CreateWorkoutPlanValidRequest {
+  body: {
+    workoutPlan: {
+      planTypeId: string,
+      workouts: CreateWorkoutPlanValidRequestWorkout[]
+    }
   },
   cookies: {
     [CookiesNames.AUTHORIZATION]: string
   },
-  userId: string
+  query: {
+    userId: string
+  }
 }
 
-enum CreateWorkoutPlanRequestErrors {
+export enum CreateWorkoutPlanRequestErrors {
   TOKEN_NOT_FOUND = 'TOKEN_NOT_FOUND',
   EMPTY_USER_ID = 'EMPTY_USER_ID',
   EMPTY_WORKOUT_PLAN = 'EMPTY_WORKOUT_PLAN',
@@ -54,7 +58,7 @@ enum CreateWorkoutPlanRequestErrors {
   INVALID_WORKOUT_SET_EXERCISE_GRIP = 'INVALID_WORKOUT_SET_EXERCISE_GRIP',
 }
 
-interface CreateWorkoutPlanRequest {
+export interface CreateWorkoutPlanRequest {
   cookies: Record<string, string>,
   body: Record<string, any>,
   query: Record<string, string>
@@ -93,10 +97,14 @@ export class CreateWorkoutPlanRequestValidator implements RequestValidator<Creat
       cookies: {
         [CookiesNames.AUTHORIZATION]: cookies[CookiesNames.AUTHORIZATION]
       },
-      userId: query.userId,
-      workoutPlan: {
-        planTypeId: workoutPlan.planTypeId,
-        workouts: validatedWorkouts
+      query: {
+        userId: query.userId
+      },
+      body: {
+        workoutPlan: {
+          planTypeId: workoutPlan.planTypeId,
+          workouts: validatedWorkouts
+        }
       }
     }
   }
@@ -104,7 +112,7 @@ export class CreateWorkoutPlanRequestValidator implements RequestValidator<Creat
   private validateWorkouts(workouts: any[]): CreateWorkoutPlanValidRequestWorkout[] {
     return workouts.map(({ day, aerobicMinutes, sets }) => {
       if(!day || typeof day !== 'string') {
-        throw new Error(CreateWorkoutPlanRequestErrors.INVALID_WORKOUTS)
+        throw new Error(CreateWorkoutPlanRequestErrors.INVALID_WORKOUT_DAY)
       }
 
       if(!aerobicMinutes || typeof aerobicMinutes !== 'number') {
@@ -148,7 +156,7 @@ export class CreateWorkoutPlanRequestValidator implements RequestValidator<Creat
       }
 
       if(!exercises || !Array.isArray(exercises)) {
-        throw new Error(CreateWorkoutPlanRequestErrors.INVALID_WORKOUT_SETS)
+        throw new Error(CreateWorkoutPlanRequestErrors.INVALID_WORKOUT_SET_EXERCISES)
       }
 
       const validatedExercises = this.validateExercises(exercises);
