@@ -1,54 +1,11 @@
-import { ValidationError } from "@application/api/errors/ValidationError";
-import { AuthenticationError } from "@domain/errors/AuthenticationError";
-import { AuthorizationError } from "@domain/errors/AuthorizationError";
-import { CreateWorkoutPlanUseCase } from "@domain/usecases/CreateWorkoutPlan/CreateWorkoutPlanUseCase";
-import { CreateWorkoutPlanUseCasePort, CreateWorkoutPlanUseCaseDTO } from "@domain/usecases/CreateWorkoutPlan/interfaces";
 import { CreateWorkoutPlanController, CreateWorkoutPlanResponse } from "./CreateWorkoutPlanController";
 import { CreateWorkoutPlanRequestMock } from "./CreateWorkoutPlanRequestMock";
-import { CreateWorkoutPlanValidRequest, ICreateWorkoutPlanRequestValidator } from "./CreateWorkoutPlanRequestValidator";
-
-
-class RequestValidatorMock implements ICreateWorkoutPlanRequestValidator {
-  public errorMessage = 'any_error'
-  public shouldThrowValidation = false;
-  public shouldThrowAuthentication = false;
-
-  validate = jest.fn((request: Record<string, any>): CreateWorkoutPlanValidRequest => {
-    if(this.shouldThrowValidation){
-      throw new ValidationError(this.errorMessage);
-    }
-
-    if(this.shouldThrowAuthentication) {
-      throw new AuthenticationError('any_error');
-    }
-
-    return request as CreateWorkoutPlanValidRequest;
-  })
-}
-
-class CreateWorkoutPlanServiceMock implements CreateWorkoutPlanUseCase {
-  public createdId = 'any_id'
-  public shouldThrowAuthorization = false
-  public shouldThrowGeneric = false
-
-  execute = jest.fn(async (port: CreateWorkoutPlanUseCasePort): Promise<CreateWorkoutPlanUseCaseDTO> => {
-    if(this.shouldThrowAuthorization){
-      throw new AuthorizationError('any_error');
-    }
-
-    if(this.shouldThrowGeneric) {
-      throw new Error();
-    }
-
-    return {
-      id: this.createdId
-    }
-  }) 
-}
+import { CreateWorkoutPlanRequestValidatorMock } from "./CreateWorkoutPlanRequestValidatorMock";
+import { CreateWorkoutPlanServiceMock } from "./CreateWorkoutPlanServiceMock";
 
 const makeSut = () => {
   const requestMock = new CreateWorkoutPlanRequestMock();
-  const validator = new RequestValidatorMock();
+  const validator = new CreateWorkoutPlanRequestValidatorMock();
   const service = new CreateWorkoutPlanServiceMock()
   const controller = new CreateWorkoutPlanController(validator, service);
   
