@@ -3,7 +3,7 @@ import { Day } from "./enums/Day"
 
 interface ExerciseBeingCreated {
   movementId: string,
-  equipmentId: string,
+  equipmentId?: string,
 }
 
 interface SetBeingCreated {

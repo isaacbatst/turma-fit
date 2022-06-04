@@ -28,7 +28,8 @@ export class CreateWorkoutPlanDataMock {
     userId: 'any_user_id',
     workouts: [
       this.PORT_WORKOUT
-    ]
+    ],
+    token: 'any_token'
   }
 
   public WORKOUT_PLAN: WorkoutPlanBeingCreated = new WorkoutPlanBeingCreated({

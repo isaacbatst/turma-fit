@@ -4,7 +4,7 @@ import { Grip } from "@domain/entities/WorkoutPlan/enums/Grip"
 
 export type CreateWorkoutPlanPortExercise = {
   movementId   : string  
-  equipmentId  : string 
+  equipmentId?  : string 
   grip?        : string
 }
 
