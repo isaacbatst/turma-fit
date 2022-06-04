@@ -2,8 +2,8 @@ import { CookiesHandler } from "@application/api/common/CookiesHandler";
 import { NextApiRequest, NextApiResponse } from "next";
 import { Controller, HttpRequest } from "../../interfaces";
 
-export class NextApiHandlerAdapter {
-  constructor(private controller: Controller) {
+export class NextApiHandlerAdapter<Response> {
+  constructor(private controller: Controller<Response>) {
 
   }
   

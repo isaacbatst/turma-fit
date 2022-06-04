@@ -1,4 +1,5 @@
 import { CookiesNames } from "@application/api/common/CookiesNames";
+import { ValidationError } from "@application/api/errors/ValidationError";
 import { RequestValidator } from "@application/api/interfaces";
 import { AuthenticationError } from "@domain/errors/AuthenticationError";
 
@@ -72,23 +73,23 @@ export class CreateWorkoutPlanRequestValidator implements RequestValidator<Creat
     }
 
     if(!query.userId){
-      throw new Error(CreateWorkoutPlanRequestErrors.EMPTY_USER_ID)
+      throw new ValidationError(CreateWorkoutPlanRequestErrors.EMPTY_USER_ID)
     }
 
     const { workoutPlan } = body;
 
     if(!workoutPlan) {
-      throw new Error(CreateWorkoutPlanRequestErrors.EMPTY_WORKOUT_PLAN)
+      throw new ValidationError(CreateWorkoutPlanRequestErrors.EMPTY_WORKOUT_PLAN)
     }
 
     const { planTypeId, workouts } = workoutPlan;
 
     if(!planTypeId || typeof planTypeId !== 'string') {
-      throw new Error(CreateWorkoutPlanRequestErrors.INVALID_PLAN_TYPE_ID)
+      throw new ValidationError(CreateWorkoutPlanRequestErrors.INVALID_PLAN_TYPE_ID)
     }
 
     if(!workouts || !Array.isArray(workouts)){
-      throw new Error(CreateWorkoutPlanRequestErrors.INVALID_WORKOUTS)
+      throw new ValidationError(CreateWorkoutPlanRequestErrors.INVALID_WORKOUTS)
     }
 
     const validatedWorkouts = this.validateWorkouts(workouts);
@@ -112,15 +113,15 @@ export class CreateWorkoutPlanRequestValidator implements RequestValidator<Creat
   private validateWorkouts(workouts: any[]): CreateWorkoutPlanValidRequestWorkout[] {
     return workouts.map(({ day, aerobicMinutes, sets }) => {
       if(!day || typeof day !== 'string') {
-        throw new Error(CreateWorkoutPlanRequestErrors.INVALID_WORKOUT_DAY)
+        throw new ValidationError(CreateWorkoutPlanRequestErrors.INVALID_WORKOUT_DAY)
       }
 
       if(!aerobicMinutes || typeof aerobicMinutes !== 'number') {
-        throw new Error(CreateWorkoutPlanRequestErrors.INVALID_WORKOUT_AEROBIC_MINUTES)
+        throw new ValidationError(CreateWorkoutPlanRequestErrors.INVALID_WORKOUT_AEROBIC_MINUTES)
       }
 
       if(!sets || !Array.isArray(sets)) {
-        throw new Error(CreateWorkoutPlanRequestErrors.INVALID_WORKOUT_SETS)
+        throw new ValidationError(CreateWorkoutPlanRequestErrors.INVALID_WORKOUT_SETS)
       }
 
       const validatedSets = this.validateSets(sets)
@@ -136,27 +137,27 @@ export class CreateWorkoutPlanRequestValidator implements RequestValidator<Creat
   private validateSets(sets: any[]): CreateWorkoutPlanValidRequestSet[] {
     return sets.map(({ repetitions, times, techniqueId, maxRestTime, minRestTime, exercises }) => {
       if(!repetitions || typeof repetitions !== 'string') {
-        throw new Error(CreateWorkoutPlanRequestErrors.INVALID_WORKOUT_SET_REPETITIONS)
+        throw new ValidationError(CreateWorkoutPlanRequestErrors.INVALID_WORKOUT_SET_REPETITIONS)
       }
 
       if(!times || typeof times !== 'number') {
-        throw new Error(CreateWorkoutPlanRequestErrors.INVALID_WORKOUT_SET_TIMES)
+        throw new ValidationError(CreateWorkoutPlanRequestErrors.INVALID_WORKOUT_SET_TIMES)
       }
 
       if(!techniqueId || typeof techniqueId !== 'string') {
-        throw new Error(CreateWorkoutPlanRequestErrors.INVALID_WORKOUT_SET_TECHNIQUE_ID)
+        throw new ValidationError(CreateWorkoutPlanRequestErrors.INVALID_WORKOUT_SET_TECHNIQUE_ID)
       }
 
       if(typeof maxRestTime !== 'undefined' && typeof maxRestTime !== 'number') {
-        throw new Error(CreateWorkoutPlanRequestErrors.INVALID_WORKOUT_SET_MAX_REST_TIME)
+        throw new ValidationError(CreateWorkoutPlanRequestErrors.INVALID_WORKOUT_SET_MAX_REST_TIME)
       }
 
       if(typeof minRestTime !== 'undefined' && typeof minRestTime !== 'number') {
-        throw new Error(CreateWorkoutPlanRequestErrors.INVALID_WORKOUT_SET_MIN_REST_TIME)
+        throw new ValidationError(CreateWorkoutPlanRequestErrors.INVALID_WORKOUT_SET_MIN_REST_TIME)
       }
 
       if(!exercises || !Array.isArray(exercises)) {
-        throw new Error(CreateWorkoutPlanRequestErrors.INVALID_WORKOUT_SET_EXERCISES)
+        throw new ValidationError(CreateWorkoutPlanRequestErrors.INVALID_WORKOUT_SET_EXERCISES)
       }
 
       const validatedExercises = this.validateExercises(exercises);
@@ -175,15 +176,15 @@ export class CreateWorkoutPlanRequestValidator implements RequestValidator<Creat
   private validateExercises(exercises: any[]): CreateWorkoutPlanValidRequestExercise[] {
     return exercises.map(({ movementId, equipmentId, grip }) => {
       if(!movementId || typeof movementId !== 'string') {
-        throw new Error(CreateWorkoutPlanRequestErrors.INVALID_WORKOUT_SET_EXERCISE_MOVEMENT_ID)
+        throw new ValidationError(CreateWorkoutPlanRequestErrors.INVALID_WORKOUT_SET_EXERCISE_MOVEMENT_ID)
       }
 
       if(!equipmentId || typeof equipmentId !== 'string') {
-        throw new Error(CreateWorkoutPlanRequestErrors.INVALID_WORKOUT_SET_EXERCISE_EQUIPMENT_ID)
+        throw new ValidationError(CreateWorkoutPlanRequestErrors.INVALID_WORKOUT_SET_EXERCISE_EQUIPMENT_ID)
       }
 
       if(typeof grip !== 'undefined' && typeof grip !== 'string') {
-        throw new Error(CreateWorkoutPlanRequestErrors.INVALID_WORKOUT_SET_EXERCISE_GRIP)
+        throw new ValidationError(CreateWorkoutPlanRequestErrors.INVALID_WORKOUT_SET_EXERCISE_GRIP)
       }
 
       return {

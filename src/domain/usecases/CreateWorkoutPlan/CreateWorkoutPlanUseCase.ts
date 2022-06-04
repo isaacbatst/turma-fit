@@ -6,8 +6,9 @@ import { CreateWorkoutPlanSessionRepository } from "@domain/repositories/Session
 import { CreateWorkoutPlanRepository } from "@domain/repositories/WorkoutPlanRepository";
 import { CreateWorkoutPlanUseCaseDTO, CreateWorkoutPlanUseCasePort, ICreateWorkoutPlanPortValidator } from "./interfaces";
 
+export interface CreateWorkoutPlanUseCase extends UseCase<CreateWorkoutPlanUseCasePort, CreateWorkoutPlanUseCaseDTO> {}
 
-export class CreateWorkoutPlanService implements UseCase<CreateWorkoutPlanUseCasePort, CreateWorkoutPlanUseCaseDTO> {
+export class CreateWorkoutPlanService implements CreateWorkoutPlanUseCase {
   constructor(
     private workoutPlanRepository: CreateWorkoutPlanRepository,
     private uuidGenerator: UuidGenerator,

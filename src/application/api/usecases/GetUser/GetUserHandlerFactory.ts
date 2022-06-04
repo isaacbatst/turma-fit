@@ -6,7 +6,7 @@ import { GetUserController } from "./GetUserController";
 import { GetUserRequestValidator } from "./GetUserRequestValidator";
 
 export class GetUserHandlerFactory {
-  static make(): NextApiHandlerAdapter {
+  static make() {
     const userRepository = new PrismaUserRepository(prisma);
     const getUserUseCase = new GetUserUseCase(userRepository);
     const getUserRequestValidator = new GetUserRequestValidator();
