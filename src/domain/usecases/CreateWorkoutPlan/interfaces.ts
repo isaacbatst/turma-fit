@@ -39,12 +39,14 @@ export interface CreateWorkoutPlanUseCasePort {
   planTypeId: string
   userId: string
   workouts: CreateWorkoutPlanPortWorkout[]
+  token: string
 }
 
 export interface CreateWorkoutPlanUseCasePortValidated {
   planTypeId: string
   userId: string,
   workouts: CreateWorkoutPlanPortWorkoutValidated[]
+  token: string,
 }
 
 export interface CreateWorkoutPlanUseCaseDTO {

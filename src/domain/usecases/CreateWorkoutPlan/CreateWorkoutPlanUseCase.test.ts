@@ -1,7 +1,8 @@
+import { AuthorizationError } from "@domain/errors/AuthorizationError";
 import { UuidGeneratorMock } from "../_mocks";
 import { CreateWorkoutPlanDataMock } from "./CreateWorkoutPlanDataMock";
 import { CreateWorkoutPlanPortValidatorMock } from "./CreateWorkoutPlanPortValidatorMock";
-import { CreateWorkoutPlanRepositoryMock } from "./CreateWorkoutPlanRepositoryMock";
+import { CreateWorkoutPlanRepositoryMock, CreateWorkoutPlanSessionRepositoryMock } from "./CreateWorkoutPlanRepositoryMock";
 import { CreateWorkoutPlanService } from "./CreateWorkoutPlanUseCase";
 
 const makeSut = () => {
@@ -9,14 +10,21 @@ const makeSut = () => {
   const dataMock = new CreateWorkoutPlanDataMock();
   const uuidGenerator = new UuidGeneratorMock(dataMock.WORKOUT_PLAN.getId());
   const portValidator = new CreateWorkoutPlanPortValidatorMock();
-  const createWorkoutPlanUseCase = new CreateWorkoutPlanService(workoutPlanRepository, uuidGenerator, portValidator);
+  const sessionRepository = new CreateWorkoutPlanSessionRepositoryMock();
+  const createWorkoutPlanUseCase = new CreateWorkoutPlanService(
+    workoutPlanRepository, 
+    uuidGenerator, 
+    portValidator,
+    sessionRepository
+  );
 
   return {
     createWorkoutPlanUseCase,
     uuidGenerator,
     portValidator,
     workoutPlanRepository,
-    dataMock
+    dataMock,
+    sessionRepository
   }
 }
 
@@ -29,7 +37,27 @@ describe('CreateWorkoutPlanUseCase', () => {
     expect(portValidator.validate).toBeCalledWith(dataMock.PORT)
   })
 
-  describe('Given validated data', () => {
+  it('should call session validation with port token and user id', async () => {
+    const { sessionRepository, createWorkoutPlanUseCase, dataMock } = makeSut();
+
+    await createWorkoutPlanUseCase.execute(dataMock.PORT);
+
+    expect(sessionRepository.validate).toHaveBeenCalledWith(dataMock.PORT.token, dataMock.PORT.userId);
+  })
+
+  describe('Given unauthorized session for requested user id', () => {
+    it('should throw authorization error', async () => {
+      const { sessionRepository, createWorkoutPlanUseCase, dataMock } = makeSut();
+      sessionRepository.isValid = false;
+
+      expect(async () => {
+        await createWorkoutPlanUseCase.execute(dataMock.PORT);
+      }).rejects.toThrowError(AuthorizationError)
+
+    })
+  })
+
+  describe('Given authorized session for requested user id', () => {
     it('should call uuid generator', async () => {
       const { createWorkoutPlanUseCase, uuidGenerator, dataMock } = makeSut();
 
