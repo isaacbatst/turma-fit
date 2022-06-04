@@ -1,22 +1,22 @@
 import { CookiesNames } from "@application/api/common/CookiesNames";
 import { ValidationError } from "@application/api/errors/ValidationError";
-import { Controller, HttpRequest, HttpResponse, RequestValidator } from "@application/api/interfaces";
+import { Controller, HttpResponse } from "@application/api/interfaces";
 import { AuthenticationError } from "@domain/errors/AuthenticationError";
 import { AuthorizationError } from "@domain/errors/AuthorizationError";
 import { CreateWorkoutPlanUseCase } from "@domain/usecases/CreateWorkoutPlan/CreateWorkoutPlanUseCase";
-import { CreateWorkoutPlanValidRequest } from "./CreateWorkoutPlanRequestValidator";
+import { CreateWorkoutPlanRequest, ICreateWorkoutPlanRequestValidator } from "./CreateWorkoutPlanRequestValidator";
 
-interface CreateWorkoutPlanResponse {
+export interface CreateWorkoutPlanResponse {
   id: string
 }
 
 export class CreateWorkoutPlanController implements Controller<CreateWorkoutPlanResponse> {
   constructor(
-    private requestValidator: RequestValidator<CreateWorkoutPlanValidRequest>,
+    private requestValidator: ICreateWorkoutPlanRequestValidator,
     private createWorkoutPlanService: CreateWorkoutPlanUseCase
   ){}
 
-  async handle(request: HttpRequest): Promise<HttpResponse<CreateWorkoutPlanResponse>> {
+  async handle(request: CreateWorkoutPlanRequest): Promise<HttpResponse<CreateWorkoutPlanResponse>> {
     try {
       const validatedRequest = this.requestValidator.validate(request);
 

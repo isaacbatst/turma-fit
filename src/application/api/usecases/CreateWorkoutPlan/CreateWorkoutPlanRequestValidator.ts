@@ -64,7 +64,9 @@ export interface CreateWorkoutPlanRequest {
   body: Record<string, any>,
   query: Record<string, string>
 }
-export class CreateWorkoutPlanRequestValidator implements RequestValidator<CreateWorkoutPlanValidRequest> {
+
+export interface ICreateWorkoutPlanRequestValidator extends RequestValidator<CreateWorkoutPlanValidRequest> {}
+export class CreateWorkoutPlanRequestValidator implements ICreateWorkoutPlanRequestValidator {
   validate(request: CreateWorkoutPlanRequest): CreateWorkoutPlanValidRequest {
     const { cookies, query, body } = request;
 
