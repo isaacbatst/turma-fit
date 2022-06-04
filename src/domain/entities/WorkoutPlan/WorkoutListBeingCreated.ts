@@ -14,6 +14,7 @@ interface SetBeingCreated {
 
 export interface WorkoutBeingCreated {
   sets: SetBeingCreated[],
+  aerobicMinutes: number,
   day: Day
 }
 
@@ -33,6 +34,7 @@ interface Set extends SetBeingCreated {
 
 interface Workout extends WorkoutBeingCreated {
   id: string
+  aerobicMinutes: number
   sets: Set[]
 }
 

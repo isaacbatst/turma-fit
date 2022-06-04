@@ -1,9 +1,11 @@
+import { WorkoutPlanBeingCreated } from '@domain/entities/WorkoutPlan/WorkoutPlanBeingCreated';
 import WorkoutPlanBeingGetted from '@domain/entities/WorkoutPlan/WorkoutPlanBeingGetted';
-import { GetMyWorkoutPlansRepository } from '@domain/repositories/WorkoutPlanRepository';
+import { CreateWorkoutPlanRepository, GetMyWorkoutPlansRepository } from '@domain/repositories/WorkoutPlanRepository';
 import { PrismaClient } from '@prisma/client';
+import { PrismaCreateWorkoutPlanMapper } from '../mappers/PrismaCreateWorkoutPlanMapper';
 import { PrismaWorkoutPlanInclude, PrismaGetMyWorkoutPlansMapper } from '../mappers/PrismaGetMyWorkoutPlansMapper';
 
-export class PrismaWorkoutPlanRepository implements GetMyWorkoutPlansRepository {
+export class PrismaWorkoutPlanRepository implements GetMyWorkoutPlansRepository, CreateWorkoutPlanRepository {
   constructor(private prisma: PrismaClient){}
 
   async getByUserId(userId: string): Promise<WorkoutPlanBeingGetted[]> {
@@ -15,5 +17,18 @@ export class PrismaWorkoutPlanRepository implements GetMyWorkoutPlansRepository 
     });
 
     return workoutPlans.map(prismaWorkoutPlan => PrismaGetMyWorkoutPlansMapper.ormToDomain(prismaWorkoutPlan));
+  }
+
+  async create(workoutPlan: WorkoutPlanBeingCreated, userId: string): Promise<void> {
+    const prismaWorkoutPlan = PrismaCreateWorkoutPlanMapper.domainToOrm(workoutPlan, userId);
+
+    await this.prisma.workoutPlan.create({
+      data: {
+        ...prismaWorkoutPlan,
+        workouts: {
+          create: workoutPlan.getWorkouts()
+        }
+      },
+    })
   }
 }

@@ -5,7 +5,7 @@ export interface SessionRepository {
 }
 
 export interface GetMyWorkoutPlanSessionRepository {
-  validateUserToken(userId: string, sessionToken: string): Promise<boolean>
+  validate(userId: string, sessionToken: string): Promise<boolean>
 }
 
 export interface CreateWorkoutPlanSessionRepository {

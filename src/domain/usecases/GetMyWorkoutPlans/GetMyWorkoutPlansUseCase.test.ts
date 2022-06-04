@@ -37,7 +37,7 @@ describe('GetMyWorkoutPlansUseCase', () => {
 
     await getMyWorkoutPlansUseCase.execute(GetMyWorkoutPlansDataMock.DEFAULT_PORT);
 
-    expect(sessionRepository.validateUserToken).toBeCalledWith(
+    expect(sessionRepository.validate).toBeCalledWith(
       GetMyWorkoutPlansDataMock.DEFAULT_PORT.userId,
       GetMyWorkoutPlansDataMock.DEFAULT_PORT.sessionToken
     )

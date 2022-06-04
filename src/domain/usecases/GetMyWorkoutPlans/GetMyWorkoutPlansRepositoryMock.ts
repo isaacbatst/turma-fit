@@ -11,7 +11,7 @@ export class GetMyWorkoutPlansRepositoryMock implements GetMyWorkoutPlansReposit
 export class GetMyWorkoutPlanSessionRepositoryMock implements GetMyWorkoutPlanSessionRepository {
   isValid = true
 
-  validateUserToken = jest.fn(() => {
+  validate = jest.fn(() => {
     return Promise.resolve(this.isValid);
   })
 }
