@@ -9,7 +9,10 @@ interface ExerciseBeingCreated {
 interface SetBeingCreated {
   times: number,
   repetitions: string,
-  exercises: ExerciseBeingCreated[]
+  exercises: ExerciseBeingCreated[],
+  techniqueId?: string,
+  minRestTime?: number,
+  maxRestTime?: number
 }
 
 export interface WorkoutBeingCreated {

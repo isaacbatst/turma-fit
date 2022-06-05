@@ -60,14 +60,9 @@ export class CreateWorkoutPlanController implements Controller<CreateWorkoutPlan
 
       if(error instanceof RelationError){
         return {
-          statusCode: 422
-        }
-      }
-
-      if(error instanceof Error) {
-        if(error.message === 'INVALID_DAY') {
-          return {
-            statusCode: 422
+          statusCode: 422,
+          body: {
+            error: error.message
           }
         }
       }

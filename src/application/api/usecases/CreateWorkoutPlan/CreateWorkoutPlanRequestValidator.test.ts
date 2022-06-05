@@ -188,17 +188,6 @@ describe('CreateWorkoutPlanRequestValidator', () => {
     })
   })
 
-  describe('Given request does not includes workout sets technique id', () => {
-    it('should throw INVALID_WORKOUT_SET_TECHNIQUE_ID error', () => {
-      const { validator, mock } = makeSut();
-      mock.SET.techniqueId = undefined;
-
-      expect(() => {
-        validator.validate(mock.REQUEST)
-      }).toThrowError(CreateWorkoutPlanRequestErrors.INVALID_WORKOUT_SET_TECHNIQUE_ID);
-    })
-  })
-
   describe('Given request with technique id not a string', () => {
     it('should throw INVALID_WORKOUT_SET_TECHNIQUE_ID error', () => {
       const { validator, mock } = makeSut();
@@ -232,10 +221,10 @@ describe('CreateWorkoutPlanRequestValidator', () => {
     })
   })
 
-  describe('Given request does not includes exercise equipment id', () => {
+  describe('Given request exercise equipment id is not a string', () => {
     it('should throw INVALID_WORKOUT_SET_EXERCISE_EQUIPMENT_ID error', () => {
       const { validator, mock } = makeSut();
-      mock.EXERCISE.equipmentId = undefined;
+      mock.EXERCISE.equipmentId = { not: 'string' };
 
       expect(() => {
         validator.validate(mock.REQUEST)

@@ -1,9 +1,10 @@
+import { ValidationError } from '@application/api/errors/ValidationError';
 import { WorkoutPlanBeingCreated } from '@domain/entities/WorkoutPlan/WorkoutPlanBeingCreated';
 import WorkoutPlanBeingGetted from '@domain/entities/WorkoutPlan/WorkoutPlanBeingGetted';
 import { CreateWorkoutPlanRepository, GetMyWorkoutPlansRepository } from '@domain/repositories/WorkoutPlanRepository';
 import { RelationError } from '@infra/persistence/errors/RelationError';
-import { PrismaClient } from '@prisma/client';
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
+import { Prisma, PrismaClient } from '@prisma/client';
+import { PrismaClientKnownRequestError, PrismaClientValidationError } from '@prisma/client/runtime';
 import { PrismaCreateWorkoutPlanMapper } from '../mappers/PrismaCreateWorkoutPlanMapper';
 import { PrismaGetMyWorkoutPlansMapper, PrismaWorkoutPlanInclude } from '../mappers/PrismaGetMyWorkoutPlansMapper';
 
@@ -29,17 +30,45 @@ export class PrismaWorkoutPlanRepository implements GetMyWorkoutPlansRepository,
         data: {
           ...prismaWorkoutPlan,
           workouts: {
-            create: workoutPlan.getWorkouts()
+            create: workoutPlan.getWorkouts().map<Prisma.WorkoutCreateInput>(workout => ({
+              ...workout,
+              sets: {
+                create: workout.sets.map<Prisma.SetCreateInput>(set => ({
+                  repetitions: set.repetitions,
+                  times: set.times,
+                  maxRestTime: set.maxRestTime,
+                  minRestTime: set.minRestTime,
+                  technique: set.techniqueId ? {
+                    connect: {
+                      id: set.techniqueId
+                    }
+                  } : undefined,
+                  exercises: {
+                    create: set.exercises
+                  }
+                }))
+              }
+            }))
           }
         },
       })
     } catch(error) {
       if(error instanceof PrismaClientKnownRequestError) {
-        if(error.code === 'P2003') {
-          throw new RelationError();
+        if(error.code === 'P2025'){
+          throw new RelationError('NOT_FOUND_RELATION');
+        }
+
+        if(error.code === 'P2003'){
+          throw new RelationError('NOT_FOUND_RELATION');
         }
       }
 
+      console.error(error)
+
+      if(error instanceof PrismaClientValidationError) {
+        throw new ValidationError('UNKNOWN_BODY_ERROR');
+      }
+      
       throw new Error();
     }
   }

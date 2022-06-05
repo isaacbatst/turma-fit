@@ -146,7 +146,7 @@ export class CreateWorkoutPlanRequestValidator implements ICreateWorkoutPlanRequ
         throw new ValidationError(CreateWorkoutPlanRequestErrors.INVALID_WORKOUT_SET_TIMES)
       }
 
-      if(!techniqueId || typeof techniqueId !== 'string') {
+      if(techniqueId && typeof techniqueId !== 'string') {
         throw new ValidationError(CreateWorkoutPlanRequestErrors.INVALID_WORKOUT_SET_TECHNIQUE_ID)
       }
 
@@ -181,7 +181,7 @@ export class CreateWorkoutPlanRequestValidator implements ICreateWorkoutPlanRequ
         throw new ValidationError(CreateWorkoutPlanRequestErrors.INVALID_WORKOUT_SET_EXERCISE_MOVEMENT_ID)
       }
 
-      if(!equipmentId || typeof equipmentId !== 'string') {
+      if(equipmentId && typeof equipmentId !== 'string') {
         throw new ValidationError(CreateWorkoutPlanRequestErrors.INVALID_WORKOUT_SET_EXERCISE_EQUIPMENT_ID)
       }
 

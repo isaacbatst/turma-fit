@@ -1,5 +1,6 @@
 import { Day } from "@domain/entities/WorkoutPlan/enums/Day";
 import { Grip } from "@domain/entities/WorkoutPlan/enums/Grip";
+import { RelationError } from "@infra/persistence/errors/RelationError";
 import { CreateWorkoutPlanPortExercise, CreateWorkoutPlanPortExerciseValidated, CreateWorkoutPlanPortSet, CreateWorkoutPlanPortSetValidated, CreateWorkoutPlanPortWorkout, CreateWorkoutPlanPortWorkoutValidated, CreateWorkoutPlanUseCasePort, CreateWorkoutPlanUseCasePortValidated, ICreateWorkoutPlanPortValidator } from "./interfaces";
 
 export class CreateWorkoutPlanPortValidator implements ICreateWorkoutPlanPortValidator {
@@ -15,7 +16,7 @@ export class CreateWorkoutPlanPortValidator implements ICreateWorkoutPlanPortVal
   private validateWorkouts(workouts: CreateWorkoutPlanPortWorkout[]): CreateWorkoutPlanPortWorkoutValidated[] {
     return workouts.map(workout => {
       if(!(workout.day in Day)){
-        throw new Error('INVALID_DAY');
+        throw new RelationError('INVALID_DAY');
       }
 
       return {
@@ -36,7 +37,7 @@ export class CreateWorkoutPlanPortValidator implements ICreateWorkoutPlanPortVal
   private validateExercises(exercises: CreateWorkoutPlanPortExercise[]): CreateWorkoutPlanPortExerciseValidated[] {
     return exercises.map((exercise) => {
       if(exercise.grip && !(exercise.grip in Grip)){
-        throw new Error('INVALID_GRIP')
+        throw new RelationError('INVALID_GRIP')
       }
 
       return {
