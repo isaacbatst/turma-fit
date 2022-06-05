@@ -1,4 +1,4 @@
-import { WorkoutList, WorkoutWithoutLetter } from "./WorkoutList"
+import { WorkoutListBeingGetted, WorkoutWithoutLetter } from "./WorkoutListBeingGetted"
 
 export interface WorkoutPlanType {
   id: string,
@@ -13,15 +13,15 @@ interface CreateWorkoutPlanEntityParams {
   planType: WorkoutPlanType
 }
 
-export default class WorkoutPlan {
+export default class WorkoutPlanBeingGetted {
   private id        : string                     
-  private workoutList  : WorkoutList
+  private workoutList  : WorkoutListBeingGetted
   private planType  : WorkoutPlanType
 
   constructor(params: CreateWorkoutPlanEntityParams){
     this.id = params.id;
     this.planType = params.planType;
-    this.workoutList = new WorkoutList(params.workouts);
+    this.workoutList = new WorkoutListBeingGetted(params.workouts);
   }
 
   getId() {

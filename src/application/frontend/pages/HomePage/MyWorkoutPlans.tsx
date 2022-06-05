@@ -1,4 +1,4 @@
-import { Day } from "@domain/entities/WorkoutPlan/WorkoutList"
+import { Day } from "@domain/entities/WorkoutPlan/enums/Day"
 import { WorkoutPlanDTO } from "@domain/usecases/GetMyWorkoutPlans/GetMyWorkoutPlansUseCase"
 
 type MyWorkoutPlansProps = {

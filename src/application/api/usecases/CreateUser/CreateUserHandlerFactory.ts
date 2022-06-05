@@ -8,7 +8,7 @@ import { PrismaSessionRepository } from "@infra/persistence/prisma/adapters/Pris
 import { CreateUserPortValidator } from "@domain/usecases/CreateUserUseCase/CreateUserPortValidator";
 import { CryptoTokenGeneratorAdapter } from "../../adapters/TokenGenerator/CryptoTokenGeneratorAdapter";
 import { Uuidv4UuidGeneratorAdapter } from "../../adapters/UuidGenerator/Uuidv4UuidGeneratorAdapter";
-import { CreateUserBodyValidator } from "./CreateUserBodyValidator";
+import { CreateUserRequestValidator } from "./CreateUserRequestValidator";
 import { CreateUserController } from "./CreateUserController";
 
 export class CreateUserHandlerFactory {
@@ -31,7 +31,7 @@ export class CreateUserHandlerFactory {
       uuidGenerator,
     });
   
-    const createUserBodyValidator = new CreateUserBodyValidator();
+    const createUserBodyValidator = new CreateUserRequestValidator();
   
     const createUserController = new CreateUserController(
       createUserBodyValidator,

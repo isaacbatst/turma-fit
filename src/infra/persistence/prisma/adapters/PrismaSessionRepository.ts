@@ -1,8 +1,8 @@
 import { Session } from "@domain/entities/User/Session";
-import { GetMyWorkoutPlanSessionRepository, SessionRepository } from "@domain/repositories/SessionRepository";
+import { CreateWorkoutPlanSessionRepository, GetMyWorkoutPlanSessionRepository, SessionRepository } from "@domain/repositories/SessionRepository";
 import { PrismaClient } from "@prisma/client";
 
-export class PrismaSessionRepository implements SessionRepository, GetMyWorkoutPlanSessionRepository {
+export class PrismaSessionRepository implements SessionRepository, GetMyWorkoutPlanSessionRepository, CreateWorkoutPlanSessionRepository {
   constructor(
     private prisma: PrismaClient
   ) {}
@@ -21,14 +21,14 @@ export class PrismaSessionRepository implements SessionRepository, GetMyWorkoutP
     })
   }
 
-  async validateUserToken(userId: string, sessionToken: string): Promise<boolean> {
+  async validate(token: string, userId: string): Promise<boolean> {
     const session = await this.prisma.session.findFirst({
       where: {
-        token: sessionToken,
+        token,
         userId
       }
     })
 
-    return !!session;
+    return Boolean(session);
   }
 }

@@ -3,7 +3,7 @@ import { GetMyWorkoutPlansUseCase } from "@domain/usecases/GetMyWorkoutPlans/Get
 import { PrismaSessionRepository } from "@infra/persistence/prisma/adapters/PrismaSessionRepository";
 import { PrismaWorkoutPlanRepository } from "@infra/persistence/prisma/adapters/PrismaWorkoutPlanRepository";
 import { prisma } from "src/lib/prisma";
-import { GetMyWorkoutPlansBodyValidator } from "./GetMyWorkoutPlansBodyValidator";
+import { GetMyWorkoutPlansRequestValidator } from "./GetMyWorkoutPlansRequestValidator";
 import { GetMyWorkoutPlansController } from "./GetMyWorkoutPlansController";
 
 export class GetMyWorkoutPlansHandlerFactory {
@@ -16,7 +16,7 @@ export class GetMyWorkoutPlansHandlerFactory {
       getMyWorkoutPlansSessionRepository
     );
 
-    const getMyWorkoutPlansBodyValidator = new GetMyWorkoutPlansBodyValidator();
+    const getMyWorkoutPlansBodyValidator = new GetMyWorkoutPlansRequestValidator();
 
     const getMyWorkoutPlansHandler = new GetMyWorkoutPlansController(
       getMyWorkoutPlansUseCase,

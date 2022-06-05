@@ -1,4 +1,4 @@
-export enum CreateUserBodyValidatorErrors {
+export enum CreateUserRequestErrors {
   INVALID_PASSWORD = 'INVALID_PASSWORD',
   INVALID_AGE = 'INVALID_AGE',
   INVALID_EMAIL = 'INVALID_EMAIL',

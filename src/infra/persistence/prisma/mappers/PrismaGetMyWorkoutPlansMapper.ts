@@ -1,6 +1,9 @@
 
-import WorkoutPlan from '@domain/entities/WorkoutPlan/WorkoutPlan';
-import { Day, Equipment, Exercise, Grip, Movement, MuscleGroup, Set, WorkoutWithoutLetter } from '@domain/entities/WorkoutPlan/WorkoutList';
+import { Day } from '@domain/entities/WorkoutPlan/enums/Day';
+import { Grip } from '@domain/entities/WorkoutPlan/enums/Grip';
+import { MuscleGroup } from '@domain/entities/WorkoutPlan/enums/MuscleGroup';
+import { Equipment, Exercise, Movement, Set, WorkoutWithoutLetter } from '@domain/entities/WorkoutPlan/WorkoutListBeingGetted';
+import WorkoutPlanBeingGetted from '@domain/entities/WorkoutPlan/WorkoutPlanBeingGetted';
 import { Equipment as PrismaEquipment, Grip as PrismaGrip, MuscleGroup as PrismaMuscleGroup, Prisma } from '@prisma/client';
 
 export class PrismaWorkoutPlanInclude {
@@ -34,9 +37,9 @@ type PrismaSetWithExercisesAndTechnique = PrismaWorkoutWithSets['sets'][number]
 type PrismaExerciseWithMovement = PrismaSetWithExercisesAndTechnique['exercises'][number]
 type PrismaMovementWithFocusedMuscleGroup = PrismaExerciseWithMovement['movement'];
 
-export class PrismaWorkoutPlanMapper {
-  static ormToDomain(prismaWorkoutPlan: PrismaWorkoutPlanWithWorkoutsAndType): WorkoutPlan {
-    const workoutPlan = new WorkoutPlan({
+export class PrismaGetMyWorkoutPlansMapper {
+  static ormToDomain(prismaWorkoutPlan: PrismaWorkoutPlanWithWorkoutsAndType): WorkoutPlanBeingGetted {
+    const workoutPlan = new WorkoutPlanBeingGetted({
       id: prismaWorkoutPlan.id,
       planType: prismaWorkoutPlan.type,
       workouts: prismaWorkoutPlan.workouts.map(prismaWorkout => PrismaWorkoutMapper.ormToDomain(prismaWorkout)),

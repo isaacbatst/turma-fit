@@ -1,11 +1,11 @@
 import { RequestMock } from "@application/api/mocks";
-import { GetMyWorkoutBodyValidatorMock } from "./GetMyWorkoutBodyValidatorMock";
+import { GetMyWorkoutRequestValidatorMock } from "./GetMyWorkoutRequestValidatorMock";
 import { GetMyWorkoutPlansController } from "./GetMyWorkoutPlansController";
 import { GetMyWorkoutPlansServiceMock } from "./GetMyWorkoutPlansServiceMock";
 
 const makeSut = () => {
   const service = new GetMyWorkoutPlansServiceMock();
-  const bodyValidator = new GetMyWorkoutBodyValidatorMock();
+  const bodyValidator = new GetMyWorkoutRequestValidatorMock();
   const controller = new GetMyWorkoutPlansController(
     service,
     bodyValidator,

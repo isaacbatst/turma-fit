@@ -1,4 +1,6 @@
-import { Day, Letter, MuscleGroup } from "@domain/entities/WorkoutPlan/WorkoutList";
+import { Day } from "@domain/entities/WorkoutPlan/enums/Day";
+import { Letter } from "@domain/entities/WorkoutPlan/enums/Letter";
+import { MuscleGroup } from "@domain/entities/WorkoutPlan/enums/MuscleGroup";
 import { WorkoutPlanDTO } from "@domain/usecases/GetMyWorkoutPlans/GetMyWorkoutPlansUseCase";
 import { GetUserUseCaseDTO } from "@domain/usecases/GetUser/GetUserUseCase";
 

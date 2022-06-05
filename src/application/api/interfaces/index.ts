@@ -11,9 +11,9 @@ export interface HttpResponse<T = {}> {
   statusCode: number
 }
 
-export interface BodyValidator<T> {
-  validate(body: Record<string, any>): T
+export interface RequestValidator<T> {
+  validate(request: Record<string, any>): T
 }
-export interface Controller<ResponseType=any> {
-  handle(request: HttpRequest): Promise<HttpResponse<ResponseType>>
+export interface Controller<Response> {
+  handle(request: HttpRequest): Promise<HttpResponse<Response>>
 }

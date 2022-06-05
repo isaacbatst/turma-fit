@@ -1,44 +1,7 @@
-export enum Day {
-  SUNDAY = 'SUNDAY',
-  MONDAY = 'MONDAY',
-  TUESDAY = 'TUESDAY',
-  WEDNESDAY = 'WEDNESDAY',
-  THURSDAY = 'THURSDAY',
-  FRIDAY = 'FRIDAY',
-  SATURDAY = 'SATURDAY',
-}
-
-export enum Grip {
-  PRONATE = 'PRONATE',
-  SUPINE = 'SUPINE',
-  NEUTRAL = 'NEUTRAL'
-}
-
-export enum MuscleGroup {
-  BICEPS = 'BICEPS',
-  TRICEPS = 'TRICEPS',
-  CHEST = 'CHEST',
-  BACK = 'BACK',
-  ABDOMINALS = 'ABDOMINALS',
-  SHOULDERS = 'SHOULDERS',
-  CALVES = 'CALVES',
-  FOREARMS = 'FOREARMS',
-  TRAPEZIUS = 'TRAPEZIUS',
-  GLUTES = 'GLUTES',
-  HAMSTRINGS = 'HAMSTRINGS',
-  LOWER_BACK = 'LOWER_BACK',
-  QUADRICEPS = 'QUADRICEPS'
-}
-
-export enum Letter {
-  A = 'A',
-  B = 'B',
-  C = 'C',
-  D = 'D',
-  E = 'E',
-  F = 'F',
-  G = 'G',
-}
+import { Day } from "@prisma/client";
+import { Grip } from "./enums/Grip";
+import { Letter } from "./enums/Letter";
+import { MuscleGroup } from "./enums/MuscleGroup";
 
 export interface Equipment {
   id: string;
@@ -52,7 +15,7 @@ interface SetTechnique {
 export interface Movement {
   name:               string
   id:                 string        
-  muscleGroup:        MuscleGroup 
+  muscleGroup:        MuscleGroup
 }
 
 export interface Exercise {
@@ -77,12 +40,12 @@ export interface Workout {
   sets               : Set[]
   aerobicMinutes     : number
   day                : Day
-  letter:             Letter
+  letter             : Letter
 }
 
 export type WorkoutWithoutLetter = Omit<Workout, 'letter'>
 
-export class WorkoutList {
+export class WorkoutListBeingGetted {
   private static readonly WORKOUT_LETTERS = Object.values(Letter)
   private static readonly WORKOUT_DAYS = Object.values(Day)
   private static readonly WORKOUTS_MAX_LENGTH = 7
@@ -92,9 +55,9 @@ export class WorkoutList {
   constructor(workouts: WorkoutWithoutLetter[]) {
     this.validateWorkouts(workouts);
 
-    const workoutsOrderedByWeekDay = this.orderWorkoutsByWeekDay(workouts);
+    const workoutsOrderedByWeekDay = this.orderByDay(workouts);
 
-    const workoutsWithLetter = this.addLetterToWorkoutsByWeekDay(workoutsOrderedByWeekDay);
+    const workoutsWithLetter = this.addLetterByDay(workoutsOrderedByWeekDay);
 
     this.workouts = workoutsWithLetter;
   }
@@ -104,7 +67,7 @@ export class WorkoutList {
   }
 
   private validateWorkouts(workouts: WorkoutWithoutLetter[]) {
-    if(workouts.length > WorkoutList.WORKOUTS_MAX_LENGTH){
+    if(workouts.length > WorkoutListBeingGetted.WORKOUTS_MAX_LENGTH){
       throw new Error('WORKOUTS_MAX_LENGTH')
     }
 
@@ -119,18 +82,18 @@ export class WorkoutList {
     }
   }
 
-  private orderWorkoutsByWeekDay(workouts: WorkoutWithoutLetter[]) {
+  private orderByDay(workouts: WorkoutWithoutLetter[]) {
     const ordered = workouts
       .sort((workoutA, workoutB) => 
-        WorkoutList.WORKOUT_DAYS.findIndex(day => day === workoutA.day) - WorkoutList.WORKOUT_DAYS.findIndex(day => day === workoutB.day))
+        WorkoutListBeingGetted.WORKOUT_DAYS.findIndex(day => day === workoutA.day) - WorkoutListBeingGetted.WORKOUT_DAYS.findIndex(day => day === workoutB.day))
   
     return ordered;
   }
 
-  private addLetterToWorkoutsByWeekDay(workouts: WorkoutWithoutLetter[]){
+  private addLetterByDay(workouts: WorkoutWithoutLetter[]){
     return workouts.map((workout, index) => ({
       ...workout,
-      letter: WorkoutList.WORKOUT_LETTERS[index]
+      letter: WorkoutListBeingGetted.WORKOUT_LETTERS[index]
     }))
   }
 }

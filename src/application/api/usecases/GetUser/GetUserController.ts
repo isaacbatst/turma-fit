@@ -1,5 +1,5 @@
 import { CookiesNames } from "@application/api/common/CookiesNames";
-import { BodyValidator, Controller, HttpResponse } from "@application/api/interfaces";
+import { RequestValidator, Controller, HttpResponse } from "@application/api/interfaces";
 import { AuthenticationError } from "@domain/errors/AuthenticationError";
 import { IGetUserUseCase } from "@domain/usecases/GetUser/GetUserUseCase";
 import { GetUserUseCaseErrors } from "@domain/usecases/GetUser/GetUserUseCaseErrors";
@@ -26,7 +26,7 @@ export interface GetUserValidRequest {
 export class GetUserController implements Controller<GetUserControllerResponse> {
   constructor(
     private getUserUseCase: IGetUserUseCase,
-    private getUserRequestValidator: BodyValidator<GetUserValidRequest>
+    private getUserRequestValidator: RequestValidator<GetUserValidRequest>
   ) {}
 
   async handle(request: GetUserControllerRequest): Promise<HttpResponse<GetUserControllerResponse>> {
