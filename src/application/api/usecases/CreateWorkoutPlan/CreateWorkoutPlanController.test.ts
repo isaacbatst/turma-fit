@@ -1,4 +1,5 @@
-import { CreateWorkoutPlanController, CreateWorkoutPlanResponse } from "./CreateWorkoutPlanController";
+import console from "node:console";
+import { CreateWorkoutPlanController, CreateWorkoutPlanResponse, ErrorLogger } from "./CreateWorkoutPlanController";
 import { CreateWorkoutPlanRequestMock } from "./CreateWorkoutPlanRequestMock";
 import { CreateWorkoutPlanRequestValidatorMock } from "./CreateWorkoutPlanRequestValidatorMock";
 import { CreateWorkoutPlanServiceMock } from "./CreateWorkoutPlanServiceMock";
@@ -6,14 +7,18 @@ import { CreateWorkoutPlanServiceMock } from "./CreateWorkoutPlanServiceMock";
 const makeSut = () => {
   const requestMock = new CreateWorkoutPlanRequestMock();
   const validator = new CreateWorkoutPlanRequestValidatorMock();
-  const service = new CreateWorkoutPlanServiceMock()
-  const controller = new CreateWorkoutPlanController(validator, service);
+  const service = new CreateWorkoutPlanServiceMock();
+  const errorLogger: ErrorLogger = {
+    log: jest.fn()
+  }
+  const controller = new CreateWorkoutPlanController(validator, service, errorLogger);
   
   return { 
     requestMock,
     validator,
     service,
-    controller
+    controller,
+    errorLogger
   }
 }
 
@@ -102,6 +107,15 @@ describe('CreateWorkoutPlanController', () => {
       const response = await controller.handle(requestMock.REQUEST);
 
       expect(response.statusCode).toBe(500)
+    })
+
+    it('should call error logger', async () => {
+      const { controller, requestMock, errorLogger, service } = makeSut();
+      service.shouldThrowGeneric = true;
+
+      await controller.handle(requestMock.REQUEST);
+
+      expect(errorLogger.log).toHaveBeenCalled();
     })
   })
 })

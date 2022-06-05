@@ -4,6 +4,8 @@ import { WorkoutPlanBeingCreated } from "@domain/entities/WorkoutPlan/WorkoutPla
 import { AuthorizationError } from "@domain/errors/AuthorizationError";
 import { CreateWorkoutPlanSessionRepository } from "@domain/repositories/SessionRepository";
 import { CreateWorkoutPlanRepository } from "@domain/repositories/WorkoutPlanRepository";
+import { CreateWorkoutPlanTypeRepository } from "@domain/repositories/WorkoutPlanTypeRepository";
+import { RelationError } from "@infra/persistence/errors/RelationError";
 import { CreateWorkoutPlanUseCaseDTO, CreateWorkoutPlanUseCasePort, ICreateWorkoutPlanPortValidator } from "./interfaces";
 
 export interface CreateWorkoutPlanUseCase extends UseCase<CreateWorkoutPlanUseCasePort, CreateWorkoutPlanUseCaseDTO> {}
@@ -13,7 +15,8 @@ export class CreateWorkoutPlanService implements CreateWorkoutPlanUseCase {
     private workoutPlanRepository: CreateWorkoutPlanRepository,
     private uuidGenerator: UuidGenerator,
     private portValidator: ICreateWorkoutPlanPortValidator,
-    private sessionRepository: CreateWorkoutPlanSessionRepository
+    private sessionRepository: CreateWorkoutPlanSessionRepository,
+    private planTypeRepository: CreateWorkoutPlanTypeRepository
   ) {}
   
   async execute(port: CreateWorkoutPlanUseCasePort): Promise<CreateWorkoutPlanUseCaseDTO> {
@@ -26,6 +29,12 @@ export class CreateWorkoutPlanService implements CreateWorkoutPlanUseCase {
 
     if(!isTokenValid){
       throw new AuthorizationError('USER_NOT_AUTHORIZED');
+    }
+
+    const planTypeExists = await this.planTypeRepository.existById(validatedPort.planTypeId);
+
+    if(!planTypeExists){
+      throw new RelationError('PLAN_TYPE_DOES_NOT_EXIST')
     }
 
     const workoutPlan = new WorkoutPlanBeingCreated({

@@ -21,10 +21,10 @@ export class PrismaSessionRepository implements SessionRepository, GetMyWorkoutP
     })
   }
 
-  async validate(userId: string, sessionToken: string): Promise<boolean> {
+  async validate(token: string, userId: string): Promise<boolean> {
     const session = await this.prisma.session.findFirst({
       where: {
-        token: sessionToken,
+        token,
         userId
       }
     })

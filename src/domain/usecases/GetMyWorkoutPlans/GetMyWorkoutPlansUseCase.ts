@@ -29,7 +29,7 @@ export class GetMyWorkoutPlansUseCase implements IGetMyWorkoutPlansUseCase {
   ){}
   
   async execute(port: GetMyWorkoutPlansUseCasePort): Promise<GetMyWorkoutPlansUseCaseDTO> {
-    const isValid = await this.sessionRepository.validate(port.userId, port.sessionToken);
+    const isValid = await this.sessionRepository.validate(port.sessionToken, port.userId);
 
     if(!isValid) {
       throw new AuthorizationError('UNAUTHORIZED_SESSION');

@@ -4,16 +4,21 @@ import { Controller, HttpResponse } from "@application/api/interfaces";
 import { AuthenticationError } from "@domain/errors/AuthenticationError";
 import { AuthorizationError } from "@domain/errors/AuthorizationError";
 import { CreateWorkoutPlanUseCase } from "@domain/usecases/CreateWorkoutPlan/CreateWorkoutPlanUseCase";
+import { RelationError } from "@infra/persistence/errors/RelationError";
 import { CreateWorkoutPlanRequest, ICreateWorkoutPlanRequestValidator } from "./CreateWorkoutPlanRequestValidator";
-
 export interface CreateWorkoutPlanResponse {
   id: string
+}
+
+export interface ErrorLogger {
+  log: (error: any) => void
 }
 
 export class CreateWorkoutPlanController implements Controller<CreateWorkoutPlanResponse> {
   constructor(
     private requestValidator: ICreateWorkoutPlanRequestValidator,
-    private createWorkoutPlanService: CreateWorkoutPlanUseCase
+    private createWorkoutPlanService: CreateWorkoutPlanUseCase,
+    private errorLogger: ErrorLogger
   ){}
 
   async handle(request: CreateWorkoutPlanRequest): Promise<HttpResponse<CreateWorkoutPlanResponse>> {
@@ -52,6 +57,22 @@ export class CreateWorkoutPlanController implements Controller<CreateWorkoutPlan
           statusCode: 403
         }
       }
+
+      if(error instanceof RelationError){
+        return {
+          statusCode: 422
+        }
+      }
+
+      if(error instanceof Error) {
+        if(error.message === 'INVALID_DAY') {
+          return {
+            statusCode: 422
+          }
+        }
+      }
+
+      this.errorLogger.log(error)
 
       return {
         statusCode: 500

@@ -1,8 +1,9 @@
 import { AuthorizationError } from "@domain/errors/AuthorizationError";
+import { RelationError } from "@infra/persistence/errors/RelationError";
 import { UuidGeneratorMock } from "../_mocks";
 import { CreateWorkoutPlanDataMock } from "./CreateWorkoutPlanDataMock";
 import { CreateWorkoutPlanPortValidatorMock } from "./CreateWorkoutPlanPortValidatorMock";
-import { CreateWorkoutPlanRepositoryMock, CreateWorkoutPlanSessionRepositoryMock } from "./CreateWorkoutPlanRepositoryMock";
+import { CreateWorkoutPlanRepositoryMock, CreateWorkoutPlanSessionRepositoryMock, CreateWorkoutPlanTypeRepositoryMock } from "./CreateWorkoutPlanRepositoryMock";
 import { CreateWorkoutPlanService } from "./CreateWorkoutPlanUseCase";
 
 const makeSut = () => {
@@ -11,11 +12,14 @@ const makeSut = () => {
   const uuidGenerator = new UuidGeneratorMock(dataMock.WORKOUT_PLAN.getId());
   const portValidator = new CreateWorkoutPlanPortValidatorMock();
   const sessionRepository = new CreateWorkoutPlanSessionRepositoryMock();
+  const planTypeRepository = new CreateWorkoutPlanTypeRepositoryMock();
+
   const createWorkoutPlanUseCase = new CreateWorkoutPlanService(
     workoutPlanRepository, 
     uuidGenerator, 
     portValidator,
-    sessionRepository
+    sessionRepository,
+    planTypeRepository
   );
 
   return {
@@ -24,7 +28,8 @@ const makeSut = () => {
     portValidator,
     workoutPlanRepository,
     dataMock,
-    sessionRepository
+    sessionRepository,
+    planTypeRepository
   }
 }
 
@@ -56,8 +61,27 @@ describe('CreateWorkoutPlanUseCase', () => {
 
     })
   })
+  
+  describe('Given plan type does not exist', () => {
+    it('should throw relation error', async () => {
+      const { planTypeRepository, createWorkoutPlanUseCase, dataMock } = makeSut();
+      planTypeRepository.exist = false;
 
-  describe('Given authorized session for requested user id', () => {
+      expect(async () => {
+        await createWorkoutPlanUseCase.execute(dataMock.PORT);
+      }).rejects.toThrowError(RelationError)
+    })
+  })
+
+  describe('Given authorized session and existing plan type', () => {
+    it('should call plan type repository', async () => {
+      const { createWorkoutPlanUseCase, planTypeRepository, dataMock } = makeSut();
+
+      await createWorkoutPlanUseCase.execute(dataMock.PORT)
+
+      expect(planTypeRepository.existById).toBeCalled();
+    })
+    
     it('should call uuid generator', async () => {
       const { createWorkoutPlanUseCase, uuidGenerator, dataMock } = makeSut();
 
