@@ -164,15 +164,15 @@ model Exercise {
 }
 
 model Set {
-  exercises           Exercise[]
-  id                  String             @id @default(uuid())
-  times               Int
-  repetitions         String
-  technique           ExerciseTechnique? @relation(fields: [exerciseTechniqueId], references: [id])
-  exerciseTechniqueId String?
-  minRestTime         Int?
-  maxRestTime         Int?
-  workouts            Workout[]
+  exercises   Exercise[]
+  id          String             @id @default(uuid())
+  times       Int
+  repetitions String
+  technique   ExerciseTechnique? @relation(fields: [techniqueId], references: [id])
+  techniqueId String?
+  minRestTime Int?
+  maxRestTime Int?
+  workouts    Workout[]
 }
 
 model ExerciseTechnique {
