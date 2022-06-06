@@ -1,66 +1,36 @@
-import { Day } from "@domain/entities/WorkoutPlan/enums/Day"
-import { WorkoutPlanDTO } from "@domain/usecases/GetMyWorkoutPlans/GetMyWorkoutPlansUseCase"
+import { useMyWorkoutPlans } from "@application/frontend/swr/useMyWorkoutPlans"
+import WorkoutPlanCard from "./WorkoutPlanCard"
 
 type MyWorkoutPlansProps = {
-  workoutPlans: WorkoutPlanDTO[]
+  userId: string
 }
 
-const readableDay: Record<Day, string> = {
-  FRIDAY: 'Sexta',
-  MONDAY: 'Segunda',
-  SATURDAY: 'Sábado',
-  SUNDAY: 'Domingo',
-  THURSDAY: 'Quinta',
-  TUESDAY: 'Terça',
-  WEDNESDAY: 'Quarta'
-}
+const MyWorkoutPlans: React.FC<MyWorkoutPlansProps> = ({ userId }) => {
+  const { isLoading, workoutPlans, error } = useMyWorkoutPlans(userId);
 
-const isLastItem = (array: any[], index: number) => array.length - 1 === index 
-
-const MyWorkoutPlans: React.FC<MyWorkoutPlansProps> = ({ workoutPlans }) => {
   return (
-    <ul aria-label="Lista de planos">
+    <section aria-label="Meus planos de treino">
+      <h2>Meus planos de treino</h2>
       {
-        workoutPlans.map(({ planType, id, workouts }) => (
-          <li key={id}>
-            <h3>Plano de {planType.name}</h3>
-            <p>
-              Tempo de descanso: {planType.defaultMinRestTime} - {planType.defaultMaxRestTime} segundos 
-            </p>
-            <div>
-              <h4>Treinos</h4>
-              <ul>
-                {workouts.map(({ id, aerobicMinutes, day, sets, letter }, index) => (
-                  <li key={id}>
-                    <h5>Treino {letter} ({readableDay[day]})</h5>
-                    <p>{aerobicMinutes} minutos de aeróbico</p>
-                    <p>Séries</p>
-                    <ul>
-                      {sets.map(({ exercises, id, repetitions, times, technique }) => {
-
-                        return (
-                          <li key={id}>
-                            <p>
-                              {
-                                exercises
-                                  .reduce((acc, exercise, index) => {
-                                    const separator = isLastItem(exercises, index) ? '' : ' - '; 
-                                    return `${acc}${exercise.movement.name}${separator}`
-                                  }, '')
-                              }: {times} x {repetitions} {technique && `(${technique.name})`}
-                            </p>
-                          </li>
-                        )
-                      })}
-                    </ul>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </li>
-        ))
+        isLoading && <div role="status">Carregando...</div>
       }
-    </ul>
+      {
+        workoutPlans?.length === 0 && <div>Nenhum plano de treino cadastrado</div>
+      }
+      {
+        error && <div role="alert">Erro ao recuperar planos de treino</div>
+      }
+      {
+        workoutPlans && (
+          <ul aria-label="Lista de planos">
+            {
+              workoutPlans.map((workoutPlan) => <WorkoutPlanCard key={workoutPlan.id} workoutPlan={workoutPlan} />)
+            }
+          </ul>
+        )
+      }
+    </section>
+    
   )
 }
 
