@@ -8,7 +8,7 @@ const fetchPlanningTypes = (url: string) =>
 
 
 export default function usePlanningTypes(){
-  const { data, error } = useSWR('/api/plannings/types', fetchPlanningTypes);
+  const { data, error } = useSWR('/api/workout-plan-type', fetchPlanningTypes);
 
   return {
     planningTypes: data,

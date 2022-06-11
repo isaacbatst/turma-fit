@@ -1,7 +1,14 @@
-import { MuscleGroup } from "@prisma/client";
-import { ExerciseWithDetails, SetsWithExercises, TrainingPlanningWithDetails } from "../../types/schema";
+import { Exercise, Movement, MuscleGroup, Set } from "@prisma/client";
 
-const getMuscleGroupsFromExercises = (exercises: ExerciseWithDetails[], muscleGroups: MuscleGroup[]) => {
+interface ExerciseWithMovement extends Exercise {
+  movement: Movement
+}
+
+interface SetWithExercisesWithMovement extends Set {
+  exercises: ExerciseWithMovement[]
+}
+
+const getMuscleGroupsFromExercises = (exercises: ExerciseWithMovement[], muscleGroups: MuscleGroup[]) => {
   exercises.forEach(exercise => {
     muscleGroups.push(exercise.movement.focusedMuscleGroup);
   })
@@ -9,7 +16,7 @@ const getMuscleGroupsFromExercises = (exercises: ExerciseWithDetails[], muscleGr
   return muscleGroups;
 }
 
-const getMuscleGroupsFromSets = (sets: SetsWithExercises[]) => {
+const getMuscleGroupsFromSets = (sets: SetWithExercisesWithMovement[]) => {
   const muscleGroups: MuscleGroup[] = [];
   
   sets.forEach(set => getMuscleGroupsFromExercises(set.exercises, muscleGroups));

@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { createPlanningApi } from "../features/personal/createPlanning/api";
+import { createPlanningApi } from "../features/createPlanning/api";
 import personalReducer from "../features/personal/reducer";
 
 export const store = configureStore({
