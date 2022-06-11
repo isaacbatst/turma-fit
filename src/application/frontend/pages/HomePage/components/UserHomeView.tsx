@@ -14,8 +14,8 @@ const UserHomeView: React.FC<UserHomeViewProps> = ({ user }) => {
   return (
     <div>
       <div>Logado: {user.name}</div>
-      <CreateWorkoutPlanForm />
       <MyWorkoutPlans userId={user.id} />
+      <CreateWorkoutPlanForm />
     </div>
   )
 }

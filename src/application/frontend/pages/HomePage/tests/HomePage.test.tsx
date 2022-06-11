@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { rest } from "msw";
 import { setupServer } from 'msw/node';
 import { SWRConfig } from "swr";
-import HomePage from "./HomePage";
+import HomePage from "../HomePage";
 import { USER } from "./HomePageDataMocks";
 
 jest.mock('./UserHomeView.tsx', () => {
