@@ -1,5 +1,4 @@
-import { useMyWorkoutPlans } from "@application/frontend/swr/useMyWorkoutPlans";
-import CreateWorkoutPlanForm from "./CreateWorkoutPlanForm";
+import CreateWorkoutPlanForm from "./CreateWorkoutPlanForm/CreateWorkoutPlanForm";
 import MyWorkoutPlans from "./MyWorkoutPlans";
 
 type UserHomeViewProps = {
