@@ -11,7 +11,7 @@ export interface GetWorkoutPlanTypesResponse {
 
 const handler: NextApiHandler<GetWorkoutPlanTypesResponse[]> = async (req, res) => {
   const workoutPlanTypes = await prisma.workoutPlanType.findMany();
-
+  
   res.json(workoutPlanTypes);
 }
 
