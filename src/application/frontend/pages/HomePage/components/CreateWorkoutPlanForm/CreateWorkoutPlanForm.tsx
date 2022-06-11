@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PlanTypeRadios from './PlanTypeRadios'
 import SetInputs from './SetInputs/SetInputs'
 
@@ -10,6 +10,11 @@ const CreateWorkoutPlanForm: React.FC = () => {
         <PlanTypeRadios />
         <div>
           <h3>Treino A</h3>
+          <SetInputs />
+          <button>+ Série</button>
+        </div>
+        <div>
+          <h3>Treino B</h3>
           <SetInputs />
           <button>+ Série</button>
         </div>
