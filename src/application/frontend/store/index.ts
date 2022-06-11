@@ -1,14 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { createPlanningApi } from "../features/createPlanning/api";
-import personalReducer from "../features/personal/reducer";
 
 export const store = configureStore({
-  reducer: {
-    personal: personalReducer,
-    [createPlanningApi.reducerPath]: createPlanningApi.reducer
-  },
-  middleware: (getDefaultMiddleware) => 
-    getDefaultMiddleware().concat(createPlanningApi.middleware)
+  reducer: {},
 })
 
 export type RootState = ReturnType<typeof store.getState>;
