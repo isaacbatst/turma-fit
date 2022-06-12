@@ -8,7 +8,7 @@ export const useEquipments = () => {
   const { data, error } = useSWR<GetEquipmentsResponse>("/api/equipments", fetcher);
 
   return {
-    equipments: data,
+    data,
     isLoading: !error && !data,
     error,
   }}

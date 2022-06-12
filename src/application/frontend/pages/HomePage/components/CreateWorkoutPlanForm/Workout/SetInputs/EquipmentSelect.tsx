@@ -1,13 +1,13 @@
-import React from 'react'
-import { useEquipments } from '../../useEquipments';
+import React, { useContext } from 'react';
+import { CreateWorkoutPlanFormContext } from '../../CreateWorkoutPlanFormContext';
 
 const EquipmentSelect: React.FC = () => {
-  const { equipments } = useEquipments();
+  const { equipments: { data } } = useContext(CreateWorkoutPlanFormContext);
 
   return (
     <select name="exercise-equipments" id="exercise-equipments">
       {
-        equipments && equipments.map(equipment => (
+        data && data.map(equipment => (
           <option key={equipment.id} value={equipment.id}>{equipment.name}</option>
         ))
       }

@@ -8,7 +8,7 @@ export const useMovements = () => {
   const { data, error } = useSWR<GetMovementsResponse>("/api/movements", fetcher);
 
   return {
-    movements: data,
+    data,
     isLoading: !error && !data,
     error,
   }}

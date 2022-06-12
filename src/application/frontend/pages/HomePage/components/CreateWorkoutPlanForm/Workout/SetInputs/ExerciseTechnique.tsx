@@ -1,13 +1,14 @@
-import React from 'react'
-import { useExerciseTechniques } from '../../useExerciseTechniques'
+import React, { useContext } from 'react';
+import { CreateWorkoutPlanFormContext } from '../../CreateWorkoutPlanFormContext';
 
 const ExerciseTechnique: React.FC = () => {
-  const { error, isLoading, exerciseTechniques } = useExerciseTechniques();
+  const { techniques: { data } } = useContext(CreateWorkoutPlanFormContext);
+  
   return (
     <div>
       <h5>Técnica da série</h5>
       {
-        exerciseTechniques && exerciseTechniques.map(exerciseTechnique => (
+        data && data.map(exerciseTechnique => (
           <label key={exerciseTechnique.id} htmlFor={`exercise-technique-${exerciseTechnique.id}`}>
             <input type="radio" name="exercise-technique" id={`exercise-technique-${exerciseTechnique.id}`} value={exerciseTechnique.id} />
             {exerciseTechnique.name}

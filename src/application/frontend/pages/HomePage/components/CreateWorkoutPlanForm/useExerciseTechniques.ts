@@ -8,7 +8,7 @@ export const useExerciseTechniques = () => {
   const { data, error } = useSWR<GetExerciseTechniquesResponse>("/api/exercise-techniques", fetcher);
 
   return {
-    exerciseTechniques: data,
+    data,
     isLoading: !error && !data,
     error,
   }}
