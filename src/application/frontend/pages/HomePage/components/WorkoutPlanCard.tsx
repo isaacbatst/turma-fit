@@ -1,19 +1,10 @@
 import { Day } from '@domain/entities/WorkoutPlan/enums/Day'
 import { WorkoutPlanDTO } from '@domain/usecases/GetMyWorkoutPlans/GetMyWorkoutPlansUseCase'
 import React from 'react'
+import { readableDay } from 'src/lib/days'
 
 type WorkoutPlanCardProps = {
   workoutPlan: WorkoutPlanDTO
-}
-
-const readableDay: Record<Day, string> = {
-  FRIDAY: 'Sexta',
-  MONDAY: 'Segunda',
-  SATURDAY: 'Sábado',
-  SUNDAY: 'Domingo',
-  THURSDAY: 'Quinta',
-  TUESDAY: 'Terça',
-  WEDNESDAY: 'Quarta'
 }
 
 const isLastItem = (array: any[], index: number) => array.length - 1 === index 

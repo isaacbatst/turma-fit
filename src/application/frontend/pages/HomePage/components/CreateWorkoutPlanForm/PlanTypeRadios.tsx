@@ -1,8 +1,7 @@
 import { useAppDispatch, useAppSelector } from '@application/frontend/store/hooks';
 import { selectPlanType, selectPlanTypeAction } from '@application/frontend/store/slices/CreateWorkoutPlanForm';
-import React from 'react'
-import { useSelector } from 'react-redux';
-import { usePlanTypes } from './usePlanTypes'
+import React from 'react';
+import { usePlanTypes } from './usePlanTypes';
 
 const PlanTypeRadios: React.FC = () => {
   const { error, isLoading, planTypes } = usePlanTypes();
@@ -23,15 +22,15 @@ const PlanTypeRadios: React.FC = () => {
       {
         planTypes && planTypes.map(planType => (
           <label key={planType.id} htmlFor={`plan-type-${planType.id}`}>
-            {planType.name}
             <input 
               type="radio"  
               name="plan-type" 
               id={`plan-type-${planType.id}`} 
               value={planType.id} 
               checked={selectedPlanType?.id === planType.id} 
-              onChange={() => dispatch(selectPlanTypeAction(planType))}
+              onChange={() => dispatch(selectPlanTypeAction({ selectedPlanType: planType }))}
             />
+            {planType.name}
           </label>
         ))
       }

@@ -1,11 +1,8 @@
 import { useAppDispatch, useAppSelector } from '@application/frontend/store/hooks'
-import { addSetAction, addWorkoutAction, removeWorkoutAction } from '@application/frontend/store/slices/CreateWorkoutPlanForm'
-import { Letter } from '@domain/entities/WorkoutPlan/enums/Letter'
+import { addWorkoutAction } from '@application/frontend/store/slices/CreateWorkoutPlanForm'
 import React from 'react'
 import PlanTypeRadios from './PlanTypeRadios'
-import SetInputs from './SetInputs/SetInputs'
-
-const indexToLetter = (index: number) => Object.keys(Letter)[index]; 
+import Workout from './Workout/Workout'
 
 const CreateWorkoutPlanForm: React.FC = () => {
   const workouts = useAppSelector(state => state.createWorkoutPlanForm.workouts);
@@ -13,34 +10,17 @@ const CreateWorkoutPlanForm: React.FC = () => {
 
   return (
     <div>
-      <h2>Criar plano de treino</h2>
       <form action="">
-        <PlanTypeRadios />
+        <h2>Criar plano de treino</h2>
+        <div>
+          <PlanTypeRadios />
+        </div>
+        <button type="button" onClick={() => dispatch(addWorkoutAction())}>+ Treino</button>
         {
           workouts.map((workout, workoutIndex) => (
-            <div key={workout.id}>
-              <h3>Treino {indexToLetter(workoutIndex)}</h3>
-              <button 
-                type="button" 
-                onClick={() => dispatch(removeWorkoutAction({ workoutIndex }))
-                }>
-                  Remover treino
-              </button>
-              {
-                workout.sets.map((set, setIndex) => (
-                  <SetInputs 
-                    id={set.id} 
-                    setIndex={setIndex} 
-                    workoutIndex={workoutIndex}
-                    key={set.id} 
-                  />
-                ))
-              }
-              <button type="button" onClick={() => dispatch(addSetAction({ workoutIndex: workoutIndex }))}>+ Série</button>
-            </div>
+            <Workout key={workout.id} workout={workout} workoutIndex={workoutIndex} />
           ))
         }
-        <button type="button" onClick={() => dispatch(addWorkoutAction())}>+ Treino</button>
         <button>Finalizar Plano</button>
       </form>
     </div>

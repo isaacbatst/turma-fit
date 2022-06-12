@@ -1,12 +1,12 @@
-import { Day } from "@domain/entities/WorkoutPlan/enums/Day"
-import { Grip } from "@domain/entities/WorkoutPlan/enums/Grip"
-import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { RootState } from ".."
+import { Day } from "@domain/entities/WorkoutPlan/enums/Day";
+import { Grip } from "@domain/entities/WorkoutPlan/enums/Grip";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "..";
 
 const generateId = () => new Date().getTime();
 
 interface SelectedPlanType {
-  id: number,
+  id: string,
   defaultMinRestTime: number,
   defaultMaxRestTime: number
 }
@@ -25,36 +25,48 @@ export interface CreateWorkoutPlanFormSet {
   }[]
 }
 
-interface CreateWorkoutPlanFormState {
-  planType?: SelectedPlanType,
-  workouts: {
-    id: number,
-    aerobicMinutes?: number,
-    day?: Day
-    sets: CreateWorkoutPlanFormSet[],
-  }[]
+export interface CreateWorkoutPlanFormWorkout {
+  id: number,
+  aerobicMinutes: number,
+  day?: Day
+  sets: CreateWorkoutPlanFormSet[],
 }
 
-const createSet = () => ({
+interface CreateWorkoutPlanFormState {
+  planType?: SelectedPlanType,
+  workouts: CreateWorkoutPlanFormWorkout[]
+}
+
+const createSet = (): CreateWorkoutPlanFormSet => ({
   id: generateId(),
   exercises: []
 })
 
-const createWorkout = () => ({
+const createWorkout = (): CreateWorkoutPlanFormWorkout => ({
   id: generateId(),
-  sets: [createSet()]
+  aerobicMinutes: 10,
+  sets: []
 })
 
 const initialState: CreateWorkoutPlanFormState = {
-  workouts: [createWorkout()]
+  workouts: []
 };
 
-export const createWorkoutPlanSlice = createSlice({
+const createWorkoutPlanSlice = createSlice({
   name: 'createWorkoutPlanForm',
   initialState,
   reducers: {
     selectPlanType: (state, action: PayloadAction<{ selectedPlanType: SelectedPlanType }>) => {
       state.planType = action.payload.selectedPlanType
+    },
+    setAerobicInput: (state, action: PayloadAction<{ workoutIndex: number, value: number }>) => {
+      const { value, workoutIndex } = action.payload;
+      state.workouts[workoutIndex].aerobicMinutes = value;
+    },
+    setWorkoutDay: (state, action: PayloadAction<{ workoutIndex: number, day: Day }>) => {
+      const { workoutIndex, day } = action.payload;
+
+      state.workouts[workoutIndex].day = day
     },
     addWorkout: (state) => {
       state.workouts.push(createWorkout())
@@ -71,7 +83,7 @@ export const createWorkoutPlanSlice = createSlice({
     removeSet: (state, action: PayloadAction<{ setIndex: number, workoutIndex: number }>) => {
       const { setIndex, workoutIndex } = action.payload;
       state.workouts[workoutIndex].sets.splice(setIndex, 1);
-    }
+    },
   }
 })
 
@@ -81,8 +93,12 @@ export const {
   addWorkout: addWorkoutAction,
   removeSet: removeSetAction,
   removeWorkout: removeWorkoutAction,
+  setAerobicInput: setAerobicInputAction,
+  setWorkoutDay: setWorkoutDayAction
 } = createWorkoutPlanSlice.actions;
 
-export const selectPlanType = (state: RootState) => state.createWorkoutPlanForm.planType
+export const selectPlanType = (state: RootState) => state.createWorkoutPlanForm.planType;
+export const selectAerobicMinutes = (workoutIndex: number) => (state: RootState) => state.createWorkoutPlanForm.workouts[workoutIndex].aerobicMinutes
+export const selectWorkoutDay = (workoutIndex: number) => (state: RootState) => state.createWorkoutPlanForm.workouts[workoutIndex].day
 
 export const createWorkoutPlanReducer = createWorkoutPlanSlice.reducer;
