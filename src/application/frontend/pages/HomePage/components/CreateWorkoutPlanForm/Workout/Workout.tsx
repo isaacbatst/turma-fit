@@ -2,7 +2,7 @@ import { useAppDispatch } from '@application/frontend/store/hooks'
 import { addSetAction, CreateWorkoutPlanFormWorkout, removeWorkoutAction } from '@application/frontend/store/slices/CreateWorkoutPlanForm'
 import { Letter } from '@domain/entities/WorkoutPlan/enums/Letter'
 import React from 'react'
-import SetInputs from '../SetInputs/SetInputs'
+import SetInputs from './SetInputs/SetInputs'
 import AerobicMinutesInput from './AerobicMinutesInput'
 import WorkoutDayRadio from './WorkoutDayRadio'
 

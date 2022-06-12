@@ -1,5 +1,5 @@
 import React from 'react'
-import { useExerciseTechniques } from '../useExerciseTechniques'
+import { useExerciseTechniques } from '../../useExerciseTechniques'
 
 const ExerciseTechnique: React.FC = () => {
   const { error, isLoading, exerciseTechniques } = useExerciseTechniques();

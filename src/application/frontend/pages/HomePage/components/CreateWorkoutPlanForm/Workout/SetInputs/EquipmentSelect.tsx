@@ -1,5 +1,5 @@
 import React from 'react'
-import { useEquipments } from '../useEquipments';
+import { useEquipments } from '../../useEquipments';
 
 const EquipmentSelect: React.FC = () => {
   const { equipments } = useEquipments();
