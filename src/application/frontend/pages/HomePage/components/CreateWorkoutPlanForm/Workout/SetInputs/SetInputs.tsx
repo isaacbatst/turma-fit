@@ -25,7 +25,7 @@ const SetInputs: React.FC<Props> = ({ setIndex, workoutIndex, id }) => {
       </button>
       <Exercises setIndex={setIndex} workoutIndex={workoutIndex} />
       <TimesAndRepetitions />
-      <ExerciseTechnique />
+      <ExerciseTechnique setIndex={setIndex} workoutIndex={workoutIndex} />
     </>
   )
 }

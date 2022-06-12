@@ -14,8 +14,8 @@ interface SelectedPlanType {
 
 interface CreateWorkoutPlanFormExercise {
   id: number,
-  movementId?: string,
-  equipmentId?: string,
+  movementId: string,
+  equipmentId: string,
   grip?: Grip
 }
 
@@ -53,7 +53,9 @@ const createWorkout = (): CreateWorkoutPlanFormWorkout => ({
 })
 
 const createExercise = (): CreateWorkoutPlanFormExercise => ({
-  id: generateId()
+  id: generateId(),
+  equipmentId: "",
+  movementId: ""
 })
 
 const initialState: CreateWorkoutPlanFormState = {
@@ -76,6 +78,29 @@ const createWorkoutPlanSlice = createSlice({
 
       state.workouts[workoutIndex].day = day
     },
+    setTechnique: (state, action: PayloadAction<{ workoutIndex: number, setIndex: number, techniqueId: string | null}>) => {
+      const { techniqueId, setIndex, workoutIndex } = action.payload;
+    
+      state.workouts[workoutIndex].sets[setIndex].techniqueId = techniqueId || undefined;
+    },
+    setExerciseMovement: 
+      (state, action: PayloadAction<{ workoutIndex: number, setIndex: number, exerciseIndex: number, movementId: string }>) => {
+        const { exerciseIndex, movementId, setIndex, workoutIndex } = action.payload;
+
+        state.workouts[workoutIndex].sets[setIndex].exercises[exerciseIndex].movementId = movementId;
+      },
+    setExerciseEquipment: 
+      (state, action: PayloadAction<{ workoutIndex: number, setIndex: number, exerciseIndex: number, equipmentId: string }>) => {
+        const { exerciseIndex, equipmentId, setIndex, workoutIndex } = action.payload;
+
+        state.workouts[workoutIndex].sets[setIndex].exercises[exerciseIndex].equipmentId = equipmentId;
+      },
+    setExerciseGrip: 
+      (state, action: PayloadAction<{ workoutIndex: number, setIndex: number, exerciseIndex: number, grip: Grip | null }>) => {
+        const { exerciseIndex, grip, setIndex, workoutIndex } = action.payload;
+
+        state.workouts[workoutIndex].sets[setIndex].exercises[exerciseIndex].grip = grip || undefined;
+      },
     addWorkout: (state) => {
       state.workouts.push(createWorkout())
     },
@@ -106,21 +131,42 @@ const createWorkoutPlanSlice = createSlice({
 
 export const { 
   selectPlanType: selectPlanTypeAction,
+  setExerciseEquipment: setExerciseEquipmentAction,
+  setExerciseGrip: setExerciseGripAction,
+  setExerciseMovement: setExerciseMovementAction,
+  setTechnique: setTechniqueAction,
+  setWorkoutDay: setWorkoutDayAction,
+  setAerobicInput: setAerobicInputAction,
+
   addSet: addSetAction,
   addWorkout: addWorkoutAction,
+  addExercise: addExerciseAction, 
   removeSet: removeSetAction,
   removeWorkout: removeWorkoutAction,
-  setAerobicInput: setAerobicInputAction,
-  setWorkoutDay: setWorkoutDayAction,
-  addExercise: addExerciseAction, 
-  removeExercise: removeExerciseAction
+  removeExercise: removeExerciseAction,
 } = createWorkoutPlanSlice.actions;
 
+const getWorkoutByIndex = (state: RootState, workoutIndex: number) => state.createWorkoutPlanForm.workouts[workoutIndex];
+const getSetByIndex = (state: RootState, workoutIndex: number, setIndex: number) => getWorkoutByIndex(state, workoutIndex).sets[setIndex];
+const getExerciseByIndex = (state: RootState, workoutIndex: number, setIndex: number, exerciseIndex: number) =>
+  getSetByIndex(state, workoutIndex, setIndex).exercises[exerciseIndex]
+
 export const selectPlanType = (state: RootState) => state.createWorkoutPlanForm.planType;
-export const selectAerobicMinutes = (workoutIndex: number) => (state: RootState) => state.createWorkoutPlanForm.workouts[workoutIndex].aerobicMinutes
-export const selectWorkoutDay = (workoutIndex: number) => (state: RootState) => state.createWorkoutPlanForm.workouts[workoutIndex].day
-export const selectExercises = 
-  (workoutIndex: number, setIndex: number) => (state: RootState) => 
-    state.createWorkoutPlanForm.workouts[workoutIndex].sets[setIndex].exercises
+
+export const selectAerobicMinutes = (workoutIndex: number) => 
+  (state: RootState) => getWorkoutByIndex(state, workoutIndex).aerobicMinutes
+export const selectWorkoutDay = (workoutIndex: number) => 
+  (state: RootState) => getWorkoutByIndex(state, workoutIndex).day
+export const selectSetExerciseTechnique = (workoutIndex: number, setIndex: number) => 
+  (state: RootState) => getSetByIndex(state, workoutIndex, setIndex).techniqueId;
+export const selectExercises = (workoutIndex: number, setIndex: number) => 
+  (state: RootState) => getSetByIndex(state, workoutIndex, setIndex).exercises;
+export const selectExerciseMovement = (workoutIndex: number, setIndex: number, exerciseIndex: number) =>
+  (state: RootState) => getExerciseByIndex(state, workoutIndex, setIndex, exerciseIndex).movementId
+export const selectExerciseEquipment = (workoutIndex: number, setIndex: number, exerciseIndex: number) =>
+  (state: RootState) => getExerciseByIndex(state, workoutIndex, setIndex, exerciseIndex).equipmentId
+export const selectExerciseGrip = (workoutIndex: number, setIndex: number, exerciseIndex: number) =>
+  (state: RootState) => getExerciseByIndex(state, workoutIndex, setIndex, exerciseIndex).grip
+
 
 export const createWorkoutPlanReducer = createWorkoutPlanSlice.reducer;

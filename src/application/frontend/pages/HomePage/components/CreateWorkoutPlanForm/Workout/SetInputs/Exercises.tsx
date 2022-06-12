@@ -2,6 +2,7 @@ import { useAppDispatch, useAppSelector } from '@application/frontend/store/hook
 import { addExerciseAction, removeExerciseAction, selectExercises } from '@application/frontend/store/slices/CreateWorkoutPlanForm';
 import React from 'react';
 import EquipmentSelect from './EquipmentSelect';
+import { ExerciseContextProvider } from './ExerciseContext';
 import GripRadio from './GripRadio';
 import MovementSelect from './MovementSelect';
 
@@ -21,19 +22,25 @@ const Exercises: React.FC<Props> = ({ setIndex, workoutIndex }) => {
       {
         exercises.map((exercise, exerciseIndex) => (
           <div key={exercise.id}>
-            <MovementSelect />
-            <EquipmentSelect />
-            <GripRadio />
-            <button 
-              type="button" 
-              onClick={() => dispatch(removeExerciseAction({
-                exerciseIndex,
-                setIndex,
-                workoutIndex
-              }))}
+            <ExerciseContextProvider
+              exerciseIndex={exerciseIndex}
+              setIndex={setIndex}  
+              workoutIndex={workoutIndex}
             >
+              <MovementSelect />
+              <EquipmentSelect />
+              <GripRadio />
+              <button 
+                type="button" 
+                onClick={() => dispatch(removeExerciseAction({
+                  exerciseIndex,
+                  setIndex,
+                  workoutIndex
+                }))}
+              >
               Remover exercício
-            </button>
+              </button>
+            </ExerciseContextProvider>
           </div>
         ))
       }
