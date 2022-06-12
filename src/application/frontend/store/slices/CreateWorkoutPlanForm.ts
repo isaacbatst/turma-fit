@@ -1,7 +1,6 @@
 import { Day } from "@domain/entities/WorkoutPlan/enums/Day";
 import { Grip } from "@domain/entities/WorkoutPlan/enums/Grip";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { number } from "joi";
 import { RootState } from "..";
 
 const generateId = () => new Date().getTime();
@@ -155,16 +154,28 @@ export const selectPlanType = (state: RootState) => state.createWorkoutPlanForm.
 
 export const selectAerobicMinutes = (workoutIndex: number) => 
   (state: RootState) => getWorkoutByIndex(state, workoutIndex).aerobicMinutes
+
 export const selectWorkoutDay = (workoutIndex: number) => 
   (state: RootState) => getWorkoutByIndex(state, workoutIndex).day
+
 export const selectSetExerciseTechnique = (workoutIndex: number, setIndex: number) => 
   (state: RootState) => getSetByIndex(state, workoutIndex, setIndex).techniqueId;
+
+export const selectSetTimes = (workoutIndex: number, setIndex: number) => 
+  (state: RootState) => getSetByIndex(state, workoutIndex, setIndex).times;
+
+export const selectSetRepetitions = (workoutIndex: number, setIndex: number) => 
+  (state: RootState) => getSetByIndex(state, workoutIndex, setIndex).repetitions;
+
 export const selectExercises = (workoutIndex: number, setIndex: number) => 
   (state: RootState) => getSetByIndex(state, workoutIndex, setIndex).exercises;
+
 export const selectExerciseMovement = (workoutIndex: number, setIndex: number, exerciseIndex: number) =>
   (state: RootState) => getExerciseByIndex(state, workoutIndex, setIndex, exerciseIndex).movementId
+
 export const selectExerciseEquipment = (workoutIndex: number, setIndex: number, exerciseIndex: number) =>
   (state: RootState) => getExerciseByIndex(state, workoutIndex, setIndex, exerciseIndex).equipmentId
+
 export const selectExerciseGrip = (workoutIndex: number, setIndex: number, exerciseIndex: number) =>
   (state: RootState) => getExerciseByIndex(state, workoutIndex, setIndex, exerciseIndex).grip
 
