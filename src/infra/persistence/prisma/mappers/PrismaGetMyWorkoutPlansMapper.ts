@@ -125,7 +125,7 @@ class PrismaMovementMapper {
 class PrismaMuscleGroupMapper {
   static ormToDomain(prismaMuscleGroup: PrismaMuscleGroup): MuscleGroup {
     const map: Record<PrismaMuscleGroup, MuscleGroup> = {
-      'ABS': MuscleGroup.ABDOMINALS,
+      'ABDOMINALS': MuscleGroup.ABDOMINALS,
       'BACK': MuscleGroup.BACK,
       'BICEPS': MuscleGroup.BICEPS,
       'CHEST': MuscleGroup.CHEST,
