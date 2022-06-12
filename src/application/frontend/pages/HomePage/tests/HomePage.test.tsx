@@ -3,15 +3,14 @@ import { rest } from "msw";
 import { setupServer } from 'msw/node';
 import { SWRConfig } from "swr";
 import HomePage from "../HomePage";
-import { USER } from "./HomePageDataMocks";
 
-jest.mock('./UserHomeView.tsx', () => {
+jest.mock('../components/UserHomeView.tsx', () => {
   const UserHomeViewMock = () => <div>UserHomeView</div>
 
   return UserHomeViewMock
 })
 
-jest.mock('./CreateUserForm.tsx', () => {
+jest.mock('../components/CreateUserForm.tsx', () => {
   const CreateUserFormMock = () => <div>CreateUserForm</div>
 
   return CreateUserFormMock
