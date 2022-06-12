@@ -1,7 +1,12 @@
 import { NextApiHandler } from 'next'
 import { prisma } from '../../../lib/prisma'
 
-const handler: NextApiHandler = async (req, res) => {
+export type GetEquipmentsResponse = {
+  id: string,
+  name: string
+}[]
+
+const handler: NextApiHandler<GetEquipmentsResponse> = async (req, res) => {
   const equipment = await prisma.equipment.findMany();
 
   res.json(equipment);

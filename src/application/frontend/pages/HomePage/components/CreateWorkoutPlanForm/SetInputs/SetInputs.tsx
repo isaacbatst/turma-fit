@@ -1,7 +1,7 @@
 import { useAppDispatch } from '@application/frontend/store/hooks'
 import { removeSetAction } from '@application/frontend/store/slices/CreateWorkoutPlanForm'
 import React from 'react'
-import ExercisesSelect from './ExercisesSelect'
+import Exercises from './Exercises'
 import ExerciseTechnique from './ExerciseTechnique'
 import TimesAndRepetitions from './TimesAndRepetitions'
 
@@ -23,7 +23,7 @@ const SetInputs: React.FC<Props> = ({ setIndex, workoutIndex, id }) => {
       >
         Remover série
       </button>
-      <ExercisesSelect />
+      <Exercises setIndex={setIndex} workoutIndex={workoutIndex} />
       <TimesAndRepetitions />
       <ExerciseTechnique />
     </>

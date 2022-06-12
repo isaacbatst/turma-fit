@@ -5,18 +5,18 @@ const ExerciseTechnique: React.FC = () => {
   const { error, isLoading, exerciseTechniques } = useExerciseTechniques();
   return (
     <div>
-      <h3>Técnica do Exercício</h3>
+      <h5>Técnica da série</h5>
       {
         exerciseTechniques && exerciseTechniques.map(exerciseTechnique => (
           <label key={exerciseTechnique.id} htmlFor={`exercise-technique-${exerciseTechnique.id}`}>
-            {exerciseTechnique.name}
             <input type="radio" name="exercise-technique" id={`exercise-technique-${exerciseTechnique.id}`} value={exerciseTechnique.id} />
+            {exerciseTechnique.name}
           </label>
         ))
       }
       <label htmlFor="none-exercise-technique">
-        Nenhuma
         <input type="radio" name="exercise-technique" id="none-exercise-technique" />
+        Nenhuma
       </label>
     </div>
   )
