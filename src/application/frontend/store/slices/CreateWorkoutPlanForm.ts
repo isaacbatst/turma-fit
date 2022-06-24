@@ -20,8 +20,8 @@ interface CreateWorkoutPlanFormExercise {
 
 export interface CreateWorkoutPlanFormSet {
   id: number,
-  times?: number,
-  repetitions?: number,
+  times: number,
+  repetitions: string,
   techniqueId?: string,
   minRestTime?: number,
   maxRestTime?: number,
@@ -42,13 +42,15 @@ interface CreateWorkoutPlanFormState {
 
 const createSet = (): CreateWorkoutPlanFormSet => ({
   id: generateId(),
-  exercises: []
+  exercises: [ createExercise() ],
+  repetitions: "",
+  times: 0,
 })
 
 const createWorkout = (): CreateWorkoutPlanFormWorkout => ({
   id: generateId(),
   aerobicMinutes: 10,
-  sets: []
+  sets: [ createSet() ]
 })
 
 const createExercise = (): CreateWorkoutPlanFormExercise => ({
@@ -58,7 +60,7 @@ const createExercise = (): CreateWorkoutPlanFormExercise => ({
 })
 
 const initialState: CreateWorkoutPlanFormState = {
-  workouts: []
+  workouts: [ createWorkout() ]
 };
 
 const createWorkoutPlanSlice = createSlice({
@@ -81,6 +83,14 @@ const createWorkoutPlanSlice = createSlice({
       const { techniqueId, setIndex, workoutIndex } = action.payload;
     
       state.workouts[workoutIndex].sets[setIndex].techniqueId = techniqueId || undefined;
+    },
+    setSetTimes: (state, action: PayloadAction<{ workoutIndex: number, setIndex: number, value: number }>) => {
+      const { value, workoutIndex, setIndex } = action.payload;
+      state.workouts[workoutIndex].sets[setIndex].times = value;
+    },
+    setSetRepetitions: (state, action: PayloadAction<{ workoutIndex: number, setIndex: number, value: string }>) => {
+      const { value, workoutIndex, setIndex } = action.payload;
+      state.workouts[workoutIndex].sets[setIndex].repetitions = value;
     },
     setExerciseMovement: 
       (state, action: PayloadAction<{ workoutIndex: number, setIndex: number, exerciseIndex: number, movementId: string }>) => {
@@ -136,6 +146,8 @@ export const {
   setTechnique: setTechniqueAction,
   setWorkoutDay: setWorkoutDayAction,
   setAerobicInput: setAerobicInputAction,
+  setSetRepetitions: setSetRepetitionsAction,
+  setSetTimes: setSetTimesAction,
 
   addSet: addSetAction,
   addWorkout: addWorkoutAction,

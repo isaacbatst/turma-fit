@@ -24,7 +24,7 @@ const SetInputs: React.FC<Props> = ({ setIndex, workoutIndex, id }) => {
         Remover série
       </button>
       <Exercises setIndex={setIndex} workoutIndex={workoutIndex} />
-      <TimesAndRepetitions />
+      <TimesAndRepetitions setIndex={setIndex} workoutIndex={workoutIndex} />
       <ExerciseTechnique setIndex={setIndex} workoutIndex={workoutIndex} />
     </>
   )

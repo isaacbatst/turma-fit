@@ -6,7 +6,7 @@ import PlanTypeRadios from './PlanTypeRadios'
 import Workout from './Workout/Workout'
 
 const CreateWorkoutPlanForm: React.FC = () => {
-  const workouts = useAppSelector(state => state.createWorkoutPlanForm.workouts);
+  const workouts = useAppSelector(state => state.createWorkoutPlanForm.workouts, (workoutL, workoutR) => workoutL.length === workoutR.length);
   const dispatch = useAppDispatch();
 
   return (
