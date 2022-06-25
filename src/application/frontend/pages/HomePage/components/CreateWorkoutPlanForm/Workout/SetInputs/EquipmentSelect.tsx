@@ -17,7 +17,7 @@ const EquipmentSelect: React.FC = () => {
       id="exercise-equipments" 
       value={selectedEquipment}
       onChange={(e) => dispatch(setExerciseEquipmentAction({
-        equipmentId: e.target.value,
+        equipmentId: e.target.value === "none" || e.target.value === "" ? undefined : e.target.value,
         exerciseIndex,
         setIndex,
         workoutIndex
@@ -29,6 +29,7 @@ const EquipmentSelect: React.FC = () => {
           <option key={equipment.id} value={equipment.id}>{equipment.name}</option>
         ))
       }
+      <option value="none">Nenhum</option>
     </select>
   )
 }

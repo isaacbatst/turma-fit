@@ -5,16 +5,16 @@ import { RootState } from "..";
 
 const generateId = () => nanoid();
 
-interface SelectedPlanType {
+export interface SelectedPlanType {
   id: string,
   defaultMinRestTime: number,
   defaultMaxRestTime: number
 }
-
+ 
 interface CreateWorkoutPlanFormExercise {
   id: string,
   movementId: string,
-  equipmentId: string,
+  equipmentId?: string,
   grip?: Grip
 }
 
@@ -36,8 +36,9 @@ export interface CreateWorkoutPlanFormWorkout {
 }
 
 interface CreateWorkoutPlanFormState {
-  planType?: SelectedPlanType,
-  workouts: CreateWorkoutPlanFormWorkout[]
+  planType: SelectedPlanType | null,
+  workouts: CreateWorkoutPlanFormWorkout[],
+  error: string | null
 }
 
 const createSet = (): CreateWorkoutPlanFormSet => ({
@@ -55,12 +56,13 @@ const createWorkout = (): CreateWorkoutPlanFormWorkout => ({
 
 const createExercise = (): CreateWorkoutPlanFormExercise => ({
   id: generateId(),
-  equipmentId: "",
   movementId: ""
 })
 
 const initialState: CreateWorkoutPlanFormState = {
-  workouts: [ createWorkout() ]
+  planType: null,
+  workouts: [ createWorkout() ],
+  error: null
 };
 
 const createWorkoutPlanSlice = createSlice({
@@ -99,7 +101,7 @@ const createWorkoutPlanSlice = createSlice({
         state.workouts[workoutIndex].sets[setIndex].exercises[exerciseIndex].movementId = movementId;
       },
     setExerciseEquipment: 
-      (state, action: PayloadAction<{ workoutIndex: number, setIndex: number, exerciseIndex: number, equipmentId: string }>) => {
+      (state, action: PayloadAction<{ workoutIndex: number, setIndex: number, exerciseIndex: number, equipmentId?: string }>) => {
         const { exerciseIndex, equipmentId, setIndex, workoutIndex } = action.payload;
 
         state.workouts[workoutIndex].sets[setIndex].exercises[exerciseIndex].equipmentId = equipmentId;
@@ -134,6 +136,9 @@ const createWorkoutPlanSlice = createSlice({
     removeExercise: (state, action: PayloadAction<{ setIndex: number, workoutIndex: number, exerciseIndex: number }>) => {
       const { setIndex, workoutIndex, exerciseIndex } = action.payload;
       state.workouts[workoutIndex].sets[setIndex].exercises.splice(exerciseIndex, 1)
+    },
+    setError: (state, action: PayloadAction<{ error: string | null }>) => {
+      state.error = action.payload.error;
     }
   }
 })
@@ -155,14 +160,20 @@ export const {
   removeSet: removeSetAction,
   removeWorkout: removeWorkoutAction,
   removeExercise: removeExerciseAction,
+
+  setError: setErrorAction
 } = createWorkoutPlanSlice.actions;
 
 const getWorkoutByIndex = (state: RootState, workoutIndex: number) => state.createWorkoutPlanForm.workouts[workoutIndex];
+
 const getSetByIndex = (state: RootState, workoutIndex: number, setIndex: number) => getWorkoutByIndex(state, workoutIndex).sets[setIndex];
+
 const getExerciseByIndex = (state: RootState, workoutIndex: number, setIndex: number, exerciseIndex: number) =>
   getSetByIndex(state, workoutIndex, setIndex).exercises[exerciseIndex]
 
 export const selectPlanType = (state: RootState) => state.createWorkoutPlanForm.planType;
+export const selectWorkouts = (state: RootState) => state.createWorkoutPlanForm.workouts;
+export const selectError = (state: RootState) => state.createWorkoutPlanForm.error;
 
 export const selectAerobicMinutes = (workoutIndex: number) => 
   (state: RootState) => getWorkoutByIndex(state, workoutIndex).aerobicMinutes

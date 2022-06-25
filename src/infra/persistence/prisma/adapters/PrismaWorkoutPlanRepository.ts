@@ -54,6 +54,7 @@ export class PrismaWorkoutPlanRepository implements GetMyWorkoutPlansRepository,
       })
     } catch(error) {
       if(error instanceof PrismaClientKnownRequestError) {
+        console.log(error)
         if(error.code === 'P2025'){
           throw new RelationError('NOT_FOUND_RELATION');
         }

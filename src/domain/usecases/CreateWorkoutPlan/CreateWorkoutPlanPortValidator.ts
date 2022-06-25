@@ -1,3 +1,4 @@
+import { ValidationError } from "@application/api/errors/ValidationError";
 import { Day } from "@domain/entities/WorkoutPlan/enums/Day";
 import { Grip } from "@domain/entities/WorkoutPlan/enums/Grip";
 import { RelationError } from "@infra/persistence/errors/RelationError";
@@ -38,6 +39,10 @@ export class CreateWorkoutPlanPortValidator implements ICreateWorkoutPlanPortVal
     return exercises.map((exercise) => {
       if(exercise.grip && !(exercise.grip in Grip)){
         throw new RelationError('INVALID_GRIP')
+      }
+
+      if(typeof exercise.equipmentId === "string" && exercise.equipmentId.length === 0 ){
+        throw new ValidationError("EMPTY_EQUIPMENT_ID")
       }
 
       return {
