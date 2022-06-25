@@ -3,7 +3,7 @@ import { selectAerobicMinutes, setAerobicInputAction } from '@application/fronte
 import React from 'react'
 
 type Props = {
-  workoutId: number,
+  workoutId: string,
   workoutIndex: number
 }
 

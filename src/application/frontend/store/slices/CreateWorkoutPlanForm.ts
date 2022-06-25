@@ -1,9 +1,9 @@
 import { Day } from "@domain/entities/WorkoutPlan/enums/Day";
 import { Grip } from "@domain/entities/WorkoutPlan/enums/Grip";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction, nanoid  } from "@reduxjs/toolkit";
 import { RootState } from "..";
 
-const generateId = () => new Date().getTime();
+const generateId = () => nanoid();
 
 interface SelectedPlanType {
   id: string,
@@ -12,14 +12,14 @@ interface SelectedPlanType {
 }
 
 interface CreateWorkoutPlanFormExercise {
-  id: number,
+  id: string,
   movementId: string,
   equipmentId: string,
   grip?: Grip
 }
 
 export interface CreateWorkoutPlanFormSet {
-  id: number,
+  id: string,
   times: number,
   repetitions: string,
   techniqueId?: string,
@@ -29,7 +29,7 @@ export interface CreateWorkoutPlanFormSet {
 }
 
 export interface CreateWorkoutPlanFormWorkout {
-  id: number,
+  id: string,
   aerobicMinutes: number,
   day?: Day
   sets: CreateWorkoutPlanFormSet[],

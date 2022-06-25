@@ -8,7 +8,7 @@ import TimesAndRepetitions from './TimesAndRepetitions'
 interface Props {
   setIndex: number,
   workoutIndex: number,
-  id: number
+  id: string
 }
 
 const SetInputs: React.FC<Props> = ({ setIndex, workoutIndex, id }) => {

@@ -5,7 +5,7 @@ import { Day } from '@domain/entities/WorkoutPlan/enums/Day'
 import { readableDay } from 'src/lib/days'
 
 type Props = {
-  workoutId: number,
+  workoutId: string,
   workoutIndex: number
 }
 
