@@ -1,12 +1,11 @@
-import { useAppDispatch, useAppSelector } from '@application/frontend/store/hooks'
+import { useAppDispatch } from '@application/frontend/store/hooks'
 import { addWorkoutAction } from '@application/frontend/store/slices/CreateWorkoutPlanForm'
 import React from 'react'
 import CreateWorkoutPlanFormContextProvider from './CreateWorkoutPlanFormContextProvider'
 import PlanTypeRadios from './PlanTypeRadios'
-import Workout from './Workout/Workout'
+import WorkoutsList from './WorkoutsList'
 
 const CreateWorkoutPlanForm: React.FC = () => {
-  const workouts = useAppSelector(state => state.createWorkoutPlanForm.workouts, (workoutL, workoutR) => workoutL.length === workoutR.length);
   const dispatch = useAppDispatch();
 
   return (
@@ -18,12 +17,8 @@ const CreateWorkoutPlanForm: React.FC = () => {
             <PlanTypeRadios />
           </div>
           <button type="button" onClick={() => dispatch(addWorkoutAction())}>+ Treino</button>
-          {
-            workouts.map((workout, workoutIndex) => (
-              <Workout key={workout.id} workout={workout} workoutIndex={workoutIndex} />
-            ))
-          }
-          <button>Finalizar Plano</button>
+          <WorkoutsList />
+          
         </form>
       </div>
     </CreateWorkoutPlanFormContextProvider>
