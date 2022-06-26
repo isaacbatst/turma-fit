@@ -1,14 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { createPlanningApi } from "../features/personal/createPlanning/api";
-import personalReducer from "../features/personal/reducer";
+import { createWorkoutPlanReducer } from "./slices/CreateWorkoutPlanForm";
 
 export const store = configureStore({
   reducer: {
-    personal: personalReducer,
-    [createPlanningApi.reducerPath]: createPlanningApi.reducer
+    createWorkoutPlanForm: createWorkoutPlanReducer
   },
-  middleware: (getDefaultMiddleware) => 
-    getDefaultMiddleware().concat(createPlanningApi.middleware)
 })
 
 export type RootState = ReturnType<typeof store.getState>;

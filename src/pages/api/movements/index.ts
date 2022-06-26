@@ -1,10 +1,19 @@
+import { MuscleGroup } from '@domain/entities/WorkoutPlan/enums/MuscleGroup'
 import { NextApiHandler } from 'next'
 import { prisma } from '../../../lib/prisma'
 
-const handler: NextApiHandler = async (req, res) => {
-  const movement = await prisma.movement.findMany();
+export type GetMovementsResponse = {
+  id: string,
+  name: string,
+  focusedMuscleGroup: MuscleGroup
+}[]
 
-  res.json(movement);
+const handler: NextApiHandler<GetMovementsResponse> = async (req, res) => {
+  const movements = await prisma.movement.findMany();
+  res.json(movements.map(movement => ({
+    ...movement,
+    focusedMuscleGroup: MuscleGroup[movement.focusedMuscleGroup]
+  })));
 }
 
 export default handler
