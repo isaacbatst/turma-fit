@@ -1,13 +1,11 @@
 import { ValidationError } from "@application/api/errors/ValidationError";
 import { Controller, HttpRequest, HttpResponse } from "@application/api/interfaces";
-import AuthenticateUserUseCase from "@domain/usecases/AuthenticateUserUseCase/AuthenticateUserUseCase";
+import { AuthenticateUserUseCase } from "@domain/usecases/AuthenticateUserUseCase/AuthenticateUserUseCase";
 import { IAuthenticateUserRequestValidator } from "./AuthenticateUserRequestValidator";
 
-interface AuthenticateUserResponse {
+export interface AuthenticateUserResponse {
   accessToken: string
 }
-
-
 
 export class AuthenticateUserController implements Controller<AuthenticateUserResponse> {
   constructor(
