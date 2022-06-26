@@ -22,7 +22,11 @@ interface AuthenticateUserUseCaseParams {
   uuidGenerator: UuidGenerator
 }
 
-export default class AuthenticateUserUseCase {
+export interface AuthenticateUserUseCase {
+  execute(port: AuthenticateUserUseCasePort): Promise<AuthenticateUserUseCaseDTO>
+}
+
+export default class AuthenticateUserService implements AuthenticateUserUseCase {
   private userRepository: AuthenticateUserRepository
   private encrypter: Encrypter
   private sessionRepository: SessionRepository
