@@ -1,6 +1,6 @@
 import { useUser } from "@application/frontend/swr/useUser";
 import { NextPage } from "next";
-import CreateUserForm from "./components/CreateUserForm";
+import UnauthenticatedView from "./components/UnauthenticatedView";
 import UserHomeView from "./components/UserHomeView";
 
 const HomePage: NextPage = () => {
@@ -18,7 +18,7 @@ const HomePage: NextPage = () => {
               <UserHomeView user={user} />
             ) 
             : (
-              <CreateUserForm />
+              <UnauthenticatedView />
             )
         )
       }
