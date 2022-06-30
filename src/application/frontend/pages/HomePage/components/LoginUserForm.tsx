@@ -3,15 +3,32 @@ import React, { useState } from 'react'
 
 const LoginUserForm: React.FC = () => {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("")
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null)
 
-  const handleSubmit: React.FormEventHandler<HTMLButtonElement> = (e) => {
+  const handleSubmit: React.FormEventHandler<HTMLButtonElement> = async (e) => {
     e.preventDefault();
 
-    axios.post('/api/user/session', {
-      email,
-      password
-    })
+    setError(null);
+
+    try {
+      const response = await axios.post('/api/user/session', {
+        email,
+        password
+      })
+    } catch(error) {
+      if(axios.isAxiosError(error)){
+        if(error.response) {
+          const castBody = error.response.data as { error: unknown };
+
+          if(castBody && castBody.error && typeof castBody.error === 'string'){
+            return setError(error.response.data.error)
+          }
+        }
+      }
+      
+      setError('UNKNOWN_ERROR')
+    }
   }
 
   return (
@@ -37,8 +54,11 @@ const LoginUserForm: React.FC = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </label>
-        <button type="submit" onChange={handleSubmit}>Entrar</button>
+        <button type="submit" onClick={handleSubmit}>Entrar</button>
       </form>
+      {
+        error && <div>{error}</div>
+      }
     </div>
   )
 }

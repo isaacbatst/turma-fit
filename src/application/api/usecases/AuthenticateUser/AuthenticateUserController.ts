@@ -1,5 +1,7 @@
+import { CookiesNames } from "@application/api/common/CookiesNames";
 import { ValidationError } from "@application/api/errors/ValidationError";
 import { Controller, HttpRequest, HttpResponse } from "@application/api/interfaces";
+import { AuthenticationError } from "@domain/errors/AuthenticationError";
 import { AuthenticateUserUseCase } from "@domain/usecases/AuthenticateUserUseCase/AuthenticateUserUseCase";
 import { IAuthenticateUserRequestValidator } from "./AuthenticateUserRequestValidator";
 
@@ -8,6 +10,8 @@ export interface AuthenticateUserResponse {
 }
 
 export class AuthenticateUserController implements Controller<AuthenticateUserResponse> {
+  static DAYS_TO_EXPIRE_COOKIE = 15
+
   constructor(
     private authenticateUserUseCase: AuthenticateUserUseCase,
     private requestValidator: IAuthenticateUserRequestValidator
@@ -23,9 +27,12 @@ export class AuthenticateUserController implements Controller<AuthenticateUserRe
       });
 
       return {
-        statusCode: 200,
-        body: {
-          accessToken
+        statusCode: 201,
+        cookies: {
+          [CookiesNames.AUTHORIZATION]: {
+            value: accessToken,
+            daysToExpire: AuthenticateUserController.DAYS_TO_EXPIRE_COOKIE
+          }
         }
       }
     } catch (error) {
@@ -34,6 +41,15 @@ export class AuthenticateUserController implements Controller<AuthenticateUserRe
           statusCode: 400,
           body: {
             error: error.getMessage()
+          }
+        }
+      }
+
+      if(error instanceof AuthenticationError){
+        return {
+          statusCode: 401,
+          body: {
+            error: error.message
           }
         }
       }

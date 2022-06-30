@@ -1,5 +1,7 @@
+import { CookiesHandler } from "@application/api/common/CookiesHandler";
+import { CookiesNames } from "@application/api/common/CookiesNames";
 import { ValidationError } from "@application/api/errors/ValidationError";
-import { HttpRequest } from "@application/api/interfaces";
+import { Cookie, HttpRequest } from "@application/api/interfaces";
 import { AuthenticateUserUseCase } from "@domain/usecases/AuthenticateUserUseCase/AuthenticateUserUseCase";
 import { AuthenticateUserController, AuthenticateUserResponse } from "./AuthenticateUserController";
 import { AuthenticateUserValidRequest, IAuthenticateUserRequestValidator } from "./AuthenticateUserRequestValidator";
@@ -90,16 +92,18 @@ describe('AuthenticateUseController', () => {
 
       const response = await controller.handle(request);
       
-      expect(response.statusCode).toBe(200);
+      expect(response.statusCode).toBe(201);
     })
 
-    it('should return body with servicew accessToken', async () => {
+    it('should return cookies with service accessToken', async () => {
       const { controller, service } = makeSut();
       const request = createRequest({});
 
       const response = await controller.handle(request);
-      
-      expect((response.body as AuthenticateUserResponse).accessToken).toBe(service.accessToken);
+
+      const cookies = response.cookies as Record<string, Cookie>
+
+      expect(cookies[CookiesNames.AUTHORIZATION].value).toBe(service.accessToken)
     })
   })
 })

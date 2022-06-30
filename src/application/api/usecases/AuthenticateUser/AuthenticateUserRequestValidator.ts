@@ -14,11 +14,11 @@ export class AuthenticateUserRequestValidator implements RequestValidator<Authen
   validate(request: HttpRequest): AuthenticateUserValidRequest {
     const { email, password } = request.body;
 
-    if(!email && typeof email !== 'string'){
+    if(!email || typeof email !== 'string'){
       throw new ValidationError('INVALID_EMAIL')
     }
 
-    if(!password && typeof password !== 'string'){
+    if(!password || typeof password !== 'string'){
       throw new ValidationError('INVALID_PASSWORD')
     }
 
