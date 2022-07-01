@@ -1,11 +1,12 @@
 import React from 'react'
 import CreateUserForm from './CreateUserForm'
-import LoginUserForm from './LoginUserForm'
+import Header from './Header'
+import LoginUserForm from '../../LoginPage/LoginUserForm'
 
 const UnauthenticatedView: React.FC = () => {
   return (
     <>
-      <LoginUserForm />
+      <Header />
       <CreateUserForm />
     </>
   )

@@ -1,5 +1,5 @@
 import React from 'react';
-import useLoginForm from '../hooks/useLoginForm';
+import useLoginForm from '../HomePage/hooks/useLoginForm';
 
 const LoginUserForm: React.FC = () => {
   const {
@@ -10,7 +10,7 @@ const LoginUserForm: React.FC = () => {
   } = useLoginForm();
 
   return (
-    <div>
+    <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'>
       <form>
         <label htmlFor="email-login">
           Email

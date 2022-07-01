@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useCreateUserForm } from "../hooks/useCreateUserForm";
 
 const CreateUserForm: React.FC = () => {
@@ -63,7 +64,7 @@ const CreateUserForm: React.FC = () => {
             value={repeatPassword} onChange={(e) => setRepeatPassword(e.target.value)}
           />
         </label>
-
+        <p>Já possui uma conta? <Link href="/login">Entre aqui</Link></p>
         <button type="submit">Criar</button>
       </form>
       {error && <p>{getErrorMessage(error)}</p>}
