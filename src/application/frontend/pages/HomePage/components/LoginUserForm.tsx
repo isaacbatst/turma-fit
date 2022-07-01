@@ -1,10 +1,13 @@
 import axios from 'axios';
+import { useRouter } from 'next/router';
 import React, { useState } from 'react'
 
 const LoginUserForm: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>(null)
+  const [error, setError] = useState<string | null>(null);
+
+  const router = useRouter();
 
   const handleSubmit: React.FormEventHandler<HTMLButtonElement> = async (e) => {
     e.preventDefault();
@@ -12,10 +15,12 @@ const LoginUserForm: React.FC = () => {
     setError(null);
 
     try {
-      const response = await axios.post('/api/user/session', {
+      await axios.post('/api/user/session', {
         email,
         password
       })
+
+      router.reload();
     } catch(error) {
       if(axios.isAxiosError(error)){
         if(error.response) {

@@ -19,7 +19,9 @@ export class NextApiHandlerAdapter<Response> {
 
     if(cookies) {
       Object.entries(cookies).forEach(([key, { value, daysToExpire }]) => {
-        CookiesHandler.setCookie(res, key, value, daysToExpire);
+        CookiesHandler.setCookie(res, key, value, daysToExpire, {
+          path: '/'
+        });
       })
     }
     

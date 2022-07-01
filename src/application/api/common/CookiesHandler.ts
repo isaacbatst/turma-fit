@@ -37,7 +37,9 @@ export class CookiesHandler {
     const stringValue = "expired";
     
     res.setHeader('Set-Cookie', serialize(name, stringValue, {
-      maxAge: 0
+      maxAge: 0,
+      expires: new Date(),
+      path: '/'
     }))
   }
 
