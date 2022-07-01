@@ -15,56 +15,74 @@ const CreateUserForm: React.FC = () => {
   } = useCreateUserForm();
 
   return (
-    <div>
-      <h2>Criar usuário</h2>
+    <div className="px-4">
+      <h2 className="text-center mb-2 font-bold">Registre-se agora!</h2>
+      <p className="text-center text-xs mb-5">Já possui uma conta? <Link href="/login"><a className="text-blue-600 underline">Entre aqui</a></Link></p>
       <form aria-label="Criar conta" onSubmit={(e) => handleFormSubmit(e)}>
-        <label htmlFor="create-user-name">
-        Nome
+        <div className="flex flex-col mb-4">
+          <label htmlFor="create-user-name" className="font-light mb-1 text-sm">
+            Nome
+          </label>
           <input type="text" name="name" id="create-user-name" 
+            className="bg-transparent border-white border-2 p-2 text-sm"
             value={name} onChange={(e) => setName(e.target.value)}
           />
-        </label>
-        <label htmlFor="create-user-email">
-        E-mail
+        </div>
+        <div className="flex flex-col mb-4">
+          <label htmlFor="create-user-email" className="font-light mb-1 text-sm">
+            E-mail
+          </label>
           <input type="email" name="email" id="create-user-email" 
+            className="bg-transparent border-white border-2 p-2 text-sm"
             value={email} onChange={(e) => setEmail(e.target.value)}
           />
-        </label>
-        <label htmlFor="create-user-email">
-        Imagem
-          <input type="text" name="image" id="create-user-image" 
-            value={image} onChange={(e) => setImage(e.target.value)}
+        </div>
+        <div className="flex flex-col mb-4">
+          <label htmlFor="create-user-birthdate"
+            className="font-light mb-1 text-sm"
+          >
+          Data de Nascimento
+          </label>
+          <input type="date" name="birthdate" id="create-user-birthdate" 
+            className="bg-transparent border-white border-2 p-2 text-sm"
           />
-        </label>
-        <label htmlFor="create-user-age">
-        Idade
-          <input type="number" name="age" id="create-user-age" 
-            value={age} onChange={(e) => setAge(Number(e.target.value))}
-          />
-        </label>
-        <label htmlFor="create-user-profile">
+        </div>
+        <div className="flex flex-col mb-4">
+          <label htmlFor="create-user-profile"
+            className="font-light mb-1 text-sm"
+          >
         Tipo de perfil
+          </label>
+
           <select name="profile" id="create-user-profile"
+            className="bg-transparent border-white border-2 p-2 text-sm"
+
             value={profile} onChange={(e) => setProfile(e.target.value)}
           >
             <option disabled value="null">Selecione um tipo de perfil...</option>
             <option value="STUDENT">Aluno</option>
             <option value="PERSONAL">Personal</option>
           </select>
-        </label>
-        <label htmlFor="create-user-password">
+        </div>
+        <div className="flex flex-col mb-4">
+          <label htmlFor="create-user-password"
+
+            className="font-light mb-1 text-sm"
+          >
         Senha
+          </label>
           <input type="password" name="password" 
+            className="bg-transparent border-white border-2 p-2 text-sm"
+
             value={password} onChange={(e) => setPassword(e.target.value)}
           />
-        </label>
+        </div>
         <label htmlFor="create-user-repeat-password">
         Confirmar senha
           <input type="password" name="repeat-password" 
             value={repeatPassword} onChange={(e) => setRepeatPassword(e.target.value)}
           />
         </label>
-        <p>Já possui uma conta? <Link href="/login">Entre aqui</Link></p>
         <button type="submit">Criar</button>
       </form>
       {error && <p>{getErrorMessage(error)}</p>}
