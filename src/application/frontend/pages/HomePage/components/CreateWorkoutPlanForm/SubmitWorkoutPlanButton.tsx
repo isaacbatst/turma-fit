@@ -42,6 +42,8 @@ const SubmitWorkoutPlan: React.FC = () => {
     } catch (e) {
       if(axios.isAxiosError(e) && e.response){
         handleApiError(e.response.data)
+      } else {
+        return 'UNKNOWN_ERROR'
       }
     }
   }

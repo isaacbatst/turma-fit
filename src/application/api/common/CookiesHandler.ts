@@ -30,6 +30,17 @@ export class CookiesHandler {
     res.setHeader('Set-Cookie', serialize(name, stringValue, cookieOptions))
   }
 
+  static removeCookie(
+    name: string, 
+    res: ResponseWithSetHeader,
+  ) {
+    const stringValue = "expired";
+    
+    res.setHeader('Set-Cookie', serialize(name, stringValue, {
+      maxAge: 0
+    }))
+  }
+
   static daysToSeconds(days: number) {
     return days * this.SECONDS_IN_A_DAY
   }

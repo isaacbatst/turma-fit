@@ -5,9 +5,14 @@ export interface HttpRequest {
   cookies: Record<string, any>
 }
 
+export interface Cookie {
+  value: string, 
+  daysToExpire?: number
+}
+
 export interface HttpResponse<T = {}> {
   body?: T | { error: string },
-  cookies?: Record<string, { value: string, daysToExpire?: number }>,
+  cookies?: Record<string, Cookie>,
   statusCode: number
 }
 

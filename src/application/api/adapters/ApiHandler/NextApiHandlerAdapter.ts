@@ -16,13 +16,14 @@ export class NextApiHandlerAdapter<Response> {
     }
 
     const { statusCode, body, cookies } = await this.controller.handle(httpRequest);
+
+    if(cookies) {
+      Object.entries(cookies).forEach(([key, { value, daysToExpire }]) => {
+        CookiesHandler.setCookie(res, key, value, daysToExpire);
+      })
+    }
     
     if(!body) return res.status(statusCode).end();
-    if(!cookies) return res.status(statusCode).json(body);
-
-    Object.entries(cookies).forEach(([key, { value, daysToExpire }]) => {
-      CookiesHandler.setCookie(res, key, value, daysToExpire);
-    })
 
     return res.status(statusCode).json(body);
   }
