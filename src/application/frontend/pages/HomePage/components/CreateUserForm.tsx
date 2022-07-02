@@ -79,7 +79,7 @@ const CreateUserForm: React.FC = () => {
         <button 
           type="submit" 
           className="bg-white text-red-500 block w-full py-2 font-bold 
-            active:bg-slate-100 hover:scale-105 text-center"
+            active:bg-slate-100 text-center"
           disabled={isLoading}
         >
           {isLoading ? (
