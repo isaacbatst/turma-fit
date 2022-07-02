@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { useCreateUserForm } from "../hooks/useCreateUserForm";
+import Input from "./Input";
+import InputWrapper from "./InputWrapper";
 
 const CreateUserForm: React.FC = () => {
   const {
@@ -7,8 +9,7 @@ const CreateUserForm: React.FC = () => {
     email, setEmail,
     password, setPassword,
     repeatPassword, setRepeatPassword,
-    age, setAge,
-    image,setImage,
+    birthdate, setBirthdate,
     profile, setProfile,
     error, getErrorMessage,
     handleFormSubmit
@@ -19,71 +20,61 @@ const CreateUserForm: React.FC = () => {
       <h2 className="text-center mb-2 font-bold">Registre-se agora!</h2>
       <p className="text-center text-xs mb-5">Já possui uma conta? <Link href="/login"><a className="text-blue-600 underline">Entre aqui</a></Link></p>
       <form aria-label="Criar conta" onSubmit={(e) => handleFormSubmit(e)}>
-        <div className="flex flex-col mb-4">
-          <label htmlFor="create-user-name" className="font-light mb-1 text-sm">
-            Nome
-          </label>
-          <input type="text" name="name" id="create-user-name" 
-            className="bg-transparent border-white border-2 p-2 text-sm"
-            value={name} onChange={(e) => setName(e.target.value)}
-          />
-        </div>
-        <div className="flex flex-col mb-4">
-          <label htmlFor="create-user-email" className="font-light mb-1 text-sm">
-            E-mail
-          </label>
-          <input type="email" name="email" id="create-user-email" 
-            className="bg-transparent border-white border-2 p-2 text-sm"
-            value={email} onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div className="flex flex-col mb-4">
-          <label htmlFor="create-user-birthdate"
-            className="font-light mb-1 text-sm"
-          >
-          Data de Nascimento
-          </label>
-          <input type="date" name="birthdate" id="create-user-birthdate" 
-            className="bg-transparent border-white border-2 p-2 text-sm"
-          />
-        </div>
-        <div className="flex flex-col mb-4">
-          <label htmlFor="create-user-profile"
-            className="font-light mb-1 text-sm"
-          >
-        Tipo de perfil
-          </label>
-
+        <Input 
+          id="create-user-name"
+          label="Nome"
+          name="name"
+          setValue={setName}
+          value={name}
+        />
+        <Input 
+          id="create-user-email"
+          label="E-mail"
+          name="email"
+          setValue={setEmail}
+          value={email}
+          type="email"
+        />
+        <Input 
+          id="create-user-birthdate"
+          label="Data de Nascimento"
+          name="birthdate"
+          setValue={setBirthdate}
+          value={birthdate}
+          type="date"
+        />
+        <InputWrapper id="create-user-profile" label="Tipo de Perfil">
           <select name="profile" id="create-user-profile"
-            className="bg-transparent border-white border-2 p-2 text-sm"
-
+            className="bg-transparent border-white border-2 p-2 text-sm font-light
+            focus:outline-none focus:font-light focus:bg-white focus:text-stone-800"
             value={profile} onChange={(e) => setProfile(e.target.value)}
           >
-            <option disabled value="null">Selecione um tipo de perfil...</option>
-            <option value="STUDENT">Aluno</option>
-            <option value="PERSONAL">Personal</option>
+            <option className="text-stone-700" disabled value="null">Selecione um tipo de perfil...</option>
+            <option className="text-stone-700" value="STUDENT">Aluno</option>
+            <option className="text-stone-700" value="PERSONAL">Personal</option>
           </select>
-        </div>
-        <div className="flex flex-col mb-4">
-          <label htmlFor="create-user-password"
-
-            className="font-light mb-1 text-sm"
-          >
-        Senha
-          </label>
-          <input type="password" name="password" 
-            className="bg-transparent border-white border-2 p-2 text-sm"
-
-            value={password} onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <label htmlFor="create-user-repeat-password">
-        Confirmar senha
-          <input type="password" name="repeat-password" 
-            value={repeatPassword} onChange={(e) => setRepeatPassword(e.target.value)}
-          />
-        </label>
-        <button type="submit">Criar</button>
+        </InputWrapper>
+        <Input 
+          id="create-user-password"
+          label="Senha"
+          name="password"
+          setValue={setPassword}
+          value={password}
+          type="password"
+        />
+        <Input 
+          id="create-user-repeat-password"
+          label="Confirme a senha"
+          name="repeat-password"
+          setValue={setRepeatPassword}
+          value={repeatPassword}
+          type="password"
+        />
+        <button 
+          type="submit" 
+          className="bg-white text-red-500 block w-full py-2 font-bold 
+            active:bg-slate-100 hover:scale-105"
+        >Cadastrar</button>
       </form>
       {error && <p>{getErrorMessage(error)}</p>}
     </div>
