@@ -8,14 +8,14 @@ import { useSWRConfig } from "swr";
 type CreateUserApiErrors = CreateUserRequestErrors | CreateUserUseCaseErrors | 'DEFAULT'
 
 const API_ERROR_TO_MESSAGE: Record<CreateUserApiErrors, string> = {
-  INVALID_AGE: "Age must be a number",
-  INVALID_EMAIL: "Email is invalid",
-  INVALID_NAME: "Name is invalid",
-  INVALID_PASSWORD: "Password is invalid",
-  INVALID_IMAGE: "Image is invalid",
-  INVALID_PROFILE: "Profile is invalid",
-  REPEATED_EMAIL: "Email is already in use",
-  UNKNOW_PROFILE: "Profile is invalid",
+  INVALID_AGE: "A idade deve ser um número",
+  INVALID_EMAIL: "E-mail inválido",
+  INVALID_NAME: "Nome inválido",
+  INVALID_PASSWORD: "Senha inválida",
+  INVALID_IMAGE: "Imagem inválida",
+  INVALID_PROFILE: "Tipo de perfil inválido",
+  REPEATED_EMAIL: "E-mail já em uso",
+  UNKNOW_PROFILE: "Tipo de perfil inválido",
   DEFAULT: 'Erro ao criar usuário'
 }
 
@@ -28,6 +28,7 @@ export const useCreateUserForm = () => {
   const [image, setImage] = useState("");
   const [profile, setProfile] = useState("null");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const { mutate } = useSWRConfig();
 
@@ -38,7 +39,7 @@ export const useCreateUserForm = () => {
   const handleFormSubmit = async (e: FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
-
+      setIsLoading(true);
       await axios.post('/api/user', {
         name,
         email,
@@ -61,6 +62,8 @@ export const useCreateUserForm = () => {
       }
 
       return setError('SERVER_ERROR')
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -73,6 +76,7 @@ export const useCreateUserForm = () => {
     image,setImage,
     profile, setProfile,
     error, getErrorMessage,
+    isLoading,
     handleFormSubmit
   }
 }
