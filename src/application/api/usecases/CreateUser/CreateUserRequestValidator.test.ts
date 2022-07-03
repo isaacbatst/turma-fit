@@ -1,13 +1,25 @@
 import { CreateUserUseCasePort } from "@domain/usecases/CreateUserUseCase/CreateUserPortValidator";
 import { CreateUserRequestValidator } from "./CreateUserRequestValidator";
 
+class RequestMock {
+  public request: Record<string, any> = {  
+    password: 'any_password',
+    birthdate: 'any_birthdate',
+    email: 'any_email',
+    name: 'any_name',
+    profile: 'any_profile'
+  }
+}
+
 describe('CreateUserBodyValidator', () => {
   describe('Given it receives no password', () => {
     it('should throw INVALID_PASSWORD error', () => {
       const createUserBodyValidator = new CreateUserRequestValidator();
+      const requestMock = new RequestMock();
+      delete requestMock.request.password;
       
       expect(() => {
-        createUserBodyValidator.validate({});
+        createUserBodyValidator.validate(requestMock.request);
       }).toThrowError('INVALID_PASSWORD')
     })
   })
@@ -15,49 +27,47 @@ describe('CreateUserBodyValidator', () => {
   describe('Given it receives a password that is not a string', () => {
     it('should throw INVALID_PASSWORD error', () => {
       const createUserBodyValidator = new CreateUserRequestValidator();
+      const requestMock = new RequestMock();
+      requestMock.request.password = false;
       
       expect(() => {
-        createUserBodyValidator.validate({
-          password: false
-        });
+        createUserBodyValidator.validate(requestMock.request);
       }).toThrowError('INVALID_PASSWORD')
     })
   })
 
-  describe('Given it receives no age', () => {
-    it('should throw INVALID_AGE error', () => {
+  describe('Given it receives no birthdate', () => {
+    it('should throw INVALID_BIRTHDATE error', () => {
       const createUserBodyValidator = new CreateUserRequestValidator();
+      const requestMock = new RequestMock();
+      delete requestMock.request.birthdate;
       
       expect(() => {
-        createUserBodyValidator.validate({
-          password: 'any_password'
-        });
-      }).toThrowError('INVALID_AGE')
+        createUserBodyValidator.validate(requestMock.request);
+      }).toThrowError('INVALID_BIRTHDATE')
     })
   })
 
-  describe('Given it receives a age that is not a number', () => {
-    it('should throw INVALID_AGE error', () => {
+  describe('Given it receives a birthdate that is not a string', () => {
+    it('should throw INVALID_BIRTHDATE error', () => {
       const createUserBodyValidator = new CreateUserRequestValidator();
+      const requestMock = new RequestMock();
+      requestMock.request.birthdate = false;
       
       expect(() => {
-        createUserBodyValidator.validate({
-          password: 'any_password',
-          age: '23'
-        });
-      }).toThrowError('INVALID_AGE')
+        createUserBodyValidator.validate(requestMock.request);
+      }).toThrowError('INVALID_BIRTHDATE')
     })
   })
 
   describe('Given it receives no email', () => {
     it('should throw INVALID_EMAIL error', () => {
       const createUserBodyValidator = new CreateUserRequestValidator();
+      const requestMock = new RequestMock();
+      delete requestMock.request.email;
       
       expect(() => {
-        createUserBodyValidator.validate({
-          password: 'any_password',
-          age: 23
-        });
+        createUserBodyValidator.validate(requestMock.request);
       }).toThrowError('INVALID_EMAIL')
     })
   })
@@ -65,57 +75,23 @@ describe('CreateUserBodyValidator', () => {
   describe('Given it receives a email that is not a string', () => {
     it('should throw INVALID_EMAIL error', () => {
       const createUserBodyValidator = new CreateUserRequestValidator();
+      const requestMock = new RequestMock();
+      requestMock.request.email = false;
       
       expect(() => {
-        createUserBodyValidator.validate({
-          password: 'any_password',
-          age: 23,
-          email: false
-        });
+        createUserBodyValidator.validate(requestMock.request);
       }).toThrowError('INVALID_EMAIL')
-    })
-  })
-
-  describe('Given it receives no image', () => {
-    it('should throw INVALID_IMAGE error', () => {
-      const createUserBodyValidator = new CreateUserRequestValidator();
-      
-      expect(() => {
-        createUserBodyValidator.validate({
-          password: 'any_password',
-          age: 23,
-          email: 'any_email'
-        });
-      }).toThrowError('INVALID_IMAGE')
-    })
-  })
-
-  describe('Given it receives a image that is not a string', () => {
-    it('should throw INVALID_IMAGE error', () => {
-      const createUserBodyValidator = new CreateUserRequestValidator();
-      
-      expect(() => {
-        createUserBodyValidator.validate({
-          password: 'any_password',
-          age: 23,
-          email: 'any_email',
-          image: false
-        });
-      }).toThrowError('INVALID_IMAGE')
     })
   })
 
   describe('Given it receives no name', () => {
     it('should throw INVALID_NAME error', () => {
       const createUserBodyValidator = new CreateUserRequestValidator();
+      const requestMock = new RequestMock();
+      delete requestMock.request.name;
       
       expect(() => {
-        createUserBodyValidator.validate({
-          password: 'any_password',
-          age: 23,
-          email: 'any_email',
-          image: 'any_image'
-        });
+        createUserBodyValidator.validate(requestMock.request);
       }).toThrowError('INVALID_NAME')
     })
   })
@@ -123,15 +99,11 @@ describe('CreateUserBodyValidator', () => {
   describe('Given it receives a name that is not a string', () => {
     it('should throw INVALID_NAME error', () => {
       const createUserBodyValidator = new CreateUserRequestValidator();
+      const requestMock = new RequestMock();
+      requestMock.request.name = false;
       
       expect(() => {
-        createUserBodyValidator.validate({
-          password: 'any_password',
-          age: 23,
-          email: 'any_email',
-          image: 'any_image',
-          name: false
-        });
+        createUserBodyValidator.validate(requestMock.request);
       }).toThrowError('INVALID_NAME')
     })
   })
@@ -140,15 +112,11 @@ describe('CreateUserBodyValidator', () => {
   describe('Given it receives no profile', () => {
     it('should throw INVALID_PROFILE error', () => {
       const createUserBodyValidator = new CreateUserRequestValidator();
+      const requestMock = new RequestMock();
+      delete requestMock.request.profile;
       
       expect(() => {
-        createUserBodyValidator.validate({
-          password: 'any_password',
-          age: 23,
-          email: 'any_email',
-          image: 'any_image',
-          name: 'any_name'
-        });
+        createUserBodyValidator.validate(requestMock.request);
       }).toThrowError('INVALID_PROFILE')
     })
   })
@@ -156,16 +124,11 @@ describe('CreateUserBodyValidator', () => {
   describe('Given it receives a profile that is not a string', () => {
     it('should throw INVALID_PROFILE error', () => {
       const createUserBodyValidator = new CreateUserRequestValidator();
+      const requestMock = new RequestMock();
+      requestMock.request.profile = false;
       
       expect(() => {
-        createUserBodyValidator.validate({
-          password: 'any_password',
-          age: 23,
-          email: 'any_email',
-          image: 'any_image',
-          name: 'any_name',
-          profile: false
-        });
+        createUserBodyValidator.validate(requestMock.request);
       }).toThrowError('INVALID_PROFILE')
     })
   })
@@ -173,19 +136,11 @@ describe('CreateUserBodyValidator', () => {
   describe('Given it receives valid data', () => {
     it('should return the data', () => {
       const createUserBodyValidator = new CreateUserRequestValidator();
+      const requestMock = new RequestMock();
 
-      const MOCK_DATA: CreateUserUseCasePort = {  
-        password: 'any_password',
-        age: 23,
-        email: 'any_email',
-        image: 'any_image',
-        name: 'any_name',
-        profile: 'any_profile'
-      }
+      const data = createUserBodyValidator.validate(requestMock.request);
 
-      const data = createUserBodyValidator.validate(MOCK_DATA);
-
-      expect(data).toEqual(MOCK_DATA)
+      expect(data).toEqual(requestMock.request)
     })
   })
 })

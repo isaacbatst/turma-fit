@@ -11,9 +11,8 @@ export class BodyValidatorMock implements RequestValidator<CreateUserUseCasePort
     }
 
     return {
-      age: 23,
+      birthdate: '2000-05-01',
       email: 'valid_email',
-      image: 'valid_image',
       name: 'valid_name',
       password: 'valid_password',
       profile: 'PERSONAL'

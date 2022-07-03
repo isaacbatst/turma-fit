@@ -1,5 +1,3 @@
-import { v4 } from "uuid";
-
 export enum PROFILE_TYPES {
   STUDENT = 'STUDENT',
   PERSONAL = 'PERSONAL'
@@ -12,8 +10,8 @@ export abstract class Profile {
   protected abstract readonly type: ProfileType;
   // protected advices: Advice[]
 
-  constructor(id?: string) {
-    this.id = id || v4();
+  constructor(id: string) {
+    this.id = id;
   }
 
   public getId(): string {

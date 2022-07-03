@@ -8,14 +8,13 @@ import { useSWRConfig } from "swr";
 type CreateUserApiErrors = CreateUserRequestErrors | CreateUserUseCaseErrors | 'DEFAULT'
 
 const API_ERROR_TO_MESSAGE: Record<CreateUserApiErrors, string> = {
-  INVALID_AGE: "A idade deve ser um número",
+  INVALID_BIRTHDATE: "Data de nascimento inválida",
   INVALID_EMAIL: "E-mail inválido",
   INVALID_NAME: "Nome inválido",
   INVALID_PASSWORD: "Senha inválida",
-  INVALID_IMAGE: "Imagem inválida",
   INVALID_PROFILE: "Tipo de perfil inválido",
-  REPEATED_EMAIL: "E-mail já em uso",
-  UNKNOW_PROFILE: "Tipo de perfil inválido",
+  REPEATED_EMAIL: "E-mail em uso",
+  UNKNOW_PROFILE: "Tipo de perfil desconhecido",
   DEFAULT: 'Erro ao criar usuário'
 }
 
@@ -25,7 +24,6 @@ export const useCreateUserForm = () => {
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
   const [birthdate, setBirthdate] = useState("");
-  const [image, setImage] = useState("");
   const [profile, setProfile] = useState("null");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -45,7 +43,6 @@ export const useCreateUserForm = () => {
         email,
         password,
         birthdate,
-        image,
         profile
       })
 
@@ -73,7 +70,6 @@ export const useCreateUserForm = () => {
     password, setPassword,
     repeatPassword, setRepeatPassword,
     birthdate, setBirthdate,
-    image,setImage,
     profile, setProfile,
     error, getErrorMessage,
     isLoading,

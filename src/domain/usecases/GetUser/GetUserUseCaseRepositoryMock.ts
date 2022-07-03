@@ -4,7 +4,7 @@ import { GetUserRepository } from "@domain/repositories/UserRepository";
 export class GetUserRepositoryMock implements GetUserRepository {
   user: User | null = new User({
     id: 'any_id',
-    age: 20,
+    birthdate: new Date(),
     email: 'any_email',
     image: 'any_image',
     name: 'any_name',

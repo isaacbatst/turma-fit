@@ -13,8 +13,8 @@ model User {
   id              String        @id
   email           String        @unique
   emailVerifiedAt DateTime?
-  image           String
-  age             Int
+  image           String?
+  birthdate       DateTime
   password        String
   workoutPlans    WorkoutPlan[]
   profile         Profile[]

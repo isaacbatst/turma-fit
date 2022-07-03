@@ -74,9 +74,8 @@ export class CreateUserService implements CreateUserUseCase {
 
     const user = new User({
       id: this.uuidGenerator.generate(),
-      age: port.age,
+      birthdate: new Date(port.birthdate),
       email: port.email,
-      image: port.image,
       name: port.name,
       password: hashedPassword
     })
@@ -110,11 +109,11 @@ export class CreateUserService implements CreateUserUseCase {
 
   private getProfileInstance(profile: ProfileType): Profile {
     if(profile === 'PERSONAL'){
-      return new PersonalProfile();
+      return new PersonalProfile(this.uuidGenerator.generate());
     }
 
     if(profile === 'STUDENT'){
-      return new StudentProfile();
+      return new StudentProfile(this.uuidGenerator.generate());
     }
 
     throw new ValidationError(CreateUserUseCaseErrors.UNKNOW_PROFILE)
