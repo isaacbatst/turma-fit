@@ -23,8 +23,7 @@ export const useCreateUserForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
-  const [age, setAge] = useState(0);
-  const [image, setImage] = useState("");
+  const [birthdate, setBirthdate] = useState("");
   const [profile, setProfile] = useState("null");
   const [error, setError] = useState("");
 
@@ -42,8 +41,7 @@ export const useCreateUserForm = () => {
         name,
         email,
         password,
-        age,
-        image,
+        birthdate,
         profile
       })
 
@@ -68,8 +66,7 @@ export const useCreateUserForm = () => {
     email, setEmail,
     password, setPassword,
     repeatPassword, setRepeatPassword,
-    age, setAge,
-    image,setImage,
+    birthdate, setBirthdate,
     profile, setProfile,
     error, getErrorMessage,
     handleFormSubmit

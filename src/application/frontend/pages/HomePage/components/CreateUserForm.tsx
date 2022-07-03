@@ -7,8 +7,7 @@ const CreateUserForm: React.FC = () => {
     email, setEmail,
     password, setPassword,
     repeatPassword, setRepeatPassword,
-    age, setAge,
-    image,setImage,
+    birthdate, setBirthdate,
     profile, setProfile,
     error, getErrorMessage,
     handleFormSubmit
@@ -30,16 +29,10 @@ const CreateUserForm: React.FC = () => {
             value={email} onChange={(e) => setEmail(e.target.value)}
           />
         </label>
-        <label htmlFor="create-user-email">
-        Imagem
-          <input type="text" name="image" id="create-user-image" 
-            value={image} onChange={(e) => setImage(e.target.value)}
-          />
-        </label>
-        <label htmlFor="create-user-age">
-        Idade
-          <input type="number" name="age" id="create-user-age" 
-            value={age} onChange={(e) => setAge(Number(e.target.value))}
+        <label htmlFor="create-user-birthdate">
+        Data de nascimento
+          <input type="number" name="birthdate" id="create-user-birthdate" 
+            value={birthdate} onChange={(e) => setBirthdate(e.target.value)}
           />
         </label>
         <label htmlFor="create-user-profile">
