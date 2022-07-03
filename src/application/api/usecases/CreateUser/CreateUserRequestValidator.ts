@@ -5,14 +5,13 @@ import { CreateUserRequestErrors } from "./CreateUserRequestErrors";
 export interface CreateUserValidRequest {
   name: string,
   email: string,
-  image: string,
   birthdate: string,
   profile: string,
   password: string,
 }
 export class CreateUserRequestValidator implements RequestValidator<CreateUserValidRequest> {
   validate(request: Record<string, any>): CreateUserValidRequest {
-    const { password, birthdate, email, image, name, profile } = request;
+    const { password, birthdate, email, name, profile } = request;
     
     if(!password || typeof password !== 'string') {
       throw new ValidationError(CreateUserRequestErrors.INVALID_PASSWORD)
@@ -38,7 +37,6 @@ export class CreateUserRequestValidator implements RequestValidator<CreateUserVa
       password,
       birthdate,
       email,
-      image,
       name,
       profile
     }    
