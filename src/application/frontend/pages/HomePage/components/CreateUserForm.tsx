@@ -51,7 +51,7 @@ const CreateUserForm: React.FC = () => {
         />
         <InputWrapper id="create-user-profile" label="Tipo de Perfil">
           <select name="profile" id="create-user-profile"
-            className="bg-transparent border-white border-2 p-2 text-sm font-light
+            className="bg-transparent border-white border-2 p-2 text-sm font-light rounded
             focus:outline-none focus:font-light focus:bg-white focus:text-stone-800"
             value={profile} onChange={(e) => setProfile(e.target.value)}
           >
@@ -79,7 +79,7 @@ const CreateUserForm: React.FC = () => {
         <button 
           type="submit" 
           className="bg-white text-red-500 block w-full py-2 font-bold 
-            active:bg-slate-100 text-center"
+            active:bg-slate-100 text-center rounded"
           disabled={isLoading}
         >
           {isLoading ? (

@@ -24,7 +24,7 @@ const Input: React.FC<Props> = ({
       label={label} 
     >
       <input type={type} name={name} id={id} 
-        className="bg-transparent border-white border-2 p-2 text-sm font-medium
+        className="bg-transparent border-white border-2 p-2 text-sm font-medium rounded
       focus:outline-none focus:bg-white focus:text-stone-800"
         value={value} onChange={(e) => setValue(e.target.value)}
       />

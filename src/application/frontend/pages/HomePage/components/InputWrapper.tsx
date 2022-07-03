@@ -11,7 +11,7 @@ const InputWrapper: React.FC<Props> = ({
   label
 }) => {
   return (
-    <div className="flex flex-col mb-4 font-light">
+    <div className="flex flex-col mb-4">
       <label htmlFor={id} className="mb-1 text-sm">
         {label}
       </label>
