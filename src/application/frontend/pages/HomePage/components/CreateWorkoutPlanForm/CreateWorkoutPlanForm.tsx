@@ -13,20 +13,15 @@ const CreateWorkoutPlanForm: React.FC = () => {
 
   return (
     <CreateWorkoutPlanFormContextProvider>
-      <div>
-        <form action="">
-          <h2>Criar plano de treino</h2>
-          <div>
-            <PlanTypeRadios />
-          </div>
-          <button type="button" onClick={() => dispatch(addWorkoutAction())}>+ Treino</button>
-          <WorkoutsList />
-          <SubmitWorkoutPlanButton />
-          {
-            error && <div>{error}</div>
-          }
-        </form>
-      </div>
+      <form action="">
+        <PlanTypeRadios />
+        <button type="button" onClick={() => dispatch(addWorkoutAction())}>+ Treino</button>
+        <WorkoutsList />
+        <SubmitWorkoutPlanButton />
+        {
+          error && <div>{error}</div>
+        }
+      </form>
     </CreateWorkoutPlanFormContextProvider>
   )
 }
