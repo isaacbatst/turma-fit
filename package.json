@@ -55,7 +55,7 @@
     "lint": "next lint",
     "test": "dotenv -e .env.test jest",
     "coverage": "jest --coverage",
-    "vercel-build": "npm run prisma:generate && npm run prisma:migrate && next build",
+    "vercel-build": "yarn prisma:generate && yarn prisma:migrate && next build",
     "prisma:generate": "PRISMA_CLIENT_ENGINE_TYPE='dataproxy' prisma generate",
     "prisma:migrate": "DATABASE_URL=\"$MIGRATE_DATABASE_URL\" prisma migrate deploy"
   }
