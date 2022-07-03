@@ -2,7 +2,7 @@
 CREATE TYPE "ProfileType" AS ENUM ('STUDENT', 'PERSONAL');
 
 -- CreateEnum
-CREATE TYPE "MuscleGroup" AS ENUM ('CHEST', 'SHOULDERS', 'TRICEPS', 'BICEPS', 'ABS', 'QUADRICEPS', 'HAMSTRINGS', 'CALVES', 'GLUTES', 'BACK', 'TRAPEZIUS', 'FOREARMS', 'LOWER_BACK');
+CREATE TYPE "MuscleGroup" AS ENUM ('BICEPS', 'TRICEPS', 'CHEST', 'BACK', 'ABDOMINALS', 'SHOULDERS', 'CALVES', 'FOREARMS', 'TRAPEZIUS', 'GLUTES', 'HAMSTRINGS', 'LOWER_BACK', 'QUADRICEPS');
 
 -- CreateEnum
 CREATE TYPE "Grip" AS ENUM ('PRONATE', 'SUPINE', 'NEUTRAL');
@@ -16,8 +16,8 @@ CREATE TABLE "User" (
     "id" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "emailVerifiedAt" TIMESTAMP(3),
-    "image" TEXT NOT NULL,
-    "age" INTEGER NOT NULL,
+    "image" TEXT,
+    "birthdate" TIMESTAMP(3) NOT NULL,
     "password" TEXT NOT NULL,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
@@ -118,7 +118,7 @@ CREATE TABLE "Set" (
     "id" TEXT NOT NULL,
     "times" INTEGER NOT NULL,
     "repetitions" TEXT NOT NULL,
-    "exerciseTechniqueId" TEXT,
+    "techniqueId" TEXT,
     "minRestTime" INTEGER,
     "maxRestTime" INTEGER,
 
@@ -210,7 +210,7 @@ ALTER TABLE "Exercise" ADD CONSTRAINT "Exercise_movementId_fkey" FOREIGN KEY ("m
 ALTER TABLE "Exercise" ADD CONSTRAINT "Exercise_equipmentId_fkey" FOREIGN KEY ("equipmentId") REFERENCES "Equipment"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Set" ADD CONSTRAINT "Set_exerciseTechniqueId_fkey" FOREIGN KEY ("exerciseTechniqueId") REFERENCES "ExerciseTechnique"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Set" ADD CONSTRAINT "Set_techniqueId_fkey" FOREIGN KEY ("techniqueId") REFERENCES "ExerciseTechnique"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "WorkoutPlan" ADD CONSTRAINT "WorkoutPlan_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
