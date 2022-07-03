@@ -7,7 +7,7 @@ export class UserRepositoryMock implements CreateUserRepository {
     email: 'any_email@email',
     name: 'any_name',
     password: 'any_hashed_password',
-    birthdate: 'any_birthdate'
+    birthdate: new Date(),
   };
 
   public foundUser: User | null = new User(UserRepositoryMock.USER_DATA)

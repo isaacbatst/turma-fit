@@ -4,7 +4,7 @@ export interface CreateUserEntityParams {
   image?: string;
   name: string;
   email: string;
-  birthdate: string;
+  birthdate: Date;
   password: string
 }
 export class User {
@@ -13,7 +13,7 @@ export class User {
   private email: string;
   private emailVerifiedAt: Date | null;
   private image: string | null;
-  private birthdate: string;
+  private birthdate: Date;
   private password: string
 
   constructor(params: CreateUserEntityParams) {
@@ -46,7 +46,7 @@ export class User {
     return this.image;
   }
 
-  public getBirthdate(): string {
+  public getBirthdate(): Date {
     return this.birthdate;
   }
 

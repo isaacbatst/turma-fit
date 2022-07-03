@@ -74,7 +74,7 @@ export class CreateUserService implements CreateUserUseCase {
 
     const user = new User({
       id: this.uuidGenerator.generate(),
-      birthdate: port.birthdate,
+      birthdate: new Date(port.birthdate),
       email: port.email,
       name: port.name,
       password: hashedPassword

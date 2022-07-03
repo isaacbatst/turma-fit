@@ -74,6 +74,7 @@ describe('CreateUserUseCase', () => {
 
     const expectedUserParameter = new User({
       ...portMock.port,
+      birthdate: new Date(portMock.port.birthdate),
       password: EncrypterMock.HASHED_VALUE,
       id: uuidGenerator.GENERATED_ID
     })

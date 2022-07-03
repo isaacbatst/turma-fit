@@ -4,9 +4,9 @@ import { User as PrismaUser } from "@prisma/client";
 export class PrismaUserMapper {
   static ormToDomain(prismaUser: PrismaUser): User {
     const user = new User({
-      age: prismaUser.age,
+      birthdate: prismaUser.birthdate,
       email: prismaUser.email,
-      image: prismaUser.image,
+      image: prismaUser.image || undefined,
       name: prismaUser.name,
       password: prismaUser.password,
       id: prismaUser.id,
@@ -21,7 +21,7 @@ export class PrismaUserMapper {
       email: user.getEmail(),
       name: user.getName(),
       image: user.getImage(),
-      age: user.getAge(),
+      birthdate: user.getBirthdate(),
       id: user.getId(),
       emailVerifiedAt: user.getEmailVerifiedAt(),
       password: user.getPassword(),

@@ -8,14 +8,13 @@ import { useSWRConfig } from "swr";
 type CreateUserApiErrors = CreateUserRequestErrors | CreateUserUseCaseErrors | 'DEFAULT'
 
 const API_ERROR_TO_MESSAGE: Record<CreateUserApiErrors, string> = {
-  INVALID_AGE: "Age must be a number",
-  INVALID_EMAIL: "Email is invalid",
-  INVALID_NAME: "Name is invalid",
-  INVALID_PASSWORD: "Password is invalid",
-  INVALID_IMAGE: "Image is invalid",
-  INVALID_PROFILE: "Profile is invalid",
-  REPEATED_EMAIL: "Email is already in use",
-  UNKNOW_PROFILE: "Profile is invalid",
+  INVALID_BIRTHDATE: "Data de nascimento inválida",
+  INVALID_EMAIL: "E-mail inválido",
+  INVALID_NAME: "Nome inválido",
+  INVALID_PASSWORD: "Senha inválida",
+  INVALID_PROFILE: "Tipo de perfil inválido",
+  REPEATED_EMAIL: "E-mail em uso",
+  UNKNOW_PROFILE: "Tipo de perfil desconhecido",
   DEFAULT: 'Erro ao criar usuário'
 }
 
