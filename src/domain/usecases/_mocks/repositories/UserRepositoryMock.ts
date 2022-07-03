@@ -1,14 +1,13 @@
-import { User } from "@domain/entities/User/User";
+import { CreateUserEntityParams, User } from "@domain/entities/User/User";
 import { CreateUserRepository } from "@domain/repositories/UserRepository";
 
 export class UserRepositoryMock implements CreateUserRepository {
-  static readonly USER_DATA = {
+  static readonly USER_DATA: CreateUserEntityParams = {
     id: 'any_id',
     email: 'any_email@email',
     name: 'any_name',
-    age: 23,
-    image: 'any_image',
     password: 'any_hashed_password',
+    birthdate: 'any_birthdate'
   };
 
   public foundUser: User | null = new User(UserRepositoryMock.USER_DATA)

@@ -1,12 +1,10 @@
-import { v4 } from "uuid";
-
 export interface CreateUserEntityParams {
   id: string;
   emailVerifiedAt?: Date | null;
+  image?: string;
   name: string;
   email: string;
-  image: string;
-  age: number;
+  birthdate: string;
   password: string
 }
 export class User {
@@ -14,8 +12,8 @@ export class User {
   private name: string;
   private email: string;
   private emailVerifiedAt: Date | null;
-  private image: string;
-  private age: number;
+  private image: string | null;
+  private birthdate: string;
   private password: string
 
   constructor(params: CreateUserEntityParams) {
@@ -23,8 +21,8 @@ export class User {
     this.id = params.id;
     this.name = params.name;
     this.email = params.email;
-    this.image = params.image;
-    this.age = params.age;
+    this.image = params.image || null;
+    this.birthdate = params.birthdate;
     this.password = params.password
   }
 
@@ -44,12 +42,12 @@ export class User {
     return this.password;
   }
 
-  public getImage(): string {
+  public getImage(): string | null {
     return this.image;
   }
 
-  public getAge(): number {
-    return this.age;
+  public getBirthdate(): string {
+    return this.birthdate;
   }
 
   public getEmailVerifiedAt(): Date | null {
