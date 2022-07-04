@@ -1,12 +1,14 @@
 import { useAppDispatch, useAppSelector } from '@application/frontend/store/hooks';
 import { selectPlanType, selectPlanTypeAction } from '@application/frontend/store/slices/CreateWorkoutPlanForm';
 import React from 'react';
+import { useSwiper } from 'swiper/react';
 import { usePlanTypes } from './usePlanTypes';
 
 const PlanTypeRadios: React.FC = () => {
   const { error, isLoading, planTypes } = usePlanTypes();
   const selectedPlanType = useAppSelector(selectPlanType);
   const dispatch = useAppDispatch();
+  const swiper = useSwiper();
 
   return (
     <div>
@@ -30,6 +32,7 @@ const PlanTypeRadios: React.FC = () => {
                 id={`plan-type-${planType.id}`} 
                 value={planType.id} 
                 checked={selectedPlanType?.id === planType.id} 
+                onClick={() => swiper.slideNext()}
                 onChange={() => dispatch(selectPlanTypeAction({ selectedPlanType: planType }))}
               />
               <label 

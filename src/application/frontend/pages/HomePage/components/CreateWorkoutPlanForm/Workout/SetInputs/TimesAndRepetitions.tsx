@@ -1,15 +1,12 @@
 import { useAppDispatch } from '@application/frontend/store/hooks';
 import { selectSetRepetitions, selectSetTimes, setSetRepetitionsAction, setSetTimesAction } from '@application/frontend/store/slices/CreateWorkoutPlanForm';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { SetSlideContext } from '../SetSlideContext';
 
-interface Props {
-  workoutIndex: number,
-  setIndex: number
-}
-
-const TimesAndRepetitions: React.FC<Props> = ({ setIndex,workoutIndex }) => {
+const TimesAndRepetitions: React.FC = () => {
   const dispatch = useAppDispatch();
+  const { setIndex, workoutIndex } = useContext(SetSlideContext);
   const times = useSelector(selectSetTimes(workoutIndex, setIndex));
   const repetitions = useSelector(selectSetRepetitions(workoutIndex, setIndex));
   const [isUntilFailure, setIsUntilFailure] = useState(false);
@@ -27,23 +24,39 @@ const TimesAndRepetitions: React.FC<Props> = ({ setIndex,workoutIndex }) => {
   }
 
   return (
-    <div>
-      <label htmlFor={`set-times-${workoutIndex}-${setIndex}`}>
+    <div className='mb-2'>
+      <div className='flex justify-evenly mb-2'>
+        <div className="flex flex-col items-center">
+          <label htmlFor={`set-times-${workoutIndex}-${setIndex}`}
+            className="text-sm mb-1"
+          >
             Séries
-        <input type="number" name={`set-times-${workoutIndex}-${setIndex}`} id={`set-times-${workoutIndex}-${setIndex}`} value={times} 
-          onChange={(e) => dispatch(setSetTimesAction({ setIndex, value: Number(e.target.value), workoutIndex }))}
-        />
-      </label>
-      <label htmlFor={`set-repetitions-${workoutIndex}-${setIndex}`}>
+          </label>
+          <input type="number" 
+            className='w-12 text-center py-1 outline-red-500 border-2 border-white
+            bg-transparent text-white focus:text-stone-800 focus:bg-white'
+            name={`set-times-${workoutIndex}-${setIndex}`} id={`set-times-${workoutIndex}-${setIndex}`} value={times} 
+            onChange={(e) => dispatch(setSetTimesAction({ setIndex, value: Number(e.target.value), workoutIndex }))}
+          />
+        </div>
+        <div className="flex flex-col items-center">
+          <label htmlFor={`set-repetitions-${workoutIndex}-${setIndex}`}
+            className="text-sm mb-1"
+          >
             Repetições
-        <input type="text" name={`set-repetitions-${workoutIndex}-${setIndex}`} id={`set-repetitions-${workoutIndex}-${setIndex}`} value={repetitions}
-          onChange={handleRepetitionsChange}
-          disabled={isUntilFailure}
-        />
-      </label>
-      <label htmlFor={`set-repetitions-failure-${workoutIndex}-${setIndex}`}>
-        Até a falha
-        <input type="checkbox" 
+          </label>
+          <input type="text" 
+            className='w-12 text-center py-1 outline-red-500  border-2 border-white
+            bg-transparent text-white focus:text-stone-800 focus:bg-white disabled:bg-stone-300'
+            name={`set-repetitions-${workoutIndex}-${setIndex}`} id={`set-repetitions-${workoutIndex}-${setIndex}`} value={repetitions}
+            onChange={handleRepetitionsChange}
+            disabled={isUntilFailure}
+          />
+        </div>
+      </div>
+      <div>
+        <input type="checkbox"
+          className='appearance-none peer hidden'
           name={`set-repetitions-failure-${workoutIndex}-${setIndex}`} 
           id={`set-repetitions-failure-${workoutIndex}-${setIndex}`} 
           checked={isUntilFailure}
@@ -57,7 +70,13 @@ const TimesAndRepetitions: React.FC<Props> = ({ setIndex,workoutIndex }) => {
             setIsUntilFailure(e.target.checked)
           }}
         />
-      </label>
+        <label 
+          className='p-2 border-2 border-white block 
+                          peer-checked:bg-white peer-checked:text-blue-900'
+          htmlFor={`set-repetitions-failure-${workoutIndex}-${setIndex}`}>
+    Até a falha
+        </label>
+      </div>
     </div>
   )
 }

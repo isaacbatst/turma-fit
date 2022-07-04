@@ -4,6 +4,21 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
 body {
   font-family: "Montserrat", sans-serif;
+}
+
+.exercises-swiper-wrapper .swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

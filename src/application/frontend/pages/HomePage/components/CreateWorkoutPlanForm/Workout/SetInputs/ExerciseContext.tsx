@@ -1,20 +1,20 @@
 import { createContext } from "react";
 
 export interface ExerciseContextValue {
-  workoutIndex: number,
-  setIndex: number,
-  exerciseIndex: number
+  exerciseIndex: number,
+  exercisesLength: number,
 }
 
-export const ExerciseContext = createContext<ExerciseContextValue | null>(null);
+export const ExerciseContext = createContext<ExerciseContextValue>({} as ExerciseContextValue);
 
 interface Props extends ExerciseContextValue {}
 
-export const ExerciseContextProvider: React.FC<Props> = ({ children, exerciseIndex, setIndex, workoutIndex }) => {
+export const ExerciseContextProvider: React.FC<Props> = ({ 
+  children, exerciseIndex, exercisesLength
+}) => {
   const value: ExerciseContextValue = {
     exerciseIndex,
-    setIndex,
-    workoutIndex
+    exercisesLength
   }
 
   return (

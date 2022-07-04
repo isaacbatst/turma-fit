@@ -7,11 +7,19 @@ const UnauthenticatedView: React.FC = () => {
   return (
     <div className='bg-red-500 min-h-screen	text-white'>
       <Header />
-      <section className='bg-blue-900 py-5'>
-        <h2 className='text-center font-bold mb-5'>Registre seus treinos agora!</h2>
+      <section className='text-center'>
+        {/* <div className='mb-3'>
+          <h2 className='text-center font-bold mb-2'>Registre seus treinos agora!</h2>
+          <a href="#register-user" 
+            className='text-xs text-blue-900 underline bg-slate-300 text-center p-1'>
+          Ou crie sua conta aqui
+          </a>
+        </div> */}
         <CreateWorkoutPlanForm />
       </section>
-      <CreateUserForm />
+      <section className='py-5' id="register-user">
+        <CreateUserForm />
+      </section>
     </div>
   )
 }

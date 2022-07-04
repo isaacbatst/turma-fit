@@ -56,7 +56,8 @@ const createWorkout = (): CreateWorkoutPlanFormWorkout => ({
 
 const createExercise = (): CreateWorkoutPlanFormExercise => ({
   id: generateId(),
-  movementId: ""
+  movementId: "",
+  equipmentId: ''
 })
 
 const initialState: CreateWorkoutPlanFormState = {
@@ -180,6 +181,9 @@ export const selectAerobicMinutes = (workoutIndex: number) =>
 
 export const selectWorkoutDay = (workoutIndex: number) => 
   (state: RootState) => getWorkoutByIndex(state, workoutIndex).day
+export const selectWorkoutId = (workoutIndex: number) => 
+  (state: RootState) => getWorkoutByIndex(state, workoutIndex).id
+
 
 export const selectSetExerciseTechnique = (workoutIndex: number, setIndex: number) => 
   (state: RootState) => getSetByIndex(state, workoutIndex, setIndex).techniqueId;
@@ -189,6 +193,9 @@ export const selectSetTimes = (workoutIndex: number, setIndex: number) =>
 
 export const selectSetRepetitions = (workoutIndex: number, setIndex: number) => 
   (state: RootState) => getSetByIndex(state, workoutIndex, setIndex).repetitions;
+
+export const selectSetId = (workoutIndex: number, setIndex: number) => 
+  (state: RootState) => getSetByIndex(state, workoutIndex, setIndex).id;
 
 export const selectExercises = (workoutIndex: number, setIndex: number) => 
   (state: RootState) => getSetByIndex(state, workoutIndex, setIndex).exercises;
