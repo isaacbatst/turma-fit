@@ -33,7 +33,9 @@ const ExerciseTechnique: React.FC = () => {
               />
               <label 
                 className='p-2 border-2 border-white block 
-          peer-checked:bg-white peer-checked:text-blue-900'
+          peer-checked:bg-white peer-checked:text-blue-900
+          hover:scale-105 cursor-pointer
+            active:opacity-75'
                 htmlFor={`exercise-technique-${exerciseTechnique.id}`}>
                 {exerciseTechnique.name}
               </label>

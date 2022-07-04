@@ -183,6 +183,8 @@ export const selectWorkoutDay = (workoutIndex: number) =>
   (state: RootState) => getWorkoutByIndex(state, workoutIndex).day
 export const selectWorkoutId = (workoutIndex: number) => 
   (state: RootState) => getWorkoutByIndex(state, workoutIndex).id
+export const selectWorkoutSetsLength = (workoutIndex: number) => 
+  (state: RootState) => getWorkoutByIndex(state, workoutIndex).sets.length
 
 
 export const selectSetExerciseTechnique = (workoutIndex: number, setIndex: number) => 

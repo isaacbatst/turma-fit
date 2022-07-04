@@ -1,45 +1,40 @@
-import { useAppDispatch, useAppSelector } from '@application/frontend/store/hooks'
-import { removeWorkoutAction, selectWorkoutId } from '@application/frontend/store/slices/CreateWorkoutPlanForm'
-import React, { useContext } from 'react'
-import { HiCheck, HiTrash } from 'react-icons/hi'
+import { useAppDispatch } from '@application/frontend/store/hooks'
+import { addWorkoutAction, removeWorkoutAction } from '@application/frontend/store/slices/CreateWorkoutPlanForm'
+import { WorkoutList } from '@domain/entities/WorkoutPlan/WorkoutList'
+import React, { useContext, useEffect, useState } from 'react'
+import { HiCheck, HiPlus, HiTrash } from 'react-icons/hi'
+import { indexToLetter } from 'src/lib/letters'
+import { useSwiper } from 'swiper/react'
+import AddWorkoutButton from './AddWorkoutButton'
 import AerobicMinutesInput from './AerobicMinutesInput'
+import RemoveWorkoutButton from './RemoveWorkoutButton'
+import SavePlanButton from './SavePlanButton'
 import { WorkoutCheckoutSlideContext } from './WorkoutCheckoutSlideContext'
 import WorkoutDayRadio from './WorkoutDayRadio'
 
 const WorkoutCheckoutSlide: React.FC = () => {
   const { workoutIndex, workoutsLength } = useContext(WorkoutCheckoutSlideContext);
-  const dispatch = useAppDispatch();
+  const isLastWorkout = workoutIndex === workoutsLength - 1;
+  const isMaxWorkoutsLength = workoutsLength >= WorkoutList.WORKOUTS_MAX_LENGTH;
+
 
   return (
     <section className="py-3 px-2 pb-10 bg-lime-300 flex flex-col">
+      <h3 className='font-bold mb-2'>Treino {indexToLetter(workoutIndex)}</h3>
       <AerobicMinutesInput />
-      {/* <WorkoutDayRadio /> */}
+      <WorkoutDayRadio />
       <div className="flex">
-        <button 
-          type="button" 
-          className='border-2 flex-1 border-white py-2 mr-1 mb-2 flex justify-center items-center'
-        >
-            Adicionar treino
-        </button>
         {
-          workoutsLength > 1 && (
-            <button 
-              type="button" 
-              className='border-2 border-white p-2 mr-1 mb-2 flex justify-center items-center'
-              onClick={() => dispatch(removeWorkoutAction({ workoutIndex }))
-              }>
-              <HiTrash />
-            </button>
-          )
+          isLastWorkout && !isMaxWorkoutsLength && <AddWorkoutButton />
+        }
+        {
+          workoutsLength > 1 && <RemoveWorkoutButton />
         }
       </div>
 
-      <button 
-        type="button" 
-        className='border-2 flex-1 border-white py-2 mr-1 mb-2 flex justify-center items-center'
-      >
-        <HiCheck className='m-2'/> Salvar Planejamento
-      </button>
+      {
+        isLastWorkout && <SavePlanButton />
+      }
     </section>  )
 }
 

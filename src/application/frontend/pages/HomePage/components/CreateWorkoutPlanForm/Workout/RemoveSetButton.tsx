@@ -22,8 +22,10 @@ const RemoveSetButton: React.FC<Props> = ({
     <button 
       type="button" 
       className={`border-2 border-white p-2 mb-2 
-                          flex justify-center items-center 
-                          ${!isLastSet && 'flex-1'}`}
+        flex justify-center items-center 
+        ${!isLastSet && 'flex-1'}
+        hover:scale-105 cursor-pointer
+            active:opacity-75`}
       onClick={() => {
         swiper.once('slidePrevTransitionEnd', () => {
           dispatch(removeSetAction({ setIndex, workoutIndex }))

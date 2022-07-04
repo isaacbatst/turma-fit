@@ -9,7 +9,9 @@ const FinishWorkoutButton = () => {
     <button
       type='button'
       className='border-2 border-white p-2 mb-2
-      flex justify-center items-center' 
+      flex justify-center items-center
+      hover:scale-105 cursor-pointer
+            active:opacity-75' 
       onClick={() => {
         swiper.slideNext();
       }} 

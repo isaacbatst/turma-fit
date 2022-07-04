@@ -1,14 +1,13 @@
 import { useAppSelector } from '@application/frontend/store/hooks'
 import { selectSetId } from '@application/frontend/store/slices/CreateWorkoutPlanForm'
-import { Letter } from '@domain/entities/WorkoutPlan/enums/Letter'
 import React, { useContext } from 'react'
+import { indexToLetter } from 'src/lib/letters'
 import AddSetButton from './AddSetButton'
 import FinishWorkoutButton from './FinishWorkoutButton'
 import RemoveSetButton from './RemoveSetButton'
 import SetInputs from './SetInputs/SetInputs'
 import { SetSlideContext } from './SetSlideContext'
 
-const indexToLetter = (index: number) => Object.keys(Letter)[index]; 
 
 const SetSlide: React.FC = () => {
   const { setIndex, setsLength, workoutIndex } = useContext(SetSlideContext);

@@ -12,7 +12,8 @@ const PlanTypeRadios: React.FC = () => {
 
   return (
     <div>
-      <h3 className='text-center mb-5'>Tipo de treino</h3>
+      <h2 className='mb-4'>Crie seu treino <span className='font-bold'>agora</span>!</h2>
+      <h3 className='text-center mb-3 text-sm'>Tipo de treino</h3>
       {
         error && <div role={"alert"}>
           Não consegui recuperar os tipos de plano, tente novamente mais tarde.

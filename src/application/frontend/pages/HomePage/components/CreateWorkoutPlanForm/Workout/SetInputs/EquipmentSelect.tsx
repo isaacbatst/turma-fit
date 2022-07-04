@@ -19,6 +19,8 @@ const EquipmentSelect: React.FC = () => {
       id="exercise-equipments" 
       className={`p-2 text-white bg-transparent text-center border-white border-2 mb-2
        outline-none focus:bg-white focus:text-stone-800
+       hover:scale-105 cursor-pointer
+            active:opacity-75
       ${selectedEquipment !== '' && 'bg-white text-stone-800'}`}
       value={selectedEquipment}
       onChange={(e) => dispatch(setExerciseEquipmentAction({

@@ -20,6 +20,8 @@ const MovementSelect: React.FC = () => {
       id="exercise-movements"
       className={`p-2 text-white text-center bg-transparent border-white border-2 mb-2 
       outline-none focus:bg-white focus:text-stone-800
+      hover:scale-105 cursor-pointer
+            active:opacity-75
       ${selectedMovement !== '' && 'bg-white text-stone-800'}`}
       value={selectedMovement}
       onChange={(e) => dispatch(setExerciseMovementAction({

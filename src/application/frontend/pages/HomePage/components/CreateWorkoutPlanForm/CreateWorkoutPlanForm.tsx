@@ -18,7 +18,8 @@ const CreateWorkoutPlanForm: React.FC = () => {
           noSwipingClass='swiper-wrapper'
           modules={[Pagination]}
           pagination={{
-            clickable: true
+            clickable: true,
+            dynamicBullets: true
           }}
           autoHeight={true}
           onSlideChange={() => console.log('slide change')}

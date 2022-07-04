@@ -23,7 +23,8 @@ const GripRadio: React.FC = () => {
       {
         !showRadios && (
           <button 
-            className='border-white border-2 py-2'
+            className='border-white border-2 py-2 hover:scale-105 cursor-pointer
+            active:opacity-75'
             type='button'
             onClick={() => setShowRadios(!showRadios)}>
         Selecione a pegada (opcional)
@@ -52,7 +53,9 @@ const GripRadio: React.FC = () => {
                   />
                   <label  htmlFor={`grip-checkbox-${exerciseIndex}-${setIndex}-${workoutIndex}-${grip}`}
                     className='p-2 border-2 border-white block 
-          peer-checked:bg-white peer-checked:text-blue-900'  
+          peer-checked:bg-white peer-checked:text-blue-900
+          hover:scale-105 cursor-pointer
+            active:opacity-75'  
                   >
             
                     {readableGrip[grip]}

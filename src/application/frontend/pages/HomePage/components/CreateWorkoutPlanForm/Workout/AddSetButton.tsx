@@ -14,7 +14,9 @@ const AddSetButton: React.FC<Props> = ({ workoutIndex }) => {
   return (
     <button 
       type="button" 
-      className='border-2 flex-1 border-white py-2 mr-1 mb-2 flex justify-center items-center'
+      className='border-2 flex-1 border-white py-2 mr-1 mb-2 flex justify-center items-center
+      hover:scale-105 cursor-pointer
+            active:opacity-75'
       onClick={() => {
         dispatch(addSetAction({ workoutIndex: workoutIndex }))
         swiper.slideNext();

@@ -26,13 +26,14 @@ const Exercise: React.FC = () => {
       </div>
       {
         (isLastIndex || !isFirstIndex) && (
-          <div className="flex justify-between py-2">
+          <div className="flex justify-between pt-2">
             {
               isLastIndex && (
                 <button 
                   type="button"
                   className='border-2 border-white p-2 mb-2 mr-1 flex-1 
-              flex justify-center items-center' 
+              flex justify-center items-center hover:scale-105 cursor-pointer
+              active:opacity-75' 
                   onClick={() => {
                     dispatch(addExerciseAction({ setIndex, workoutIndex }));
                   }} 
@@ -48,6 +49,8 @@ const Exercise: React.FC = () => {
                   type="button" 
                   className={`border-2 border-white p-2 mb-2 flex 
               justify-center items-center
+              hover:scale-105 cursor-pointer
+            active:opacity-75
               ${showRemoveText && 'flex-1'}`} 
                   onClick={() => {
                     dispatch(removeExerciseAction({
