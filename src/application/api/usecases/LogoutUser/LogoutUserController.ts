@@ -12,7 +12,7 @@ export class LogoutUserController {
   
       return res.status(204).end();
     } catch (error) {
-      console.log(error);
+      console.error(error);
 
       return res.status(500).end();
     }

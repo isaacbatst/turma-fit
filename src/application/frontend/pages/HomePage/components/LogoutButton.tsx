@@ -11,7 +11,7 @@ const LogoutButton: React.FC = () => {
 
       router.reload();
     } catch(err) {
-      console.log(err)
+      console.error(err)
     }
   }
 

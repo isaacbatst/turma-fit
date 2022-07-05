@@ -11,7 +11,7 @@ const PlanTypeRadios: React.FC = () => {
   const swiper = useSwiper();
 
   return (
-    <div>
+    <>
       <h2 className='mb-4'>Crie seu treino <span className='font-bold'>agora</span>!</h2>
       <h3 className='text-center mb-3 text-sm'>Tipo de treino</h3>
       {
@@ -46,7 +46,7 @@ const PlanTypeRadios: React.FC = () => {
           ))
         }
       </div>
-    </div>
+    </>
   )
 }
 

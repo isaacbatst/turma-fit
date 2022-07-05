@@ -22,8 +22,6 @@ const CreateWorkoutPlanForm: React.FC = () => {
             dynamicBullets: true
           }}
           autoHeight={true}
-          onSlideChange={() => console.log('slide change')}
-          onSwiper={(swiper) => console.log(swiper)}
         >
           <SwiperSlide>
             <section className='bg-blue-900 py-5 px-2 '>
