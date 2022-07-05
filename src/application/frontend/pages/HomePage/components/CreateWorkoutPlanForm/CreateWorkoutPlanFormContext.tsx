@@ -19,6 +19,7 @@ export interface CreateWorkoutPlanFormContextValue {
     isLoading: boolean,
     error: unknown
   },
+  isAuthenticated: boolean
 }
 
 const createInitialContext = () => ({
@@ -30,7 +31,8 @@ const createInitialContext = () => ({
 const defaultValue: CreateWorkoutPlanFormContextValue = {
   equipments: createInitialContext(),
   movements: createInitialContext(),
-  techniques: createInitialContext()
+  techniques: createInitialContext(),
+  isAuthenticated: false
 }
 
 export const CreateWorkoutPlanFormContext = createContext<CreateWorkoutPlanFormContextValue>(defaultValue);

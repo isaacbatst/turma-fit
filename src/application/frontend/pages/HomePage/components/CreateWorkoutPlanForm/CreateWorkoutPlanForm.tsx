@@ -7,9 +7,13 @@ import CreateWorkoutPlanFormContextProvider from './CreateWorkoutPlanFormContext
 import PlanTypeRadios from './PlanTypeRadios'
 import WorkoutsList from './WorkoutsList'
 
-const CreateWorkoutPlanForm: React.FC = () => {
+interface Props {
+  isAuthenticated?: boolean
+}
+
+const CreateWorkoutPlanForm: React.FC<Props> = ({ isAuthenticated = false }) => {
   return (
-    <CreateWorkoutPlanFormContextProvider>
+    <CreateWorkoutPlanFormContextProvider isAuthenticated={isAuthenticated}>
       <form action="">
         <Swiper
           spaceBetween={0}

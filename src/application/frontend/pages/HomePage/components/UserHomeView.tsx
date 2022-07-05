@@ -16,7 +16,7 @@ const UserHomeView: React.FC<UserHomeViewProps> = ({ user }) => {
       <div>Logado: {user.name}</div>
       <LogoutButton />
       <MyWorkoutPlans userId={user.id} />
-      <CreateWorkoutPlanForm />
+      <CreateWorkoutPlanForm isAuthenticated />
     </div>
   )
 }
