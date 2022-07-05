@@ -24,7 +24,7 @@ const CreateWorkoutPlanForm: React.FC = () => {
           autoHeight={true}
         >
           <SwiperSlide>
-            <section className='bg-blue-900 py-5 px-2 '>
+            <section className='bg-blue-900 pt-5 pb-10 px-2 '>
               <PlanTypeRadios />
             </section>
           </SwiperSlide>
