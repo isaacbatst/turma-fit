@@ -19,7 +19,6 @@ const WorkoutCheckoutSlide: React.FC = () => {
   
   useEffect(() => {
     if(shouldGoNext){
-      console.log(shouldGoNext, 'going next');
       swiper.updateSlides();
       swiper.slideNext();
       setShouldGoNext(false);
