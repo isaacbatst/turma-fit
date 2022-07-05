@@ -15,7 +15,7 @@ const SetSlide: React.FC = () => {
   const isLastSet = setIndex === setsLength - 1;
 
   return (
-    <section className="py-3 px-2 pb-10 bg-lime-300">
+    <section className="py-3 px-2 pb-10 bg-lime-400">
       <h3 className='font-bold mb-2'>Treino {indexToLetter(workoutIndex)}</h3>
       <div className="flex flex-col">
         <SetInputs

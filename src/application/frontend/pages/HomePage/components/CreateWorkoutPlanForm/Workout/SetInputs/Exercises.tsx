@@ -1,6 +1,6 @@
 import { useAppSelector } from '@application/frontend/store/hooks';
 import { selectExercises } from '@application/frontend/store/slices/CreateWorkoutPlanForm';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useSwiper } from 'swiper/react';
 import { SetSlideContext } from '../SetSlideContext';
 import Exercise from './Exercise';
@@ -11,10 +11,11 @@ const Exercises: React.FC = () => {
   const { setIndex, workoutIndex } = useContext(SetSlideContext);
   const exercises = useAppSelector(selectExercises(workoutIndex, setIndex))
 
-  // const swiper = useSwiper();
-  // useEffect(() => {
-  //   swiper.updateAutoHeight();
-  // }, [exercises.length, swiper])
+  const swiper = useSwiper();
+
+  useEffect(() => {
+    swiper.updateAutoHeight();
+  }, [exercises.length, swiper])
 
   return (
     <div className='flex flex-col divide-y'>
