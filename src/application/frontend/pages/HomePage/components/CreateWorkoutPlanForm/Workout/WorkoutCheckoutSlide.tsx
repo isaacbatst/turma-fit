@@ -25,10 +25,9 @@ const WorkoutCheckoutSlide: React.FC = () => {
       setShouldGoNext(false);
     }
   }, [shouldGoNext, swiper])
-  
 
   return (
-    <section className="py-3 px-2 pb-10 bg-lime-300 flex flex-col">
+    <section className="py-3 px-2 pb-10 bg-blue-800 flex flex-col">
       <h3 className='font-bold mb-2'>Treino {indexToLetter(workoutIndex)}</h3>
       <AerobicMinutesInput />
       <WorkoutDayRadio />
