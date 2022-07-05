@@ -1,28 +1,22 @@
 import { addWorkoutAction } from '@application/frontend/store/slices/CreateWorkoutPlanForm';
-import React, { useContext, useEffect, useState } from 'react'
+import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react'
 import { HiPlus } from 'react-icons/hi';
 import { useDispatch } from 'react-redux'
 import { indexToLetter } from 'src/lib/letters';
 import { useSwiper } from 'swiper/react';
 import { WorkoutCheckoutSlideContext } from './WorkoutCheckoutSlideContext';
 
-const AddWorkoutButton: React.FC = () => {
-  const { workoutIndex } = useContext(WorkoutCheckoutSlideContext);
+interface Props {
+  setShouldGoNext: Dispatch<SetStateAction<boolean>>
+}
+
+const AddWorkoutButton: React.FC<Props> = ({ setShouldGoNext }) => {
+  const { workoutIndex, workoutsLength } = useContext(WorkoutCheckoutSlideContext);
   
   const dispatch = useDispatch();
   const swiper = useSwiper();
   
-  const [shouldGoNext, setShouldGoNext] = useState(false);
-  
-  useEffect(() => {
-    console.log(shouldGoNext, 'going next')
-    if(shouldGoNext){
-      swiper.updateSlides();
-      swiper.slideNext();
-      setShouldGoNext(false);
-    }
-  }, [swiper, shouldGoNext])
-  
+
   return (
     <button 
       type="button" 
