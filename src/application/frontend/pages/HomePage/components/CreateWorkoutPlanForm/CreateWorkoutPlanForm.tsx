@@ -1,32 +1,38 @@
-import { useAppDispatch } from '@application/frontend/store/hooks'
-import { addWorkoutAction, selectError } from '@application/frontend/store/slices/CreateWorkoutPlanForm'
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { Pagination } from 'swiper'
+import 'swiper/css'
+import 'swiper/css/pagination'
+import { Swiper, SwiperSlide } from 'swiper/react'
 import CreateWorkoutPlanFormContextProvider from './CreateWorkoutPlanFormContextProvider'
 import PlanTypeRadios from './PlanTypeRadios'
-import SubmitWorkoutPlanButton from './SubmitWorkoutPlanButton'
 import WorkoutsList from './WorkoutsList'
 
 const CreateWorkoutPlanForm: React.FC = () => {
-  const dispatch = useAppDispatch();
-  const error = useSelector(selectError);
-
   return (
     <CreateWorkoutPlanFormContextProvider>
-      <div>
-        <form action="">
-          <h2>Criar plano de treino</h2>
-          <div>
-            <PlanTypeRadios />
-          </div>
-          <button type="button" onClick={() => dispatch(addWorkoutAction())}>+ Treino</button>
+      <form action="">
+        <Swiper
+          spaceBetween={0}
+          slidesPerView={1}
+          noSwiping
+          noSwipingClass='swiper-wrapper'
+          modules={[Pagination]}
+          pagination={{
+            clickable: true,
+            dynamicBullets: true
+          }}
+          autoHeight={true}
+          onSlideChange={() => console.log('slide change')}
+          onSwiper={(swiper) => console.log(swiper)}
+        >
+          <SwiperSlide>
+            <section className='bg-blue-900 py-5 px-2 '>
+              <PlanTypeRadios />
+            </section>
+          </SwiperSlide>
           <WorkoutsList />
-          <SubmitWorkoutPlanButton />
-          {
-            error && <div>{error}</div>
-          }
-        </form>
-      </div>
+        </Swiper>
+      </form>
     </CreateWorkoutPlanFormContextProvider>
   )
 }

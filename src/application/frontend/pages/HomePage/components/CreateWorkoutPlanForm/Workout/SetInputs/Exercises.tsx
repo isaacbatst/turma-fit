@@ -1,48 +1,35 @@
-import { useAppDispatch, useAppSelector } from '@application/frontend/store/hooks';
-import { addExerciseAction, removeExerciseAction, selectExercises } from '@application/frontend/store/slices/CreateWorkoutPlanForm';
-import React from 'react';
-import EquipmentSelect from './EquipmentSelect';
+import { useAppSelector } from '@application/frontend/store/hooks';
+import { selectExercises } from '@application/frontend/store/slices/CreateWorkoutPlanForm';
+import React, { useContext } from 'react';
+import { useSwiper } from 'swiper/react';
+import { SetSlideContext } from '../SetSlideContext';
+import Exercise from './Exercise';
 import { ExerciseContextProvider } from './ExerciseContext';
-import GripRadio from './GripRadio';
-import MovementSelect from './MovementSelect';
 
-interface Props {
-  workoutIndex: number,
-  setIndex: number
-}
 
-const Exercises: React.FC<Props> = ({ setIndex, workoutIndex }) => {
+const Exercises: React.FC = () => {
+  const { setIndex, workoutIndex } = useContext(SetSlideContext);
   const exercises = useAppSelector(selectExercises(workoutIndex, setIndex))
-  const dispatch = useAppDispatch();
+
+  // const swiper = useSwiper();
+  // useEffect(() => {
+  //   swiper.updateAutoHeight();
+  // }, [exercises.length, swiper])
 
   return (
-    <div>
-      <h5>Exercícios</h5>
-      <button type="button" onClick={() => dispatch(addExerciseAction({ setIndex, workoutIndex }))} >+ Exercício</button>
+    <div className='flex flex-col divide-y'>
       {
-        exercises.map((exercise, exerciseIndex) => (
-          <div key={exercise.id}>
+        exercises.map((exercise, exerciseIndex) => {
+          return (
             <ExerciseContextProvider
               exerciseIndex={exerciseIndex}
-              setIndex={setIndex}  
-              workoutIndex={workoutIndex}
+              exercisesLength={exercises.length}
+              key={exercise.id}
             >
-              <MovementSelect />
-              <EquipmentSelect />
-              <GripRadio />
-              <button 
-                type="button" 
-                onClick={() => dispatch(removeExerciseAction({
-                  exerciseIndex,
-                  setIndex,
-                  workoutIndex
-                }))}
-              >
-              Remover exercício
-              </button>
+              <Exercise />
             </ExerciseContextProvider>
-          </div>
-        ))
+          )
+        })
       }
     </div>
   )

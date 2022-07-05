@@ -1,44 +1,49 @@
-import { useAppDispatch } from '@application/frontend/store/hooks'
-import { addSetAction, CreateWorkoutPlanFormWorkout, removeWorkoutAction } from '@application/frontend/store/slices/CreateWorkoutPlanForm'
-import { Letter } from '@domain/entities/WorkoutPlan/enums/Letter'
+import { useAppSelector } from '@application/frontend/store/hooks'
+import { CreateWorkoutPlanFormWorkout, selectWorkoutId } from '@application/frontend/store/slices/CreateWorkoutPlanForm'
 import React, { memo } from 'react'
-import SetInputs from './SetInputs/SetInputs'
-import AerobicMinutesInput from './AerobicMinutesInput'
-import WorkoutDayRadio from './WorkoutDayRadio'
+import { SwiperSlide } from 'swiper/react'
+import SetSlide from './SetSlide'
+import { SetSlideContextProvider } from './SetSlideContext'
+import WorkoutCheckoutSlide from './WorkoutCheckoutSlide'
+import { WorkoutCheckoutSlideContextProvider } from './WorkoutCheckoutSlideContext'
 
 type Props = {
   workout: CreateWorkoutPlanFormWorkout,
-  workoutIndex: number
+  workoutIndex: number,
+  workoutsLength: number,
 }
 
-const indexToLetter = (index: number) => Object.keys(Letter)[index]; 
 
-const Workout: React.FC<Props> = ({ workout, workoutIndex }) => {
-  const dispatch = useAppDispatch();
+const Workout: React.FC<Props> = ({ workout, workoutIndex, workoutsLength }) => {
+  const workoutId = useAppSelector(selectWorkoutId(workoutIndex));
 
   return (
-    <div key={workout.id}>
-      <h3>Treino {indexToLetter(workoutIndex)}</h3>
-      <button 
-        type="button" 
-        onClick={() => dispatch(removeWorkoutAction({ workoutIndex }))
-        }>
-        Remover treino
-      </button>
-      <button type="button" onClick={() => dispatch(addSetAction({ workoutIndex: workoutIndex }))}>+ Série</button>
-      <AerobicMinutesInput workoutId={workout.id} workoutIndex={workoutIndex} />
-      <WorkoutDayRadio workoutId={workout.id} workoutIndex={workoutIndex} />
+    <>
       {
-        workout.sets.map((set, setIndex) => (
-          <SetInputs
-            id={set.id} 
-            setIndex={setIndex} 
-            workoutIndex={workoutIndex}
-            key={set.id} 
-          />
-        ))
+        workout.sets.map((set, setIndex) => {
+          return (
+            <SwiperSlide key={set.id}>
+              <SetSlideContextProvider 
+                setIndex={setIndex} 
+                workoutIndex={workoutIndex}
+                setsLength={workout.sets.length}
+              >
+                <SetSlide />
+              </SetSlideContextProvider>
+            </SwiperSlide>
+          )})
       }
-    </div>
+
+      <SwiperSlide>
+        <WorkoutCheckoutSlideContextProvider
+          workoutId={workoutId}  
+          workoutsLength={workoutsLength}
+          workoutIndex={workoutIndex}
+        >
+          <WorkoutCheckoutSlide />
+        </WorkoutCheckoutSlideContextProvider>
+      </SwiperSlide>
+    </>
   )
 }
 

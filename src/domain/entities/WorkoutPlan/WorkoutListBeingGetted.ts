@@ -2,6 +2,7 @@ import { Day } from "@prisma/client";
 import { Grip } from "./enums/Grip";
 import { Letter } from "./enums/Letter";
 import { MuscleGroup } from "./enums/MuscleGroup";
+import { WorkoutList } from "./WorkoutList";
 
 export interface Equipment {
   id: string;
@@ -48,7 +49,6 @@ export type WorkoutWithoutLetter = Omit<Workout, 'letter'>
 export class WorkoutListBeingGetted {
   private static readonly WORKOUT_LETTERS = Object.values(Letter)
   private static readonly WORKOUT_DAYS = Object.values(Day)
-  private static readonly WORKOUTS_MAX_LENGTH = 7
 
   private workouts: Workout[]
 
@@ -67,7 +67,7 @@ export class WorkoutListBeingGetted {
   }
 
   private validateWorkouts(workouts: WorkoutWithoutLetter[]) {
-    if(workouts.length > WorkoutListBeingGetted.WORKOUTS_MAX_LENGTH){
+    if(workouts.length > WorkoutList.WORKOUTS_MAX_LENGTH){
       throw new Error('WORKOUTS_MAX_LENGTH')
     }
 

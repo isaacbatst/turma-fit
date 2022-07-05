@@ -1,10 +1,9 @@
 import { useAppDispatch, useAppSelector } from '@application/frontend/store/hooks';
-import { CreateWorkoutPlanFormWorkout, SelectedPlanType, selectPlanType, selectWorkouts, setErrorAction } from '@application/frontend/store/slices/CreateWorkoutPlanForm';
+import { selectPlanType, selectWorkouts, setErrorAction } from '@application/frontend/store/slices/CreateWorkoutPlanForm';
 import { useUser } from '@application/frontend/swr/useUser';
 import axios from 'axios';
-import React from 'react'
-
-
+import React from 'react';
+import { HiCheck } from 'react-icons/hi';
 
 const SubmitWorkoutPlan: React.FC = () => {
   const planType = useAppSelector(selectPlanType);
@@ -50,14 +49,19 @@ const SubmitWorkoutPlan: React.FC = () => {
   
   const handleSubmit: React.MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
-    
     createWorkoutPlan();
   }
 
   return (
-    <button type="submit" 
+    <button 
+      type="button" 
+      className='border-2 flex-1 border-white py-2 mr-1 mb-2 flex justify-center items-center
+    hover:scale-105 cursor-pointer
+          active:opacity-75'
       onClick={handleSubmit}
-    >Finalizar Plano</button>
+    >
+      <HiCheck className='m-2'/> Salvar Planejamento
+    </button> 
   )
 }
 

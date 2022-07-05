@@ -1,6 +1,7 @@
 import { ValidationError } from "@application/api/errors/ValidationError";
 import { PortValidator } from "@domain/common/PortValidator";
 import { ProfileType, PROFILE_TYPES } from "@domain/entities/User/Profile";
+import { CreateUserUseCaseErrors } from "./CreateUserUseCaseErrors";
 
 export interface CreateUserUseCasePortValidated {
   name: string,
@@ -33,16 +34,16 @@ export class CreateUserPortValidator implements PortValidator<CreateUserUseCaseP
     }
 
     if(port.password.length < 8){
-      throw new ValidationError('INVALID_PASSWORD')
+      throw new ValidationError(CreateUserUseCaseErrors.PASSWORD_LENGTH)
     }
 
     if(!CreateUserPortValidator.DATE_REGEX.test(port.birthdate)){
-      throw new ValidationError('INVALID_BIRTHDATE')
+      throw new ValidationError(CreateUserUseCaseErrors.INVALID_BIRTHDATE)
     }
     const age = this.calcAge(port.birthdate);
 
     if(age < CreateUserPortValidator.MIN_AGE) {
-      throw new ValidationError('BELOW_MIN_AGE')
+      throw new ValidationError(CreateUserUseCaseErrors.BELOW_MIN_AGE)
     }
 
     return {

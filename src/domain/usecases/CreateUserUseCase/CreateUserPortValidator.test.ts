@@ -49,7 +49,7 @@ describe('CreateUserPortValidator', () => {
 
       expect(() => {
         validator.validate(portMock)
-      }).toThrowError('INVALID_PASSWORD')
+      }).toThrowError('PASSWORD_LENGTH')
     })
   })
 
