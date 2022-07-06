@@ -3,6 +3,7 @@ import { selectPlanType, selectWorkouts } from "@application/frontend/store/slic
 import { saveWorkoutPlanAction, setErrorAction } from "@application/frontend/store/slices/UnauthenticatedWorkoutPlan";
 import { Day } from "@domain/entities/WorkoutPlan/enums/Day";
 import { Grip } from "@domain/entities/WorkoutPlan/enums/Grip";
+import { MuscleGroup } from "@domain/entities/WorkoutPlan/enums/MuscleGroup";
 import { nanoid } from "@reduxjs/toolkit";
 
 interface ValidUnauthenticatedPlanType {
@@ -15,6 +16,7 @@ interface ValidUnauthenticatedPlanType {
 interface ValidUnauthenticatedMovement {
   id: string
   name: string,
+  muscleGroup: MuscleGroup
 }
  
 interface ValidUnauthenticatedEquipment {
@@ -66,6 +68,7 @@ interface UnauthenticatedPlanType {
 interface UnauthenticatedMovement {
   id: string
   name: string,
+  muscleGroup: MuscleGroup,
 }
  
 interface UnauthenticatedEquipment {

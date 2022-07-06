@@ -1,5 +1,6 @@
 import { Day } from "@domain/entities/WorkoutPlan/enums/Day";
 import { Grip } from "@domain/entities/WorkoutPlan/enums/Grip";
+import { MuscleGroup } from "@domain/entities/WorkoutPlan/enums/MuscleGroup";
 import { createSlice, PayloadAction, nanoid  } from "@reduxjs/toolkit";
 import { RootState } from "..";
 
@@ -15,6 +16,7 @@ export interface SelectedPlanType {
 interface CreateWorkoutPlanFormMovement {
   id: string
   name: string,
+  muscleGroup: MuscleGroup
 }
 
 interface CreateWorkoutPlanFormEquipment {
@@ -116,7 +118,7 @@ const createWorkoutPlanSlice = createSlice({
         state.workouts[workoutIndex].sets[setIndex].exercises[exerciseIndex].movement = movement;
       },
     setExerciseEquipment: 
-      (state, action: PayloadAction<{ workoutIndex: number, setIndex: number, exerciseIndex: number, equipment?: CreateWorkoutPlanFormMovement }>) => {
+      (state, action: PayloadAction<{ workoutIndex: number, setIndex: number, exerciseIndex: number, equipment?: CreateWorkoutPlanFormEquipment }>) => {
         const { exerciseIndex, equipment, setIndex, workoutIndex } = action.payload;
 
         state.workouts[workoutIndex].sets[setIndex].exercises[exerciseIndex].equipment = equipment;
