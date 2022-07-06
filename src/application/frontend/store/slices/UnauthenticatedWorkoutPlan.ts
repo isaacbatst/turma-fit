@@ -1,60 +1,36 @@
-import { Day } from "@domain/entities/WorkoutPlan/enums/Day"
-import { Grip } from "@domain/entities/WorkoutPlan/enums/Grip"
+import { ValidUnauthenticatedWorkoutPlan } from "@application/frontend/pages/HomePage/hooks/useSaveWorkoutPlanLocal"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-
-export interface UnauthenticatedPlanType {
-  id: string,
-  defaultMinRestTime: number,
-  defaultMaxRestTime: number
-}
- 
-interface UnauthenticatedExercise {
-  id: string,
-  movementId: string,
-  equipmentId?: string,
-  grip?: Grip
-}
-
-export interface UnauthenticatedSet {
-  id: string,
-  times: number,
-  repetitions: string,
-  techniqueId?: string,
-  minRestTime?: number,
-  maxRestTime?: number,
-  exercises: UnauthenticatedExercise[]
-}
-
-export interface UnauthenticatedWorkout {
-  id: string,
-  aerobicMinutes: number,
-  day?: Day
-  sets: UnauthenticatedSet[],
-}
-
-interface UnauthenticatedWorkoutPlan {
-  planType: UnauthenticatedPlanType | null,
-  workouts: UnauthenticatedWorkout[],
-}
+import { RootState } from ".."
 
 interface UnauthenticatedWorkoutPlanState {
-  workoutPlan: UnauthenticatedWorkoutPlan | null
+  workoutPlan: ValidUnauthenticatedWorkoutPlan | null,
+  error: string | null
 }
 
 const initialState: UnauthenticatedWorkoutPlanState = {
-  workoutPlan: null
+  workoutPlan: null,
+  error: null
 }
 
 const unauthenticatedWorkoutPlanSlice = createSlice({
   initialState,
   name: 'unauthenticatedWorkoutPlan',
   reducers: {
-    saveWorkoutPlan(state, action: PayloadAction<{ workoutPlan: UnauthenticatedWorkoutPlan }>) {
+    saveWorkoutPlan(state, action: PayloadAction<{ workoutPlan: ValidUnauthenticatedWorkoutPlan }>) {
       state.workoutPlan = action.payload.workoutPlan
+    },
+    setError(state, action: PayloadAction<{ error: string | null }>) {
+      state.error = action.payload.error
     }
   }
 })
 
-export const { saveWorkoutPlan: saveWorkoutPlanAction } = unauthenticatedWorkoutPlanSlice.actions;
+export const { 
+  saveWorkoutPlan: saveWorkoutPlanAction,
+  setError: setErrorAction
+} = unauthenticatedWorkoutPlanSlice.actions;
+
+export const selectUnauthenticateWorkoutPlan = (state: RootState) => state.unauthenticatedWorkoutPlan.workoutPlan;
+export const selectUnauthenticatedCreateWorkoutPlanError = (state: RootState) => state.unauthenticatedWorkoutPlan.error;
 
 export const unauthenticatedWorkoutPlanReducer = unauthenticatedWorkoutPlanSlice.reducer;

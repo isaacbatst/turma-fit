@@ -53,9 +53,11 @@ export class WorkoutListBeingGetted {
   private workouts: Workout[]
 
   constructor(workouts: WorkoutWithoutLetter[]) {
-    this.validateWorkouts(workouts);
+    const workoutsCopy = [ ...workouts ];
 
-    const workoutsOrderedByWeekDay = this.orderByDay(workouts);
+    this.validateWorkouts(workoutsCopy);
+
+    const workoutsOrderedByWeekDay = this.orderByDay(workoutsCopy);
 
     const workoutsWithLetter = this.addLetterByDay(workoutsOrderedByWeekDay);
 

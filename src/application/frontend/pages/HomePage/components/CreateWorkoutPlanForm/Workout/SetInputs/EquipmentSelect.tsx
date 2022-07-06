@@ -6,7 +6,7 @@ import { SetSlideContext } from '../SetSlideContext';
 import { ExerciseContext, ExerciseContextValue } from './ExerciseContext';
 
 const EquipmentSelect: React.FC = () => {
-  const { equipments: { data } } = useContext(CreateWorkoutPlanFormContext);
+  const { equipments: { data: equipments } } = useContext(CreateWorkoutPlanFormContext);
   const { exerciseIndex } = useContext(ExerciseContext) as ExerciseContextValue;
   const { setIndex, workoutIndex } = useContext(SetSlideContext);
 
@@ -21,18 +21,24 @@ const EquipmentSelect: React.FC = () => {
        outline-none focus:bg-white focus:text-stone-800
        hover:scale-105 cursor-pointer
             active:opacity-75
-      ${selectedEquipment !== '' && 'bg-white text-stone-800'}`}
-      value={selectedEquipment}
-      onChange={(e) => dispatch(setExerciseEquipmentAction({
-        equipmentId: e.target.value === "none" || e.target.value === "" ? undefined : e.target.value,
-        exerciseIndex,
-        setIndex,
-        workoutIndex
-      }))}
+      ${selectedEquipment && 'bg-white text-stone-800'}`}
+      value={selectedEquipment?.id || ""}
+      onChange={(e) => {
+        if(equipments) {
+          dispatch(setExerciseEquipmentAction({
+            equipment: (e.target.value === "none" || e.target.value === "") 
+              ? undefined 
+              : equipments.find(equipment => equipment.id === e.target.value),
+            exerciseIndex,
+            setIndex,
+            workoutIndex
+          }))
+        }
+      }}
     >
       <option disabled value="" className='text-stone-400'>Selecione o equipamento (opcional)</option>
       {
-        data && data.map(equipment => (
+        equipments && equipments.map(equipment => (
           <option className='text-stone-800' key={equipment.id} value={equipment.id}>{equipment.name}</option>
         ))
       }

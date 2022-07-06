@@ -7,22 +7,38 @@ const generateId = () => nanoid();
 
 export interface SelectedPlanType {
   id: string,
+  name: string,
   defaultMinRestTime: number,
   defaultMaxRestTime: number
+}
+
+interface CreateWorkoutPlanFormMovement {
+  id: string
+  name: string,
+}
+
+interface CreateWorkoutPlanFormEquipment {
+  id: string
+  name: string,
 }
  
 interface CreateWorkoutPlanFormExercise {
   id: string,
-  movementId: string,
-  equipmentId?: string,
+  movement?: CreateWorkoutPlanFormMovement,
+  equipment?: CreateWorkoutPlanFormEquipment,
   grip?: Grip
+}
+
+interface CreateWorkoutPlanFormTecnique {
+  id: string,
+  name: string
 }
 
 export interface CreateWorkoutPlanFormSet {
   id: string,
   times: number,
   repetitions: string,
-  techniqueId?: string,
+  technique?: CreateWorkoutPlanFormTecnique 
   minRestTime?: number,
   maxRestTime?: number,
   exercises: CreateWorkoutPlanFormExercise[]
@@ -56,8 +72,6 @@ const createWorkout = (): CreateWorkoutPlanFormWorkout => ({
 
 const createExercise = (): CreateWorkoutPlanFormExercise => ({
   id: generateId(),
-  movementId: "",
-  equipmentId: ''
 })
 
 const initialState: CreateWorkoutPlanFormState = {
@@ -82,10 +96,10 @@ const createWorkoutPlanSlice = createSlice({
 
       state.workouts[workoutIndex].day = day
     },
-    setTechnique: (state, action: PayloadAction<{ workoutIndex: number, setIndex: number, techniqueId: string | null}>) => {
-      const { techniqueId, setIndex, workoutIndex } = action.payload;
+    setTechnique: (state, action: PayloadAction<{ workoutIndex: number, setIndex: number, technique: CreateWorkoutPlanFormTecnique | null }>) => {
+      const { technique, setIndex, workoutIndex } = action.payload;
     
-      state.workouts[workoutIndex].sets[setIndex].techniqueId = techniqueId || undefined;
+      state.workouts[workoutIndex].sets[setIndex].technique = technique || undefined;
     },
     setSetTimes: (state, action: PayloadAction<{ workoutIndex: number, setIndex: number, value: number }>) => {
       const { value, workoutIndex, setIndex } = action.payload;
@@ -96,16 +110,16 @@ const createWorkoutPlanSlice = createSlice({
       state.workouts[workoutIndex].sets[setIndex].repetitions = value;
     },
     setExerciseMovement: 
-      (state, action: PayloadAction<{ workoutIndex: number, setIndex: number, exerciseIndex: number, movementId: string }>) => {
-        const { exerciseIndex, movementId, setIndex, workoutIndex } = action.payload;
+      (state, action: PayloadAction<{ workoutIndex: number, setIndex: number, exerciseIndex: number, movement?: CreateWorkoutPlanFormMovement  }>) => {
+        const { exerciseIndex, movement, setIndex, workoutIndex } = action.payload;
 
-        state.workouts[workoutIndex].sets[setIndex].exercises[exerciseIndex].movementId = movementId;
+        state.workouts[workoutIndex].sets[setIndex].exercises[exerciseIndex].movement = movement;
       },
     setExerciseEquipment: 
-      (state, action: PayloadAction<{ workoutIndex: number, setIndex: number, exerciseIndex: number, equipmentId?: string }>) => {
-        const { exerciseIndex, equipmentId, setIndex, workoutIndex } = action.payload;
+      (state, action: PayloadAction<{ workoutIndex: number, setIndex: number, exerciseIndex: number, equipment?: CreateWorkoutPlanFormMovement }>) => {
+        const { exerciseIndex, equipment, setIndex, workoutIndex } = action.payload;
 
-        state.workouts[workoutIndex].sets[setIndex].exercises[exerciseIndex].equipmentId = equipmentId;
+        state.workouts[workoutIndex].sets[setIndex].exercises[exerciseIndex].equipment = equipment;
       },
     setExerciseGrip: 
       (state, action: PayloadAction<{ workoutIndex: number, setIndex: number, exerciseIndex: number, grip: Grip | null }>) => {
@@ -188,7 +202,7 @@ export const selectWorkoutSetsLength = (workoutIndex: number) =>
 
 
 export const selectSetExerciseTechnique = (workoutIndex: number, setIndex: number) => 
-  (state: RootState) => getSetByIndex(state, workoutIndex, setIndex).techniqueId;
+  (state: RootState) => getSetByIndex(state, workoutIndex, setIndex).technique;
 
 export const selectSetTimes = (workoutIndex: number, setIndex: number) => 
   (state: RootState) => getSetByIndex(state, workoutIndex, setIndex).times;
@@ -203,10 +217,10 @@ export const selectExercises = (workoutIndex: number, setIndex: number) =>
   (state: RootState) => getSetByIndex(state, workoutIndex, setIndex).exercises;
 
 export const selectExerciseMovement = (workoutIndex: number, setIndex: number, exerciseIndex: number) =>
-  (state: RootState) => getExerciseByIndex(state, workoutIndex, setIndex, exerciseIndex).movementId
+  (state: RootState) => getExerciseByIndex(state, workoutIndex, setIndex, exerciseIndex).movement
 
 export const selectExerciseEquipment = (workoutIndex: number, setIndex: number, exerciseIndex: number) =>
-  (state: RootState) => getExerciseByIndex(state, workoutIndex, setIndex, exerciseIndex).equipmentId
+  (state: RootState) => getExerciseByIndex(state, workoutIndex, setIndex, exerciseIndex).equipment
 
 export const selectExerciseGrip = (workoutIndex: number, setIndex: number, exerciseIndex: number) =>
   (state: RootState) => getExerciseByIndex(state, workoutIndex, setIndex, exerciseIndex).grip

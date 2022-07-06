@@ -1,3 +1,5 @@
+import { useAppSelector } from '@application/frontend/store/hooks'
+import { selectUnauthenticatedCreateWorkoutPlanError } from '@application/frontend/store/slices/UnauthenticatedWorkoutPlan'
 import React from 'react'
 import { Pagination } from 'swiper'
 import 'swiper/css'
@@ -12,9 +14,16 @@ interface Props {
 }
 
 const CreateWorkoutPlanForm: React.FC<Props> = ({ isAuthenticated = false }) => {
+  const error = useAppSelector(selectUnauthenticatedCreateWorkoutPlanError);
+
   return (
     <CreateWorkoutPlanFormContextProvider isAuthenticated={isAuthenticated}>
-      <form action="">
+      {
+        error && <div role="alert" className="px-4 py-3 text-xs text-yellow-700 bg-yellow-10 dark:bg-yellow-200 dark:text-yellow-800" >
+          {error}
+        </div>
+      }
+      <form>
         <Swiper
           spaceBetween={0}
           slidesPerView={1}
