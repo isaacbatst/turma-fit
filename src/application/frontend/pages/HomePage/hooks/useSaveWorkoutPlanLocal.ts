@@ -37,7 +37,7 @@ interface ValidUnauthenticatedTechnique {
 
 interface ValidUnauthenticatedSet {
   id: string,
-  times: string,
+  times: number,
   repetitions: string,
   technique?: ValidUnauthenticatedTechnique,
   minRestTime?: number,
@@ -146,43 +146,20 @@ const validateWorkoutPlan = (workoutPlan: UnauthenticatedWorkoutPlan): Omit<Vali
     throw new FormValidationError('EMPTY_PLAN_TYPE')
   }
 
-  const workouts = workoutPlan.workouts.map<ValidUnauthenticatedWorkout>((workout, workoutIndex) => {
+  const workouts = validateWorkouts(workoutPlan.workouts);
+
+  return {
+    planType: workoutPlan.planType,
+    workouts
+  };
+}
+
+const validateWorkouts = (workouts: UnauthenticatedWorkout[]): ValidUnauthenticatedWorkout[] => {
+  return workouts.map<ValidUnauthenticatedWorkout>((workout, workoutIndex) => {
     if(!workout.day) {
       throw new WorkoutError("EMPTY_WORKOUT_DAY", workoutIndex)
     }
-    const sets = workout.sets.map<ValidUnauthenticatedSet>((set, setIndex) => {
-      if(!set.times){
-        throw new SetError("EMPTY_TIMES", workoutIndex, setIndex)
-      }
-
-      if(isNaN(Number(set.times))){
-        throw new SetError("INVALID_TIMES", workoutIndex, setIndex)
-      }
-
-      if(!set.repetitions) {
-        throw new SetError("EMPTY_REPETITIONS", workoutIndex, setIndex)
-      }
-
-      if(isNaN(Number(set.repetitions)) && set.repetitions !== 'F'){
-        throw new SetError("INVALID_REPETITIONS", workoutIndex, setIndex)
-      }
-
-      const exercises = set.exercises.map<ValidUnauthenticatedExercise>((exercise, exerciseIndex) => {
-        if(!exercise.movement){
-          throw new ExerciseError("EMPTY_EXERCISE_MOVEMENT", workoutIndex, setIndex, exerciseIndex)
-        }
-
-        return {
-          ...exercise,
-          movement: exercise.movement,
-        }
-      })
-
-      return {
-        ...set,
-        exercises
-      }
-    })
+    const sets = validateSets(workout.sets, workoutIndex);
 
     return {
       ...workout,
@@ -190,11 +167,49 @@ const validateWorkoutPlan = (workoutPlan: UnauthenticatedWorkoutPlan): Omit<Vali
       day: workout.day,
     };
   })
+}
 
-  return {
-    planType: workoutPlan.planType,
-    workouts
-  };
+const validateSets = (sets: UnauthenticatedSet[], workoutIndex: number): ValidUnauthenticatedSet[] => {
+  return sets.map<ValidUnauthenticatedSet>((set, setIndex) => {
+    if(!set.times){
+      throw new SetError("EMPTY_TIMES", workoutIndex, setIndex)
+    }
+
+    if(isNaN(Number(set.times))){
+      throw new SetError("INVALID_TIMES", workoutIndex, setIndex)
+    }
+
+    if(!set.repetitions) {
+      throw new SetError("EMPTY_REPETITIONS", workoutIndex, setIndex)
+    }
+
+    if(isNaN(Number(set.repetitions)) && set.repetitions !== 'F'){
+      throw new SetError("INVALID_REPETITIONS", workoutIndex, setIndex)
+    }
+
+    const exercises = validateExercises(set.exercises, workoutIndex, setIndex);
+
+    return {
+      ...set,
+      times: Number(set.times),
+      exercises
+    }
+  })
+}
+
+const validateExercises = (exercises: UnauthenticatedExercise[], workoutIndex: number, setIndex: number): ValidUnauthenticatedExercise[] => {
+  return exercises.map<ValidUnauthenticatedExercise>((exercise, exerciseIndex) => {
+    if(!exercise.movement){
+      throw new ExerciseError("EMPTY_EXERCISE_MOVEMENT", workoutIndex, setIndex, exerciseIndex)
+    }
+
+    return {
+      ...exercise,
+      movement: exercise.movement,
+    }
+  })
+
+
 }
 
 
