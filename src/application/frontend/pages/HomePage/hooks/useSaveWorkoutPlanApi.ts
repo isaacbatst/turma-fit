@@ -48,6 +48,7 @@ const workoutFromFormToApi = (workout: CreateWorkoutPlanFormWorkout) => ({
   sets: workout.sets.map(set => ({
     ...set,
     techniqueId: set.technique?.id,
+    times: Number(set.times),
     exercises: set.exercises.map(exercise => ({
       ...exercise,
       equipmentId: exercise.equipment?.id,
