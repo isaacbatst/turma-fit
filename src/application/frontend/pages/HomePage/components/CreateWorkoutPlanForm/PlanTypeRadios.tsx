@@ -1,3 +1,4 @@
+import Loading from '@application/frontend/components/common/Loading';
 import { useAppDispatch, useAppSelector } from '@application/frontend/store/hooks';
 import { selectPlanType, selectPlanTypeAction } from '@application/frontend/store/slices/CreateWorkoutPlanForm';
 import React from 'react';
@@ -20,7 +21,7 @@ const PlanTypeRadios: React.FC = () => {
         </div>
       }
       {
-        isLoading && <div>Loading</div>
+        isLoading && <Loading />
       }
       <div className='mb-3 flex justify-center flex-wrap'>
         {
@@ -38,7 +39,9 @@ const PlanTypeRadios: React.FC = () => {
               />
               <label 
                 className='p-3 mx-2 border-2 border-white block 
-                  peer-checked:bg-white peer-checked:text-blue-900'  
+                  peer-checked:bg-white peer-checked:text-blue-900
+                  hover:scale-105 cursor-pointer
+                  active:opacity-75'  
                 key={planType.id} htmlFor={`plan-type-${planType.id}`}>
                 {planType.name}
               </label>

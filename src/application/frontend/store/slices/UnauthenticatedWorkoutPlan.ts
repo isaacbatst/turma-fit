@@ -21,13 +21,17 @@ const unauthenticatedWorkoutPlanSlice = createSlice({
     },
     setError(state, action: PayloadAction<{ error: string | null }>) {
       state.error = action.payload.error
+    },
+    clearWorkoutPlan(state) {
+      state.workoutPlan = null
     }
   }
 })
 
 export const { 
   saveWorkoutPlan: saveWorkoutPlanAction,
-  setError: setErrorAction
+  setError: setErrorAction,
+  clearWorkoutPlan: clearWorkoutPlanAction
 } = unauthenticatedWorkoutPlanSlice.actions;
 
 export const selectUnauthenticateWorkoutPlan = (state: RootState) => state.unauthenticatedWorkoutPlan.workoutPlan;

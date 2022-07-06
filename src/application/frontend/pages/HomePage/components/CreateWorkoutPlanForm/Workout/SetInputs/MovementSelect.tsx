@@ -1,3 +1,4 @@
+import ApiHandlerWrapper from '@application/frontend/components/common/ApiHandlerWrapper';
 import { useAppDispatch, useAppSelector } from '@application/frontend/store/hooks';
 import { selectExerciseMovement, setExerciseMovementAction } from '@application/frontend/store/slices/CreateWorkoutPlanForm';
 import React, { useContext } from 'react';
@@ -6,7 +7,7 @@ import { SetSlideContext } from '../SetSlideContext';
 import { ExerciseContext } from './ExerciseContext';
 
 const MovementSelect: React.FC = () => {
-  const { movements: { data: movements } } = useContext(CreateWorkoutPlanFormContext);
+  const { movements: { data: movements, error, isLoading } } = useContext(CreateWorkoutPlanFormContext);
   const { setIndex, workoutIndex } = useContext(SetSlideContext);
 
   const { exerciseIndex } = useContext(ExerciseContext);
@@ -15,33 +16,41 @@ const MovementSelect: React.FC = () => {
   const dispatch = useAppDispatch();
 
   return (
-    <select 
-      name="exercise-movements" 
-      id="exercise-movements"
-      className={`p-2 text-white text-center bg-transparent border-white border-2 mb-2 
-      outline-none focus:bg-white focus:text-stone-800
-      hover:scale-105 cursor-pointer
-            active:opacity-75
-      ${selectedMovement && 'bg-white text-stone-800'}`}
-      value={selectedMovement?.id || ""}
-      onChange={(e) => {
-        if(movements){
-          dispatch(setExerciseMovementAction({
-            movement: movements.find(movement => movement.id === e.target.value),
-            exerciseIndex,
-            setIndex,
-            workoutIndex
-          }))
+    <ApiHandlerWrapper error={error} isLoading={isLoading}>
+      <>
+        {
+          movements && (
+            <select 
+              name="exercise-movements" 
+              id="exercise-movements"
+              className={`p-2 text-white text-center bg-transparent border-white border-2 mb-2 
+          outline-none focus:bg-white focus:text-stone-800
+          hover:scale-105 cursor-pointer
+                active:opacity-75
+          ${selectedMovement && 'bg-white text-stone-800'}`}
+              value={selectedMovement?.id || ""}
+              onChange={(e) => {
+                if(movements){
+                  dispatch(setExerciseMovementAction({
+                    movement: movements[Number(e.target.value)],
+                    exerciseIndex,
+                    setIndex,
+                    workoutIndex
+                  }))
+                }
+              }}
+            >
+              <option value="" disabled className='text-stone-400'>Selecione o movimento</option>
+              {
+                movements && movements.map((movement, index) => (
+                  <option className='text-stone-800' key={movement.id} value={index}>{movement.name}</option>
+                ))
+              }
+            </select>
+          )
         }
-      }}
-    >
-      <option value="" disabled className='text-stone-400'>Selecione o movimento</option>
-      {
-        movements && movements.map((movement) => (
-          <option className='text-stone-800' key={movement.id} value={movement.id}>{movement.name}</option>
-        ))
-      }
-    </select>
+      </>
+    </ApiHandlerWrapper>
   )
 }
 

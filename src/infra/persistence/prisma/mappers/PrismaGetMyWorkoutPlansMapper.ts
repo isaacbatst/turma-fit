@@ -2,7 +2,7 @@
 import { Day } from '@domain/entities/WorkoutPlan/enums/Day';
 import { Grip } from '@domain/entities/WorkoutPlan/enums/Grip';
 import { MuscleGroup } from '@domain/entities/WorkoutPlan/enums/MuscleGroup';
-import { Equipment, Exercise, Movement, Set, WorkoutWithoutLetter } from '@domain/entities/WorkoutPlan/WorkoutListBeingGetted';
+import { Equipment, Exercise, Movement, Set, WorkoutPort } from '@domain/entities/WorkoutPlan/WorkoutListBeingGetted';
 import WorkoutPlanBeingGetted from '@domain/entities/WorkoutPlan/WorkoutPlanBeingGetted';
 import { Equipment as PrismaEquipment, Grip as PrismaGrip, MuscleGroup as PrismaMuscleGroup, Prisma } from '@prisma/client';
 
@@ -50,8 +50,8 @@ export class PrismaGetMyWorkoutPlansMapper {
 }
 
 class PrismaWorkoutMapper {
-  static ormToDomain(prismaWorkout: PrismaWorkoutWithSets): WorkoutWithoutLetter {
-    const workout: WorkoutWithoutLetter = {
+  static ormToDomain(prismaWorkout: PrismaWorkoutWithSets): WorkoutPort {
+    const workout: WorkoutPort = {
       id: prismaWorkout.id,
       day: Day[prismaWorkout.day],
       aerobicMinutes: prismaWorkout.aerobicMinutes,

@@ -1,4 +1,4 @@
-import { WorkoutListBeingGetted, WorkoutWithoutLetter } from "./WorkoutListBeingGetted"
+import { WorkoutListBeingGetted, WorkoutPort } from "./WorkoutListBeingGetted"
 
 export interface WorkoutPlanType {
   id: string,
@@ -9,7 +9,7 @@ export interface WorkoutPlanType {
 
 interface CreateWorkoutPlanEntityParams {
   id: string,
-  workouts: WorkoutWithoutLetter[]
+  workouts: WorkoutPort[]
   planType: WorkoutPlanType
 }
 

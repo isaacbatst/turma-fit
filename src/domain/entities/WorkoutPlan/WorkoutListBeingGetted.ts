@@ -42,9 +42,10 @@ export interface Workout {
   aerobicMinutes     : number
   day                : Day
   letter             : Letter
+  muscleGroups       : MuscleGroup[]
 }
 
-export type WorkoutWithoutLetter = Omit<Workout, 'letter'>
+export type WorkoutPort = Omit<Workout, 'letter' | 'muscleGroups'>
 
 export class WorkoutListBeingGetted {
   private static readonly WORKOUT_LETTERS = Object.values(Letter)
@@ -52,7 +53,7 @@ export class WorkoutListBeingGetted {
 
   private workouts: Workout[]
 
-  constructor(workouts: WorkoutWithoutLetter[]) {
+  constructor(workouts: WorkoutPort[]) {
     const workoutsCopy = [ ...workouts ];
 
     this.validateWorkouts(workoutsCopy);
@@ -61,14 +62,16 @@ export class WorkoutListBeingGetted {
 
     const workoutsWithLetter = this.addLetterByDay(workoutsOrderedByWeekDay);
 
-    this.workouts = workoutsWithLetter;
+    const workoutsWithMuscleGroups = this.addMuscleGroups(workoutsWithLetter);
+
+    this.workouts = workoutsWithMuscleGroups;
   }
 
   public getWorkouts() {
     return this.workouts;
   }
 
-  private validateWorkouts(workouts: WorkoutWithoutLetter[]) {
+  private validateWorkouts(workouts: WorkoutPort[]) {
     if(workouts.length > WorkoutList.WORKOUTS_MAX_LENGTH){
       throw new Error('WORKOUTS_MAX_LENGTH')
     }
@@ -84,7 +87,7 @@ export class WorkoutListBeingGetted {
     }
   }
 
-  private orderByDay(workouts: WorkoutWithoutLetter[]) {
+  private orderByDay(workouts: WorkoutPort[]) {
     const ordered = workouts
       .sort((workoutA, workoutB) => 
         WorkoutListBeingGetted.WORKOUT_DAYS.findIndex(day => day === workoutA.day) - WorkoutListBeingGetted.WORKOUT_DAYS.findIndex(day => day === workoutB.day))
@@ -92,10 +95,29 @@ export class WorkoutListBeingGetted {
     return ordered;
   }
 
-  private addLetterByDay(workouts: WorkoutWithoutLetter[]){
+  private addLetterByDay(workouts: WorkoutPort[]){
     return workouts.map((workout, index) => ({
       ...workout,
       letter: WorkoutListBeingGetted.WORKOUT_LETTERS[index]
     }))
+  }
+
+  private addMuscleGroups(workouts: Omit<Workout, 'muscleGroups'>[]): Workout[] {
+    return workouts.map<Workout>(workout => {
+      const muscleGroups: MuscleGroup[] = [];
+
+      workout.sets.forEach(set => {
+        set.exercises.forEach(exercise => {
+          if(!muscleGroups.find(muscleGroup => muscleGroup === exercise.movement.muscleGroup)){
+            muscleGroups.push(exercise.movement.muscleGroup)
+          }
+        })
+      })
+
+      return {
+        ...workout,
+        muscleGroups: muscleGroups
+      }
+    })
   }
 }
