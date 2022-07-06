@@ -37,7 +37,7 @@ interface ValidUnauthenticatedTechnique {
 
 interface ValidUnauthenticatedSet {
   id: string,
-  times: number,
+  times: string,
   repetitions: string,
   technique?: ValidUnauthenticatedTechnique,
   minRestTime?: number,
@@ -89,7 +89,7 @@ interface UnauthenticatedTechnique {
 
 export interface UnauthenticatedSet {
   id: string,
-  times: number,
+  times: string,
   repetitions: string,
   technique?: UnauthenticatedTechnique,
   minRestTime?: number,
@@ -155,8 +155,16 @@ const validateWorkoutPlan = (workoutPlan: UnauthenticatedWorkoutPlan): Omit<Vali
         throw new SetError("EMPTY_TIMES", workoutIndex, setIndex)
       }
 
+      if(isNaN(Number(set.times))){
+        throw new SetError("INVALID_TIMES", workoutIndex, setIndex)
+      }
+
       if(!set.repetitions) {
         throw new SetError("EMPTY_REPETITIONS", workoutIndex, setIndex)
+      }
+
+      if(isNaN(Number(set.repetitions)) && set.repetitions !== 'F'){
+        throw new SetError("INVALID_REPETITIONS", workoutIndex, setIndex)
       }
 
       const exercises = set.exercises.map<ValidUnauthenticatedExercise>((exercise, exerciseIndex) => {
