@@ -38,7 +38,7 @@ interface CreateWorkoutPlanFormTecnique {
 
 export interface CreateWorkoutPlanFormSet {
   id: string,
-  times: number,
+  times: string,
   repetitions: string,
   technique?: CreateWorkoutPlanFormTecnique 
   minRestTime?: number,
@@ -63,7 +63,7 @@ const createSet = (): CreateWorkoutPlanFormSet => ({
   id: generateId(),
   exercises: [ createExercise() ],
   repetitions: "",
-  times: 0,
+  times: "",
 })
 
 const createWorkout = (): CreateWorkoutPlanFormWorkout => ({
@@ -103,7 +103,7 @@ const createWorkoutPlanSlice = createSlice({
     
       state.workouts[workoutIndex].sets[setIndex].technique = technique || undefined;
     },
-    setSetTimes: (state, action: PayloadAction<{ workoutIndex: number, setIndex: number, value: number }>) => {
+    setSetTimes: (state, action: PayloadAction<{ workoutIndex: number, setIndex: number, value: string }>) => {
       const { value, workoutIndex, setIndex } = action.payload;
       state.workouts[workoutIndex].sets[setIndex].times = value;
     },

@@ -50,7 +50,7 @@ const TimesAndRepetitions: React.FC = () => {
             value={times} 
             onChange={(e) => {
               if(!isNaN(Number(e.target.value))){
-                dispatch(setSetTimesAction({ setIndex, value: Number(e.target.value), workoutIndex }))
+                dispatch(setSetTimesAction({ setIndex, value: e.target.value, workoutIndex }))
               }
             }}
           />
