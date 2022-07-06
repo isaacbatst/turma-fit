@@ -35,5 +35,13 @@ export default class WorkoutPlanBeingGetted {
   getPlanType() {
     return this.planType;
   }
+
+  toPlainObject() {
+    return {
+      id: this.getId(),
+      planType: this.getPlanType(),
+      workouts: this.getWorkouts()
+    }
+  }
 }
 

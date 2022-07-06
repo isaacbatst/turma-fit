@@ -1,4 +1,3 @@
-import { Day } from '@domain/entities/WorkoutPlan/enums/Day'
 import { WorkoutPlanDTO } from '@domain/usecases/GetMyWorkoutPlans/GetMyWorkoutPlansUseCase'
 import React from 'react'
 import { readableDay } from 'src/lib/days'
@@ -12,7 +11,7 @@ const isLastItem = (array: any[], index: number) => array.length - 1 === index
 const WorkoutPlanCard: React.FC<WorkoutPlanCardProps> = ({ workoutPlan }) => {
   const { planType, workouts } = workoutPlan;
   return (
-    <li>
+    <li className='list-none'>
       <h3>Plano de {planType.name}</h3>
       <p>
         Tempo de descanso: {planType.defaultMinRestTime} - {planType.defaultMaxRestTime} segundos 

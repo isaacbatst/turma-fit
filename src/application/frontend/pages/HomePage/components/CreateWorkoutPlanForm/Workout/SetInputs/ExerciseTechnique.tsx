@@ -20,14 +20,14 @@ const ExerciseTechnique: React.FC = () => {
             <div className='mb-1 mr-2' key={exerciseTechnique.id}>
               <input 
                 type="checkbox" 
-                name="exercise-technique"
+                name={`exercise-technique-${workoutIndex}-${setIndex}`}
                 className='appearance-none peer hidden'
-                id={`exercise-technique-${exerciseTechnique.id}`} 
+                id={`exercise-technique-${exerciseTechnique.id}-${workoutIndex}-${setIndex}`} 
                 value={exerciseTechnique.id} 
-                checked={selectedTechnique === exerciseTechnique.id}
+                checked={selectedTechnique?.id === exerciseTechnique.id}
                 onChange={(e) => dispatch(setTechniqueAction({
                   setIndex,
-                  techniqueId: e.target.checked ? exerciseTechnique.id : null,
+                  technique: e.target.checked ? exerciseTechnique : null,
                   workoutIndex
                 }))}
               />
@@ -36,7 +36,7 @@ const ExerciseTechnique: React.FC = () => {
           peer-checked:bg-white peer-checked:text-blue-900
           hover:scale-105 cursor-pointer
             active:opacity-75'
-                htmlFor={`exercise-technique-${exerciseTechnique.id}`}>
+                htmlFor={`exercise-technique-${exerciseTechnique.id}-${workoutIndex}-${setIndex}`}>
                 {exerciseTechnique.name}
               </label>
             </div >

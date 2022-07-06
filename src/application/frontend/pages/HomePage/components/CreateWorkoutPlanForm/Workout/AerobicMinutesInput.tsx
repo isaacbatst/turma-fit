@@ -29,14 +29,18 @@ const AerobicMinutesInput: React.FC = () => {
       </label>
       <div className='flex'>
         <input 
-          type="number" 
+          type="tel" 
           min={0} 
           ref={inputRef}
           disabled={!hasAerobic}
           className='w-12 text-center py-1 outline-red-500 border-2 border-white
           bg-transparent mr-2 text-white focus:text-stone-800 focus:bg-white
           disabled:bg-stone-300'          id={`aerobic-minutes-workout-${workoutId}`} 
-          onChange={(e) => dispatch(setAerobicInputAction({ value: Number(e.target.value), workoutIndex }))}
+          onChange={(e) => {
+            if(!isNaN(Number(e.target.value))){
+              dispatch(setAerobicInputAction({ value: Number(e.target.value), workoutIndex }))
+            }
+          }}
           value={value}
         />
         <input type="checkbox"

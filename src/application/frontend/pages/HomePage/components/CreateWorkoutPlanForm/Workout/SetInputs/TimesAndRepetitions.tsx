@@ -42,13 +42,17 @@ const TimesAndRepetitions: React.FC = () => {
             Séries
           </label>
           <input 
-            type="number" 
+            type="tel" 
             className='w-12 text-center py-1 outline-red-500 border-2 border-white
             bg-transparent text-white focus:text-stone-800 focus:bg-white'
             name={`set-times-${workoutIndex}-${setIndex}`} 
             id={`set-times-${workoutIndex}-${setIndex}`} 
             value={times} 
-            onChange={(e) => dispatch(setSetTimesAction({ setIndex, value: Number(e.target.value), workoutIndex }))}
+            onChange={(e) => {
+              if(!isNaN(Number(e.target.value))){
+                dispatch(setSetTimesAction({ setIndex, value: Number(e.target.value), workoutIndex }))
+              }
+            }}
           />
         </div>
         <div className='flex items-end'>
