@@ -3,8 +3,7 @@ import { WorkoutPlanDTO } from '@domain/usecases/GetMyWorkoutPlans/GetMyWorkoutP
 import React from 'react'
 import { HiTrash } from 'react-icons/hi'
 import { useDispatch } from 'react-redux'
-import { readableDay } from 'src/lib/days'
-import { readableMuscleGroups } from 'src/lib/muscleGroups'
+import WorkoutCard from './WorkoutCard'
 
 type WorkoutPlanCardProps = {
   workoutPlan: WorkoutPlanDTO
@@ -25,28 +24,8 @@ const WorkoutPlanCard: React.FC<WorkoutPlanCardProps> = ({ workoutPlan }) => {
         </button>
       </div>
       <ul className='flex flex-col'>
-        {workouts.map(({ id, aerobicMinutes, day, letter, muscleGroups }) => (
-          <li key={id} className='p-5 bg-white text-stone-800 flex flex-col mb-3 shadow-lg active:opacity-95 cursor-pointer hover:scale-105'>
-            <div className="flex justify-between mb-3">
-              <h5>Treino {letter}</h5>
-              <p className='font-normal text-sm'>{readableDay[day]}</p>
-            </div>
-            {
-              muscleGroups.length > 0 && (
-                <ul className='text-white flex mb-3'>
-                  {
-                    muscleGroups.map(muscleGroup => (
-                      <li className='text-xs font-bold bg-green-700 px-3 py-1 shadow-lg mr-2' 
-                        key={muscleGroup}>{readableMuscleGroups[muscleGroup]}</li>
-                    ))
-                  }
-                </ul>
-              )
-            }
-            <div className='text-amber-500 font-bold text-xs bg-white shadow-md self-start px-3 py-2'>
-              Aeróbico - {aerobicMinutes} minutos
-            </div>
-          </li>
+        {workouts.map((workout) => (
+          <WorkoutCard workout={workout} key={workout.id}/> 
         ))}
       </ul>
     </>

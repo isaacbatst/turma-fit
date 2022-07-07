@@ -7,7 +7,7 @@ const Layout: React.FC = ({ children }) => {
         <link rel="icon" href="/favicon.ico" />
         <meta
           name="description"
-          content="Learn how to build a personal website using Next.js"
+          content="Salve seus treinos gratuitamente"
         />
         <meta name="og:title" content='TurmaFit' />
         <meta name="twitter:card" content="summary_large_image" />

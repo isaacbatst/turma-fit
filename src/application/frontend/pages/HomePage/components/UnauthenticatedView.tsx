@@ -1,10 +1,10 @@
+import Header from '@application/frontend/components/common/Header'
 import { useAppSelector } from '@application/frontend/store/hooks'
 import { selectUnauthenticateWorkoutPlan } from '@application/frontend/store/slices/UnauthenticatedWorkoutPlan'
 import WorkoutPlanBeingGetted from '@domain/entities/WorkoutPlan/WorkoutPlanBeingGetted'
 import React from 'react'
 import CreateUserForm from './CreateUserForm'
 import CreateWorkoutPlanForm from './CreateWorkoutPlanForm/CreateWorkoutPlanForm'
-import Header from './Header'
 import WorkoutPlanCard from './WorkoutPlanCard'
 
 const UnauthenticatedView: React.FC = () => {
