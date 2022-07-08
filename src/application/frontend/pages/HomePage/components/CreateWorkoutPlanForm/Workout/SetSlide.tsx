@@ -11,7 +11,6 @@ import { SetSlideContext } from './SetSlideContext'
 
 const SetSlide: React.FC = () => {
   const { setIndex, setsLength, workoutIndex } = useContext(SetSlideContext);
-  const setId = useAppSelector(selectSetId(workoutIndex, setIndex));
   const isLastSet = setIndex === setsLength - 1;
 
   return (
@@ -19,9 +18,7 @@ const SetSlide: React.FC = () => {
       <h3 className='font-bold mb-2'>Treino {indexToLetter(workoutIndex)}</h3>
       <div className="flex flex-col">
         <SetInputs
-          id={setId} 
           setIndex={setIndex} 
-          workoutIndex={workoutIndex}
         />
         <div className="flex">
           {
