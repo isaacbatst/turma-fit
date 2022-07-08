@@ -1,7 +1,7 @@
 import Loading from '@application/frontend/components/common/Loading';
 import { useAppDispatch, useAppSelector } from '@application/frontend/store/hooks';
 import { selectPlanType, selectPlanTypeAction } from '@application/frontend/store/slices/CreateWorkoutPlanForm';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSwiper } from 'swiper/react';
 import { usePlanTypes } from './usePlanTypes';
 
@@ -10,6 +10,12 @@ const PlanTypeRadios: React.FC = () => {
   const selectedPlanType = useAppSelector(selectPlanType);
   const dispatch = useAppDispatch();
   const swiper = useSwiper();
+
+  useEffect(() => {
+    if(planTypes){
+      swiper.updateAutoHeight();
+    }
+  }, [planTypes, swiper])
 
   return (
     <>

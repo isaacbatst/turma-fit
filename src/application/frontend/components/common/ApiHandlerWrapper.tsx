@@ -12,7 +12,7 @@ const ApiHandlerWrapper: React.FC<Props> = ({ error, isLoading, children }) => {
       {
         isLoading && (
           <div className="flex justify-center py-2 mb-2">
-            <Loading size={4} />
+            <Loading />
           </div>
         )
       }
