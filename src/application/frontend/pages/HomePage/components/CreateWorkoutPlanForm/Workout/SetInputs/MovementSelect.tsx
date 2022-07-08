@@ -21,8 +21,8 @@ const MovementSelect: React.FC = () => {
         {
           movements && (
             <select 
-              name="exercise-movements" 
-              id="exercise-movements"
+              name={`exercise-movements-${workoutIndex}-${setIndex}-${exerciseIndex}`} 
+              id={`exercise-movements-${workoutIndex}-${setIndex}-${exerciseIndex}`}
               className={`p-2 text-white text-center bg-transparent border-white border-2 mb-2 
           outline-none focus:bg-white focus:text-stone-800
           hover:scale-105 cursor-pointer
@@ -32,7 +32,7 @@ const MovementSelect: React.FC = () => {
               onChange={(e) => {
                 if(movements){
                   dispatch(setExerciseMovementAction({
-                    movement: movements[Number(e.target.value)],
+                    movement: movements.find(movement => movement.id === e.target.value),
                     exerciseIndex,
                     setIndex,
                     workoutIndex
@@ -42,8 +42,8 @@ const MovementSelect: React.FC = () => {
             >
               <option value="" disabled className='text-stone-400'>Selecione o movimento</option>
               {
-                movements && movements.map((movement, index) => (
-                  <option className='text-stone-800' key={movement.id} value={index}>{movement.name}</option>
+                movements && movements.map((movement) => (
+                  <option className='text-stone-800' key={movement.id} value={movement.id}>{movement.name}</option>
                 ))
               }
             </select>

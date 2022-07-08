@@ -1,4 +1,4 @@
-import { WorkoutListBeingGetted, WorkoutPort } from "./WorkoutListBeingGetted"
+import { Workout, WorkoutListBeingGetted, WorkoutPort } from "./WorkoutListBeingGetted"
 
 export interface WorkoutPlanType {
   id: string,
@@ -10,6 +10,12 @@ export interface WorkoutPlanType {
 interface CreateWorkoutPlanEntityParams {
   id: string,
   workouts: WorkoutPort[]
+  planType: WorkoutPlanType
+}
+
+export interface WorkoutPlan {
+  id: string,
+  workouts: Workout[],
   planType: WorkoutPlanType
 }
 

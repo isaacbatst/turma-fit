@@ -17,7 +17,7 @@ const UnauthenticatedView: React.FC = () => {
         {
           workoutPlan ? (
             <section className='py-5 bg-amber-500 px-3'>
-              <WorkoutPlanCard workoutPlan={new WorkoutPlanBeingGetted(workoutPlan).toPlainObject()} />
+              <WorkoutPlanCard workoutPlan={workoutPlan} />
             </section>
           ) : (
             <CreateWorkoutPlanForm />

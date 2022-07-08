@@ -4,6 +4,7 @@ import { saveWorkoutPlanAction, setErrorAction } from "@application/frontend/sto
 import { Day } from "@domain/entities/WorkoutPlan/enums/Day";
 import { Grip } from "@domain/entities/WorkoutPlan/enums/Grip";
 import { MuscleGroup } from "@domain/entities/WorkoutPlan/enums/MuscleGroup";
+import WorkoutPlanBeingGetted from "@domain/entities/WorkoutPlan/WorkoutPlanBeingGetted";
 import { nanoid } from "@reduxjs/toolkit";
 
 interface ValidUnauthenticatedPlanType {
@@ -45,7 +46,7 @@ interface ValidUnauthenticatedSet {
   exercises: ValidUnauthenticatedExercise[]
 }
 
-interface ValidUnauthenticatedWorkout {
+export interface ValidUnauthenticatedWorkout {
   id: string,
   aerobicMinutes: number,
   day: Day
@@ -118,16 +119,18 @@ export const useSaveWorkoutPlanLocal = () => {
     try {
       dispatch(setErrorAction({ error: null }));
 
-      const workoutPlan = validateWorkoutPlan({
+      const validated = validateWorkoutPlan({
         planType,
         workouts
       })
 
+      const workoutPlan = new WorkoutPlanBeingGetted({
+        ...validated,
+        id: nanoid(),
+      });
+
       dispatch(saveWorkoutPlanAction({
-        workoutPlan: {
-          ...workoutPlan,
-          id: nanoid(),
-        }
+        workoutPlan: workoutPlan.toPlainObject()
       }))
     } catch(error) {
       dispatch(setErrorAction({ 
