@@ -1,6 +1,6 @@
 # Turma Fit
 
-A training manager app, to personal trainers and their students.
+A workout manager app.
 
 ## Deploys
 
@@ -13,8 +13,6 @@ At Vercel.
 
 ## Description
 
-It's a studying project with Next, NextAuth and Prisma.
+It's a studying project with Next and applying Clean Architecture where it fits.
 
 Check Issues and Projects to know whats being developed.
-
-![App Preview](./preview.gif)
