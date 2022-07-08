@@ -1,15 +1,10 @@
-import React, { Fragment, useContext, useState } from 'react'
-import { Grip } from '@domain/entities/WorkoutPlan/enums/Grip';
-import { ExerciseContext, ExerciseContextValue } from './ExerciseContext';
 import { useAppDispatch, useAppSelector } from '@application/frontend/store/hooks';
 import { selectExerciseGrip, setExerciseGripAction } from '@application/frontend/store/slices/CreateWorkoutPlanForm';
+import { Grip } from '@domain/entities/WorkoutPlan/enums/Grip';
+import React, { useContext, useState } from 'react';
+import { readableGrip } from 'src/lib/grips';
 import { SetSlideContext } from '../SetSlideContext';
-
-const readableGrip: Record<Grip, string> = {
-  NEUTRAL: 'Neutra',
-  PRONATE: 'Pronada',
-  SUPINE: 'Supinada'
-}
+import { ExerciseContext } from './ExerciseContext';
 
 const GripRadio: React.FC = () => {
   const { exerciseIndex } = useContext(ExerciseContext);

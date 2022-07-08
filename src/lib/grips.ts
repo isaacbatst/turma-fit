@@ -1,6 +1,6 @@
 import { Grip } from "@prisma/client"
 
-export const gripMapToLabel = {
+export const readableGrip: Record<Grip, string> = {
   SUPINE: 'Supinada',
   PRONATE: 'Pronada',
   NEUTRAL: 'Neutra'

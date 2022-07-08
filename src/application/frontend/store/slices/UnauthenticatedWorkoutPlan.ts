@@ -38,5 +38,6 @@ export const selectUnauthenticateWorkoutPlan = (state: RootState) => state.unaut
 export const selectUnauthenticatedCreateWorkoutPlanError = (state: RootState) => state.unauthenticatedWorkoutPlan.error;
 export const selectUnauthenticatedWorkout = (id: string) => (state: RootState) => state.unauthenticatedWorkoutPlan.workoutPlan?.
   workouts.find(workout => workout.id === id)
+export const selectUnauthenticatedPlanType = (state: RootState) => state.unauthenticatedWorkoutPlan.workoutPlan?.planType
 
 export const unauthenticatedWorkoutPlanReducer = unauthenticatedWorkoutPlanSlice.reducer;
