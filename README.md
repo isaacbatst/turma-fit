@@ -1,6 +1,6 @@
 # Turma Fit
 
-A training manager app, to personal trainers and their students.
+A workout manager app.
 
 ## Deploys
 
