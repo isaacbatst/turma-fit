@@ -9,17 +9,7 @@ import { WorkoutContextProvider } from './WorkoutContext';
 
 const WorkoutPreviewPage: NextPage = () => {
   const router = useRouter();
-
-  if(!router.query.id || typeof router.query.id !== "string"){
-    router.push('/');
-  }
-
   const workout = useAppSelector(selectUnauthenticatedWorkout(router.query.id as string))
-
-  if(!workout) {
-    router.push('/')
-  }
-
   return (
     <div className='min-h-screen bg-amber-500'>
       <Header />
