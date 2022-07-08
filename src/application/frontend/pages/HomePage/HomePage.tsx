@@ -1,3 +1,4 @@
+import Header from "@application/frontend/components/common/Header";
 import Loading from "@application/frontend/components/common/Loading";
 import { useUser } from "@application/frontend/swr/useUser";
 import { NextPage } from "next";
@@ -9,6 +10,7 @@ const HomePage: NextPage = () => {
 
   return (
     <>
+      <Header />
       {
         isLoading ? (
           <div className="min-h-screen bg-red-500 flex items-center justify-center">

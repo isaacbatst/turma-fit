@@ -12,7 +12,6 @@ const UnauthenticatedView: React.FC = () => {
 
   return (
     <div className='bg-red-500 min-h-screen	text-white'>
-      <Header />
       <section className='text-center'>
         {
           workoutPlan ? (

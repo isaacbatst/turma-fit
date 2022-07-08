@@ -6,6 +6,8 @@ const useLoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const router = useRouter();
 
@@ -13,6 +15,7 @@ const useLoginForm = () => {
     e.preventDefault();
 
     setError(null);
+    setIsLoading(true);
 
     try {
       await axios.post('/api/user/session', {
@@ -20,6 +23,7 @@ const useLoginForm = () => {
         password
       })
 
+      setIsAuthenticated(true);
       router.reload();
     } catch(error) {
       if(axios.isAxiosError(error)){
@@ -33,14 +37,16 @@ const useLoginForm = () => {
       }
       
       setError('UNKNOWN_ERROR')
+    } finally {
+      setIsLoading(false);
     }
   }
 
   return {
     email, setEmail,
     password, setPassword,
-    error,
-    handleSubmit
+    error, isLoading,
+    handleSubmit, isAuthenticated
   }
 }
 

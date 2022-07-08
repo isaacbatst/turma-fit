@@ -16,7 +16,7 @@ const LogoutButton: React.FC = () => {
   }
 
   return (
-    <button type='button' onClick={handleClick}>Sair</button>
+    <button type='button' className='border-2 border-white py-1 px-5 m-2 hover:scale-105 active:opacity-90' onClick={handleClick}>Sair</button>
   )
 }
 

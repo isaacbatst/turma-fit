@@ -27,8 +27,6 @@ const CreateWorkoutPlanForm: React.FC<Props> = ({ isAuthenticated = false }) => 
         <Swiper
           spaceBetween={0}
           slidesPerView={1}
-          noSwiping
-          noSwipingClass='swiper-wrapper'
           modules={[Pagination]}
           pagination={{
             clickable: true,

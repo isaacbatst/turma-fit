@@ -27,6 +27,11 @@ export interface AuthenticateUserUseCase {
   execute(port: AuthenticateUserUseCasePort): Promise<AuthenticateUserUseCaseDTO>
 }
 
+export enum AuthenticateUserUseCaseErrors {
+  INCORRECT_EMAIL_OR_PASSWORD = 'INCORRECT_EMAIL_OR_PASSWORD',
+  EMAIL_NOT_FOUND = 'EMAIL_NOT_FOUND',
+}
+
 export default class AuthenticateUserService implements AuthenticateUserUseCase {
   private userRepository: AuthenticateUserRepository
   private encrypter: Encrypter
@@ -47,11 +52,11 @@ export default class AuthenticateUserService implements AuthenticateUserUseCase 
   async execute(port: AuthenticateUserUseCasePort): Promise<AuthenticateUserUseCaseDTO> {
     const user = await this.userRepository.getByEmail(port.email)
 
-    if(!user) throw new AuthenticationError('EMAIL_NOT_FOUND');
+    if(!user) throw new AuthenticationError(AuthenticateUserUseCaseErrors.EMAIL_NOT_FOUND);
 
     const isAuthenticated = await this.encrypter.compare(port.password, user.getPassword());
 
-    if(!isAuthenticated) throw new AuthenticationError('WRONG_PASSWORD');
+    if(!isAuthenticated) throw new AuthenticationError(AuthenticateUserUseCaseErrors.INCORRECT_EMAIL_OR_PASSWORD);
 
     const session = new Session(
       this.uuidGenerator.generate(),
