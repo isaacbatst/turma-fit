@@ -200,6 +200,8 @@ export const selectError = (state: RootState) => state.createWorkoutPlanForm.err
 export const selectAerobicMinutes = (workoutIndex: number) => 
   (state: RootState) => getWorkoutByIndex(state, workoutIndex).aerobicMinutes
 
+export const selectWorkout = (workoutIndex: number) => 
+  (state: RootState) => getWorkoutByIndex(state, workoutIndex)
 export const selectWorkoutDay = (workoutIndex: number) => 
   (state: RootState) => getWorkoutByIndex(state, workoutIndex).day
 export const selectWorkoutId = (workoutIndex: number) => 

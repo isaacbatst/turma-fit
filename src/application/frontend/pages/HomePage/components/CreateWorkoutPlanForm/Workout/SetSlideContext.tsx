@@ -1,7 +1,7 @@
 import { useAppSelector } from "@application/frontend/store/hooks";
 import { selectSet } from "@application/frontend/store/slices/CreateWorkoutPlanForm";
 import { createContext, Dispatch, SetStateAction, useState } from "react";
-import { ExerciseError, readableExerciseErrors, readableSetErrors, SetError, validateSet } from "../../../hooks/useSaveWorkoutPlanLocal";
+import { ExerciseError, readableExerciseErrors, readableSetErrors, SetError, useValidateWorkoutPlan } from "../../../hooks/useValidateWorkoutPlan";
 
 interface SetSlideContextValue {
   setIndex: number,
@@ -29,7 +29,8 @@ export const SetSlideContextProvider: React.FC<Props> = ({
   children 
 }) => {
   const [error, setError] = useState<string | null>(null)
-  const set = useAppSelector(selectSet(setIndex, workoutIndex))
+  const set = useAppSelector(selectSet(setIndex, workoutIndex));
+  const { validateSet } = useValidateWorkoutPlan();
 
   const validate = (): boolean => {
     setError(null);

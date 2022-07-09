@@ -1,8 +1,7 @@
-import { useAppDispatch, useAppSelector } from '@application/frontend/store/hooks';
-import { addSetAction, selectSet } from '@application/frontend/store/slices/CreateWorkoutPlanForm';
-import React, { useContext } from 'react'
+import { useAppDispatch } from '@application/frontend/store/hooks';
+import { addSetAction } from '@application/frontend/store/slices/CreateWorkoutPlanForm';
+import React, { useContext } from 'react';
 import { useSwiper } from 'swiper/react';
-import { readableSetErrors, SetError, validateSet } from '../../../hooks/useSaveWorkoutPlanLocal';
 import { SetSlideContext } from './SetSlideContext';
 
 interface Props {
@@ -13,9 +12,8 @@ interface Props {
 
 const AddSetButton: React.FC<Props> = ({ workoutIndex, setIndex }) => {
   const dispatch = useAppDispatch();
-  const set = useAppSelector(selectSet(setIndex, workoutIndex))
   const swiper = useSwiper();
-  const { error, setError, validateSet } = useContext(SetSlideContext);
+  const { validateSet } = useContext(SetSlideContext);
 
   return (
     <button 

@@ -29,6 +29,10 @@ const WorkoutCheckoutSlide: React.FC = () => {
     }
   }, [shouldGoNext, swiper])
 
+  useEffect(() => {
+    swiper.updateAutoHeight();
+  }, [error, swiper])
+
   return (
     <>
       {error && <Alert message={error} />}

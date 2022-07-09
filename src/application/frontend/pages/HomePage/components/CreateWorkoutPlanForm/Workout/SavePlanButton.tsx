@@ -3,7 +3,7 @@ import { HiCheck } from 'react-icons/hi';
 import { useSaveWorkoutPlan } from '../../../hooks/useSaveWorkoutPlan';
 
 const SubmitWorkoutPlan: React.FC = () => {
-  const { handleSubmit } = useSaveWorkoutPlan();
+  const { saveWorkoutPlan } = useSaveWorkoutPlan();
 
   return (
     <button 
@@ -11,7 +11,7 @@ const SubmitWorkoutPlan: React.FC = () => {
       className='border-2 flex-1 border-white py-2 mr-1 mb-2 flex justify-center items-center
     hover:scale-105 cursor-pointer
           active:opacity-75'
-      onClick={handleSubmit}
+      onClick={saveWorkoutPlan}
     >
       <HiCheck className='m-2'/> Salvar Planejamento
     </button> 

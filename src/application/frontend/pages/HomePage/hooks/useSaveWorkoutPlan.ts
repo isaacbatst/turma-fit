@@ -25,7 +25,7 @@ export const useSaveWorkoutPlan = () => {
     return saveOnApi(user);
   }
   
-  const handleSubmit: React.MouseEventHandler<HTMLButtonElement> = async (e) => {
+  const saveWorkoutPlan: React.MouseEventHandler<HTMLButtonElement> = async (e) => {
     try {
       e.preventDefault();
       await createWorkoutPlan();
@@ -37,6 +37,6 @@ export const useSaveWorkoutPlan = () => {
   }
 
   return {
-    handleSubmit,
+    saveWorkoutPlan,
   }
 }

@@ -3,7 +3,6 @@ import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from
 import { HiPlus } from 'react-icons/hi';
 import { useDispatch } from 'react-redux'
 import { indexToLetter } from 'src/lib/letters';
-import { useSwiper } from 'swiper/react';
 import { WorkoutCheckoutSlideContext } from './WorkoutCheckoutSlideContext';
 
 interface Props {
@@ -11,10 +10,9 @@ interface Props {
 }
 
 const AddWorkoutButton: React.FC<Props> = ({ setShouldGoNext }) => {
-  const { workoutIndex, workoutsLength } = useContext(WorkoutCheckoutSlideContext);
-  
+  const { validateWorkout, workoutIndex } = useContext(WorkoutCheckoutSlideContext);
+
   const dispatch = useDispatch();
-  const swiper = useSwiper();
   
 
   return (
@@ -24,8 +22,13 @@ const AddWorkoutButton: React.FC<Props> = ({ setShouldGoNext }) => {
       hover:scale-105 cursor-pointer
             active:opacity-75'
       onClick={() => {
-        dispatch(addWorkoutAction())
-        setShouldGoNext(true);
+        console.log('validdando treino')
+        const isValid = validateWorkout();
+
+        if(isValid){
+          dispatch(addWorkoutAction())
+          setShouldGoNext(true);
+        }
       }}
     >
       <HiPlus className='mr-2' />Adicionar Treino {indexToLetter(workoutIndex + 1)}
