@@ -17,8 +17,14 @@ const CreateUserForm: React.FC = () => {
 
   return (
     <div className="px-4 pb-4">
-      <h2 className="text-center mb-2 font-bold">Registre-se agora!</h2>
-      <p className="text-center text-xs mb-5">Já possui uma conta? <Link href="/login"><a className="text-blue-600 underline">Entre aqui</a></Link></p>
+      <h2 className="text-center mb-4 font-bold">Registre-se agora!</h2>
+      <p className="text-center text-xs mb-5 py-3 bg-slate-100 bg-opacity-75 text-stone-800">
+        Já possui uma conta?
+        {' '}
+        <Link href="/login">
+          <a className="text-blue-600 underline">Entre aqui</a>
+        </Link>
+      </p>
       {error && (
         <div className="px-4 py-3 mb-4 text-xs text-yellow-700 bg-yellow-10 dark:bg-yellow-200 dark:text-yellow-800" 
           role="alert">
