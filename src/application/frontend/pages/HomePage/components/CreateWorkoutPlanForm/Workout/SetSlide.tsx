@@ -1,6 +1,7 @@
 import Alert from '@application/frontend/components/common/Alert'
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { indexToLetter } from 'src/lib/letters'
+import { useSwiper } from 'swiper/react'
 import AddSetButton from './AddSetButton'
 import FinishWorkoutButton from './FinishWorkoutButton'
 import RemoveSetButton from './RemoveSetButton'
@@ -11,6 +12,11 @@ import { SetSlideContext } from './SetSlideContext'
 const SetSlide: React.FC = () => {
   const { setIndex, setsLength, workoutIndex, error } = useContext(SetSlideContext);
   const isLastSet = setIndex === setsLength - 1;
+  const swiper = useSwiper();
+
+  useEffect(() => {
+    swiper.updateAutoHeight();
+  }, [error, swiper])
 
   return (
     <>
