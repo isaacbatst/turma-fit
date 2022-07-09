@@ -1,6 +1,5 @@
 import { Workout } from "@domain/entities/WorkoutPlan/WorkoutListBeingGetted";
 import { createContext } from "react";
-import { ValidUnauthenticatedWorkout } from "../HomePage/hooks/useSaveWorkoutPlanLocal";
 
 interface WorkoutContextValue {
   workout: Workout
