@@ -14,7 +14,11 @@ interface SetSlideContextValue {
 
 export const SetSlideContext = createContext({} as SetSlideContextValue);
 
-interface Props extends SetSlideContextValue {};
+interface Props {
+  setIndex: number,
+  workoutIndex: number,
+  setsLength: number,
+};
 
 const defaultErrorMessage = 'Algo deu errado, tente novamente mais tarde'
 
