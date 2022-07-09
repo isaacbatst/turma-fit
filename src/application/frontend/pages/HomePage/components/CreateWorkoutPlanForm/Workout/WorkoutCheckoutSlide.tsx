@@ -13,13 +13,13 @@ import { WorkoutCheckoutSlideContext } from './WorkoutCheckoutSlideContext'
 import WorkoutDayRadio from './WorkoutDayRadio'
 
 const WorkoutCheckoutSlide: React.FC = () => {
-  const { workoutIndex, workoutsLength } = useContext(WorkoutCheckoutSlideContext);
+  const { workoutIndex, workoutsLength, error: workoutError } = useContext(WorkoutCheckoutSlideContext);
   const isLastWorkout = workoutIndex === workoutsLength - 1;
   const isMaxWorkoutsLength = workoutsLength >= WorkoutList.WORKOUTS_MAX_LENGTH;
 
   const [shouldGoNext, setShouldGoNext] = useState(false);
   const swiper = useSwiper();
-  const error = useAppSelector(selectUnauthenticatedCreateWorkoutPlanError);
+  const workoutPlanError = useAppSelector(selectUnauthenticatedCreateWorkoutPlanError);
   
   useEffect(() => {
     if(shouldGoNext){
@@ -31,11 +31,12 @@ const WorkoutCheckoutSlide: React.FC = () => {
 
   useEffect(() => {
     swiper.updateAutoHeight();
-  }, [error, swiper])
+  }, [workoutPlanError, swiper])
 
   return (
     <>
-      {error && <Alert message={error} />}
+      {workoutPlanError && <Alert message={workoutPlanError} />}
+      {workoutError && <Alert message={workoutError} />}
       <section className="py-3 px-2 pb-8 bg-orange-400 flex flex-col">
         <h3 className='font-bold mb-2'>Treino {indexToLetter(workoutIndex)}</h3>
         <AerobicMinutesInput />

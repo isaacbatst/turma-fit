@@ -1,4 +1,5 @@
 import { addWorkoutAction } from '@application/frontend/store/slices/CreateWorkoutPlanForm';
+import { setErrorAction } from '@application/frontend/store/slices/UnauthenticatedWorkoutPlan';
 import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react'
 import { HiPlus } from 'react-icons/hi';
 import { useDispatch } from 'react-redux'
@@ -22,7 +23,7 @@ const AddWorkoutButton: React.FC<Props> = ({ setShouldGoNext }) => {
       hover:scale-105 cursor-pointer
             active:opacity-75'
       onClick={() => {
-        console.log('validdando treino')
+        dispatch(setErrorAction({ error: null }))
         const isValid = validateWorkout();
 
         if(isValid){

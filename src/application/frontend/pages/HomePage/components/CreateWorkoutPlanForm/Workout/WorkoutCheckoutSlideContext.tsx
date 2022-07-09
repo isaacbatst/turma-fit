@@ -1,13 +1,15 @@
 import { useAppSelector } from "@application/frontend/store/hooks";
 import { selectWorkout } from "@application/frontend/store/slices/CreateWorkoutPlanForm";
-import { createContext, useState } from "react";
+import { createContext, Dispatch, SetStateAction, useState } from "react";
 import { ExerciseError, readableExerciseErrors, readableSetErrors, readableWorkoutErrors, SetError, useValidateWorkoutPlan, WorkoutError } from "../../../hooks/useValidateWorkoutPlan";
 
 interface WorkoutCheckoutSlideContextValue {
   workoutIndex: number,
   workoutsLength: number
   workoutId: string,
-  validateWorkout: () => boolean
+  validateWorkout: () => boolean,
+  error: string | null,
+  setError: Dispatch<SetStateAction<string | null>>
 }
 
 export const WorkoutCheckoutSlideContext = createContext({} as WorkoutCheckoutSlideContextValue);
@@ -62,7 +64,8 @@ export const WorkoutCheckoutSlideContextProvider: React.FC<Props> = ({
     workoutIndex,
     workoutsLength,
     workoutId,
-    validateWorkout: validate
+    validateWorkout: validate,
+    error, setError
   }
 
   return (
