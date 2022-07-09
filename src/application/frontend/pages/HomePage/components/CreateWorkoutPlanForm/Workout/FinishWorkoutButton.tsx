@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { HiCheck } from 'react-icons/hi'
 import { useSwiper } from 'swiper/react'
+import { SetSlideContext } from './SetSlideContext';
 
 const FinishWorkoutButton = () => {
   const swiper = useSwiper();
+  const { validateSet } = useContext(SetSlideContext)
 
   return (
     <button
@@ -13,7 +15,12 @@ const FinishWorkoutButton = () => {
       hover:scale-105 cursor-pointer
             active:opacity-75' 
       onClick={() => {
-        swiper.slideNext();
+        const isValid = validateSet();
+
+        if(isValid){
+          swiper.slideNext();
+        }
+
       }} 
     >
       <HiCheck className='mr-2' /> Finalizar Treino

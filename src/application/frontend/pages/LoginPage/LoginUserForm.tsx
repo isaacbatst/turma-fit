@@ -34,7 +34,9 @@ const LoginUserForm: React.FC = () => {
     ) :
       <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 px-4'>
         {
-          error && <Alert message={readableErrors[(error as LoginError)] || 'Erro desconhecido' } />
+          error && <div className="mb-4">
+            <Alert message={readableErrors[(error as LoginError)] || 'Erro desconhecido' } />
+          </div>
         }
         <form>
           <div className="flex flex-col mb-2">

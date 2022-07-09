@@ -202,6 +202,8 @@ export const selectWorkoutId = (workoutIndex: number) =>
 export const selectWorkoutSetsLength = (workoutIndex: number) => 
   (state: RootState) => getWorkoutByIndex(state, workoutIndex).sets.length
 
+export const selectSet = (setIndex: number, workoutIndex: number) => 
+  (state: RootState) => getSetByIndex(state, workoutIndex, setIndex);
 
 export const selectSetExerciseTechnique = (workoutIndex: number, setIndex: number) => 
   (state: RootState) => getSetByIndex(state, workoutIndex, setIndex).technique;

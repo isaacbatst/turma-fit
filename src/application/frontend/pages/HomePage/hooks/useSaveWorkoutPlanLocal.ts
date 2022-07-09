@@ -4,6 +4,7 @@ import { saveWorkoutPlanAction, setErrorAction } from "@application/frontend/sto
 import { Day } from "@domain/entities/WorkoutPlan/enums/Day";
 import { Grip } from "@domain/entities/WorkoutPlan/enums/Grip";
 import { MuscleGroup } from "@domain/entities/WorkoutPlan/enums/MuscleGroup";
+import { Set } from "@domain/entities/WorkoutPlan/WorkoutListBeingGetted";
 import WorkoutPlanBeingGetted from "@domain/entities/WorkoutPlan/WorkoutPlanBeingGetted";
 import { nanoid } from "@reduxjs/toolkit";
 
@@ -173,37 +174,48 @@ const validateWorkouts = (workouts: UnauthenticatedWorkout[]): ValidUnauthentica
 }
 
 const validateSets = (sets: UnauthenticatedSet[], workoutIndex: number): ValidUnauthenticatedSet[] => {
-  return sets.map<ValidUnauthenticatedSet>((set, setIndex) => {
-    if(!set.times){
-      throw new SetError("EMPTY_TIMES", workoutIndex, setIndex)
-    }
+  return sets.map<ValidUnauthenticatedSet>((set, setIndex) => validateSet(set, workoutIndex, setIndex))
+}
 
-    if(isNaN(Number(set.times))){
-      throw new SetError("INVALID_TIMES", workoutIndex, setIndex)
-    }
+export const validateSet = (set: UnauthenticatedSet, workoutIndex: number, setIndex: number): ValidUnauthenticatedSet => {
+  const exercises = validateExercises(set.exercises, workoutIndex, setIndex);
+  
+  if(!set.times){
+    throw new SetError(SetErrors.EMPTY_TIMES, workoutIndex, setIndex)
+  }
 
-    if(!set.repetitions) {
-      throw new SetError("EMPTY_REPETITIONS", workoutIndex, setIndex)
-    }
+  if(isNaN(Number(set.times))){
+    throw new SetError(SetErrors.INVALID_TIMES, workoutIndex, setIndex)
+  }
 
-    if(isNaN(Number(set.repetitions)) && set.repetitions !== 'F'){
-      throw new SetError("INVALID_REPETITIONS", workoutIndex, setIndex)
-    }
+  if(Number(set.times) === 0) {
+    throw new SetError(SetErrors.ZERO_TIMES, workoutIndex, setIndex)
+  }
 
-    const exercises = validateExercises(set.exercises, workoutIndex, setIndex);
+  if(Number(set.repetitions) === 0) {
+    throw new SetError(SetErrors.ZERO_REPETITIONS, workoutIndex, setIndex)
+  }
 
-    return {
-      ...set,
-      times: Number(set.times),
-      exercises
-    }
-  })
+  if(!set.repetitions) {
+    throw new SetError(SetErrors.EMPTY_REPETITIONS, workoutIndex, setIndex)
+  }
+
+  if(isNaN(Number(set.repetitions)) && set.repetitions !== 'F'){
+    throw new SetError(SetErrors.INVALID_REPETITIONS, workoutIndex, setIndex)
+  }
+
+
+  return {
+    ...set,
+    times: Number(set.times),
+    exercises
+  }
 }
 
 const validateExercises = (exercises: UnauthenticatedExercise[], workoutIndex: number, setIndex: number): ValidUnauthenticatedExercise[] => {
   return exercises.map<ValidUnauthenticatedExercise>((exercise, exerciseIndex) => {
     if(!exercise.movement){
-      throw new ExerciseError("EMPTY_EXERCISE_MOVEMENT", workoutIndex, setIndex, exerciseIndex)
+      throw new ExerciseError(ExerciseErrors.EMPTY_EXERCISE_MOVEMENT, workoutIndex, setIndex, exerciseIndex)
     }
 
     return {
@@ -211,8 +223,6 @@ const validateExercises = (exercises: UnauthenticatedExercise[], workoutIndex: n
       movement: exercise.movement,
     }
   })
-
-
 }
 
 
@@ -224,15 +234,41 @@ class WorkoutError extends FormValidationError {
   }
 }
 
-class SetError extends FormValidationError {
-  constructor(message: string, public workoutIndex: number, public setIndex: number){
+enum SetErrors {
+  EMPTY_TIMES = "EMPTY_TIMES",
+  ZERO_REPETITIONS = "ZERO_REPETITIONS",
+  INVALID_TIMES = "INVALID_TIMES",
+  EMPTY_REPETITIONS = "EMPTY_REPETITIONS",
+  INVALID_REPETITIONS = "INVALID_REPETITIONS",
+  ZERO_TIMES = "ZERO_TIMES",
+}
+
+export const readableSetErrors: Record<SetErrors, string> = {
+  EMPTY_REPETITIONS: 'Quantidade de Repetições deve ser preenchida',
+  EMPTY_TIMES: 'Quantidade de Séries deve ser prenchida',
+  INVALID_REPETITIONS: 'Quantidade de Repetições deve ser um número ou até a falha',
+  INVALID_TIMES: 'Quantidades de Séries deve ser um número',
+  ZERO_REPETITIONS: 'Quantidade de Repetições deve ser maior que zero',
+  ZERO_TIMES: 'Quantidade de Séries deve ser maior que zero'
+}
+
+export class SetError extends FormValidationError {
+  constructor(public message: SetErrors, public workoutIndex: number, public setIndex: number){
     super(message);
   }
 }
 
-class ExerciseError extends FormValidationError {
+enum ExerciseErrors {
+  EMPTY_EXERCISE_MOVEMENT = "EMPTY_EXERCISE_MOVEMENT"
+}
+
+export const readableExerciseErrors: Record<ExerciseErrors, string> = {
+  EMPTY_EXERCISE_MOVEMENT: 'O movimento precisa ser selecionado'
+}
+
+export class ExerciseError extends FormValidationError {
   constructor(
-    message: string, 
+    public message: ExerciseErrors, 
     public workoutIndex: number, 
     public setIndex: number, 
     public exerciseIndex: number

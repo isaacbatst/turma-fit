@@ -1,15 +1,21 @@
-import { useAppDispatch } from '@application/frontend/store/hooks';
-import { addSetAction } from '@application/frontend/store/slices/CreateWorkoutPlanForm';
-import React from 'react'
+import { useAppDispatch, useAppSelector } from '@application/frontend/store/hooks';
+import { addSetAction, selectSet } from '@application/frontend/store/slices/CreateWorkoutPlanForm';
+import React, { useContext } from 'react'
 import { useSwiper } from 'swiper/react';
+import { readableSetErrors, SetError, validateSet } from '../../../hooks/useSaveWorkoutPlanLocal';
+import { SetSlideContext } from './SetSlideContext';
 
 interface Props {
-  workoutIndex: number
+  workoutIndex: number,
+  setIndex: number
 }
 
-const AddSetButton: React.FC<Props> = ({ workoutIndex }) => {
+
+const AddSetButton: React.FC<Props> = ({ workoutIndex, setIndex }) => {
   const dispatch = useAppDispatch();
+  const set = useAppSelector(selectSet(setIndex, workoutIndex))
   const swiper = useSwiper();
+  const { error, setError, validateSet } = useContext(SetSlideContext);
 
   return (
     <button 
@@ -18,8 +24,13 @@ const AddSetButton: React.FC<Props> = ({ workoutIndex }) => {
       hover:scale-105 cursor-pointer
             active:opacity-75'
       onClick={() => {
-        dispatch(addSetAction({ workoutIndex: workoutIndex }))
-        swiper.slideNext();
+        const isValid = validateSet();
+
+        if(isValid){
+          dispatch(addSetAction({ workoutIndex: workoutIndex }))
+          swiper.slideNext();
+        }
+
       }}>
       Adicionar Set
     </button>
