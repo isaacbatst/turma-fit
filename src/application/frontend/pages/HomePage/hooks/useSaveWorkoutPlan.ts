@@ -1,3 +1,5 @@
+import { useAppDispatch } from "@application/frontend/store/hooks";
+import { clearFormAction } from "@application/frontend/store/slices/CreateWorkoutPlanForm";
 import { useUser } from "@application/frontend/swr/useUser";
 import { useContext } from "react";
 import { CreateWorkoutPlanFormContext } from "../components/CreateWorkoutPlanForm/CreateWorkoutPlanFormContext";
@@ -12,6 +14,8 @@ export const useSaveWorkoutPlan = () => {
 
   const { user } = useUser();
 
+  const dispatch = useAppDispatch();
+
   
   const createWorkoutPlan = async () => {
     if(!isAuthenticated || !user) {
@@ -21,9 +25,15 @@ export const useSaveWorkoutPlan = () => {
     return saveOnApi(user);
   }
   
-  const handleSubmit: React.MouseEventHandler<HTMLButtonElement> = (e) => {
-    e.preventDefault();
-    createWorkoutPlan();
+  const handleSubmit: React.MouseEventHandler<HTMLButtonElement> = async (e) => {
+    try {
+      e.preventDefault();
+      await createWorkoutPlan();
+
+      dispatch(clearFormAction());
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   return {

@@ -1,3 +1,6 @@
+import Alert from '@application/frontend/components/common/Alert'
+import { useAppSelector } from '@application/frontend/store/hooks'
+import { selectUnauthenticatedCreateWorkoutPlanError } from '@application/frontend/store/slices/UnauthenticatedWorkoutPlan'
 import { WorkoutList } from '@domain/entities/WorkoutPlan/WorkoutList'
 import React, { useContext, useEffect, useState } from 'react'
 import { indexToLetter } from 'src/lib/letters'
@@ -16,6 +19,7 @@ const WorkoutCheckoutSlide: React.FC = () => {
 
   const [shouldGoNext, setShouldGoNext] = useState(false);
   const swiper = useSwiper();
+  const error = useAppSelector(selectUnauthenticatedCreateWorkoutPlanError);
   
   useEffect(() => {
     if(shouldGoNext){
@@ -26,25 +30,29 @@ const WorkoutCheckoutSlide: React.FC = () => {
   }, [shouldGoNext, swiper])
 
   return (
-    <section className="py-3 px-2 pb-8 bg-orange-400 flex flex-col">
-      <h3 className='font-bold mb-2'>Treino {indexToLetter(workoutIndex)}</h3>
-      <AerobicMinutesInput />
-      <WorkoutDayRadio />
-      <div className="flex">
-        {
-          isLastWorkout && !isMaxWorkoutsLength && (
-            <AddWorkoutButton setShouldGoNext={setShouldGoNext} />
-          )
-        }
-        {
-          workoutsLength > 1 && <RemoveWorkoutButton />
-        }
-      </div>
+    <>
+      {error && <Alert message={error} />}
+      <section className="py-3 px-2 pb-8 bg-orange-400 flex flex-col">
+        <h3 className='font-bold mb-2'>Treino {indexToLetter(workoutIndex)}</h3>
+        <AerobicMinutesInput />
+        <WorkoutDayRadio />
+        <div className="flex">
+          {
+            isLastWorkout && !isMaxWorkoutsLength && (
+              <AddWorkoutButton setShouldGoNext={setShouldGoNext} />
+            )
+          }
+          {
+            workoutsLength > 1 && <RemoveWorkoutButton />
+          }
+        </div>
 
-      {
-        isLastWorkout && <SavePlanButton />
-      }
-    </section>  )
+        {
+          isLastWorkout && <SavePlanButton />
+        }
+      </section>  
+    </>
+  )
 }
 
 export default WorkoutCheckoutSlide

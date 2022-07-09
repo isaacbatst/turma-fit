@@ -76,15 +76,15 @@ const createExercise = (): CreateWorkoutPlanFormExercise => ({
   id: generateId(),
 })
 
-const initialState: CreateWorkoutPlanFormState = {
+const createInitialState = (): CreateWorkoutPlanFormState => ({
+  error: null,
   planType: null,
-  workouts: [ createWorkout() ],
-  error: null
-};
+  workouts: [ createWorkout() ]
+})
 
 const createWorkoutPlanSlice = createSlice({
   name: 'createWorkoutPlanForm',
-  initialState,
+  initialState: createInitialState(),
   reducers: {
     selectPlanType: (state, action: PayloadAction<{ selectedPlanType: SelectedPlanType }>) => {
       state.planType = action.payload.selectedPlanType
@@ -156,6 +156,9 @@ const createWorkoutPlanSlice = createSlice({
     },
     setError: (state, action: PayloadAction<{ error: string | null }>) => {
       state.error = action.payload.error;
+    },
+    clearForm: () => {
+      return createInitialState();
     }
   }
 })
@@ -178,7 +181,9 @@ export const {
   removeWorkout: removeWorkoutAction,
   removeExercise: removeExerciseAction,
 
-  setError: setErrorAction
+  setError: setErrorAction,
+
+  clearForm: clearFormAction
 } = createWorkoutPlanSlice.actions;
 
 const getWorkoutByIndex = (state: RootState, workoutIndex: number) => state.createWorkoutPlanForm.workouts[workoutIndex];

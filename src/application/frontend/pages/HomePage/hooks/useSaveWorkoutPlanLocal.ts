@@ -111,6 +111,103 @@ interface UnauthenticatedWorkoutPlan {
   workouts: UnauthenticatedWorkout[],
 }
 
+
+class FormValidationError extends Error {}
+
+class WorkoutPlanError extends FormValidationError {
+  constructor(public message: WorkoutPlanErrors){
+    super(message);
+  }
+}
+
+class WorkoutError extends FormValidationError {
+  constructor(public message: WorkoutErrors, public workoutIndex: number){
+    super(message);
+  }
+}
+
+
+export class SetError extends FormValidationError {
+  constructor(public message: SetErrors, public workoutIndex: number, public setIndex: number){
+    super(message);
+  }
+}
+
+
+enum WorkoutPlanErrors {
+  EMPTY_PLAN_TYPE = "EMPTY_PLAN_TYPE"
+}
+
+const readableWorkoutPlanErrors: Record<WorkoutPlanErrors, string> = {
+  EMPTY_PLAN_TYPE: 'O tipo de treino deve ser escolhido',
+}
+
+enum WorkoutErrors {
+  EMPTY_WORKOUT_DAY = "EMPTY_WORKOUT_DAY",
+}
+
+const readableWorkoutErrors: Record<WorkoutErrors, string> = {
+  EMPTY_WORKOUT_DAY: 'O dia do treino deve ser escolhido'
+}
+
+enum SetErrors {
+  EMPTY_TIMES = "EMPTY_TIMES",
+  ZERO_REPETITIONS = "ZERO_REPETITIONS",
+  INVALID_TIMES = "INVALID_TIMES",
+  EMPTY_REPETITIONS = "EMPTY_REPETITIONS",
+  INVALID_REPETITIONS = "INVALID_REPETITIONS",
+  ZERO_TIMES = "ZERO_TIMES",
+}
+
+export const readableSetErrors: Record<SetErrors, string> = {
+  EMPTY_REPETITIONS: 'Quantidade de Repetições deve ser preenchida',
+  EMPTY_TIMES: 'Quantidade de Séries deve ser prenchida',
+  INVALID_REPETITIONS: 'Quantidade de Repetições deve ser um número ou até a falha',
+  INVALID_TIMES: 'Quantidades de Séries deve ser um número',
+  ZERO_REPETITIONS: 'Quantidade de Repetições deve ser maior que zero',
+  ZERO_TIMES: 'Quantidade de Séries deve ser maior que zero'
+}
+
+
+enum ExerciseErrors {
+  EMPTY_EXERCISE_MOVEMENT = "EMPTY_EXERCISE_MOVEMENT"
+}
+
+export const readableExerciseErrors: Record<ExerciseErrors, string> = {
+  EMPTY_EXERCISE_MOVEMENT: 'O movimento precisa ser selecionado'
+}
+
+export class ExerciseError extends FormValidationError {
+  constructor(
+    public message: ExerciseErrors, 
+    public workoutIndex: number, 
+    public setIndex: number, 
+    public exerciseIndex: number
+  ){
+    super(message);
+  }
+} 
+
+const getErrorMessage = (error: unknown): string => {
+  if(error instanceof WorkoutPlanError) {
+    return readableWorkoutPlanErrors[error.message]
+  }
+
+  if(error instanceof WorkoutError) {
+    return readableWorkoutErrors[error.message]
+  }
+
+  if(error instanceof SetError) {
+    return readableSetErrors[error.message];
+  }
+
+  if(error instanceof ExerciseError) {
+    return readableExerciseErrors[error.message]
+  }
+
+  return "Algo deu errado, tente novamente mais tarde";
+} 
+
 export const useSaveWorkoutPlanLocal = () => {
   const planType = useAppSelector(selectPlanType);
   const workouts = useAppSelector(selectWorkouts);
@@ -135,8 +232,10 @@ export const useSaveWorkoutPlanLocal = () => {
       }))
     } catch(error) {
       dispatch(setErrorAction({ 
-        error: error instanceof FormValidationError ? error.message : "UNKNOWN_ERROR" 
+        error: getErrorMessage(error)
       }))
+
+      throw new Error();
     }
   } 
  
@@ -147,7 +246,7 @@ export const useSaveWorkoutPlanLocal = () => {
 
 const validateWorkoutPlan = (workoutPlan: UnauthenticatedWorkoutPlan): Omit<ValidUnauthenticatedWorkoutPlan, 'id'> => {
   if(!workoutPlan.planType){
-    throw new FormValidationError('EMPTY_PLAN_TYPE')
+    throw new WorkoutPlanError(WorkoutPlanErrors.EMPTY_PLAN_TYPE)
   }
 
   const workouts = validateWorkouts(workoutPlan.workouts);
@@ -161,7 +260,7 @@ const validateWorkoutPlan = (workoutPlan: UnauthenticatedWorkoutPlan): Omit<Vali
 const validateWorkouts = (workouts: UnauthenticatedWorkout[]): ValidUnauthenticatedWorkout[] => {
   return workouts.map<ValidUnauthenticatedWorkout>((workout, workoutIndex) => {
     if(!workout.day) {
-      throw new WorkoutError("EMPTY_WORKOUT_DAY", workoutIndex)
+      throw new WorkoutError(WorkoutErrors.EMPTY_WORKOUT_DAY, workoutIndex)
     }
     const sets = validateSets(workout.sets, workoutIndex);
 
@@ -225,54 +324,3 @@ const validateExercises = (exercises: UnauthenticatedExercise[], workoutIndex: n
   })
 }
 
-
-class FormValidationError extends Error {}
-
-class WorkoutError extends FormValidationError {
-  constructor(message: string, public workoutIndex: number){
-    super(message);
-  }
-}
-
-enum SetErrors {
-  EMPTY_TIMES = "EMPTY_TIMES",
-  ZERO_REPETITIONS = "ZERO_REPETITIONS",
-  INVALID_TIMES = "INVALID_TIMES",
-  EMPTY_REPETITIONS = "EMPTY_REPETITIONS",
-  INVALID_REPETITIONS = "INVALID_REPETITIONS",
-  ZERO_TIMES = "ZERO_TIMES",
-}
-
-export const readableSetErrors: Record<SetErrors, string> = {
-  EMPTY_REPETITIONS: 'Quantidade de Repetições deve ser preenchida',
-  EMPTY_TIMES: 'Quantidade de Séries deve ser prenchida',
-  INVALID_REPETITIONS: 'Quantidade de Repetições deve ser um número ou até a falha',
-  INVALID_TIMES: 'Quantidades de Séries deve ser um número',
-  ZERO_REPETITIONS: 'Quantidade de Repetições deve ser maior que zero',
-  ZERO_TIMES: 'Quantidade de Séries deve ser maior que zero'
-}
-
-export class SetError extends FormValidationError {
-  constructor(public message: SetErrors, public workoutIndex: number, public setIndex: number){
-    super(message);
-  }
-}
-
-enum ExerciseErrors {
-  EMPTY_EXERCISE_MOVEMENT = "EMPTY_EXERCISE_MOVEMENT"
-}
-
-export const readableExerciseErrors: Record<ExerciseErrors, string> = {
-  EMPTY_EXERCISE_MOVEMENT: 'O movimento precisa ser selecionado'
-}
-
-export class ExerciseError extends FormValidationError {
-  constructor(
-    public message: ExerciseErrors, 
-    public workoutIndex: number, 
-    public setIndex: number, 
-    public exerciseIndex: number
-  ){
-    super(message);
-  }
-} 
