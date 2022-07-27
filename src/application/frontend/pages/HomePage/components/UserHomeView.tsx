@@ -1,6 +1,4 @@
-import CreateWorkoutPlanForm from "./CreateWorkoutPlanForm/CreateWorkoutPlanForm";
 import LogoutButton from "./LogoutButton";
-import MyWorkoutPlans from "./MyWorkoutPlans";
 
 type UserHomeViewProps = {
   user: {
