@@ -3,22 +3,22 @@ import { ValidationError } from "@application/api/errors/ValidationError";
 import { RequestValidator } from "@application/api/interfaces";
 import { AuthenticationError } from "@domain/errors/AuthenticationError";
 
-interface CreateWorkoutPlanValidRequestExercise {
+export interface CreateWorkoutPlanValidRequestExercise {
   movementId: string,
   equipmentId?: string,
   grip?: string
 }
 
-interface CreateWorkoutPlanValidRequestSet {
+export interface CreateWorkoutPlanValidRequestSet {
   repetitions: string,
   times: number,
-  techniqueId: string,
+  techniqueId?: string,
   maxRestTime?: number,
   minRestTime?: number,
   exercises: CreateWorkoutPlanValidRequestExercise[]
 }
 
-interface CreateWorkoutPlanValidRequestWorkout {
+export interface CreateWorkoutPlanValidRequestWorkout {
   day: string,
   aerobicMinutes: number,
   sets: CreateWorkoutPlanValidRequestSet[]

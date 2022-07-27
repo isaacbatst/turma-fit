@@ -10,6 +10,7 @@ export interface Equipment {
 }
 
 interface SetTechnique {
+  id: string
   name: string
 }
 
