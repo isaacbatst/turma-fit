@@ -15,7 +15,7 @@ export type CreateWorkoutPlanPortExerciseValidated = CreateWorkoutPlanPortExerci
 export type CreateWorkoutPlanPortSet = {
   repetitions: string
   times: number
-  techniqueId: string
+  techniqueId?: string
   minRestTime?: number
   maxRestTime?: number
   exercises: CreateWorkoutPlanPortExercise[]
