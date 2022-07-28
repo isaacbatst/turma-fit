@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { HiX } from "react-icons/hi";
-import CacheWorkoutSync from "./CacheWorkoutSync";
+import CacheWorkoutSync from "./UserHomeView/CacheWorkoutSync";
 import CreateWorkoutPlanForm from "./CreateWorkoutPlanForm/CreateWorkoutPlanForm";
 import LogoutButton from "./LogoutButton";
-import MyWorkoutPlans from "./MyWorkoutPlans";
+import MyWorkoutPlans from "./UserHomeView/MyWorkoutPlans";
 
 type UserHomeViewProps = {
   user: {

@@ -1,6 +1,6 @@
 import Loading from "@application/frontend/components/common/Loading"
 import { useMyWorkoutPlans } from "@application/frontend/swr/useMyWorkoutPlans"
-import WorkoutPlanCard from "./WorkoutPlanCard"
+import WorkoutPlanCard from "../WorkoutPlanCard"
 
 type MyWorkoutPlansProps = {
   userId: string
