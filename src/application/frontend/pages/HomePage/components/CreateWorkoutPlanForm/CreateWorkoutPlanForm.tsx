@@ -17,11 +17,12 @@ const CreateWorkoutPlanForm: React.FC<Props> = ({ isAuthenticated = false }) => 
 
   return (
     <CreateWorkoutPlanFormContextProvider isAuthenticated={isAuthenticated}>
-      <form>
+      <form className='text-center'>
         <Swiper
           spaceBetween={0}
           slidesPerView={1}
           modules={[Pagination]}
+          noSwipingClass='swiper-wrapper'
           pagination={{
             clickable: true,
             dynamicBullets: true

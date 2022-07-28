@@ -1,3 +1,4 @@
+import Loading from "@application/frontend/components/common/Loading"
 import { useMyWorkoutPlans } from "@application/frontend/swr/useMyWorkoutPlans"
 import WorkoutPlanCard from "./WorkoutPlanCard"
 
@@ -9,10 +10,9 @@ const MyWorkoutPlans: React.FC<MyWorkoutPlansProps> = ({ userId }) => {
   const { isLoading, workoutPlans, error } = useMyWorkoutPlans(userId);
 
   return (
-    <section aria-label="Meus planos de treino">
-      <h2>Meus planos de treino</h2>
+    <section aria-label="Meus planos de treino" className="text-center">
       {
-        isLoading && <div role="status">Carregando...</div>
+        isLoading && <Loading />
       }
       {
         workoutPlans?.length === 0 && <div>Nenhum plano de treino cadastrado</div>

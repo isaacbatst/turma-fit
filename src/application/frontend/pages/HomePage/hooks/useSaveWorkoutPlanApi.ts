@@ -30,6 +30,7 @@ export const useSaveWorkoutPlanApi = () => {
 
       console.log(response)
     } catch (e) {
+      console.error(e)
       if(axios.isAxiosError(e) && e.response){
         handleApiError(e.response.data)
       } else {

@@ -1,10 +1,11 @@
 import { CreateWorkoutPlanValidRequestExercise, CreateWorkoutPlanValidRequestSet, CreateWorkoutPlanValidRequestWorkout } from '@application/api/usecases/CreateWorkoutPlan/CreateWorkoutPlanRequestValidator';
-import { useAppDispatch, useAppSelector } from '@application/frontend/store/hooks'
-import { clearWorkoutPlanAction, selectUnauthenticateWorkoutPlan } from '@application/frontend/store/slices/UnauthenticatedWorkoutPlan'
+import { useAppDispatch, useAppSelector } from '@application/frontend/store/hooks';
+import { selectUnauthenticatedWorkoutPlanIsSavedOnApi, selectUnauthenticateWorkoutPlan, setIsSavedAction } from '@application/frontend/store/slices/UnauthenticatedWorkoutPlan';
 import { useUser } from '@application/frontend/swr/useUser';
 import { Exercise, Set, Workout } from '@domain/entities/WorkoutPlan/WorkoutListBeingGetted';
 import axios from 'axios';
 import React, { useCallback, useEffect } from 'react';
+import { mutate } from 'swr';
 
 const toValidRequestWorkout = (workout: Workout): CreateWorkoutPlanValidRequestWorkout => ({
   aerobicMinutes: workout.aerobicMinutes,
@@ -28,12 +29,13 @@ const toValidRequestExercise = (exercise: Exercise): CreateWorkoutPlanValidReque
 })
 
 const CacheWorkoutSync: React.FC = ({ children }) => {
-  const workoutPlan = useAppSelector(selectUnauthenticateWorkoutPlan)
+  const workoutPlan = useAppSelector(selectUnauthenticateWorkoutPlan);
+  const isSavedOnApi = useAppSelector(selectUnauthenticatedWorkoutPlanIsSavedOnApi);
   const dispatch = useAppDispatch();
   const { user } = useUser();
 
   const syncLocalWorkoutPlanWithApi = useCallback(async () => {
-    if(workoutPlan && user){
+    if(workoutPlan && user && !isSavedOnApi){
       try {
         const workouts: CreateWorkoutPlanValidRequestWorkout[] = 
           workoutPlan.workouts.map(toValidRequestWorkout)
@@ -44,13 +46,15 @@ const CacheWorkoutSync: React.FC = ({ children }) => {
             workouts
           }
         });  
-        
-        dispatch(clearWorkoutPlanAction());
+
+        mutate(`/api/user/${user.id}/workout-plans`)
+
+        dispatch(setIsSavedAction());
       } catch (error) {
         console.log(error)
       }
     }
-  }, [user, workoutPlan, dispatch])
+  }, [user, workoutPlan, dispatch, isSavedOnApi])
   
   useEffect(() => {
     syncLocalWorkoutPlanWithApi()

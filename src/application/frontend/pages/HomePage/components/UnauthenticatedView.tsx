@@ -12,7 +12,7 @@ const UnauthenticatedView: React.FC = () => {
 
   return (
     <div className='bg-red-500 min-h-screen	text-white'>
-      <section className='text-center'>
+      <section>
         {
           workoutPlan ? (
             <section className='py-5 bg-amber-500 px-3'>
